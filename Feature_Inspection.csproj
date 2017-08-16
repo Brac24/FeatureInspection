@@ -72,7 +72,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="DataGridViewNumericUpDownElements">
-      <HintPath>..\..\..\..\..\..\Visual Studio Samples\DataGridViewNumericUpDown\DataGridViewNumericUpDownElements\bin\Debug\DataGridViewNumericUpDownElements.dll</HintPath>
+      <HintPath>T:\users\Christian Bracamontes\Feature_Inspection\bin\Debug\DataGridViewNumericUpDownElements.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.PowerBI.Api, Version=2.0.0.17159, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.PowerBI.Api.2.0.0\lib\portable45-net45+win8+wpa81\Microsoft.PowerBI.Api.dll</HintPath>
