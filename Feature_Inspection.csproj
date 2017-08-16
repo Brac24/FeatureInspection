@@ -151,12 +151,6 @@
     <Compile Include="TABBED_FORM.Designer.cs">
       <DependentUpon>TABBED_FORM.cs</DependentUpon>
     </Compile>
-    <Compile Include="TweakUI.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TweakUI.Designer.cs">
-      <DependentUpon>TweakUI.cs</DependentUpon>
-    </Compile>
     <Compile Include="UserInputForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -184,12 +178,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Report1.rdlc" />
     <EmbeddedResource Include="TABBED_FORM.resx">
       <DependentUpon>TABBED_FORM.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TweakUI.resx">
-      <DependentUpon>TweakUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInputForm.resx">
       <DependentUpon>UserInputForm.cs</DependentUpon>
