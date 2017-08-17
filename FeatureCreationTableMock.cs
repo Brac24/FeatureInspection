@@ -20,17 +20,39 @@ namespace Feature_Inspection
         {
             InitializeComponent();
             DataBind();
-            DataGridViewButtonColumn FeatureButtonColumn = new DataGridViewButtonColumn();
-            FeatureButtonColumn.UseColumnTextForButtonValue = true;
-            FeatureButtonColumn.Text = "Edit";
-            dataGridView1.Columns.Insert(dataGridView1.Columns.Count, FeatureButtonColumn);
+
+            //IP>Initializes and defines the edit button column.
+            DataGridViewButtonColumn EditButtonColumn = new DataGridViewButtonColumn();
+            EditButtonColumn.UseColumnTextForButtonValue = true;
+            EditButtonColumn.Name = "Edit_Column";
+            EditButtonColumn.Text = "Edit";
+            dataGridView1.Columns.Insert(dataGridView1.Columns.Count, EditButtonColumn);
             dataGridView1.CellClick += editRow;
+
+            //IP>Initializes and defines the feature type column.
+            DataGridViewComboBoxColumn FeatureDropColumn = new DataGridViewComboBoxColumn();
+            FeatureDropColumn.HeaderText = "Feature Type";
+            dataGridView1.Columns.Insert(0, FeatureDropColumn);
+            FeatureDropChoices(FeatureDropColumn);
         }
 
+        //IP>Checks to make sure click event only triggers on the Edit column.
         private void editRow(object sender, DataGridViewCellEventArgs e)
         {
-            throw new NotImplementedException();
+            if (e.ColumnIndex == dataGridView1.Columns["Edit_Column"].Index)
+            {
+                //IP>Code to change values of feature goes here.
+                MessageBox.Show("TEST: Edit button was clicked");
+            }
         }
+
+        //IP>Test code to try combo box workability. Will be replaced with a .DataSource method.
+        private static void FeatureDropChoices(DataGridViewComboBoxColumn comboboxColumn)
+        {
+            comboboxColumn.Items.AddRange("Diameter", "Fillet", "Chamfer", "Angle", "M.O.W.", 
+                "Surface Finish", "Linear", "Square", "GDT", "Depth");
+        }
+
 
         public FeatureCreationPresenter Presenter
         {
@@ -71,7 +93,7 @@ namespace Feature_Inspection
                 using (OdbcDataAdapter adapter = new OdbcDataAdapter(com))
                 {
 
-                    string query = "SELECT Feature_Name as 'Feature Name', Nominal, Plus_Tolerance as '+', Minus_Tolerance as '-', Places FROM ATI_FeatureInspection.dbo.Features";
+                    string query = "SELECT Nominal, Plus_Tolerance as '+', Minus_Tolerance as '-', Places FROM ATI_FeatureInspection.dbo.Features";
 
                     com.CommandText = query;
                     DataTable t = new DataTable();
@@ -84,10 +106,9 @@ namespace Feature_Inspection
             //}
             //catch (Exception e)
             /*{
-                MessageBox.Show("Youre a foo", e.Message);
+                MessageBox.Show("You're a foo", e.Message);
             }*/
         }
-
 
         private void dataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
