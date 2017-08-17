@@ -20,8 +20,8 @@ namespace Feature_Inspection
 
         public FeatureCreationTableMock()
         {
-            
-            presenter = new FeatureCreationPresenter(this, new FeatureCreationModelMock()); //Give a reference of the view and model to the presenter class
+            //Removed for testing first might return when testing is finished
+            //presenter = new FeatureCreationPresenter(this, new FeatureCreationModelMock()); //Give a reference of the view and model to the presenter class
             InitializeComponent();
             DataBind();
 

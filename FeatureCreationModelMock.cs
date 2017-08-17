@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Feature_Inspection
 {
-    class FeatureCreationModelMock : IFeaturesDataSource
+    public class FeatureCreationModelMock : IFeaturesDataSource
     {
 
         public FeatureCreationModelMock()

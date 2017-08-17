@@ -18,6 +18,15 @@ namespace Feature_Inspection
            
         }
 
+        public bool ViewExists()
+        {
+            if (view == null)
+            {
+                return false;
+            }
+            else
+                return true;
+        }
        
 
        
