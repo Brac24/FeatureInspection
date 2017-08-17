@@ -28,6 +28,7 @@ namespace Feature_Inspection
             EditButtonColumn.Text = "Edit";
             dataGridView1.Columns.Insert(dataGridView1.Columns.Count, EditButtonColumn);
             dataGridView1.CellClick += editRow;
+            dataGridView1.ReadOnly = true;
 
             //IP>Initializes and defines the feature type column.
             DataGridViewComboBoxColumn FeatureDropColumn = new DataGridViewComboBoxColumn();
@@ -35,6 +36,7 @@ namespace Feature_Inspection
             dataGridView1.Columns.Insert(0, FeatureDropColumn);
             FeatureDropChoices(FeatureDropColumn);
         }
+
 
         //IP>Checks to make sure click event only triggers on the Edit column.
         private void editRow(object sender, DataGridViewCellEventArgs e)
