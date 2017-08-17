@@ -123,6 +123,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Feature.cs" />
+    <Compile Include="FeatureCreationModelMock.cs" />
     <Compile Include="FeatureCreationPresenter.cs" />
     <Compile Include="FeatureCreationTableMock.cs">
       <SubType>Form</SubType>

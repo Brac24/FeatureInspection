@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Feature_Inspection
 {
-    interface IFeatureCreationView
+    public interface IFeatureCreationView
     {
         #region Show Methods
 
@@ -16,7 +16,7 @@ namespace Feature_Inspection
 
         #endregion
 
-        FeatureCreationPresenter Presenter { get; }
+        
 
         event EventHandler EditClicked;
         event EventHandler EnterClicked;

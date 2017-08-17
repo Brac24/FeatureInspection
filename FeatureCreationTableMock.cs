@@ -16,8 +16,12 @@ namespace Feature_Inspection
 
         private readonly string connection_string = "DSN=unipointDB;UID=jbread;PWD=Cloudy2Day";
 
+        private FeatureCreationPresenter presenter;
+
         public FeatureCreationTableMock()
         {
+            
+            presenter = new FeatureCreationPresenter(this, new FeatureCreationModelMock()); //Give a reference of the view and model to the presenter class
             InitializeComponent();
             DataBind();
 
@@ -54,13 +58,7 @@ namespace Feature_Inspection
         }
 
 
-        public FeatureCreationPresenter Presenter
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+       
 
         public event EventHandler AddFeatureClicked;
         public event EventHandler EditClicked;
@@ -115,6 +113,11 @@ namespace Feature_Inspection
             DataGridView table = sender as DataGridView;
 
             
+        }
+
+        private void FeatureCreationTableMock_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
