@@ -20,5 +20,6 @@ namespace Feature_Inspection
             _lotSize = lotSize;
             _opKey = opKey;
         }
+
      }
 }

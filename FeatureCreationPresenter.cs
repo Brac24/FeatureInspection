@@ -12,14 +12,13 @@ namespace Feature_Inspection
     {
         private IFeatureCreationView view;
         private IFeaturesDataSource model;
+        
 
         public FeatureCreationPresenter (IFeatureCreationView view, IFeaturesDataSource model)
         {
             this.view = view;
             this.model = model;
 
-            
-           
         }
 
         private void Initialize()
