@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
+using System.Windows.Forms;
 
 namespace Feature_Inspection
 {
@@ -15,7 +17,14 @@ namespace Feature_Inspection
         {
             this.view = view;
             this.model = model;
+
+            
            
+        }
+
+        private void Initialize()
+        {
+            view.EditClicked += EditClick;
         }
 
         public bool ViewExists()
@@ -26,6 +35,11 @@ namespace Feature_Inspection
             }
             else
                 return true;
+        }
+
+        public void EditClick(object sender, EventArgs e)
+        {
+            
         }
        
 
