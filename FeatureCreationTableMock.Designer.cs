@@ -50,6 +50,7 @@
             this.Controls.Add(this.dataGridView1);
             this.Name = "FeatureCreationTableMock";
             this.Text = "FeatureCreationTableMock";
+            this.Load += new System.EventHandler(this.FeatureCreationTableMock_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 

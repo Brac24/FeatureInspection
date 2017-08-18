@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Feature_Inspection
 {
-    interface IFeaturesDataSource
+    public interface IFeaturesDataSource
     {
-        Job JobInfo { get; }
+        //Job JobInfo { get; }
 
         IList<Feature> GetFeaturesOnOpKey(int opKey);
 
