@@ -31,8 +31,12 @@ namespace Feature_Inspection
             EditButtonColumn.Name = "Edit_Column";
             EditButtonColumn.Text = "Edit";
             dataGridView1.Columns.Insert(dataGridView1.Columns.Count, EditButtonColumn);
+<<<<<<< HEAD
             dataGridView1.CellContentClick += editRow;
+=======
+            dataGridView1.CellClick += editRow;
             dataGridView1.ReadOnly = true;
+>>>>>>> a951d180ddf451db7730544b8ffc5c0324a672f5
 
             //IP>Initializes and defines the feature type column.
             DataGridViewComboBoxColumn FeatureDropColumn = new DataGridViewComboBoxColumn();

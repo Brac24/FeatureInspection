@@ -20,8 +20,8 @@ namespace Feature_Inspection
 
         public FeatureCreationTableMock()
         {
-            //Removed for testing first might return when testing is finished
-            //presenter = new FeatureCreationPresenter(this, new FeatureCreationModelMock()); //Give a reference of the view and model to the presenter class
+            
+            presenter = new FeatureCreationPresenter(this, new FeatureCreationModelMock()); //Give a reference of the view and model to the presenter class
             InitializeComponent();
             DataBind();
 
@@ -31,24 +31,20 @@ namespace Feature_Inspection
             EditButtonColumn.Name = "Edit_Column";
             EditButtonColumn.Text = "Edit";
             dataGridView1.Columns.Insert(dataGridView1.Columns.Count, EditButtonColumn);
-            dataGridView1.CellContentClick += editRow;
-            dataGridView1.ReadOnly = true;
+            dataGridView1.CellClick += editRow;
 
             //IP>Initializes and defines the feature type column.
             DataGridViewComboBoxColumn FeatureDropColumn = new DataGridViewComboBoxColumn();
             FeatureDropColumn.HeaderText = "Feature Type";
             dataGridView1.Columns.Insert(0, FeatureDropColumn);
             FeatureDropChoices(FeatureDropColumn);
-            
         }
-
 
         //IP>Checks to make sure click event only triggers on the Edit column.
         private void editRow(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == dataGridView1.Columns["Edit_Column"].Index)
             {
-                EditClicked(sender, e);
                 //IP>Code to change values of feature goes here.
                 MessageBox.Show("TEST: Edit button was clicked");
             }
@@ -65,7 +61,7 @@ namespace Feature_Inspection
        
 
         public event EventHandler AddFeatureClicked;
-        public event EventHandler<EventArgs> EditClicked;
+        public event EventHandler EditClicked;
         public event EventHandler EnterClicked;
         public event EventHandler LotInspectionReadyClicked;
 
