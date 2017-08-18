@@ -39,10 +39,8 @@ namespace Feature_Inspection
 
         public void EditClick(object sender, EventArgs e)
         {
-            
-        }
-       
 
-       
+        }
+
     }
 }

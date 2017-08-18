@@ -29,28 +29,32 @@ namespace Feature_Inspection
             DataGridViewButtonColumn EditButtonColumn = new DataGridViewButtonColumn();
             EditButtonColumn.UseColumnTextForButtonValue = true;
             EditButtonColumn.Name = "Edit_Column";
-            EditButtonColumn.Text = "Edit";
+            //EditButtonColumn.Text = "Edit";
             dataGridView1.Columns.Insert(dataGridView1.Columns.Count, EditButtonColumn);
             dataGridView1.CellContentClick += editRow;
-            dataGridView1.ReadOnly = true;
 
             //IP>Initializes and defines the feature type column.
             DataGridViewComboBoxColumn FeatureDropColumn = new DataGridViewComboBoxColumn();
             FeatureDropColumn.HeaderText = "Feature Type";
             dataGridView1.Columns.Insert(0, FeatureDropColumn);
             FeatureDropChoices(FeatureDropColumn);
+
             
         }
-
-
+        
         //IP>Checks to make sure click event only triggers on the Edit column.
         private void editRow(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == dataGridView1.Columns["Edit_Column"].Index)
             {
-                EditClicked(sender, e);
+                //EditClicked(sender, e);
                 //IP>Code to change values of feature goes here.
                 MessageBox.Show("TEST: Edit button was clicked");
+                int edit = e.RowIndex;
+                dataGridView1.Rows[edit].ReadOnly = false;
+                dataGridView1.Rows[e.RowIndex].Cells["Edit_Column"].Value = "Done";
+                //dataGridView1.SelectedCells[0].Value = "Done";
+
             }
         }
 
@@ -60,9 +64,6 @@ namespace Feature_Inspection
             comboboxColumn.Items.AddRange("Diameter", "Fillet", "Chamfer", "Angle", "M.O.W.", 
                 "Surface Finish", "Linear", "Square", "GDT", "Depth");
         }
-
-
-       
 
         public event EventHandler AddFeatureClicked;
         public event EventHandler<EventArgs> EditClicked;
@@ -114,9 +115,8 @@ namespace Feature_Inspection
 
         private void dataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
-            DataGridView table = sender as DataGridView;
+            dataGridView1.Rows[e.RowIndex].ReadOnly = true;
 
-            
         }
 
         private void FeatureCreationTableMock_Load(object sender, EventArgs e)
