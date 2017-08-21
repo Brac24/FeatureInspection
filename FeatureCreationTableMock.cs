@@ -27,25 +27,35 @@ namespace Feature_Inspection
 
             //IP>Initializes and defines the edit button column.
             DataGridViewButtonColumn EditButtonColumn = new DataGridViewButtonColumn();
+            EditButtonColumn.UseColumnTextForButtonValue = true;
             EditButtonColumn.Name = "Edit Column";
+            EditButtonColumn.Text = "Edit";
             dataGridView1.Columns.Insert(dataGridView1.Columns.Count, EditButtonColumn);
             dataGridView1.CellContentClick += editRow;
+            
 
             //IP>Initializes and defines the feature type column.
             DataGridViewComboBoxColumn FeatureDropColumn = new DataGridViewComboBoxColumn();
             FeatureDropColumn.HeaderText = "Feature Type";
             dataGridView1.Columns.Insert(0, FeatureDropColumn);
             FeatureDropChoices(FeatureDropColumn);
+
+            SetEditColumn();
+
         }
         
         //IP>Checks to make sure click event only triggers on the Edit column And changes ReadOnly.
         private void editRow(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == dataGridView1.Columns["Edit Column"].Index 
-                && dataGridView1.Rows[e.RowIndex].Cells["Edit Column"].Value == "Edit"
-                || dataGridView1.Rows[e.RowIndex].Cells["Edit Column"].Value == null) //Remove once column is populated with "Edit" values.
+            var table = (DataGridView)sender;
+
+            var button = (DataGridViewButtonCell)table.Rows[e.RowIndex].Cells["Edit Column"];
+            button.UseColumnTextForButtonValue = false;
+            if (e.ColumnIndex == dataGridView1.Columns["Edit Column"].Index
+                && dataGridView1.Rows[e.RowIndex].Cells["Edit Column"].Value == "Edit") //Remove once column is populated with "Edit" values.
             {
                 //EditClicked(sender, e);
+                //var button = (DataGridViewButtonColumn)sender.UseColumnTextForButtonValue = false;
                 int edit = e.RowIndex;
                 dataGridView1.Rows[edit].ReadOnly = false;
                 dataGridView1.Rows[e.RowIndex].Cells["Edit Column"].Value = "Done";
@@ -117,7 +127,17 @@ namespace Feature_Inspection
 
         private void dataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
-            dataGridView1.Rows[e.RowIndex].ReadOnly = true;
+            //dataGridView1.Rows[e.RowIndex].ReadOnly = true;
+        }
+
+        private void SetEditColumn()
+        {
+            
+            foreach(DataGridViewRow row in dataGridView1.Rows)
+            {
+                DataGridViewCell cell = row.Cells["Edit Column"];
+                cell.Value = "Edit";
+            }
         }
 
         private void FeatureCreationTableMock_Load(object sender, EventArgs e)
