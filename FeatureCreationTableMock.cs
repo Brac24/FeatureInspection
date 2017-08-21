@@ -25,46 +25,36 @@ namespace Feature_Inspection
 
         public FeatureCreationTableMock()
         {
-           
             InitializeComponent();
-            //Removed for testing first might return when testing is finished
             DataBind();
 
             //IP>Initializes and defines the edit button column.
             DataGridViewButtonColumn EditButtonColumn = new DataGridViewButtonColumn();
             EditButtonColumn.UseColumnTextForButtonValue = true;
             EditButtonColumn.Name = "Edit Column";
-
             EditButtonColumn.Text = "Edit";
             dataGridView1.Columns.Insert(dataGridView1.Columns.Count, EditButtonColumn);
-            dataGridView1.CellContentClick += editRow;
-            
+            dataGridView1.CellMouseUp += CellMouseUp;  
 
             //IP>Initializes and defines the feature type column.
             DataGridViewComboBoxColumn FeatureDropColumn = new DataGridViewComboBoxColumn();
             FeatureDropColumn.HeaderText = "Feature Type";
             dataGridView1.Columns.Insert(0, FeatureDropColumn);
             FeatureDropChoices(FeatureDropColumn);
-
-            SetEditColumn();
-
         }
-        
+
         //IP>Checks to make sure click event only triggers on the Edit column And changes ReadOnly.
-        private void editRow(object sender, DataGridViewCellEventArgs e)
+        private void CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
         {
             var table = (DataGridView)sender;
 
             var button = (DataGridViewButtonCell)table.Rows[e.RowIndex].Cells["Edit Column"];
 
-
             if (e.ColumnIndex == dataGridView1.Columns["Edit Column"].Index
-                && dataGridView1.Rows[e.RowIndex].Cells["Edit Column"].Value == "Edit") //Remove once column is populated with "Edit" values.
+                && dataGridView1.Rows[e.RowIndex].Cells["Edit Column"].Value == "Edit")
             {
-                
-                button.UseColumnTextForButtonValue = false;
                 //EditClicked(sender, e);
-
+                button.UseColumnTextForButtonValue = false;
                 int edit = e.RowIndex;
                 dataGridView1.Rows[edit].ReadOnly = false;
                 dataGridView1.Rows[e.RowIndex].Cells["Edit Column"].Value = "Done";
@@ -98,8 +88,6 @@ namespace Feature_Inspection
             throw new NotImplementedException();
         }
 
-     
-
         private void DataBind()
         {
             int maxRows;
@@ -130,7 +118,7 @@ namespace Feature_Inspection
 
         private void dataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
-            //dataGridView1.Rows[e.RowIndex].ReadOnly = true;
+            dataGridView1.Rows[e.RowIndex].ReadOnly = true;
         }
 
         private void SetEditColumn()
@@ -146,9 +134,7 @@ namespace Feature_Inspection
         private void FeatureCreationTableMock_Load(object sender, EventArgs e)
         {
             presenter = new FeatureCreationPresenter(this, new FeatureCreationModelMock()); //Give a reference of the view and model to the presenter class
-
         }
-
 
     }
 }
