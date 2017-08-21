@@ -16,7 +16,7 @@ namespace Feature_Inspection
 
         private readonly string connection_string = "DSN=unipointDB;UID=jbread;PWD=Cloudy2Day";
 
-        private FeatureCreationPresenter presenter;
+        public FeatureCreationPresenter presenter;
 
         public event EventHandler AddFeatureClicked;
         public event EventHandler<EventArgs> EditClicked;
@@ -99,13 +99,14 @@ namespace Feature_Inspection
                 using (OdbcDataAdapter adapter = new OdbcDataAdapter(com))
                 {
 
-                    string query = "SELECT Nominal, Plus_Tolerance as '+', Minus_Tolerance as '-', Places FROM ATI_FeatureInspection.dbo.Features";
+                    string query = "SELECT Feature_Key, Nominal, Plus_Tolerance as '+', Minus_Tolerance as '-', Places FROM ATI_FeatureInspection.dbo.Features";
 
                     com.CommandText = query;
                     DataTable t = new DataTable();
                     adapter.Fill(t);
                     dataGridView1.DataSource = null;
                     dataGridView1.DataSource = t;
+                dataGridView1.Columns["Feature_Key"].Visible = false;
                     maxRows = t.Rows.Count;
 
                 }
