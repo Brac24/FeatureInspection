@@ -52,16 +52,18 @@ namespace Feature_Inspection
         
         //IP>Checks to make sure click event only triggers on the Edit column And changes ReadOnly.
         private void editRow(object sender, DataGridViewCellEventArgs e)
-	
+        {
+            var table = (DataGridView)sender;
 
             var button = (DataGridViewButtonCell)table.Rows[e.RowIndex].Cells["Edit Column"];
-            button.UseColumnTextForButtonValue = false;
+
+
             if (e.ColumnIndex == dataGridView1.Columns["Edit Column"].Index
                 && dataGridView1.Rows[e.RowIndex].Cells["Edit Column"].Value == "Edit") //Remove once column is populated with "Edit" values.
             {
-                EditClicked(sender, e);
-                //IP>Code to change values of feature goes here.
-                MessageBox.Show("TEST: Edit button was clicked");
+                
+                button.UseColumnTextForButtonValue = false;
+                //EditClicked(sender, e);
 
                 int edit = e.RowIndex;
                 dataGridView1.Rows[edit].ReadOnly = false;
