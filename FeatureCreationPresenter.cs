@@ -18,6 +18,8 @@ namespace Feature_Inspection
         {
             this.view = view;
             this.model = model;
+            Initialize();
+            
 
         }
 

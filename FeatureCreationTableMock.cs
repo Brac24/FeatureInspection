@@ -18,17 +18,23 @@ namespace Feature_Inspection
 
         private FeatureCreationPresenter presenter;
 
+        public event EventHandler AddFeatureClicked;
+        public event EventHandler<EventArgs> EditClicked;
+        public event EventHandler EnterClicked;
+        public event EventHandler LotInspectionReadyClicked;
+
         public FeatureCreationTableMock()
         {
-            //Removed for testing first might return when testing is finished
-            //presenter = new FeatureCreationPresenter(this, new FeatureCreationModelMock()); //Give a reference of the view and model to the presenter class
+           
             InitializeComponent();
+            //Removed for testing first might return when testing is finished
             DataBind();
 
             //IP>Initializes and defines the edit button column.
             DataGridViewButtonColumn EditButtonColumn = new DataGridViewButtonColumn();
             EditButtonColumn.UseColumnTextForButtonValue = true;
             EditButtonColumn.Name = "Edit Column";
+
             EditButtonColumn.Text = "Edit";
             dataGridView1.Columns.Insert(dataGridView1.Columns.Count, EditButtonColumn);
             dataGridView1.CellContentClick += editRow;
@@ -46,16 +52,17 @@ namespace Feature_Inspection
         
         //IP>Checks to make sure click event only triggers on the Edit column And changes ReadOnly.
         private void editRow(object sender, DataGridViewCellEventArgs e)
-        {
-            var table = (DataGridView)sender;
+	
 
             var button = (DataGridViewButtonCell)table.Rows[e.RowIndex].Cells["Edit Column"];
             button.UseColumnTextForButtonValue = false;
             if (e.ColumnIndex == dataGridView1.Columns["Edit Column"].Index
                 && dataGridView1.Rows[e.RowIndex].Cells["Edit Column"].Value == "Edit") //Remove once column is populated with "Edit" values.
             {
-                //EditClicked(sender, e);
-                //var button = (DataGridViewButtonColumn)sender.UseColumnTextForButtonValue = false;
+                EditClicked(sender, e);
+                //IP>Code to change values of feature goes here.
+                MessageBox.Show("TEST: Edit button was clicked");
+
                 int edit = e.RowIndex;
                 dataGridView1.Rows[edit].ReadOnly = false;
                 dataGridView1.Rows[e.RowIndex].Cells["Edit Column"].Value = "Done";
@@ -77,10 +84,7 @@ namespace Feature_Inspection
                 "Surface Finish", "Linear", "Square", "GDT", "Depth");
         }
 
-        public event EventHandler AddFeatureClicked;
-        public event EventHandler<EventArgs> EditClicked;
-        public event EventHandler EnterClicked;
-        public event EventHandler LotInspectionReadyClicked;
+        
 
         public void ShowJobInformation(Job job)
         {
@@ -92,10 +96,7 @@ namespace Feature_Inspection
             throw new NotImplementedException();
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            
-        }
+     
 
         private void DataBind()
         {
@@ -142,7 +143,10 @@ namespace Feature_Inspection
 
         private void FeatureCreationTableMock_Load(object sender, EventArgs e)
         {
+            presenter = new FeatureCreationPresenter(this, new FeatureCreationModelMock()); //Give a reference of the view and model to the presenter class
 
         }
+
+
     }
 }
