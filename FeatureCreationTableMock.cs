@@ -20,6 +20,7 @@ namespace Feature_Inspection
 
         public event EventHandler AddFeatureClicked;
         public event EventHandler<EventArgs> EditClicked;
+        public event EventHandler<EventArgs> DoneClicked;
         public event EventHandler EnterClicked;
         public event EventHandler LotInspectionReadyClicked;
 
@@ -53,7 +54,7 @@ namespace Feature_Inspection
             if (e.ColumnIndex == dataGridView1.Columns["Edit Column"].Index
                 && dataGridView1.Rows[e.RowIndex].Cells["Edit Column"].Value == "Edit")
             {
-                //EditClicked(sender, e);
+                EditClicked(sender, e);
                 button.UseColumnTextForButtonValue = false;
                 int edit = e.RowIndex;
                 dataGridView1.Rows[edit].ReadOnly = false;
@@ -62,7 +63,7 @@ namespace Feature_Inspection
             else if (e.ColumnIndex == dataGridView1.Columns["Edit Column"].Index
                 && dataGridView1.Rows[e.RowIndex].Cells["Edit Column"].Value == "Done")
             {
-                //EditClicked(sender, e);
+                EditClicked(sender, e);
                 int edit = e.RowIndex;
                 dataGridView1.Rows[edit].ReadOnly = true;
                 dataGridView1.Rows[e.RowIndex].Cells["Edit Column"].Value = "Edit";
@@ -132,7 +133,7 @@ namespace Feature_Inspection
             }
         }
 
-        private void FeatureCreationTableMock_Load(object sender, EventArgs e)
+        public void FeatureCreationTableMock_Load(object sender, EventArgs e)
         {
             presenter = new FeatureCreationPresenter(this, new FeatureCreationModelMock()); //Give a reference of the view and model to the presenter class
         }

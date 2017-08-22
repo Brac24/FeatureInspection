@@ -19,6 +19,7 @@ namespace Feature_Inspection
         
 
         event EventHandler<EventArgs> EditClicked;
+        event EventHandler<EventArgs> DoneClicked;
         event EventHandler EnterClicked;
         event EventHandler AddFeatureClicked;
         event EventHandler LotInspectionReadyClicked;

@@ -25,6 +25,7 @@ namespace Feature_Inspection
         private void Initialize()
         {
             view.EditClicked += EditClick;
+            view.DoneClicked += DoneClick;
         }
 
         public bool ViewExists()
@@ -42,5 +43,25 @@ namespace Feature_Inspection
 
         }
 
+        public void DoneClick(object t, EventArgs e)
+        {
+            Feature feature = new Feature();
+            var row = (DataGridViewRow)t;
+
+           
+
+        }
+
+        public void SetFeature(DataGridViewRow dataRow)
+        {
+            
+            var cells = dataRow.Cells;
+            Feature feature = new Feature
+            {
+
+            };
+
+            
+        }
     }
 }
