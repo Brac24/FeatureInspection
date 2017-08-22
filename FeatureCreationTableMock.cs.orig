@@ -16,7 +16,7 @@ namespace Feature_Inspection
 
         private readonly string connection_string = "DSN=unipointDB;UID=jbread;PWD=Cloudy2Day";
 
-        private FeatureCreationPresenter presenter;
+        public FeatureCreationPresenter presenter;
 
         public event EventHandler AddFeatureClicked;
         public event EventHandler<EventArgs> EditClicked;
@@ -25,53 +25,27 @@ namespace Feature_Inspection
 
         public FeatureCreationTableMock()
         {
-           
             InitializeComponent();
-            //Removed for testing first might return when testing is finished
-            DataBind();
-
-            //IP>Initializes and defines the edit button column.
-            DataGridViewButtonColumn EditButtonColumn = new DataGridViewButtonColumn();
-<<<<<<< HEAD
-            EditButtonColumn.UseColumnTextForButtonValue = true;
-            EditButtonColumn.Name = "Edit Column";
-=======
-            EditButtonColumn.UseColumnTextForButtonValue = false;
-            EditButtonColumn.Name = "Edit_Column";
->>>>>>> 9572c59d25957e917d17e2d4a5a5ac4e0fc3db79
-            EditButtonColumn.Text = "Edit";
-            dataGridView1.Columns.Insert(dataGridView1.Columns.Count, EditButtonColumn);
-            dataGridView1.CellContentClick += editRow;
-            
-
-            //IP>Initializes and defines the feature type column.
-            DataGridViewComboBoxColumn FeatureDropColumn = new DataGridViewComboBoxColumn();
-            FeatureDropColumn.HeaderText = "Feature Type";
-            dataGridView1.Columns.Insert(0, FeatureDropColumn);
-            FeatureDropChoices(FeatureDropColumn);
-
-            SetEditColumn();
-
+            dataGridView1.CellMouseUp += CellMouseUp;  
+            textBox1.KeyDown += new KeyEventHandler(OpKeyEnter);
+            button1.MouseUp += AddFeatureButton;
         }
-        
+
         //IP>Checks to make sure click event only triggers on the Edit column And changes ReadOnly.
-        private void editRow(object sender, DataGridViewCellEventArgs e)
+        private void CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
         {
+            if (e.RowIndex == -1)
+                return;
+
             var table = (DataGridView)sender;
 
             var button = (DataGridViewButtonCell)table.Rows[e.RowIndex].Cells["Edit Column"];
-            button.UseColumnTextForButtonValue = false;
+
             if (e.ColumnIndex == dataGridView1.Columns["Edit Column"].Index
-                && dataGridView1.Rows[e.RowIndex].Cells["Edit Column"].Value == "Edit") //Remove once column is populated with "Edit" values.
+                && dataGridView1.Rows[e.RowIndex].Cells["Edit Column"].Value == "Edit")
             {
-<<<<<<< HEAD
                 //EditClicked(sender, e);
-                //var button = (DataGridViewButtonColumn)sender.UseColumnTextForButtonValue = false;
-=======
-                EditClicked(sender, e);
-                //IP>Code to change values of feature goes here.
-                MessageBox.Show("TEST: Edit button was clicked");
->>>>>>> 9572c59d25957e917d17e2d4a5a5ac4e0fc3db79
+                button.UseColumnTextForButtonValue = false;
                 int edit = e.RowIndex;
                 dataGridView1.Rows[edit].ReadOnly = false;
                 dataGridView1.Rows[e.RowIndex].Cells["Edit Column"].Value = "Done";
@@ -93,8 +67,6 @@ namespace Feature_Inspection
                 "Surface Finish", "Linear", "Square", "GDT", "Depth");
         }
 
-        
-
         public void ShowJobInformation(Job job)
         {
             throw new NotImplementedException();
@@ -105,39 +77,73 @@ namespace Feature_Inspection
             throw new NotImplementedException();
         }
 
-     
-
         private void DataBind()
         {
             int maxRows;
 
-            //try
-            //{
                 using (OdbcConnection conn = new OdbcConnection(connection_string))
                 using (OdbcCommand com = conn.CreateCommand())
                 using (OdbcDataAdapter adapter = new OdbcDataAdapter(com))
                 {
 
+<<<<<<< HEAD
                     string query = "SELECT Nominal, Plus_Tolerance as '+', Minus_Tolerance as '-', Places FROM ATI_FeatureInspection.dbo.Features";
+                    
+=======
+                    string query = "SELECT Feature_Key, Nominal, Plus_Tolerance as '+', Minus_Tolerance as '-', Places FROM ATI_FeatureInspection.dbo.Features";
 
+>>>>>>> 1675d7c6a800cbd10acfd2a5780c81011ef15e87
                     com.CommandText = query;
                     DataTable t = new DataTable();
                     adapter.Fill(t);
                     dataGridView1.DataSource = null;
                     dataGridView1.DataSource = t;
+                dataGridView1.Columns["Feature_Key"].Visible = false;
                     maxRows = t.Rows.Count;
 
                 }
-            //}
-            //catch (Exception e)
-            /*{
-                MessageBox.Show("You're a foo", e.Message);
-            }*/
+
+        }
+
+        //IP> Data Bind to OP Key entered in textBox1
+        private void NewDataBind()
+        {
+            int maxRows;
+            dataGridView1.Columns.Clear();
+
+            using (OdbcConnection conn = new OdbcConnection(connection_string))
+            using (OdbcCommand com = conn.CreateCommand())
+            using (OdbcDataAdapter adapter = new OdbcDataAdapter(com))
+            {
+
+                string query = "SELECT * FROM ATI_FeatureInspection.dbo.Features WHERE Part_Number_FK = (SELECT Part_Number FROM ATI_FeatureInspection.dbo.Operation WHERE Op_Key =  " + textBox1.Text + ") AND Operation_Number_FK = (SELECT Operation_Number FROM ATI_FeatureInspection.dbo.Operation WHERE Op_Key = " + textBox1.Text + ");";
+
+                com.CommandText = query;
+                DataTable t = new DataTable();
+                adapter.Fill(t);
+                dataGridView1.DataSource = null;
+                dataGridView1.DataSource = t;
+                maxRows = t.Rows.Count;
+
+            }
+
+            //IP>Initializes and defines the edit button column.
+            DataGridViewButtonColumn EditButtonColumn = new DataGridViewButtonColumn();
+            EditButtonColumn.UseColumnTextForButtonValue = true;
+            EditButtonColumn.Name = "Edit Column";
+            EditButtonColumn.Text = "Edit";
+            dataGridView1.Columns.Insert(dataGridView1.Columns.Count, EditButtonColumn);
+
+            //IP>Initializes and defines the feature type column.
+            DataGridViewComboBoxColumn FeatureDropColumn = new DataGridViewComboBoxColumn();
+            FeatureDropColumn.HeaderText = "Feature Type";
+            dataGridView1.Columns.Insert(0, FeatureDropColumn);
+            FeatureDropChoices(FeatureDropColumn);
         }
 
         private void dataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
-            //dataGridView1.Rows[e.RowIndex].ReadOnly = true;
+            dataGridView1.Rows[e.RowIndex].ReadOnly = true;
         }
 
         private void SetEditColumn()
@@ -153,9 +159,34 @@ namespace Feature_Inspection
         private void FeatureCreationTableMock_Load(object sender, EventArgs e)
         {
             presenter = new FeatureCreationPresenter(this, new FeatureCreationModelMock()); //Give a reference of the view and model to the presenter class
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
 
         }
 
+        private void AddFeatureButton(object sender, EventArgs e)
+        {
+            MessageBox.Show("TEST: You added a new feature");
+            dataGridView1.Rows.Add(dataGridView1.Rows.Count);
+        }
 
+        private void OpKeyEnter (object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                NewDataBind();
+            }
+        }
+
+        /*
+        private void AddTableRow(DataTable t)
+        {
+            DataRow newRow = t.NewRow();
+
+            t.Rows.Add(newRow);
+        }
+        */
     }
 }

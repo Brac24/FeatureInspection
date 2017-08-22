@@ -20,7 +20,6 @@ namespace Feature_Inspection
             this.model = model;
             Initialize();
             
-
         }
 
         private void Initialize()
