@@ -56,6 +56,7 @@ namespace Feature_Inspection
         {
             
             var cells = dataRow.Cells;
+       
             Feature feature = new Feature
             {
 
