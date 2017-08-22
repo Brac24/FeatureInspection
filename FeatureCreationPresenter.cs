@@ -13,6 +13,7 @@ namespace Feature_Inspection
         private IFeatureCreationView view;
         private IFeaturesDataSource model;
         
+        
 
         public FeatureCreationPresenter (IFeatureCreationView view, IFeaturesDataSource model)
         {
@@ -52,17 +53,6 @@ namespace Feature_Inspection
 
         }
 
-        public void SetFeature(DataGridViewRow dataRow)
-        {
-            
-            var cells = dataRow.Cells;
        
-            Feature feature = new Feature
-            {
-
-            };
-
-            
-        }
     }
 }

@@ -10,7 +10,10 @@ namespace Feature_Inspection
     {
         //Job JobInfo { get; }
 
-        IList<Feature> GetFeaturesOnOpKey(int opKey);
+        //Will bind data directly to view. No need to go through presenter
+        void GetFeaturesOnOpKey(int opKey, IFeatureCreationView view);
+
+
 
 
 
