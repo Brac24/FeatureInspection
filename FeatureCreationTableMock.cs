@@ -97,7 +97,7 @@ namespace Feature_Inspection
                     adapter.Fill(t);
                     dataGridView1.DataSource = null;
                     dataGridView1.DataSource = t;
-                dataGridView1.Columns["Feature_Key"].Visible = false;
+                    dataGridView1.Columns["Feature_Key"].Visible = false;
                     maxRows = t.Rows.Count;
 
                 }
@@ -122,6 +122,7 @@ namespace Feature_Inspection
                 adapter.Fill(t);
                 dataGridView1.DataSource = null;
                 dataGridView1.DataSource = t;
+                dataGridView1.Columns["Feature_Key"].Visible = false;
                 maxRows = t.Rows.Count;
 
             }
@@ -167,8 +168,8 @@ namespace Feature_Inspection
 
         private void AddFeatureButton(object sender, EventArgs e)
         {
-            MessageBox.Show("TEST: You added a new feature");
-            dataGridView1.Rows.Add(dataGridView1.Rows.Count);
+            DataTable data = (DataTable)(dataGridView1.DataSource);
+            AddTableRow(data);
         }
 
         private void OpKeyEnter (object sender, KeyEventArgs e)
@@ -179,13 +180,12 @@ namespace Feature_Inspection
             }
         }
 
-        /*
+
         private void AddTableRow(DataTable t)
         {
             DataRow newRow = t.NewRow();
-
             t.Rows.Add(newRow);
         }
-        */
+
     }
 }
