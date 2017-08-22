@@ -28,7 +28,6 @@ namespace Feature_Inspection
             InitializeComponent();
             dataGridView1.CellMouseUp += CellMouseUp;  
             textBox1.KeyDown += new KeyEventHandler(OpKeyEnter);
-            button1.MouseUp += AddFeatureButton;
         }
 
         //IP>Checks to make sure click event only triggers on the Edit column And changes ReadOnly.
@@ -86,11 +85,7 @@ namespace Feature_Inspection
                 using (OdbcDataAdapter adapter = new OdbcDataAdapter(com))
                 {
 
-
-                    
-
                     string query = "SELECT Feature_Key, Nominal, Plus_Tolerance as '+', Minus_Tolerance as '-', Places FROM ATI_FeatureInspection.dbo.Features";
-
 
                     com.CommandText = query;
                     DataTable t = new DataTable();
@@ -101,7 +96,6 @@ namespace Feature_Inspection
                     maxRows = t.Rows.Count;
 
                 }
-
         }
 
         //IP> Data Bind to OP Key entered in textBox1
@@ -114,7 +108,6 @@ namespace Feature_Inspection
             using (OdbcCommand com = conn.CreateCommand())
             using (OdbcDataAdapter adapter = new OdbcDataAdapter(com))
             {
-
                 string query = "SELECT * FROM ATI_FeatureInspection.dbo.Features WHERE Part_Number_FK = (SELECT Part_Number FROM ATI_FeatureInspection.dbo.Operation WHERE Op_Key =  " + textBox1.Text + ") AND Operation_Number_FK = (SELECT Operation_Number FROM ATI_FeatureInspection.dbo.Operation WHERE Op_Key = " + textBox1.Text + ");";
 
                 com.CommandText = query;
@@ -124,7 +117,10 @@ namespace Feature_Inspection
                 dataGridView1.DataSource = t;
                 dataGridView1.Columns["Feature_Key"].Visible = false;
                 maxRows = t.Rows.Count;
-
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                {
+                    dataGridView1.Rows[i].ReadOnly = true;
+                }
             }
 
             //IP>Initializes and defines the edit button column.
@@ -143,17 +139,7 @@ namespace Feature_Inspection
 
         private void dataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
-            dataGridView1.Rows[e.RowIndex].ReadOnly = true;
-        }
-
-        private void SetEditColumn()
-        {
-            
-            foreach(DataGridViewRow row in dataGridView1.Rows)
-            {
-                DataGridViewCell cell = row.Cells["Edit Column"];
-                cell.Value = "Edit";
-            }
+            dataGridView1.Rows[e.RowIndex].ReadOnly = false;
         }
 
         private void FeatureCreationTableMock_Load(object sender, EventArgs e)
@@ -162,11 +148,6 @@ namespace Feature_Inspection
         }
 
         private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void AddFeatureButton(object sender, EventArgs e)
         {
             DataTable data = (DataTable)(dataGridView1.DataSource);
             AddTableRow(data);
@@ -180,12 +161,10 @@ namespace Feature_Inspection
             }
         }
 
-
         private void AddTableRow(DataTable t)
         {
             DataRow newRow = t.NewRow();
             t.Rows.Add(newRow);
         }
-
     }
 }
