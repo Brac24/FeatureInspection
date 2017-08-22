@@ -8,26 +8,26 @@ namespace Feature_Inspection
 {
     public class Feature
     {
-        string FeatureType { get; set; }
+        public string FeatureType { get; set; }
 
-        string UnitOfMeasurement { get; set; }
+        public string UnitOfMeasurement { get; set; }
 
-        double Nominal { get; set; }
+        public double Nominal { get; set; }
 
-        double PlusTol { get; set; }
+        public double PlusTol { get; set; }
 
-        double MinusTol { get; set; }
+        public double MinusTol { get; set; }
 
-        double LowRange { get; set; }
+        public double LowRange { get; set; }
 
-        double HighRange { get; set; }
+        public double HighRange { get; set; }
+        
+        public double MeasuredValue { get; set; }
+        
+        public int InspectionToolSerial { get; set; }
 
-        double MeasuredValue { get; set; }
+        public string InspectionToolName { get; set; }
 
-        int InspectionToolSerial { get; set; }
-
-        string InspectionToolName { get; set; }
-
-        int PlacesToInspect { get; set; }
+        public int PlacesToInspect { get; set; }
     }
 }
