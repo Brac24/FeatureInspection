@@ -46,10 +46,8 @@ namespace Feature_Inspection
 
         public void DoneClick(object t, EventArgs e)
         {
-            Feature feature = new Feature();
-            var row = (DataGridViewRow)t;
-
-           
+            
+            var feature = (Feature)t;       
 
         }
 

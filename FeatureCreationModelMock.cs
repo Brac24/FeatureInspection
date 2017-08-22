@@ -15,7 +15,7 @@ namespace Feature_Inspection
         }
 
 
-        public IList<Feature> GetFeaturesOnOpKey(int opKey)
+        public void GetFeaturesOnOpKey(int opKey, IFeatureCreationView view)
         {
             throw new NotImplementedException();
         }
