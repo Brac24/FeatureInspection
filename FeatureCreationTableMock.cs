@@ -96,7 +96,7 @@ namespace Feature_Inspection
                     dataGridView1.Columns["Feature_Key"].Visible = false;
                     maxRows = t.Rows.Count;
 
-                }
+            }
         }
 
         //IP> Data Bind to OP Key entered in textBox1
@@ -156,14 +156,24 @@ namespace Feature_Inspection
 
         private void OpKeyEnter (object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter && textBox1.Text != "")
             {
                 NewDataBind();
+
+                //var table = (DataGridView)sender;
+                //var button = (DataGridViewButtonCell)table.Rows[dataGridView1.Rows.Count - 1].Cells["Edit Column"];
+                //button.UseColumnTextForButtonValue = false;
+                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells["Edit Column"].Value = "Done";
             }
+
         }
 
         private void AddTableRow(DataTable t)
         {
+            if (dataGridView1.DataSource == null)
+            {
+                return;
+            }
             DataRow newRow = t.NewRow();
             t.Rows.Add(newRow);
         }
