@@ -44,7 +44,7 @@ namespace Feature_Inspection
             if (e.ColumnIndex == dataGridView1.Columns["Edit Column"].Index
                 && dataGridView1.Rows[e.RowIndex].Cells["Edit Column"].Value == "Edit")
             {
-                EditClicked(sender, e);
+                //EditClicked(sender, e);
                 button.UseColumnTextForButtonValue = false;
                 int edit = e.RowIndex;
                 dataGridView1.Rows[edit].ReadOnly = false;
@@ -53,7 +53,7 @@ namespace Feature_Inspection
             else if (e.ColumnIndex == dataGridView1.Columns["Edit Column"].Index
                 && dataGridView1.Rows[e.RowIndex].Cells["Edit Column"].Value == "Done")
             {
-                EditClicked(sender, e);
+                DoneClicked(dataGridView1.Rows[e.RowIndex], EventArgs.Empty);
                 int edit = e.RowIndex;
                 dataGridView1.Rows[edit].ReadOnly = true;
                 dataGridView1.Rows[e.RowIndex].Cells["Edit Column"].Value = "Edit";
@@ -163,7 +163,15 @@ namespace Feature_Inspection
                 //var table = (DataGridView)sender;
                 //var button = (DataGridViewButtonCell)table.Rows[dataGridView1.Rows.Count - 1].Cells["Edit Column"];
                 //button.UseColumnTextForButtonValue = false;
-                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells["Edit Column"].Value = "Done";
+
+                try
+                {
+                    dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells["Edit Column"].Value = "Done";
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine("OpKey did not return any results");
+                }
             }
 
         }

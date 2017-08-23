@@ -47,7 +47,7 @@ namespace Feature_Inspection
         public void DoneClick(object t, EventArgs e)
         {
             
-            var feature = (Feature)t;       
+            //var feature = (Feature)t;       
 
         }
 
