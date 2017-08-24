@@ -108,9 +108,6 @@ namespace Feature_Inspection
                 dataGridView1.Rows[i].ReadOnly = true;
             }
 
-
-
-
             //IP>Initializes and defines the edit button column.
             DataGridViewButtonColumn EditButtonColumn = new DataGridViewButtonColumn();
             EditButtonColumn.UseColumnTextForButtonValue = true;
