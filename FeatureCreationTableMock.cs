@@ -39,24 +39,20 @@ namespace Feature_Inspection
                 return;
 
             var table = (DataGridView)sender;
-
             var button = (DataGridViewButtonCell)table.Rows[e.RowIndex].Cells["Edit Column"];
 
             if (e.ColumnIndex == dataGridView1.Columns["Edit Column"].Index
                 && dataGridView1.Rows[e.RowIndex].Cells["Edit Column"].Value == "Edit")
             {
-                //EditClicked(sender, e);
                 button.UseColumnTextForButtonValue = false;
-                int edit = e.RowIndex;
-                dataGridView1.Rows[edit].ReadOnly = false;
+                dataGridView1.Rows[e.RowIndex].ReadOnly = false;
                 dataGridView1.Rows[e.RowIndex].Cells["Edit Column"].Value = "Done";
             }
             else if (e.ColumnIndex == dataGridView1.Columns["Edit Column"].Index
                 && dataGridView1.Rows[e.RowIndex].Cells["Edit Column"].Value == "Done")
             {
                 DoneClicked(dataGridView1.Rows[e.RowIndex], EventArgs.Empty);
-                int edit = e.RowIndex;
-                dataGridView1.Rows[edit].ReadOnly = true;
+                dataGridView1.Rows[e.RowIndex].ReadOnly = true;
                 dataGridView1.Rows[e.RowIndex].Cells["Edit Column"].Value = "Edit";
                 AdapterUpdate();
             }
@@ -100,7 +96,6 @@ namespace Feature_Inspection
 
             }
         }
-
 
         OdbcDataAdapter dataAdapter;
         DataTable table;
@@ -146,14 +141,14 @@ namespace Feature_Inspection
                 }
             }
 
-        
-
             //IP>Initializes and defines the edit button column.
             DataGridViewButtonColumn EditButtonColumn = new DataGridViewButtonColumn();
-            EditButtonColumn.UseColumnTextForButtonValue = true;
             EditButtonColumn.Name = "Edit Column";
-            EditButtonColumn.Text = "Edit";
             dataGridView1.Columns.Insert(dataGridView1.Columns.Count, EditButtonColumn);
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                dataGridView1.Rows[i].Cells["Edit Column"].Value = "Edit";
+            }
 
             //IP>Initializes and defines the feature type column.
             DataGridViewComboBoxColumn FeatureDropColumn = new DataGridViewComboBoxColumn();
@@ -161,7 +156,6 @@ namespace Feature_Inspection
             dataGridView1.Columns.Insert(0, FeatureDropColumn);
             FeatureDropChoices(FeatureDropColumn);
         }
-
 
         private void AdapterUpdate()
         {
@@ -191,10 +185,14 @@ namespace Feature_Inspection
 
                 changedTable = dt.GetChanges();
 
+                if (changedTable == null)
+                {
+                    return;
+                }
+
                 int rowsInChangedTable = changedTable.Rows.Count;
 
-                dataAdapter.Update(dt);
-
+               dataAdapter.Update(dt);
 
             }
         }
@@ -210,6 +208,11 @@ namespace Feature_Inspection
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (bindingSource == null)
+            {
+                return;
+            }
+
             DataTable data = (DataTable)(bindingSource.DataSource);
             AddTableRow(data);
         }
@@ -218,12 +221,9 @@ namespace Feature_Inspection
         {
             if (e.KeyCode == Keys.Enter && textBox1.Text != "")
             {
-                //NewDataBind();
                 DataBindTest();
-                //var table = (DataGridView)sender;
-                //var button = (DataGridViewButtonCell)table.Rows[dataGridView1.Rows.Count - 1].Cells["Edit Column"];
-                //button.UseColumnTextForButtonValue = false;
 
+                /*
                 try
                 {
                     dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells["Edit Column"].Value = "Done";
@@ -232,6 +232,7 @@ namespace Feature_Inspection
                 {
                     Console.WriteLine("OpKey did not return any results");
                 }
+                */
             }
 
         }
@@ -244,6 +245,7 @@ namespace Feature_Inspection
             }
             DataRow newRow = t.NewRow();
             t.Rows.Add(newRow);
+            dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells["Edit Column"].Value = "Done";
         }
 
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
