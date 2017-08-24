@@ -18,6 +18,7 @@ namespace Feature_Inspection
         private readonly string connection_string = "DSN=unipointDB;UID=jbread;PWD=Cloudy2Day";
 
         public FeatureCreationPresenter presenter;
+        private FeatureCreationModelMock model;
 
         public event EventHandler AddFeatureClicked;
         public event EventHandler<EventArgs> EditClicked;
@@ -28,7 +29,7 @@ namespace Feature_Inspection
         public FeatureCreationTableMock()
         {
             InitializeComponent();
-            dataGridView1.CellMouseUp += CellMouseUp;  
+            dataGridView1.CellMouseUp += CellMouseUp;
             textBox1.KeyDown += new KeyEventHandler(OpKeyEnter);
         }
 
@@ -65,7 +66,7 @@ namespace Feature_Inspection
         //IP>Test code to try combo box workability. Will be replaced with a .DataSource method.
         private static void FeatureDropChoices(DataGridViewComboBoxColumn comboboxColumn)
         {
-            comboboxColumn.Items.AddRange("Diameter", "Fillet", "Chamfer", "Angle", "M.O.W.", 
+            comboboxColumn.Items.AddRange("Diameter", "Fillet", "Chamfer", "Angle", "M.O.W.",
                 "Surface Finish", "Linear", "Square", "GDT", "Depth");
         }
 
@@ -79,70 +80,36 @@ namespace Feature_Inspection
             throw new NotImplementedException();
         }
 
-        private void DataBind()
-        {
-            int maxRows;
-
-                using (OdbcConnection conn = new OdbcConnection(connection_string))
-                using (OdbcCommand com = conn.CreateCommand())
-                using (OdbcDataAdapter adapter = new OdbcDataAdapter(com))
-                {
-
-                    string query = "SELECT Feature_Key, Nominal, Plus_Tolerance as '+', Minus_Tolerance as '-', Places FROM ATI_FeatureInspection.dbo.Features";
-
-                    com.CommandText = query;
-                    DataTable t = new DataTable();
-                    adapter.Fill(t);
-                    dataGridView1.DataSource = null;
-                    dataGridView1.DataSource = t;
-                    dataGridView1.Columns["Feature_Key"].Visible = false;
-                    maxRows = t.Rows.Count;
-
-            }
-        }
-
 
         OdbcDataAdapter dataAdapter;
         DataTable table;
         BindingSource bindingSource;
 
-        private void DataBindTest()
+        private void DataBindTest(DataTable featureTable)
         {
 
             int maxRows;
             dataGridView1.Columns.Clear();
 
+            bindingSource = new BindingSource();
 
-            using (OdbcConnection conn = new OdbcConnection(connection_string))
-            using (OdbcCommand com = conn.CreateCommand())
-            using (OdbcDataAdapter adapter = new OdbcDataAdapter(com))
+            dataGridView1.DataSource = null;
+            bindingSource.DataSource = featureTable;
+            dataGridView1.DataSource = bindingSource;
+
+            dataGridView1.Columns["Feature_Key"].Visible = false;
+            dataGridView1.Columns["Part_Number_FK"].Visible = false;
+            dataGridView1.Columns["Operation_Number_FK"].Visible = false;
+            maxRows = featureTable.Rows.Count;
+
+
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                string query = "SELECT * FROM ATI_FeatureInspection.dbo.Features WHERE Part_Number_FK = (SELECT Part_Number FROM ATI_FeatureInspection.dbo.Operation WHERE Op_Key =  " + textBox1.Text + ") AND Operation_Number_FK = (SELECT Operation_Number FROM ATI_FeatureInspection.dbo.Operation WHERE Op_Key = " + textBox1.Text + ");";
-
-                dataAdapter = adapter;
-                
-                bindingSource = new BindingSource();
-                com.CommandText = query;
-                DataTable t = new DataTable();
-                table = t;
-                dataAdapter.Fill(table);
-                dataGridView1.DataSource = null;
-                bindingSource.DataSource = table;
-                dataGridView1.DataSource = bindingSource;
-                
-                dataGridView1.Columns["Feature_Key"].Visible = false;
-                dataGridView1.Columns["Part_Number_FK"].Visible = false;
-                dataGridView1.Columns["Operation_Number_FK"].Visible = false;
-                maxRows = t.Rows.Count;
-
-
-                for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                {
-                    dataGridView1.Rows[i].ReadOnly = true;
-                }
+                dataGridView1.Rows[i].ReadOnly = true;
             }
 
-        
+
+
 
             //IP>Initializes and defines the edit button column.
             DataGridViewButtonColumn EditButtonColumn = new DataGridViewButtonColumn();
@@ -166,7 +133,7 @@ namespace Feature_Inspection
 
             using (OdbcConnection conn = new OdbcConnection(connection_string))
             using (OdbcCommand com = conn.CreateCommand())
-            using ( dataAdapter = new OdbcDataAdapter(com))
+            using (dataAdapter = new OdbcDataAdapter(com))
             {
                 string update = "UPDATE ATI_FeatureInspection.dbo.Features SET Nominal = ?, Plus_Tolerance = ?, Minus_Tolerance = ?, " +
                                 "Feature_Name = ?, Places = ?, Active = ?, Pieces = ? " +
@@ -217,7 +184,7 @@ namespace Feature_Inspection
 
                 changedTable = dt.GetChanges();
 
-                 if(changedTable != null)
+                if (changedTable != null)
                 {
                     int rowsInChangedTable = changedTable.Rows.Count;
                 }
@@ -228,7 +195,7 @@ namespace Feature_Inspection
             }
         }
 
-        
+
 
 
         private void dataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
@@ -238,7 +205,8 @@ namespace Feature_Inspection
 
         public void FeatureCreationTableMock_Load(object sender, EventArgs e)
         {
-            presenter = new FeatureCreationPresenter(this, new FeatureCreationModelMock()); //Give a reference of the view and model to the presenter class
+            model = new FeatureCreationModelMock();
+            presenter = new FeatureCreationPresenter(this, model); //Give a reference of the view and model to the presenter class
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -252,14 +220,14 @@ namespace Feature_Inspection
 
         }
 
-        private void OpKeyEnter (object sender, KeyEventArgs e)
+        private void OpKeyEnter(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter && textBox1.Text != "")
             {
-                DataBindTest();
-                //var table = (DataGridView)sender;
-                //var button = (DataGridViewButtonCell)table.Rows[dataGridView1.Rows.Count - 1].Cells["Edit Column"];
-                //button.UseColumnTextForButtonValue = false;
+                //Might want to add validation for textbox text to be an integer
+                DataTable featureTable = model.GetFeaturesOnOpKey(Int32.Parse(textBox1.Text));
+
+                DataBindTest(featureTable);
 
                 try
                 {
@@ -285,10 +253,8 @@ namespace Feature_Inspection
 
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            var table = sender as DataGridView;
+            // AdapterUpdate((BindingSource)table.DataSource);
 
-           // AdapterUpdate((BindingSource)table.DataSource);
-            
         }
     }
 }
