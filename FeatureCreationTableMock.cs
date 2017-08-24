@@ -80,7 +80,7 @@ namespace Feature_Inspection
 
         private void DataBindTest(DataTable featureTable)
         {
-
+            
             int maxRows;
             featureEditGridView1.Columns.Clear();
 
