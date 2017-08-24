@@ -29,8 +29,8 @@ namespace Feature_Inspection
         public FeatureCreationTableMock()
         {
             InitializeComponent();
-            featureEditGridView1.CellMouseUp += CellMouseUp;
-            opKeyBox1.KeyDown += new KeyEventHandler(OpKeyEnter);
+            featureEditGridView.CellMouseUp += CellMouseUp;
+            opKeyBoxFeature.KeyDown += new KeyEventHandler(OpKeyEnter);
         }
 
         //IP>Checks to make sure click event only triggers on the Edit column And changes ReadOnly.
@@ -42,19 +42,19 @@ namespace Feature_Inspection
             var table = (DataGridView)sender;
             var button = (DataGridViewButtonCell)table.Rows[e.RowIndex].Cells["Edit Column"];
 
-            if (e.ColumnIndex == featureEditGridView1.Columns["Edit Column"].Index
-                && (string)featureEditGridView1.Rows[e.RowIndex].Cells["Edit Column"].Value == "Edit")
+            if (e.ColumnIndex == featureEditGridView.Columns["Edit Column"].Index
+                && (string)featureEditGridView.Rows[e.RowIndex].Cells["Edit Column"].Value == "Edit")
             {
                 button.UseColumnTextForButtonValue = false;
-                featureEditGridView1.Rows[e.RowIndex].ReadOnly = false;
-                featureEditGridView1.Rows[e.RowIndex].Cells["Edit Column"].Value = "Done";
+                featureEditGridView.Rows[e.RowIndex].ReadOnly = false;
+                featureEditGridView.Rows[e.RowIndex].Cells["Edit Column"].Value = "Done";
             }
-            else if (e.ColumnIndex == featureEditGridView1.Columns["Edit Column"].Index
-                && (string)featureEditGridView1.Rows[e.RowIndex].Cells["Edit Column"].Value == "Done")
+            else if (e.ColumnIndex == featureEditGridView.Columns["Edit Column"].Index
+                && (string)featureEditGridView.Rows[e.RowIndex].Cells["Edit Column"].Value == "Done")
             {
-                DoneClicked(featureEditGridView1.Rows[e.RowIndex], EventArgs.Empty);
-                featureEditGridView1.Rows[e.RowIndex].ReadOnly = true;
-                featureEditGridView1.Rows[e.RowIndex].Cells["Edit Column"].Value = "Edit";
+                DoneClicked(featureEditGridView.Rows[e.RowIndex], EventArgs.Empty);
+                featureEditGridView.Rows[e.RowIndex].ReadOnly = true;
+                featureEditGridView.Rows[e.RowIndex].Cells["Edit Column"].Value = "Edit";
                 AdapterUpdate();
             }
         }
@@ -85,43 +85,43 @@ namespace Feature_Inspection
         {
 
             int maxRows;
-            featureEditGridView1.Columns.Clear();
+            featureEditGridView.Columns.Clear();
 
             bindingSource = new BindingSource();
 
-            featureEditGridView1.DataSource = null;
+            featureEditGridView.DataSource = null;
             bindingSource.DataSource = featureTable;
-            featureEditGridView1.DataSource = bindingSource;
+            featureEditGridView.DataSource = bindingSource;
 
-            featureEditGridView1.Columns["Feature_Key"].Visible = false;
-            featureEditGridView1.Columns["Part_Number_FK"].Visible = false;
-            featureEditGridView1.Columns["Operation_Number_FK"].Visible = false;
-            featureEditGridView1.Columns["Feature_Name"].Visible = false;
-            featureEditGridView1.Columns["Active"].Visible = false;
-            featureEditGridView1.Columns["Pieces"].Visible = false;
-            featureEditGridView1.Columns["Plus_Tolerance"].HeaderText = "+";
-            featureEditGridView1.Columns["Minus_Tolerance"].HeaderText = "-";
+            featureEditGridView.Columns["Feature_Key"].Visible = false;
+            featureEditGridView.Columns["Part_Number_FK"].Visible = false;
+            featureEditGridView.Columns["Operation_Number_FK"].Visible = false;
+            featureEditGridView.Columns["Feature_Name"].Visible = false;
+            featureEditGridView.Columns["Active"].Visible = false;
+            featureEditGridView.Columns["Pieces"].Visible = false;
+            featureEditGridView.Columns["Plus_Tolerance"].HeaderText = "+";
+            featureEditGridView.Columns["Minus_Tolerance"].HeaderText = "-";
             maxRows = featureTable.Rows.Count;
 
 
-            for (int i = 0; i < featureEditGridView1.Rows.Count; i++)
+            for (int i = 0; i < featureEditGridView.Rows.Count; i++)
             {
-                featureEditGridView1.Rows[i].ReadOnly = true;
+                featureEditGridView.Rows[i].ReadOnly = true;
             }
 
             //IP>Initializes and defines the edit button column.
             DataGridViewButtonColumn EditButtonColumn = new DataGridViewButtonColumn();
             EditButtonColumn.Name = "Edit Column";
-            featureEditGridView1.Columns.Insert(featureEditGridView1.Columns.Count, EditButtonColumn);
-            for (int i = 0; i < featureEditGridView1.Rows.Count; i++)
+            featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, EditButtonColumn);
+            for (int i = 0; i < featureEditGridView.Rows.Count; i++)
             {
-                featureEditGridView1.Rows[i].Cells["Edit Column"].Value = "Edit";
+                featureEditGridView.Rows[i].Cells["Edit Column"].Value = "Edit";
             }
 
             //IP>Initializes and defines the feature type column.
             DataGridViewComboBoxColumn FeatureDropColumn = new DataGridViewComboBoxColumn();
             FeatureDropColumn.HeaderText = "Feature Type";
-            featureEditGridView1.Columns.Insert(0, FeatureDropColumn);
+            featureEditGridView.Columns.Insert(0, FeatureDropColumn);
             FeatureDropChoices(FeatureDropColumn);
         }
 
@@ -201,7 +201,7 @@ namespace Feature_Inspection
 
         private void dataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
-            featureEditGridView1.Rows[e.RowIndex].ReadOnly = false;
+            featureEditGridView.Rows[e.RowIndex].ReadOnly = false;
         }
 
         public void FeatureCreationTableMock_Load(object sender, EventArgs e)
@@ -221,20 +221,22 @@ namespace Feature_Inspection
             AddTableRow(data);
 
             //Set the last row Part_Number_FK and Operation_Number_FK to the same value as in the first row
-            featureEditGridView1.Rows[featureEditGridView1.Rows.Count - 1].Cells["Part_Number_FK"].Value = featureEditGridView1.Rows[0].Cells["Part_Number_FK"].Value;
-            featureEditGridView1.Rows[featureEditGridView1.Rows.Count - 1].Cells["Operation_Number_FK"].Value = featureEditGridView1.Rows[0].Cells["Operation_Number_FK"].Value;
+            featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Part_Number_FK"].Value = featureEditGridView.Rows[0].Cells["Part_Number_FK"].Value;
+            featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Operation_Number_FK"].Value = featureEditGridView.Rows[0].Cells["Operation_Number_FK"].Value;
 
         }
 
         private void OpKeyEnter(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter && opKeyBox1.Text != "")
+            if (e.KeyCode == Keys.Enter && opKeyBoxFeature.Text != "")
             {
 
                 //Might want to add validation for textbox text to be an integer
-                DataTable featureTable = model.GetFeaturesOnOpKey(Int32.Parse(opKeyBox1.Text));
+                DataTable featureTable = model.GetFeaturesOnOpKey(Int32.Parse(opKeyBoxFeature.Text));
 
                 DataBindTest(featureTable);
+
+                featurePageHeader.Text = featureEditGridView.Rows[0].Cells["Part_Number_FK"].Value + " FEATURES";
 
 
                 /*
@@ -253,18 +255,48 @@ namespace Feature_Inspection
 
         private void AddTableRow(DataTable t)
         {
-            if (featureEditGridView1.DataSource == null)
+            if (featureEditGridView.DataSource == null)
             {
                 return;
             }
             DataRow newRow = t.NewRow();
             t.Rows.Add(newRow);
-            featureEditGridView1.Rows[featureEditGridView1.Rows.Count - 1].Cells["Edit Column"].Value = "Done";
+            featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Edit Column"].Value = "Done";
         }
 
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             // AdapterUpdate((BindingSource)table.DataSource);
+
+        }
+
+        private void Feature_Page_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label16_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void splitContainer3_Panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void listBox5_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void featureEditGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
 
         }
     }
