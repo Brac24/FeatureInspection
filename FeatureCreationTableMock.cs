@@ -178,13 +178,13 @@ namespace Feature_Inspection
 
                 changedTable = dt.GetChanges();
 
+                int rowsInChangedTable;
+
                 if (changedTable != null)
                 {
-                    int rowsInChangedTable = changedTable.Rows.Count;
+                    rowsInChangedTable = changedTable.Rows.Count;
 
                 }
-
-                int rowsInChangedTable = changedTable.Rows.Count;
 
                dataAdapter.Update(dt);
 
