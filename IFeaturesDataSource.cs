@@ -15,6 +15,7 @@ namespace Feature_Inspection
         //Will bind data directly to view. No need to go through presenter
         DataTable GetFeaturesOnOpKey(int opKey);
 
+        DataTable AdapterUpdate(DataTable table);
 
 
 
