@@ -30,7 +30,8 @@ namespace Feature_Inspection
         {
             InitializeComponent();
             featureEditGridView.CellMouseUp += CellMouseUp;
-            opKeyBoxFeature.KeyDown += new KeyEventHandler(OpKeyEnter);
+            opKeyBoxFeature.KeyDown += OpKeyEnter;
+            opKeyBoxInspection.KeyPress += checkEnterKeyPressedInspection;
         }
 
         //IP>Checks to make sure click event only triggers on the Edit column And changes ReadOnly.
@@ -95,7 +96,7 @@ namespace Feature_Inspection
             featureEditGridView.Columns["Operation_Number_FK"].Visible = false;
             featureEditGridView.Columns["Feature_Name"].Visible = false;
             featureEditGridView.Columns["Active"].Visible = false;
-            featureEditGridView.Columns["Pieces"].Visible = false;
+            //featureEditGridView.Columns["Pieces"].Visible = false;
             featureEditGridView.Columns["Plus_Tolerance"].HeaderText = "+";
             featureEditGridView.Columns["Minus_Tolerance"].HeaderText = "-";
             maxRows = featureTable.Rows.Count;
@@ -169,6 +170,15 @@ namespace Feature_Inspection
 
             }
 
+        }
+
+        private void checkEnterKeyPressedInspection(object sender, KeyPressEventArgs e)
+        {
+            //Will work on an enter or tab key press
+            if ((Keys)e.KeyChar == Keys.Enter || (Keys)e.KeyChar == Keys.Tab)
+            {
+                int a = 3;
+            }
         }
 
         private void AddTableRow(DataTable t)
