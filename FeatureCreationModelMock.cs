@@ -133,5 +133,27 @@ namespace Feature_Inspection
 
             return t;
         }
+
+        public DataTable GetFeaturesOnPartIndex(int partIndex, int opKey)
+        {
+            DataTable t;
+
+            using (OdbcConnection conn = new OdbcConnection(connection_string))
+            using (OdbcCommand com = conn.CreateCommand())
+            using (OdbcDataAdapter dataAdapter = new OdbcDataAdapter(com))
+            {
+                string query = "SELECT CAST(Features.Nominal AS varchar(50)) + ' +' + CAST(Features.Plus_Tolerance AS varchar(50)) + ' -' + CAST(Features.Minus_Tolerance AS varchar(50)) AS Feature, Position.Inspection_Key_FK, Features.Feature_Key,Position.Position_Key, Measured_Value AS 'Measured Actual', Position.InspectionTool FROM ATI_FeatureInspection.dbo.Position " +
+                                " LEFT JOIN ATI_FeatureInspection.dbo.Features ON Position.Feature_Key = Features.Feature_Key" +
+                                " WHERE Inspection_Key_FK = (SELECT Inspection_Key FROM ATI_FeatureInspection.dbo.Inspection" +
+                                " WHERE Op_Key = "+ opKey + ") AND Piece_ID = " + partIndex + ";";
+
+                com.CommandText = query;
+                t = new DataTable();
+                dataAdapter.Fill(t);
+
+            }
+
+            return t;
+        }
     }
 }

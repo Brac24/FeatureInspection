@@ -42,7 +42,23 @@ namespace Feature_Inspection
             partsListBox.DisplayMember = "PartList";
             //partsListBox.ValueMember = "PartList";
         }
-            
+
+        BindingSource bindingSourceInspection = new BindingSource();
+        private void BindDataGridViewInspection(DataTable featuresTable)
+        {
+            inspectionEntryGridView.DataSource = null;
+            bindingSourceInspection.DataSource = featuresTable;
+            inspectionEntryGridView.DataSource = bindingSourceInspection;
+
+            inspectionEntryGridView.Columns["Inspection_Key_FK"].Visible = false;
+            inspectionEntryGridView.Columns["Feature_Key"].Visible = false;
+            inspectionEntryGridView.Columns["Position_Key"].Visible = false;
+
+            inspectionEntryGridView.Columns["Feature"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            inspectionEntryGridView.Columns["Measured Actual"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            inspectionEntryGridView.Columns["InspectionTool"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        }
+
 
         //IP>Checks to make sure click event only triggers on the Edit column And changes ReadOnly.
         private void CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
@@ -228,6 +244,18 @@ namespace Feature_Inspection
         private void listBox5_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+            //Use (listbox)sender.SelectedIndex
+            var listBox = (ListBox)sender;
+            DataTable featureTable;
+
+            if(listBox.Text.Contains("Part"))
+            {
+                int listBoxIndex = listBox.SelectedIndex;
+                int pieceID = listBoxIndex + 1; //Due to 0 indexing
+                featureTable = model.GetFeaturesOnPartIndex(pieceID, Int32.Parse(opKeyBoxInspection.Text));
+                BindDataGridViewInspection(featureTable);
+            }
+            
         }
 
         private void featureEditGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
