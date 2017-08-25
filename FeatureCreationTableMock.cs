@@ -57,6 +57,13 @@ namespace Feature_Inspection
             inspectionEntryGridView.Columns["Feature"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             inspectionEntryGridView.Columns["Measured Actual"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             inspectionEntryGridView.Columns["InspectionTool"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            inspectionEntryGridView.Columns["Feature"].ReadOnly = true;
+            
+            if(inspectionEntryGridView.RowCount != 0)
+            {
+                inspectionEntryGridView.Rows[0].Cells["Measured Actual"].Selected = true;
+            }
         }
 
 
@@ -265,6 +272,14 @@ namespace Feature_Inspection
 
         private void label1_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void nextPartButton_Click(object sender, EventArgs e)
+        {
+            //+1 to selectedindex because we need to check what index it is going in to first
+            partsListBox.SelectedIndex = (partsListBox.SelectedIndex + 1 < partsListBox.Items.Count) ? 
+                partsListBox.SelectedIndex += 1: partsListBox.SelectedIndex = 0;
 
         }
     }

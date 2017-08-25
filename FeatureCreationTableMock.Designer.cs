@@ -487,6 +487,7 @@
             this.inspectionEntryGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.inspectionEntryGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.inspectionEntryGridView.Location = new System.Drawing.Point(12, 95);
+            this.inspectionEntryGridView.MultiSelect = false;
             this.inspectionEntryGridView.Name = "inspectionEntryGridView";
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
@@ -512,6 +513,7 @@
             this.nextPartButton.TabIndex = 2;
             this.nextPartButton.Text = "NEXT PART";
             this.nextPartButton.UseVisualStyleBackColor = false;
+            this.nextPartButton.Click += new System.EventHandler(this.nextPartButton_Click);
             // 
             // Feature_Page
             // 
