@@ -121,6 +121,7 @@ namespace Feature_Inspection
             FeatureDropColumn.HeaderText = "Feature Type";
             featureEditGridView.Columns.Insert(0, FeatureDropColumn);
             FeatureDropChoices(FeatureDropColumn);
+
         }
 
         private void AdapterUpdate()
@@ -166,8 +167,6 @@ namespace Feature_Inspection
                 DataBindTest(featureTable);
 
                 featurePageHeader.Text = featureEditGridView.Rows[0].Cells["Part_Number_FK"].Value + " FEATURES";
-
-
             }
 
         }
