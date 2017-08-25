@@ -25,6 +25,44 @@ namespace Feature_Inspection
         public event EventHandler EnterClicked;
         public event EventHandler LotInspectionReadyClicked;
 
+
+        public string PartNumber {
+            get { return partNumberLabelInspection.Text; }
+            set { partNumberLabelInspection.Text = value; }
+        }
+
+        public string JobNumber {
+            get { return jobLabelInspection.Text; }
+            set { jobLabelInspection.Text = value; }
+        }
+
+        public string OperationNumber
+        {
+            get { return opLabelInspection.Text; }
+            set { opLabelInspection.Text = value; }
+        }
+
+        public string Status
+        {
+            get { return statusLabelInspection.Text; }
+            set { statusLabelInspection.Text = value; }
+        }
+
+        public int LotSize
+        {
+            
+            get { return Int32.Parse(lotLabelInspection.Text); }
+            set { lotLabelInspection.Text = value.ToString(); }
+        }
+
+        public int PartsInspected
+        {
+            get { return Int32.Parse(partsInspectedLabel.Text); }
+            set { partsInspectedLabel.Text = value.ToString(); }
+        }
+
+
+
         public FeatureCreationTableMock()
         {
             InitializeComponent();
@@ -83,7 +121,7 @@ namespace Feature_Inspection
                 featureEditGridView.Rows[e.RowIndex].ReadOnly = false;
                 featureEditGridView.Rows[e.RowIndex].Cells["Edit Column"].Value = "Done";
             }
-            else if (e.ColumnIndex == featureEditGridView.Columns["Edit Column"].Index
+            else if(e.ColumnIndex == featureEditGridView.Columns["Edit Column"].Index
                 && (string)featureEditGridView.Rows[e.RowIndex].Cells["Edit Column"].Value == "Done")
             {
                 DoneClicked(featureEditGridView.Rows[e.RowIndex], EventArgs.Empty);
@@ -158,7 +196,19 @@ namespace Feature_Inspection
 
         private void AdapterUpdate()
         {
+            //Must call EndEdit Method before trying to update database
+            bindingSource.EndEdit();
+
+            //Update database
             model.AdapterUpdate((DataTable)bindingSource.DataSource);
+        }
+
+        private void AdapterUpdateInspection()
+        {
+            //Call EndEdit method before updating database
+            bindingSourceInspection.EndEdit();
+
+            model.AdapterUpdateInspection((DataTable)bindingSourceInspection.DataSource);
         }
 
         private void dataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
@@ -281,6 +331,17 @@ namespace Feature_Inspection
             partsListBox.SelectedIndex = (partsListBox.SelectedIndex + 1 < partsListBox.Items.Count) ? 
                 partsListBox.SelectedIndex += 1: partsListBox.SelectedIndex = 0;
 
+        }
+
+        private void inspectionEntryGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            
+            
+        }
+
+        private void inspectionEntryGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            AdapterUpdateInspection();
         }
     }
 }

@@ -48,7 +48,7 @@
             this.label22 = new System.Windows.Forms.Label();
             this.opLabelInspection = new System.Windows.Forms.Label();
             this.jobLabelInspection = new System.Windows.Forms.Label();
-            this.partLabelInspection = new System.Windows.Forms.Label();
+            this.partNumberLabelInspection = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
@@ -220,7 +220,7 @@
             this.splitContainer2.Panel1.Controls.Add(this.label22);
             this.splitContainer2.Panel1.Controls.Add(this.opLabelInspection);
             this.splitContainer2.Panel1.Controls.Add(this.jobLabelInspection);
-            this.splitContainer2.Panel1.Controls.Add(this.partLabelInspection);
+            this.splitContainer2.Panel1.Controls.Add(this.partNumberLabelInspection);
             this.splitContainer2.Panel1.Controls.Add(this.label13);
             this.splitContainer2.Panel1.Controls.Add(this.label14);
             this.splitContainer2.Panel1.Controls.Add(this.label16);
@@ -331,17 +331,17 @@
             this.jobLabelInspection.TabIndex = 33;
             this.jobLabelInspection.Text = "EMPTY";
             // 
-            // partLabelInspection
+            // partNumberLabelInspection
             // 
-            this.partLabelInspection.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.partLabelInspection.AutoSize = true;
-            this.partLabelInspection.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.partLabelInspection.ForeColor = System.Drawing.Color.Gainsboro;
-            this.partLabelInspection.Location = new System.Drawing.Point(70, 86);
-            this.partLabelInspection.Name = "partLabelInspection";
-            this.partLabelInspection.Size = new System.Drawing.Size(52, 16);
-            this.partLabelInspection.TabIndex = 32;
-            this.partLabelInspection.Text = "EMPTY";
+            this.partNumberLabelInspection.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.partNumberLabelInspection.AutoSize = true;
+            this.partNumberLabelInspection.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.partNumberLabelInspection.ForeColor = System.Drawing.Color.Gainsboro;
+            this.partNumberLabelInspection.Location = new System.Drawing.Point(70, 86);
+            this.partNumberLabelInspection.Name = "partNumberLabelInspection";
+            this.partNumberLabelInspection.Size = new System.Drawing.Size(52, 16);
+            this.partNumberLabelInspection.TabIndex = 32;
+            this.partNumberLabelInspection.Text = "EMPTY";
             // 
             // label13
             // 
@@ -500,6 +500,8 @@
             this.inspectionEntryGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.inspectionEntryGridView.Size = new System.Drawing.Size(1026, 555);
             this.inspectionEntryGridView.TabIndex = 0;
+            this.inspectionEntryGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.inspectionEntryGridView_CellEndEdit);
+            this.inspectionEntryGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.inspectionEntryGridView_CellValueChanged);
             // 
             // nextPartButton
             // 
@@ -758,7 +760,7 @@
         private System.Windows.Forms.Label partLabelFeature;
         private System.Windows.Forms.Label opLabelInspection;
         private System.Windows.Forms.Label jobLabelInspection;
-        private System.Windows.Forms.Label partLabelInspection;
+        private System.Windows.Forms.Label partNumberLabelInspection;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label16;

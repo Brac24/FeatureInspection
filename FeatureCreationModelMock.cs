@@ -17,6 +17,8 @@ namespace Feature_Inspection
         {
 
         }
+       
+        
 
         public DataTable AdapterUpdate(DataTable dt)
         {
@@ -88,6 +90,39 @@ namespace Feature_Inspection
 
             }
             return changedTable;
+        }
+
+        public DataTable AdapterUpdateInspection(DataTable dt)
+        {
+            string update = "UPDATE ATI_FeatureInspection.dbo.Position SET Measured_Value = ? " +
+                            "WHERE Position_Key = ?;";
+
+            DataTable changedTable = new DataTable();
+
+            using (OdbcConnection conn = new OdbcConnection(connection_string))
+            using (OdbcCommand com = conn.CreateCommand())
+            using (OdbcDataAdapter dataAdapter = new OdbcDataAdapter(com))
+            {
+                dataAdapter.UpdateCommand = new OdbcCommand(update, conn);
+
+                dataAdapter.UpdateCommand.Parameters.Add("@Measured_Value", OdbcType.Decimal, 3, "Measured Actual");
+                dataAdapter.UpdateCommand.Parameters.Add("@Position_Key", OdbcType.Int, 3, "Position_Key");
+                changedTable = dt.GetChanges();
+
+                int rowsInChangedTable;
+
+                if (changedTable != null)
+                {
+                    rowsInChangedTable = changedTable.Rows.Count;
+
+                }
+
+                dataAdapter.Update(dt);
+
+            }
+            return changedTable;
+
+
         }
 
         public DataTable GetFeaturesOnOpKey(int opKey)
