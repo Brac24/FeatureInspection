@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.Odbc;
-using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -33,6 +32,17 @@ namespace Feature_Inspection
             opKeyBoxFeature.KeyDown += OpKeyEnter;
             opKeyBoxInspection.KeyPress += checkEnterKeyPressedInspection;
         }
+
+        BindingSource bindingSourceListBox = new BindingSource();
+        private void BindListBox(DataTable partsTable)
+        {
+            partsListBox.DataSource = null;
+            bindingSourceListBox.DataSource = partsTable;
+            partsListBox.DataSource = bindingSourceListBox;
+            partsListBox.DisplayMember = "PartList";
+            //partsListBox.ValueMember = "PartList";
+        }
+            
 
         //IP>Checks to make sure click event only triggers on the Edit column And changes ReadOnly.
         private void CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
@@ -176,7 +186,9 @@ namespace Feature_Inspection
             //Will work on an enter or tab key press
             if ((Keys)e.KeyChar == Keys.Enter || (Keys)e.KeyChar == Keys.Tab)
             {
-                int a = 3;
+                DataTable partList = model.GetPartsList(Int32.Parse(opKeyBoxInspection.Text));
+
+                BindListBox(partList);
             }
         }
 

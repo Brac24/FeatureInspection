@@ -112,5 +112,26 @@ namespace Feature_Inspection
             return t;
 
         }
+
+        public DataTable GetPartsList(int opKey)
+        {
+            DataTable t;
+            
+            using (OdbcConnection conn = new OdbcConnection(connection_string))
+            using (OdbcCommand com = conn.CreateCommand())
+            using (OdbcDataAdapter dataAdapter = new OdbcDataAdapter(com))
+            {
+                string query = "SELECT  'Part ' + CAST(Piece_ID as varchar(10)) AS PartList FROM ATI_FeatureInspection.dbo.Position" +
+                               " WHERE Inspection_Key_FK = (SELECT Inspection_Key FROM ATI_FeatureInspection.dbo.Inspection" +
+                               " WHERE Op_Key = " + opKey + ") GROUP BY Piece_ID ORDER BY Piece_ID ASC;";
+
+                com.CommandText = query;
+                t = new DataTable();
+                dataAdapter.Fill(t);
+
+            }
+
+            return t;
+        }
     }
 }

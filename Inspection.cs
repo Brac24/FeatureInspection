@@ -15,6 +15,8 @@ namespace Feature_Inspection
 
         int PartsInspected { get; set; }
 
+        int InspectionKey { get; set; }
+
         public Inspection (int lotSize, int opKey)
         {
             _lotSize = lotSize;
