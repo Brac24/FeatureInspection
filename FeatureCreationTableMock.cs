@@ -25,6 +25,44 @@ namespace Feature_Inspection
         public event EventHandler EnterClicked;
         public event EventHandler LotInspectionReadyClicked;
 
+
+        public string PartNumber {
+            get { return partNumberLabelInspection.Text; }
+            set { partNumberLabelInspection.Text = value; }
+        }
+
+        public string JobNumber {
+            get { return jobLabelInspection.Text; }
+            set { jobLabelInspection.Text = value; }
+        }
+
+        public string OperationNumber
+        {
+            get { return opLabelInspection.Text; }
+            set { opLabelInspection.Text = value; }
+        }
+
+        public string Status
+        {
+            get { return statusLabelInspection.Text; }
+            set { statusLabelInspection.Text = value; }
+        }
+
+        public int LotSize
+        {
+            
+            get { return Int32.Parse(lotLabelInspection.Text); }
+            set { lotLabelInspection.Text = value.ToString(); }
+        }
+
+        public int PartsInspected
+        {
+            get { return Int32.Parse(partsInspectedLabel.Text); }
+            set { partsInspectedLabel.Text = value.ToString(); }
+        }
+
+
+
         public FeatureCreationTableMock()
         {
             InitializeComponent();
@@ -42,7 +80,30 @@ namespace Feature_Inspection
             partsListBox.DisplayMember = "PartList";
             //partsListBox.ValueMember = "PartList";
         }
+
+        BindingSource bindingSourceInspection = new BindingSource();
+        private void BindDataGridViewInspection(DataTable featuresTable)
+        {
+            inspectionEntryGridView.DataSource = null;
+            bindingSourceInspection.DataSource = featuresTable;
+            inspectionEntryGridView.DataSource = bindingSourceInspection;
+
+            inspectionEntryGridView.Columns["Inspection_Key_FK"].Visible = false;
+            inspectionEntryGridView.Columns["Feature_Key"].Visible = false;
+            inspectionEntryGridView.Columns["Position_Key"].Visible = false;
+
+            inspectionEntryGridView.Columns["Feature"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            inspectionEntryGridView.Columns["Measured Actual"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            inspectionEntryGridView.Columns["InspectionTool"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            inspectionEntryGridView.Columns["Feature"].ReadOnly = true;
             
+            if(inspectionEntryGridView.RowCount != 0)
+            {
+                inspectionEntryGridView.Rows[0].Cells["Measured Actual"].Selected = true;
+            }
+        }
+
 
         //IP>Checks to make sure click event only triggers on the Edit column And changes ReadOnly.
         private void CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
@@ -60,7 +121,7 @@ namespace Feature_Inspection
                 featureEditGridView.Rows[e.RowIndex].ReadOnly = false;
                 featureEditGridView.Rows[e.RowIndex].Cells["Edit Column"].Value = "Done";
             }
-            else if (e.ColumnIndex == featureEditGridView.Columns["Edit Column"].Index
+            else if(e.ColumnIndex == featureEditGridView.Columns["Edit Column"].Index
                 && (string)featureEditGridView.Rows[e.RowIndex].Cells["Edit Column"].Value == "Done")
             {
                 DoneClicked(featureEditGridView.Rows[e.RowIndex], EventArgs.Empty);
@@ -136,7 +197,19 @@ namespace Feature_Inspection
 
         private void AdapterUpdate()
         {
+            //Must call EndEdit Method before trying to update database
+            bindingSource.EndEdit();
+
+            //Update database
             model.AdapterUpdate((DataTable)bindingSource.DataSource);
+        }
+
+        private void AdapterUpdateInspection()
+        {
+            //Call EndEdit method before updating database
+            bindingSourceInspection.EndEdit();
+
+            model.AdapterUpdateInspection((DataTable)bindingSourceInspection.DataSource);
         }
 
         private void dataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
@@ -227,6 +300,18 @@ namespace Feature_Inspection
         private void listBox5_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+            //Use (listbox)sender.SelectedIndex
+            var listBox = (ListBox)sender;
+            DataTable featureTable;
+
+            if(listBox.Text.Contains("Part"))
+            {
+                int listBoxIndex = listBox.SelectedIndex;
+                int pieceID = listBoxIndex + 1; //Due to 0 indexing
+                featureTable = model.GetFeaturesOnPartIndex(pieceID, Int32.Parse(opKeyBoxInspection.Text));
+                BindDataGridViewInspection(featureTable);
+            }
+            
         }
 
         private void featureEditGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -237,6 +322,25 @@ namespace Feature_Inspection
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void nextPartButton_Click(object sender, EventArgs e)
+        {
+            //+1 to selectedindex because we need to check what index it is going in to first
+            partsListBox.SelectedIndex = (partsListBox.SelectedIndex + 1 < partsListBox.Items.Count) ? 
+                partsListBox.SelectedIndex += 1: partsListBox.SelectedIndex = 0;
+
+        }
+
+        private void inspectionEntryGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            
+            
+        }
+
+        private void inspectionEntryGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            AdapterUpdateInspection();
         }
     }
 }

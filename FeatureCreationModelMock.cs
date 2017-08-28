@@ -17,6 +17,8 @@ namespace Feature_Inspection
         {
 
         }
+       
+        
 
         public DataTable AdapterUpdate(DataTable dt)
         {
@@ -90,6 +92,39 @@ namespace Feature_Inspection
             return changedTable;
         }
 
+        public DataTable AdapterUpdateInspection(DataTable dt)
+        {
+            string update = "UPDATE ATI_FeatureInspection.dbo.Position SET Measured_Value = ? " +
+                            "WHERE Position_Key = ?;";
+
+            DataTable changedTable = new DataTable();
+
+            using (OdbcConnection conn = new OdbcConnection(connection_string))
+            using (OdbcCommand com = conn.CreateCommand())
+            using (OdbcDataAdapter dataAdapter = new OdbcDataAdapter(com))
+            {
+                dataAdapter.UpdateCommand = new OdbcCommand(update, conn);
+
+                dataAdapter.UpdateCommand.Parameters.Add("@Measured_Value", OdbcType.Decimal, 3, "Measured Actual");
+                dataAdapter.UpdateCommand.Parameters.Add("@Position_Key", OdbcType.Int, 3, "Position_Key");
+                changedTable = dt.GetChanges();
+
+                int rowsInChangedTable;
+
+                if (changedTable != null)
+                {
+                    rowsInChangedTable = changedTable.Rows.Count;
+
+                }
+
+                dataAdapter.Update(dt);
+
+            }
+            return changedTable;
+
+
+        }
+
         public DataTable GetFeaturesOnOpKey(int opKey)
         {
             DataTable t;
@@ -124,6 +159,28 @@ namespace Feature_Inspection
                 string query = "SELECT  'Part ' + CAST(Piece_ID as varchar(10)) AS PartList FROM ATI_FeatureInspection.dbo.Position" +
                                " WHERE Inspection_Key_FK = (SELECT Inspection_Key FROM ATI_FeatureInspection.dbo.Inspection" +
                                " WHERE Op_Key = " + opKey + ") GROUP BY Piece_ID ORDER BY Piece_ID ASC;";
+
+                com.CommandText = query;
+                t = new DataTable();
+                dataAdapter.Fill(t);
+
+            }
+
+            return t;
+        }
+
+        public DataTable GetFeaturesOnPartIndex(int partIndex, int opKey)
+        {
+            DataTable t;
+
+            using (OdbcConnection conn = new OdbcConnection(connection_string))
+            using (OdbcCommand com = conn.CreateCommand())
+            using (OdbcDataAdapter dataAdapter = new OdbcDataAdapter(com))
+            {
+                string query = "SELECT CAST(Features.Nominal AS varchar(50)) + ' +' + CAST(Features.Plus_Tolerance AS varchar(50)) + ' -' + CAST(Features.Minus_Tolerance AS varchar(50)) AS Feature, Position.Inspection_Key_FK, Features.Feature_Key,Position.Position_Key, Measured_Value AS 'Measured Actual', Position.InspectionTool FROM ATI_FeatureInspection.dbo.Position " +
+                                " LEFT JOIN ATI_FeatureInspection.dbo.Features ON Position.Feature_Key = Features.Feature_Key" +
+                                " WHERE Inspection_Key_FK = (SELECT Inspection_Key FROM ATI_FeatureInspection.dbo.Inspection" +
+                                " WHERE Op_Key = "+ opKey + ") AND Piece_ID = " + partIndex + ";";
 
                 com.CommandText = query;
                 t = new DataTable();

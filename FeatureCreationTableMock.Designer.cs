@@ -32,7 +32,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FeatureCreationTableMock));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.featureEditGridView = new System.Windows.Forms.DataGridView();
             this.addFeatureButton = new System.Windows.Forms.Button();
             this.opKeyBoxFeature = new System.Windows.Forms.TextBox();
@@ -48,7 +48,7 @@
             this.label22 = new System.Windows.Forms.Label();
             this.opLabelInspection = new System.Windows.Forms.Label();
             this.jobLabelInspection = new System.Windows.Forms.Label();
-            this.partLabelInspection = new System.Windows.Forms.Label();
+            this.partNumberLabelInspection = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
@@ -120,8 +120,6 @@
             this.featureEditGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.featureEditGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.featureEditGridView.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.featureEditGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.featureEditGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -139,11 +137,8 @@
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Gainsboro;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.featureEditGridView.DefaultCellStyle = dataGridViewCellStyle2;
-            this.featureEditGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.featureEditGridView.Location = new System.Drawing.Point(20, 100);
-            this.featureEditGridView.Margin = new System.Windows.Forms.Padding(0);
+            this.featureEditGridView.Location = new System.Drawing.Point(6, 94);
             this.featureEditGridView.Name = "featureEditGridView";
-            this.featureEditGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -152,7 +147,7 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Gainsboro;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.featureEditGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.featureEditGridView.Size = new System.Drawing.Size(806, 459);
+            this.featureEditGridView.Size = new System.Drawing.Size(1036, 560);
             this.featureEditGridView.TabIndex = 0;
             this.featureEditGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.featureEditGridView1_CellContentClick);
             this.featureEditGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
@@ -247,7 +242,7 @@
             this.splitContainer2.Panel1.Controls.Add(this.label22);
             this.splitContainer2.Panel1.Controls.Add(this.opLabelInspection);
             this.splitContainer2.Panel1.Controls.Add(this.jobLabelInspection);
-            this.splitContainer2.Panel1.Controls.Add(this.partLabelInspection);
+            this.splitContainer2.Panel1.Controls.Add(this.partNumberLabelInspection);
             this.splitContainer2.Panel1.Controls.Add(this.label13);
             this.splitContainer2.Panel1.Controls.Add(this.label14);
             this.splitContainer2.Panel1.Controls.Add(this.label16);
@@ -358,17 +353,17 @@
             this.jobLabelInspection.TabIndex = 33;
             this.jobLabelInspection.Text = "EMPTY";
             // 
-            // partLabelInspection
+            // partNumberLabelInspection
             // 
-            this.partLabelInspection.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.partLabelInspection.AutoSize = true;
-            this.partLabelInspection.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.partLabelInspection.ForeColor = System.Drawing.Color.Gainsboro;
-            this.partLabelInspection.Location = new System.Drawing.Point(94, 89);
-            this.partLabelInspection.Name = "partLabelInspection";
-            this.partLabelInspection.Size = new System.Drawing.Size(52, 16);
-            this.partLabelInspection.TabIndex = 32;
-            this.partLabelInspection.Text = "EMPTY";
+            this.partNumberLabelInspection.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.partNumberLabelInspection.AutoSize = true;
+            this.partNumberLabelInspection.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.partNumberLabelInspection.ForeColor = System.Drawing.Color.Gainsboro;
+            this.partNumberLabelInspection.Location = new System.Drawing.Point(70, 86);
+            this.partNumberLabelInspection.Name = "partNumberLabelInspection";
+            this.partNumberLabelInspection.Size = new System.Drawing.Size(52, 16);
+            this.partNumberLabelInspection.TabIndex = 32;
+            this.partNumberLabelInspection.Text = "EMPTY";
             // 
             // label13
             // 
@@ -424,7 +419,6 @@
             this.opKeyBoxInspection.BackColor = System.Drawing.Color.SlateGray;
             this.opKeyBoxInspection.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.opKeyBoxInspection.Location = new System.Drawing.Point(89, 45);
-            this.opKeyBoxInspection.Multiline = true;
             this.opKeyBoxInspection.Name = "opKeyBoxInspection";
             this.opKeyBoxInspection.Size = new System.Drawing.Size(147, 26);
             this.opKeyBoxInspection.TabIndex = 23;
@@ -502,8 +496,9 @@
             // 
             // inspectionEntryGridView
             // 
+            this.inspectionEntryGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.inspectionEntryGridView.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             dataGridViewCellStyle4.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Gainsboro;
@@ -513,9 +508,21 @@
             this.inspectionEntryGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.inspectionEntryGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.inspectionEntryGridView.Location = new System.Drawing.Point(12, 95);
+            this.inspectionEntryGridView.MultiSelect = false;
             this.inspectionEntryGridView.Name = "inspectionEntryGridView";
-            this.inspectionEntryGridView.Size = new System.Drawing.Size(655, 504);
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.inspectionEntryGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            this.inspectionEntryGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.inspectionEntryGridView.Size = new System.Drawing.Size(1026, 555);
             this.inspectionEntryGridView.TabIndex = 0;
+            this.inspectionEntryGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.inspectionEntryGridView_CellEndEdit);
+            this.inspectionEntryGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.inspectionEntryGridView_CellValueChanged);
             // 
             // nextPartButton
             // 
@@ -529,6 +536,7 @@
             this.nextPartButton.TabIndex = 2;
             this.nextPartButton.Text = "NEXT PART";
             this.nextPartButton.UseVisualStyleBackColor = false;
+            this.nextPartButton.Click += new System.EventHandler(this.nextPartButton_Click);
             // 
             // Feature_Page
             // 
@@ -932,7 +940,7 @@
         private System.Windows.Forms.Label partLabelFeature;
         private System.Windows.Forms.Label opLabelInspection;
         private System.Windows.Forms.Label jobLabelInspection;
-        private System.Windows.Forms.Label partLabelInspection;
+        private System.Windows.Forms.Label partNumberLabelInspection;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label16;
