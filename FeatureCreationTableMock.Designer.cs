@@ -397,7 +397,6 @@
             this.opKeyBoxInspection.BackColor = System.Drawing.Color.SlateGray;
             this.opKeyBoxInspection.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.opKeyBoxInspection.Location = new System.Drawing.Point(89, 45);
-            this.opKeyBoxInspection.Multiline = true;
             this.opKeyBoxInspection.Name = "opKeyBoxInspection";
             this.opKeyBoxInspection.Size = new System.Drawing.Size(166, 26);
             this.opKeyBoxInspection.TabIndex = 23;
