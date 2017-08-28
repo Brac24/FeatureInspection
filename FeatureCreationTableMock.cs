@@ -170,12 +170,15 @@ namespace Feature_Inspection
             //featureEditGridView.Columns["Pieces"].Visible = false;
             featureEditGridView.Columns["Plus_Tolerance"].HeaderText = "+";
             featureEditGridView.Columns["Minus_Tolerance"].HeaderText = "-";
+            featureEditGridView.Columns["FeatureType"].Visible = false;
+            
             maxRows = featureTable.Rows.Count;
 
 
             for (int i = 0; i < featureEditGridView.Rows.Count; i++)
             {
                 featureEditGridView.Rows[i].ReadOnly = true;
+
             }
 
             //IP>Initializes and defines the edit button column.
@@ -186,12 +189,18 @@ namespace Feature_Inspection
             {
                 featureEditGridView.Rows[i].Cells["Edit Column"].Value = "Edit";
             }
+            for (int j = 0; j <featureEditGridView.ColumnCount; j++)
+            {
+                featureEditGridView.Columns[j].SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
 
+            
             //IP>Initializes and defines the feature type column.
             DataGridViewComboBoxColumn FeatureDropColumn = new DataGridViewComboBoxColumn();
             FeatureDropColumn.HeaderText = "Feature Type";
             featureEditGridView.Columns.Insert(0, FeatureDropColumn);
             FeatureDropChoices(FeatureDropColumn);
+            
 
         }
 
@@ -250,6 +259,7 @@ namespace Feature_Inspection
                 DataBindTest(featureTable);
 
                 featurePageHeader.Text = featureEditGridView.Rows[0].Cells["Part_Number_FK"].Value + " FEATURES";
+
             }
 
         }
@@ -264,6 +274,7 @@ namespace Feature_Inspection
                 BindListBox(partList);
             }
         }
+        
 
         private void AddTableRow(DataTable t)
         {
@@ -279,21 +290,6 @@ namespace Feature_Inspection
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             // AdapterUpdate((BindingSource)table.DataSource);
-
-        }
-
-        private void Feature_Page_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label16_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void splitContainer3_Panel2_Paint(object sender, PaintEventArgs e)
-        {
 
         }
 
@@ -314,16 +310,6 @@ namespace Feature_Inspection
             
         }
 
-        private void featureEditGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void nextPartButton_Click(object sender, EventArgs e)
         {
             //+1 to selectedindex because we need to check what index it is going in to first
@@ -332,25 +318,6 @@ namespace Feature_Inspection
 
         }
 
-        private void inspectionEntryGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            
-            
-        }
-
-        private void inspectionEntryGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-            AdapterUpdateInspection();
-        }
-
-        private void tableLayoutPanel6_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void splitContainer2_SplitterMoved(object sender, SplitterEventArgs e)
-        {
-
-        }
     }
+
 }
