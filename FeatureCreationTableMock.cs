@@ -108,7 +108,7 @@ namespace Feature_Inspection
         //IP>Checks to make sure click event only triggers on the Edit column And changes ReadOnly.
         private void CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.RowIndex == -1)
+            if (e.RowIndex == -1 || e.ColumnIndex == -1)
                 return;
 
             var table = (DataGridView)sender;
@@ -128,6 +128,16 @@ namespace Feature_Inspection
                 featureEditGridView.Rows[e.RowIndex].ReadOnly = true;
                 featureEditGridView.Rows[e.RowIndex].Cells["Edit Column"].Value = "Edit";
                 AdapterUpdate();
+            }
+            else if(featureEditGridView.Columns[e.ColumnIndex] is DataGridViewComboBoxColumn
+                    && (string)featureEditGridView.Rows[e.RowIndex].Cells["Edit Column"].Value == "Done")
+            {
+                featureEditGridView.BeginEdit(true);
+                ((ComboBox)featureEditGridView.EditingControl).DroppedDown = true;
+            }
+            else
+            {
+                featureEditGridView.BeginEdit(true);
             }
         }
 
