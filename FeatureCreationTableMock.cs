@@ -342,5 +342,15 @@ namespace Feature_Inspection
         {
             AdapterUpdateInspection();
         }
+
+        private void tableLayoutPanel6_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void splitContainer2_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+
+        }
     }
 }
