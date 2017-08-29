@@ -26,16 +26,16 @@ namespace Feature_Inspection
         BindingSource bindingSource;
         BindingSource bindingSourceInspection = new BindingSource();
         BindingSource bindingSourceListBox = new BindingSource();
-        
+
 
         public FeatureCreationTableMock()
         {
             InitializeComponent();
             featureEditGridView.CellMouseUp += CellMouseUp;
-            opKeyBoxFeature.KeyPress += OpKeyEnter;
-            opKeyBoxInspection.KeyPress += checkEnterKeyPressedInspection;
-
+            opKeyBoxInspection.KeyDown += numOnly_KeyDown;
+            opKeyBoxFeature.KeyDown += numOnly_KeyDown;
         }
+
 
 
         /************************/
@@ -68,10 +68,6 @@ namespace Feature_Inspection
 
         public int LotSize
         {
-<<<<<<< HEAD
-=======
-
->>>>>>> a3a925e363155c24a453d54a370331896c208c81
             get { return Int32.Parse(lotLabelInspection.Text); }
             set { lotLabelInspection.Text = value.ToString(); }
         }
@@ -84,28 +80,81 @@ namespace Feature_Inspection
 
 
 
-
         /************************/
         /******* Methods ********/
         /************************/
 
         public void ShowJobInformation(Job job)
         {
-<<<<<<< HEAD
-            InitializeComponent();
-            featureEditGridView.CellMouseUp += CellMouseUp;
-            //opKeyBoxFeature.KeyPress += OpKeyEnter;
-            opKeyBoxFeature.KeyDown += txtType3_KeyDown;
-            opKeyBoxInspection.KeyPress += checkEnterKeyPressedInspection;  
-=======
             throw new NotImplementedException();
->>>>>>> a3a925e363155c24a453d54a370331896c208c81
+
         }
 
         public void ShowRelatedFeatures(IList<Feature> relatedFeaures)
         {
             throw new NotImplementedException();
         }
+
+        private void filterTextBox(object sender, KeyEventArgs e)
+        {
+            //Allow navigation keyboard arrows
+            switch (e.KeyCode)
+            {
+                case Keys.Up:
+                case Keys.Down:
+                case Keys.Left:
+                case Keys.Right:
+                case Keys.PageUp:
+                case Keys.PageDown:
+                case Keys.Delete:
+                    e.SuppressKeyPress = false;
+                    return;
+                default:
+                    break;
+            }
+
+            //Block non-number characters
+            char currentKey = (char)e.KeyCode;
+            bool modifier = e.Control || e.Alt || e.Shift;
+            bool nonNumber = char.IsLetter(currentKey) ||
+                             char.IsSymbol(currentKey) ||
+                             char.IsWhiteSpace(currentKey) ||
+                             char.IsPunctuation(currentKey) ||
+                             char.IsSeparator(currentKey) ||
+                             char.IsUpper(currentKey);
+
+
+
+            if (modifier || nonNumber || e.KeyCode == Keys.OemPeriod || e.KeyCode == Keys.OemMinus || e.KeyCode == Keys.Oemcomma)
+                e.SuppressKeyPress = true;
+
+            if (e.KeyCode >= (Keys)96 && e.KeyCode <= (Keys)105)
+            {
+                e.SuppressKeyPress = false;
+            }
+
+            //Handle pasted Text
+            if (e.Control && e.KeyCode == Keys.V)
+            {
+                //Preview paste data (removing non-number characters)
+                string pasteText = Clipboard.GetText();
+                string strippedText = "";
+                for (int i = 0; i < pasteText.Length; i++)
+                {
+                    if (char.IsDigit(pasteText[i]))
+                        strippedText += pasteText[i].ToString();
+                }
+
+                if (strippedText != pasteText)
+                {
+                    //There were non-numbers in the pasted text
+                    e.SuppressKeyPress = true;
+                }
+                else
+                    e.SuppressKeyPress = false;
+            }
+        }
+
 
         // INSPECTION TAB METHODS
 
@@ -128,6 +177,7 @@ namespace Feature_Inspection
             if (inspectionEntryGridView.RowCount != 0)
             {
                 inspectionEntryGridView.Rows[0].Cells["Measured Actual"].Selected = true;
+
             }
         }
 
@@ -148,11 +198,9 @@ namespace Feature_Inspection
             model.AdapterUpdateInspection((DataTable)bindingSourceInspection.DataSource);
         }
 
-        private void SetOpKeyInfo(int opkey)
+        private void SetOpKeyInfoInspection(int opkey)
         {
             DataTable info = new DataTable();
-
-
             info = model.GetInfoFromOpKeyEntry(opkey);
 
             if (info.Rows.Count > 0)
@@ -161,6 +209,7 @@ namespace Feature_Inspection
                 jobLabelInspection.Text = info.Rows[0]["Job_Number"].ToString();
                 opLabelInspection.Text = info.Rows[0]["Operation_Number"].ToString();
             }
+
             else
             {
                 partNumberLabelInspection.Text = null;
@@ -169,8 +218,29 @@ namespace Feature_Inspection
                 MessageBox.Show(opKeyBoxInspection.Text + " is and invalid please enter a valid Op Key", "Invalid OpKey");
                 opKeyBoxInspection.Clear();
             }
-
         }
+
+        private void checkEnterKeyPressedInspection(object sender, KeyEventArgs e)
+
+        {
+            //Will work on an enter or tab key press
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
+            {
+                e.Handled = true;
+                int opkey = Int32.Parse(opKeyBoxInspection.Text);
+                DataTable partList = model.GetPartsList(opkey);
+<<<<<<< HEAD
+
+                SetOpKeyInfo(opkey);
+
+=======
+                SetOpKeyInfoInspection(opkey);
+>>>>>>> 7d7ec0c45665acf2101b5ce6b5aee71a61fc83c5
+                BindListBox(partList);
+                partNumberLabelInspection.Focus();
+            }
+        }
+
 
 
         // FEATURE TAB METHODS
@@ -242,7 +312,7 @@ namespace Feature_Inspection
 
             //Update database
             model.AdapterUpdate((DataTable)bindingSource.DataSource);
-        } 
+        }
 
         private void AddTableRow(DataTable t)
         {
@@ -255,6 +325,53 @@ namespace Feature_Inspection
             featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Edit Column"].Value = "Done";
         }
 
+        private void SetOpKeyInfoFeature(int opkey)
+        {
+            DataTable info = new DataTable();
+            info = model.GetInfoFromOpKeyEntry(opkey);
+
+            if (info.Rows.Count > 0)
+            {
+                partLabelFeature.Text = info.Rows[0]["Part_Number"].ToString();
+                jobLabelFeature.Text = info.Rows[0]["Job_Number"].ToString();
+                opLabelFeature.Text = info.Rows[0]["Operation_Number"].ToString();
+            }
+
+            else
+            {
+                partNumberLabelInspection.Text = null;
+                jobLabelInspection.Text = null;
+                opLabelInspection.Text = null;
+                MessageBox.Show(opKeyBoxInspection.Text + " is and invalid please enter a valid Op Key", "Invalid OpKey");
+                opKeyBoxInspection.Clear();
+            }
+        }
+
+        private void checkEnterKeyPressedFeatures(object sender, KeyEventArgs e)
+        {
+
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
+            {
+                e.Handled = true;
+                int opkey;
+                bool isValidOpKey = Int32.TryParse(opKeyBoxFeature.Text, out opkey);
+                if (isValidOpKey)
+                {
+                    DataTable partList = model.GetFeaturesOnOpKey(opkey);
+                    SetOpKeyInfoFeature(opkey);
+                    DataBindTest(partList);
+                    if (partList.Rows.Count > 0)
+                    {
+                        featurePageHeader.Text = featureEditGridView.Rows[0].Cells["Part_Number_FK"].Value + " FEATURES";
+                    }
+                    else
+                    {
+                        featurePageHeader.Text = "FEATURES PAGE";
+                    }
+                }
+
+            }
+        }
 
 
 
@@ -271,89 +388,25 @@ namespace Feature_Inspection
         }
 
 
+        //HANDLER FOR BOTH TABS
+
+        private void numOnly_KeyDown(object sender, KeyEventArgs e)
+        {
+            filterTextBox(sender, e);
+
+            if (sender == opKeyBoxInspection)
+            {
+                checkEnterKeyPressedInspection(sender, e);
+            }
+            else if (sender == opKeyBoxFeature)
+            {
+                checkEnterKeyPressedFeatures(sender, e);
+            }
+
+        }
+
 
         //INSPECTION ENTRY TAB HANDLERS
-
-<<<<<<< HEAD
-        /*
-        //FOR FEATURES TAB!!!!!
-        private void OpKeyEnter(object sender, KeyPressEventArgs e)
-=======
-        private void checkEnterKeyPressedInspection(object sender, KeyPressEventArgs e)
->>>>>>> a3a925e363155c24a453d54a370331896c208c81
-        {
-
-            //Will work on an enter or tab key press
-            if ((Keys)e.KeyChar == Keys.Enter || (Keys)e.KeyChar == Keys.Tab)
-            {
-                e.Handled = true;
-<<<<<<< HEAD
-                //Might want to add validation for textbox text to be an integer
-                DataTable featureTable = model.GetFeaturesOnOpKey(Int32.Parse(opKeyBoxFeature.Text));
-                DataBindTest(featureTable);
-                featurePageHeader.Text = featureEditGridView.Rows[0].Cells["Part_Number_FK"].Value + " FEATURES";
-=======
-                int opkey = Int32.Parse(opKeyBoxInspection.Text);
-                DataTable partList = model.GetPartsList(opkey);
-                SetOpKeyInfo(opkey);
-
-                BindListBox(partList);
-                partNumberLabelInspection.Focus();
->>>>>>> a3a925e363155c24a453d54a370331896c208c81
-            }
-        }
-        */
-
-        private void txtType3_KeyDown(object sender, KeyEventArgs e)
-        {
-            //Allow navigation keyboard arrows
-            switch (e.KeyCode)
-            {
-                case Keys.Up:
-                case Keys.Down:
-                case Keys.Left:
-                case Keys.Right:
-                case Keys.PageUp:
-                case Keys.PageDown:
-                case Keys.Delete:
-                    e.SuppressKeyPress = false;
-                    return;
-                default:
-                    break;
-            }
-
-            //Block non-number characters
-            char currentKey = (char)e.KeyCode;
-            bool modifier = e.Control || e.Alt || e.Shift;
-            bool nonNumber = char.IsLetter(currentKey) ||
-                             char.IsSymbol(currentKey) ||
-                             char.IsWhiteSpace(currentKey) ||
-                             char.IsPunctuation(currentKey) ||
-                             char.IsSeparator(currentKey) ||
-                             char.IsUpper(currentKey);
-
-            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
-            {
-                e.Handled = true;
-                int opkey;
-                bool isValidOpKey = Int32.TryParse(opKeyBoxFeature.Text, out opkey);
-                if (isValidOpKey)
-                {
-                    DataTable partList = model.GetFeaturesOnOpKey(opkey);
-                    DataBindTest(partList);
-                    featurePageHeader.Text = featureEditGridView.Rows[0].Cells["Part_Number_FK"].Value + " FEATURES";
-                }
-
-            }
-
-            if (modifier || nonNumber || e.KeyCode == Keys.OemPeriod || e.KeyCode == Keys.OemMinus || e.KeyCode == Keys.Oemcomma)
-                e.SuppressKeyPress = true;
-
-            if (e.KeyCode >= (Keys)96 && e.KeyCode <= (Keys)105)
-            {
-                e.SuppressKeyPress = false;
-            }
-        }
 
         private void listBox5_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -369,100 +422,28 @@ namespace Feature_Inspection
                 featureTable = model.GetFeaturesOnPartIndex(pieceID, Int32.Parse(opKeyBoxInspection.Text));
                 BindDataGridViewInspection(featureTable);
             }
-
-            //Handle pasted Text
-            if (e.Control && e.KeyCode == Keys.V)
-            {
-                //Preview paste data (removing non-number characters)
-                string pasteText = Clipboard.GetText();
-                string strippedText = "";
-                for (int i = 0; i < pasteText.Length; i++)
-                {
-                    if (char.IsDigit(pasteText[i]))
-                        strippedText += pasteText[i].ToString();
-                }
-
-                if (strippedText != pasteText)
-                {
-                    //There were non-numbers in the pasted text
-                    e.SuppressKeyPress = true;
-                }
-                else
-                    e.SuppressKeyPress = false;
-            }
         }
 
         private void nextPartButton_Click(object sender, EventArgs e)
         {
-<<<<<<< HEAD
-
-            //Will work on an enter or tab key press
-            if ((Keys)e.KeyChar == Keys.Enter || (Keys)e.KeyChar == Keys.Tab)
-            {
-                e.Handled = true;
-                int opkey;
-                bool isValidOpKey = Int32.TryParse(opKeyBoxInspection.Text, out opkey);
-                if(isValidOpKey)
-                {
-                    DataTable partList = model.GetPartsList(opkey);
-                    SetOpKeyInfo(opkey);
-                    BindListBox(partList);
-                    partNumberLabelInspection.Focus();
-                }
-                
-            }
-
-=======
             //+1 to selectedindex because we need to check what index it is going in to first
             if (partsListBox.Items.Count > 0)
             {
                 partsListBox.SelectedIndex = (partsListBox.SelectedIndex + 1 < partsListBox.Items.Count) ?
                 partsListBox.SelectedIndex += 1 : partsListBox.SelectedIndex = 0;
             }
-
-
         }
 
-
-        //FEATURE TAB HANDLERS
-
-        private void OpKeyEnter(object sender, KeyPressEventArgs e)
+        private void inspectionEntryGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.KeyChar == ((char)13) || e.KeyChar == '\t')
+            if (e.ColumnIndex == inspectionEntryGridView.Columns["Measured Actual"].Index)
             {
-                e.Handled = true;
-                //Might want to add validation for textbox text to be an integer
-                DataTable featureTable = model.GetFeaturesOnOpKey(Int32.Parse(opKeyBoxFeature.Text));
-
-                DataBindTest(featureTable);
-
-                featurePageHeader.Text = featureEditGridView.Rows[0].Cells["Part_Number_FK"].Value + " FEATURES";
+                inspectionEntryGridView.BeginEdit(true);
             }
-
-            else if (e.KeyChar == ((char)32))
-            {
-                string message = "Spaces are not permitted";
-                string caption = "No Spaces Please";
-                MessageBoxButtons button = MessageBoxButtons.OK;
-                DialogResult result;
-
-                result = MessageBox.Show(message, caption, button);
-                e.KeyChar = ((char)0);
-            }
-
->>>>>>> a3a925e363155c24a453d54a370331896c208c81
         }
 
-        private void dataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
-        {
-<<<<<<< HEAD
-            DataTable info = new DataTable();
-            
-            info = model.GetInfoFromOpKeyEntry(opkey);
-=======
-            featureEditGridView.Rows[e.RowIndex].ReadOnly = false;
-        }
->>>>>>> a3a925e363155c24a453d54a370331896c208c81
+
+        // FEATURE HANDLERS
 
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
@@ -470,36 +451,15 @@ namespace Feature_Inspection
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (bindingSource == null)
-            {
-                return;
-            }
-
-            DataTable data = (DataTable)(bindingSource.DataSource);
-            AddTableRow(data);
-
-            //Set the last row Part_Number_FK and Operation_Number_FK to the same value as in the first row
-            featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Part_Number_FK"].Value = featureEditGridView.Rows[0].Cells["Part_Number_FK"].Value;
-            featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Operation_Number_FK"].Value = featureEditGridView.Rows[0].Cells["Operation_Number_FK"].Value;
-
-        }
-
-        //IP>Checks to make sure click event only triggers on the Edit column And changes ReadOnly.
         private void CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
         {
-<<<<<<< HEAD
-            //Use (listbox)sender.SelectedIndex
-            var listBox = (ListBox)sender;
-            DataTable featureTable;
-=======
+
             if (e.RowIndex == -1 || e.ColumnIndex == -1)
                 return;
 
             var table = (DataGridView)sender;
             var button = (DataGridViewButtonCell)table.Rows[e.RowIndex].Cells["Edit Column"];
->>>>>>> a3a925e363155c24a453d54a370331896c208c81
+
 
             if (e.ColumnIndex == featureEditGridView.Columns["Edit Column"].Index
                 && (string)featureEditGridView.Rows[e.RowIndex].Cells["Edit Column"].Value == "Edit")
@@ -526,15 +486,34 @@ namespace Feature_Inspection
             {
                 featureEditGridView.BeginEdit(true);
             }
-<<<<<<< HEAD
 
-=======
->>>>>>> a3a925e363155c24a453d54a370331896c208c81
         }
 
-        private void opKeyBoxFeature_KeyPress(object sender, KeyPressEventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-           
+            if (bindingSource == null)
+            {
+                return;
+            }
+
+            DataTable data = (DataTable)(bindingSource.DataSource);
+            AddTableRow(data);
+
+            //Set the last row Part_Number_FK and Operation_Number_FK to the same value as in the first row
+            featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Part_Number_FK"].Value = featureEditGridView.Rows[0].Cells["Part_Number_FK"].Value;
+            featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Operation_Number_FK"].Value = featureEditGridView.Rows[0].Cells["Operation_Number_FK"].Value;
+
+        }
+
+        private void dataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+
+            featureEditGridView.Rows[e.RowIndex].ReadOnly = false;
+        }
+
+        private void inspectionEntryGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            AdapterUpdateInspection();
         }
     }
 
