@@ -67,7 +67,8 @@ namespace Feature_Inspection
         {
             InitializeComponent();
             featureEditGridView.CellMouseUp += CellMouseUp;
-            opKeyBoxFeature.KeyDown += OpKeyEnter;
+            //opKeyBoxFeature.KeyDown += OpKeyEnter;
+            opKeyBoxFeature.KeyPress += OpKeyEnter;
             opKeyBoxInspection.KeyPress += checkEnterKeyPressedInspection;
         }
 
@@ -258,21 +259,21 @@ namespace Feature_Inspection
 
         }
 
-        private void OpKeyEnter(object sender, KeyEventArgs e)
+        private void OpKeyEnter(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter && opKeyBoxFeature.Text != "")
+            if (e.KeyChar == ((char)13) || e.KeyChar == '\t')
             {
-
                 //Might want to add validation for textbox text to be an integer
                 DataTable featureTable = model.GetFeaturesOnOpKey(Int32.Parse(opKeyBoxFeature.Text));
 
                 DataBindTest(featureTable);
 
                 featurePageHeader.Text = featureEditGridView.Rows[0].Cells["Part_Number_FK"].Value + " FEATURES";
-
             }
+            
 
         }
+
 
         private void checkEnterKeyPressedInspection(object sender, KeyPressEventArgs e)
         {
