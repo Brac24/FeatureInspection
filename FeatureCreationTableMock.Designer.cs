@@ -664,6 +664,8 @@
             this.inspectionEntryGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.inspectionEntryGridView.Size = new System.Drawing.Size(800, 591);
             this.inspectionEntryGridView.TabIndex = 0;
+            this.inspectionEntryGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.inspectionEntryGridView_CellClick);
+            this.inspectionEntryGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.inspectionEntryGridView_CellEndEdit);
             // 
             // tableLayoutPanel10
             // 

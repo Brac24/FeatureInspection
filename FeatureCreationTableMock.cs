@@ -158,7 +158,6 @@ namespace Feature_Inspection
         }
 
 
-
         // INSPECTION TAB METHODS
 
         private void BindDataGridViewInspection(DataTable featuresTable)
@@ -180,6 +179,7 @@ namespace Feature_Inspection
             if (inspectionEntryGridView.RowCount != 0)
             {
                 inspectionEntryGridView.Rows[0].Cells["Measured Actual"].Selected = true;
+
             }
         }
 
@@ -241,8 +241,6 @@ namespace Feature_Inspection
                 DataTable partList = model.GetPartsList(opkey);
 
                 SetOpKeyInfo(opkey);
-
-
 
                 BindListBox(partList);
 
@@ -414,31 +412,20 @@ namespace Feature_Inspection
             }
         }
 
-        private void dataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        private void inspectionEntryGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-
-            featureEditGridView.Rows[e.RowIndex].ReadOnly = false;
+            if (e.ColumnIndex == inspectionEntryGridView.Columns["Measured Actual"].Index)
+            {
+                inspectionEntryGridView.BeginEdit(true);
+            }
         }
+
+
+        // FEATURE HANDLERS
 
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             // AdapterUpdate((BindingSource)table.DataSource);
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (bindingSource == null)
-            {
-                return;
-            }
-
-            DataTable data = (DataTable)(bindingSource.DataSource);
-            AddTableRow(data);
-
-            //Set the last row Part_Number_FK and Operation_Number_FK to the same value as in the first row
-            featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Part_Number_FK"].Value = featureEditGridView.Rows[0].Cells["Part_Number_FK"].Value;
-            featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Operation_Number_FK"].Value = featureEditGridView.Rows[0].Cells["Operation_Number_FK"].Value;
 
         }
 
@@ -481,6 +468,32 @@ namespace Feature_Inspection
 
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (bindingSource == null)
+            {
+                return;
+            }
+
+            DataTable data = (DataTable)(bindingSource.DataSource);
+            AddTableRow(data);
+
+            //Set the last row Part_Number_FK and Operation_Number_FK to the same value as in the first row
+            featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Part_Number_FK"].Value = featureEditGridView.Rows[0].Cells["Part_Number_FK"].Value;
+            featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Operation_Number_FK"].Value = featureEditGridView.Rows[0].Cells["Operation_Number_FK"].Value;
+
+        }
+
+        private void dataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+
+            featureEditGridView.Rows[e.RowIndex].ReadOnly = false;
+        }
+
+        private void inspectionEntryGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            AdapterUpdateInspection();
+        }
     }
 
 }
