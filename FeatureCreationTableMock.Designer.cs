@@ -44,6 +44,9 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel16 = new System.Windows.Forms.TableLayoutPanel();
             this.labelWhat = new System.Windows.Forms.Label();
+            this.tableLayoutPanel15 = new System.Windows.Forms.TableLayoutPanel();
+            this.opKeyBoxInspection = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel14 = new System.Windows.Forms.TableLayoutPanel();
             this.label16 = new System.Windows.Forms.Label();
             this.statusLabelInspection = new System.Windows.Forms.Label();
@@ -90,10 +93,7 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.inspectionReadybutton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel15 = new System.Windows.Forms.TableLayoutPanel();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.opKeyBoxInspection = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.featureEditGridView)).BeginInit();
             this.mainTabControl.SuspendLayout();
             this.Inspection_Page.SuspendLayout();
@@ -106,6 +106,7 @@
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             this.tableLayoutPanel16.SuspendLayout();
+            this.tableLayoutPanel15.SuspendLayout();
             this.tableLayoutPanel14.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tableLayoutPanel17.SuspendLayout();
@@ -128,7 +129,6 @@
             this.tableLayoutPanel5.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
-            this.tableLayoutPanel15.SuspendLayout();
             this.SuspendLayout();
             // 
             // featureEditGridView
@@ -299,6 +299,46 @@
             this.labelWhat.Size = new System.Drawing.Size(157, 19);
             this.labelWhat.TabIndex = 24;
             this.labelWhat.Text = "JOB INFORMATION";
+            // 
+            // tableLayoutPanel15
+            // 
+            this.tableLayoutPanel15.ColumnCount = 2;
+            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 37.54386F));
+            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 62.45614F));
+            this.tableLayoutPanel15.Controls.Add(this.opKeyBoxInspection, 1, 0);
+            this.tableLayoutPanel15.Controls.Add(this.label1, 0, 0);
+            this.tableLayoutPanel15.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tableLayoutPanel15.Location = new System.Drawing.Point(0, 41);
+            this.tableLayoutPanel15.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel15.Name = "tableLayoutPanel15";
+            this.tableLayoutPanel15.RowCount = 1;
+            this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel15.Size = new System.Drawing.Size(285, 77);
+            this.tableLayoutPanel15.TabIndex = 42;
+            // 
+            // opKeyBoxInspection
+            // 
+            this.opKeyBoxInspection.AcceptsTab = true;
+            this.opKeyBoxInspection.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.opKeyBoxInspection.BackColor = System.Drawing.Color.SlateGray;
+            this.opKeyBoxInspection.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.opKeyBoxInspection.Location = new System.Drawing.Point(110, 25);
+            this.opKeyBoxInspection.Multiline = true;
+            this.opKeyBoxInspection.Name = "opKeyBoxInspection";
+            this.opKeyBoxInspection.Size = new System.Drawing.Size(172, 26);
+            this.opKeyBoxInspection.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.Gainsboro;
+            this.label1.Location = new System.Drawing.Point(3, 30);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(59, 16);
+            this.label1.TabIndex = 22;
+            this.label1.Text = "OP KEY:";
             // 
             // tableLayoutPanel14
             // 
@@ -974,22 +1014,6 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(846, 0);
             this.tableLayoutPanel1.TabIndex = 13;
             // 
-            // tableLayoutPanel15
-            // 
-            this.tableLayoutPanel15.ColumnCount = 2;
-            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 37.54386F));
-            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 62.45614F));
-            this.tableLayoutPanel15.Controls.Add(this.opKeyBoxInspection, 1, 0);
-            this.tableLayoutPanel15.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel15.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel15.Location = new System.Drawing.Point(0, 41);
-            this.tableLayoutPanel15.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel15.Name = "tableLayoutPanel15";
-            this.tableLayoutPanel15.RowCount = 1;
-            this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel15.Size = new System.Drawing.Size(285, 77);
-            this.tableLayoutPanel15.TabIndex = 42;
-            // 
             // textBox2
             // 
             this.textBox2.AcceptsTab = true;
@@ -1001,30 +1025,6 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(172, 26);
             this.textBox2.TabIndex = 0;
-            // 
-            // label1
-            // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label1.Location = new System.Drawing.Point(3, 30);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(59, 16);
-            this.label1.TabIndex = 22;
-            this.label1.Text = "OP KEY:";
-            // 
-            // opKeyBoxInspection
-            // 
-            this.opKeyBoxInspection.AcceptsTab = true;
-            this.opKeyBoxInspection.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.opKeyBoxInspection.BackColor = System.Drawing.Color.SlateGray;
-            this.opKeyBoxInspection.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.opKeyBoxInspection.Location = new System.Drawing.Point(110, 25);
-            this.opKeyBoxInspection.Multiline = true;
-            this.opKeyBoxInspection.Name = "opKeyBoxInspection";
-            this.opKeyBoxInspection.Size = new System.Drawing.Size(172, 26);
-            this.opKeyBoxInspection.TabIndex = 0;
             // 
             // FeatureCreationTableMock
             // 
@@ -1052,6 +1052,8 @@
             this.splitContainer2.ResumeLayout(false);
             this.tableLayoutPanel16.ResumeLayout(false);
             this.tableLayoutPanel16.PerformLayout();
+            this.tableLayoutPanel15.ResumeLayout(false);
+            this.tableLayoutPanel15.PerformLayout();
             this.tableLayoutPanel14.ResumeLayout(false);
             this.tableLayoutPanel14.PerformLayout();
             this.panel2.ResumeLayout(false);
@@ -1084,8 +1086,6 @@
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
-            this.tableLayoutPanel15.ResumeLayout(false);
-            this.tableLayoutPanel15.PerformLayout();
             this.ResumeLayout(false);
 
         }

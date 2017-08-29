@@ -66,7 +66,9 @@ namespace Feature_Inspection
             featureEditGridView.CellMouseUp += CellMouseUp;
             //opKeyBoxFeature.KeyDown += OpKeyEnter;
             opKeyBoxFeature.KeyPress += OpKeyEnter;
-            opKeyBoxInspection.KeyPress += checkEnterKeyPressedInspection;
+            opKeyBoxInspection.KeyDown += txtYourTextBox_KeyDown;
+            //opKeyBoxInspection.KeyPress += checkEnterKeyPressedInspection;
+            
         }
 
         BindingSource bindingSourceListBox = new BindingSource();
@@ -255,6 +257,7 @@ namespace Feature_Inspection
 
         }
 
+        //FOR FEATURES TAB!!!!!
         private void OpKeyEnter(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == ((char)13) || e.KeyChar == '\t')
@@ -279,6 +282,29 @@ namespace Feature_Inspection
                 e.KeyChar = ((char)0);
             }
 
+        private void txtYourTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
+            {
+                e.SuppressKeyPress = true;
+                nextPartButton.Focus();
+                int opkey = Int32.Parse(opKeyBoxInspection.Text);
+                DataTable partList = model.GetPartsList(opkey);
+                
+                SetOpKeyInfo(opkey);
+                
+                
+                
+
+                BindListBox(partList);
+                
+            }
+            /*
+            if (e.KeyCode == Keys.Enter)
+                e.SuppressKeyPress = true;
+                */
+        }
 
         }
 
@@ -294,6 +320,7 @@ namespace Feature_Inspection
                 SetOpKeyInfo(opkey);
 
                 BindListBox(partList);
+                partNumberLabelInspection.Focus();
             }
 
             else if (e.KeyChar == ((char)32))
@@ -326,7 +353,8 @@ namespace Feature_Inspection
                 partNumberLabelInspection.Text = null;
                 jobLabelInspection.Text = null;
                 opLabelInspection.Text = null;
-                MessageBox.Show("Invalid Op Key");
+                MessageBox.Show(opKeyBoxInspection.Text + " is and invalid please enter a valid Op Key", "Invalid OpKey");
+                opKeyBoxInspection.Clear();
             }
 
         }
