@@ -25,7 +25,6 @@ namespace Feature_Inspection
         public event EventHandler EnterClicked;
         public event EventHandler LotInspectionReadyClicked;
 
-
         public string PartNumber {
             get { return partNumberLabelInspection.Text; }
             set { partNumberLabelInspection.Text = value; }
@@ -60,8 +59,6 @@ namespace Feature_Inspection
             get { return Int32.Parse(partsInspectedLabel.Text); }
             set { partsInspectedLabel.Text = value.ToString(); }
         }
-
-
 
         public FeatureCreationTableMock()
         {
@@ -104,7 +101,6 @@ namespace Feature_Inspection
                 inspectionEntryGridView.Rows[0].Cells["Measured Actual"].Selected = true;
             }
         }
-
 
         //IP>Checks to make sure click event only triggers on the Edit column And changes ReadOnly.
         private void CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
@@ -263,6 +259,7 @@ namespace Feature_Inspection
         {
             if (e.KeyChar == ((char)13) || e.KeyChar == '\t')
             {
+                e.Handled = true;
                 //Might want to add validation for textbox text to be an integer
                 DataTable featureTable = model.GetFeaturesOnOpKey(Int32.Parse(opKeyBoxFeature.Text));
 
@@ -270,10 +267,20 @@ namespace Feature_Inspection
 
                 featurePageHeader.Text = featureEditGridView.Rows[0].Cells["Part_Number_FK"].Value + " FEATURES";
             }
-            
+
+            else if (e.KeyChar == ((char)32))
+            {
+                string message = "Spaces are not permitted";
+                string caption = "No Spaces Please";
+                MessageBoxButtons button = MessageBoxButtons.OK;
+                DialogResult result;
+
+                result = MessageBox.Show(message, caption, button);
+                e.KeyChar = ((char)0);
+            }
+
 
         }
-
 
         private void checkEnterKeyPressedInspection(object sender, KeyPressEventArgs e)
         {
@@ -281,11 +288,23 @@ namespace Feature_Inspection
             //Will work on an enter or tab key press
             if ((Keys)e.KeyChar == Keys.Enter || (Keys)e.KeyChar == Keys.Tab)
             {
+                e.Handled = true;
                 int opkey = Int32.Parse(opKeyBoxInspection.Text);
                 DataTable partList = model.GetPartsList(opkey);
                 SetOpKeyInfo(opkey);
 
                 BindListBox(partList);
+            }
+
+            else if (e.KeyChar == ((char)32))
+            {
+                string message = "Spaces are not permitted";
+                string caption = "No Spaces Please";
+                MessageBoxButtons button = MessageBoxButtons.OK;
+                DialogResult result;
+
+                result = MessageBox.Show(message, caption, button);
+                e.KeyChar = ((char)0);
             }
         }
 
@@ -309,11 +328,8 @@ namespace Feature_Inspection
                 opLabelInspection.Text = null;
                 MessageBox.Show("Invalid Op Key");
             }
-            
-            
 
         }
-
 
         private void AddTableRow(DataTable t)
         {
