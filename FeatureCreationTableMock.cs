@@ -49,7 +49,6 @@ namespace Feature_Inspection
 
         public int LotSize
         {
-            
             get { return Int32.Parse(lotLabelInspection.Text); }
             set { lotLabelInspection.Text = value.ToString(); }
         }
@@ -64,9 +63,9 @@ namespace Feature_Inspection
         {
             InitializeComponent();
             featureEditGridView.CellMouseUp += CellMouseUp;
-            opKeyBoxFeature.KeyPress += OpKeyEnter;
-            opKeyBoxInspection.KeyPress += checkEnterKeyPressedInspection;
-            
+            //opKeyBoxFeature.KeyPress += OpKeyEnter;
+            opKeyBoxFeature.KeyDown += txtType3_KeyDown;
+            opKeyBoxInspection.KeyPress += checkEnterKeyPressedInspection;  
         }
 
         BindingSource bindingSourceListBox = new BindingSource();
@@ -174,7 +173,6 @@ namespace Feature_Inspection
             featureEditGridView.Columns["Operation_Number_FK"].Visible = false;
             featureEditGridView.Columns["Feature_Name"].Visible = false;
             featureEditGridView.Columns["Active"].Visible = false;
-            //featureEditGridView.Columns["Pieces"].Visible = false;
             featureEditGridView.Columns["Plus_Tolerance"].HeaderText = "+";
             featureEditGridView.Columns["Minus_Tolerance"].HeaderText = "-";
             featureEditGridView.Columns["FeatureType"].Visible = false;
@@ -185,7 +183,6 @@ namespace Feature_Inspection
             for (int i = 0; i < featureEditGridView.Rows.Count; i++)
             {
                 featureEditGridView.Rows[i].ReadOnly = true;
-
             }
 
             //IP>Initializes and defines the edit button column.
@@ -255,6 +252,7 @@ namespace Feature_Inspection
 
         }
 
+        /*
         //FOR FEATURES TAB!!!!!
         private void OpKeyEnter(object sender, KeyPressEventArgs e)
         {
@@ -263,57 +261,104 @@ namespace Feature_Inspection
                 e.Handled = true;
                 //Might want to add validation for textbox text to be an integer
                 DataTable featureTable = model.GetFeaturesOnOpKey(Int32.Parse(opKeyBoxFeature.Text));
-
                 DataBindTest(featureTable);
-
                 featurePageHeader.Text = featureEditGridView.Rows[0].Cells["Part_Number_FK"].Value + " FEATURES";
             }
+        }
+        */
 
-            else if (e.KeyChar == ((char)32))
+        private void txtType3_KeyDown(object sender, KeyEventArgs e)
+        {
+            //Allow navigation keyboard arrows
+            switch (e.KeyCode)
             {
-                string message = "Spaces are not permitted";
-                string caption = "No Spaces Please";
-                MessageBoxButtons button = MessageBoxButtons.OK;
-                DialogResult result;
-
-                result = MessageBox.Show(message, caption, button);
-                e.KeyChar = ((char)0);
+                case Keys.Up:
+                case Keys.Down:
+                case Keys.Left:
+                case Keys.Right:
+                case Keys.PageUp:
+                case Keys.PageDown:
+                case Keys.Delete:
+                    e.SuppressKeyPress = false;
+                    return;
+                default:
+                    break;
             }
 
+            //Block non-number characters
+            char currentKey = (char)e.KeyCode;
+            bool modifier = e.Control || e.Alt || e.Shift;
+            bool nonNumber = char.IsLetter(currentKey) ||
+                             char.IsSymbol(currentKey) ||
+                             char.IsWhiteSpace(currentKey) ||
+                             char.IsPunctuation(currentKey) ||
+                             char.IsSeparator(currentKey) ||
+                             char.IsUpper(currentKey);
+
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
+            {
+                e.Handled = true;
+                int opkey;
+                bool isValidOpKey = Int32.TryParse(opKeyBoxFeature.Text, out opkey);
+                if (isValidOpKey)
+                {
+                    DataTable partList = model.GetFeaturesOnOpKey(opkey);
+                    DataBindTest(partList);
+                    featurePageHeader.Text = featureEditGridView.Rows[0].Cells["Part_Number_FK"].Value + " FEATURES";
+                }
+
+            }
+
+            if (modifier || nonNumber)
+                e.SuppressKeyPress = true;
+
+            //Handle pasted Text
+            if (e.Control && e.KeyCode == Keys.V)
+            {
+                //Preview paste data (removing non-number characters)
+                string pasteText = Clipboard.GetText();
+                string strippedText = "";
+                for (int i = 0; i < pasteText.Length; i++)
+                {
+                    if (char.IsDigit(pasteText[i]))
+                        strippedText += pasteText[i].ToString();
+                }
+
+                if (strippedText != pasteText)
+                {
+                    //There were non-numbers in the pasted text
+                    e.SuppressKeyPress = true;
+                }
+                else
+                    e.SuppressKeyPress = false;
+            }
         }
 
         private void checkEnterKeyPressedInspection(object sender, KeyPressEventArgs e)
         {
-            
+
             //Will work on an enter or tab key press
             if ((Keys)e.KeyChar == Keys.Enter || (Keys)e.KeyChar == Keys.Tab)
             {
                 e.Handled = true;
-                int opkey = Int32.Parse(opKeyBoxInspection.Text);
-                DataTable partList = model.GetPartsList(opkey);
-                SetOpKeyInfo(opkey);
-
-                BindListBox(partList);
-                partNumberLabelInspection.Focus();
+                int opkey;
+                bool isValidOpKey = Int32.TryParse(opKeyBoxInspection.Text, out opkey);
+                if(isValidOpKey)
+                {
+                    DataTable partList = model.GetPartsList(opkey);
+                    SetOpKeyInfo(opkey);
+                    BindListBox(partList);
+                    partNumberLabelInspection.Focus();
+                }
+                
             }
 
-            else if (e.KeyChar == ((char)32))
-            {
-                string message = "Spaces are not permitted";
-                string caption = "No Spaces Please";
-                MessageBoxButtons button = MessageBoxButtons.OK;
-                DialogResult result;
-
-                result = MessageBox.Show(message, caption, button);
-                e.KeyChar = ((char)0);
-            }
         }
 
         private void SetOpKeyInfo(int opkey)
         {
             DataTable info = new DataTable();
             
-
             info = model.GetInfoFromOpKeyEntry(opkey);
 
             if (info.Rows.Count > 0)
@@ -352,7 +397,6 @@ namespace Feature_Inspection
 
         private void listBox5_SelectedIndexChanged(object sender, EventArgs e)
         {
-
             //Use (listbox)sender.SelectedIndex
             var listBox = (ListBox)sender;
             DataTable featureTable;
@@ -375,7 +419,6 @@ namespace Feature_Inspection
                 partsListBox.SelectedIndex = (partsListBox.SelectedIndex + 1 < partsListBox.Items.Count) ?
                 partsListBox.SelectedIndex += 1 : partsListBox.SelectedIndex = 0;
             }
-            
 
         }
 
