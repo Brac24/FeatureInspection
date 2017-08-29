@@ -64,10 +64,8 @@ namespace Feature_Inspection
         {
             InitializeComponent();
             featureEditGridView.CellMouseUp += CellMouseUp;
-            //opKeyBoxFeature.KeyDown += OpKeyEnter;
             opKeyBoxFeature.KeyPress += OpKeyEnter;
-            opKeyBoxInspection.KeyDown += txtYourTextBox_KeyDown;
-            //opKeyBoxInspection.KeyPress += checkEnterKeyPressedInspection;
+            opKeyBoxInspection.KeyPress += checkEnterKeyPressedInspection;
             
         }
 
@@ -281,30 +279,6 @@ namespace Feature_Inspection
                 result = MessageBox.Show(message, caption, button);
                 e.KeyChar = ((char)0);
             }
-
-        private void txtYourTextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-
-            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
-            {
-                e.SuppressKeyPress = true;
-                nextPartButton.Focus();
-                int opkey = Int32.Parse(opKeyBoxInspection.Text);
-                DataTable partList = model.GetPartsList(opkey);
-                
-                SetOpKeyInfo(opkey);
-                
-                
-                
-
-                BindListBox(partList);
-                
-            }
-            /*
-            if (e.KeyCode == Keys.Enter)
-                e.SuppressKeyPress = true;
-                */
-        }
 
         }
 
