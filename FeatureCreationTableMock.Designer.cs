@@ -34,6 +34,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             this.featureEditGridView = new System.Windows.Forms.DataGridView();
             this.addFeatureButton = new System.Windows.Forms.Button();
             this.opKeyBoxFeature = new System.Windows.Forms.TextBox();
@@ -43,9 +44,6 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel16 = new System.Windows.Forms.TableLayoutPanel();
             this.labelWhat = new System.Windows.Forms.Label();
-            this.tableLayoutPanel15 = new System.Windows.Forms.TableLayoutPanel();
-            this.opKeyBoxInspection = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel14 = new System.Windows.Forms.TableLayoutPanel();
             this.label16 = new System.Windows.Forms.Label();
             this.statusLabelInspection = new System.Windows.Forms.Label();
@@ -92,6 +90,10 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.inspectionReadybutton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel15 = new System.Windows.Forms.TableLayoutPanel();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.opKeyBoxInspection = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.featureEditGridView)).BeginInit();
             this.mainTabControl.SuspendLayout();
             this.Inspection_Page.SuspendLayout();
@@ -104,7 +106,6 @@
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             this.tableLayoutPanel16.SuspendLayout();
-            this.tableLayoutPanel15.SuspendLayout();
             this.tableLayoutPanel14.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tableLayoutPanel17.SuspendLayout();
@@ -127,6 +128,7 @@
             this.tableLayoutPanel5.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            this.tableLayoutPanel15.SuspendLayout();
             this.SuspendLayout();
             // 
             // featureEditGridView
@@ -192,13 +194,15 @@
             // 
             // opKeyBoxFeature
             // 
+            this.opKeyBoxFeature.AcceptsTab = true;
             this.opKeyBoxFeature.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.opKeyBoxFeature.BackColor = System.Drawing.Color.SlateGray;
             this.opKeyBoxFeature.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.opKeyBoxFeature.Location = new System.Drawing.Point(105, 31);
+            this.opKeyBoxFeature.Multiline = true;
             this.opKeyBoxFeature.Name = "opKeyBoxFeature";
             this.opKeyBoxFeature.Size = new System.Drawing.Size(170, 26);
-            this.opKeyBoxFeature.TabIndex = 3;
+            this.opKeyBoxFeature.TabIndex = 0;
             // 
             // mainTabControl
             // 
@@ -295,43 +299,6 @@
             this.labelWhat.Size = new System.Drawing.Size(157, 19);
             this.labelWhat.TabIndex = 24;
             this.labelWhat.Text = "JOB INFORMATION";
-            // 
-            // tableLayoutPanel15
-            // 
-            this.tableLayoutPanel15.ColumnCount = 2;
-            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 37.54386F));
-            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 62.45614F));
-            this.tableLayoutPanel15.Controls.Add(this.opKeyBoxInspection, 1, 0);
-            this.tableLayoutPanel15.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel15.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel15.Location = new System.Drawing.Point(0, 41);
-            this.tableLayoutPanel15.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel15.Name = "tableLayoutPanel15";
-            this.tableLayoutPanel15.RowCount = 1;
-            this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel15.Size = new System.Drawing.Size(285, 77);
-            this.tableLayoutPanel15.TabIndex = 42;
-            // 
-            // opKeyBoxInspection
-            // 
-            this.opKeyBoxInspection.AcceptsTab = true;
-            this.opKeyBoxInspection.BackColor = System.Drawing.Color.SlateGray;
-            this.opKeyBoxInspection.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.opKeyBoxInspection.Location = new System.Drawing.Point(110, 3);
-            this.opKeyBoxInspection.Name = "opKeyBoxInspection";
-            this.opKeyBoxInspection.Size = new System.Drawing.Size(172, 26);
-            this.opKeyBoxInspection.TabIndex = 23;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label1.Location = new System.Drawing.Point(3, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(59, 16);
-            this.label1.TabIndex = 22;
-            this.label1.Text = "OP KEY:";
             // 
             // tableLayoutPanel14
             // 
@@ -620,38 +587,40 @@
             // 
             this.inspectionEntryGridView.AllowUserToResizeColumns = false;
             this.inspectionEntryGridView.AllowUserToResizeRows = false;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.inspectionEntryGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
             this.inspectionEntryGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.inspectionEntryGridView.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.inspectionEntryGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.inspectionEntryGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            this.inspectionEntryGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             dataGridViewCellStyle5.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Gainsboro;
             dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.SeaGreen;
             dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.inspectionEntryGridView.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.inspectionEntryGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            this.inspectionEntryGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.SeaGreen;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.inspectionEntryGridView.DefaultCellStyle = dataGridViewCellStyle6;
             this.inspectionEntryGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.inspectionEntryGridView.Location = new System.Drawing.Point(23, 103);
             this.inspectionEntryGridView.MultiSelect = false;
             this.inspectionEntryGridView.Name = "inspectionEntryGridView";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.inspectionEntryGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.SeaGreen;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.inspectionEntryGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.inspectionEntryGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.inspectionEntryGridView.Size = new System.Drawing.Size(800, 591);
             this.inspectionEntryGridView.TabIndex = 0;
@@ -660,6 +629,9 @@
             // 
             this.tableLayoutPanel10.ColumnCount = 1;
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel10.Controls.Add(this.nextPartButton, 0, 0);
             this.tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel10.Location = new System.Drawing.Point(0, 717);
@@ -755,6 +727,7 @@
             this.tableLayoutPanel9.ColumnCount = 1;
             this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel9.Controls.Add(this.jobInfoFeature, 0, 0);
+            this.tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel9.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel9.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel9.Name = "tableLayoutPanel9";
@@ -1001,6 +974,58 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(846, 0);
             this.tableLayoutPanel1.TabIndex = 13;
             // 
+            // tableLayoutPanel15
+            // 
+            this.tableLayoutPanel15.ColumnCount = 2;
+            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 37.54386F));
+            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 62.45614F));
+            this.tableLayoutPanel15.Controls.Add(this.opKeyBoxInspection, 1, 0);
+            this.tableLayoutPanel15.Controls.Add(this.label1, 0, 0);
+            this.tableLayoutPanel15.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tableLayoutPanel15.Location = new System.Drawing.Point(0, 41);
+            this.tableLayoutPanel15.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel15.Name = "tableLayoutPanel15";
+            this.tableLayoutPanel15.RowCount = 1;
+            this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel15.Size = new System.Drawing.Size(285, 77);
+            this.tableLayoutPanel15.TabIndex = 42;
+            // 
+            // textBox2
+            // 
+            this.textBox2.AcceptsTab = true;
+            this.textBox2.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.textBox2.BackColor = System.Drawing.Color.SlateGray;
+            this.textBox2.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.textBox2.Location = new System.Drawing.Point(110, 25);
+            this.textBox2.Multiline = true;
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(172, 26);
+            this.textBox2.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.Gainsboro;
+            this.label1.Location = new System.Drawing.Point(3, 30);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(59, 16);
+            this.label1.TabIndex = 22;
+            this.label1.Text = "OP KEY:";
+            // 
+            // opKeyBoxInspection
+            // 
+            this.opKeyBoxInspection.AcceptsTab = true;
+            this.opKeyBoxInspection.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.opKeyBoxInspection.BackColor = System.Drawing.Color.SlateGray;
+            this.opKeyBoxInspection.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.opKeyBoxInspection.Location = new System.Drawing.Point(110, 25);
+            this.opKeyBoxInspection.Multiline = true;
+            this.opKeyBoxInspection.Name = "opKeyBoxInspection";
+            this.opKeyBoxInspection.Size = new System.Drawing.Size(172, 26);
+            this.opKeyBoxInspection.TabIndex = 0;
+            // 
             // FeatureCreationTableMock
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1027,8 +1052,6 @@
             this.splitContainer2.ResumeLayout(false);
             this.tableLayoutPanel16.ResumeLayout(false);
             this.tableLayoutPanel16.PerformLayout();
-            this.tableLayoutPanel15.ResumeLayout(false);
-            this.tableLayoutPanel15.PerformLayout();
             this.tableLayoutPanel14.ResumeLayout(false);
             this.tableLayoutPanel14.PerformLayout();
             this.panel2.ResumeLayout(false);
@@ -1061,6 +1084,8 @@
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
+            this.tableLayoutPanel15.ResumeLayout(false);
+            this.tableLayoutPanel15.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1080,8 +1105,6 @@
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.Label featurePageHeader;
         private System.Windows.Forms.Label label42;
-        private System.Windows.Forms.TextBox opKeyBoxInspection;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label inspectionPageHeader;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
@@ -1122,8 +1145,11 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel13;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel11;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel16;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel15;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel14;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel17;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel15;
+        private System.Windows.Forms.TextBox opKeyBoxInspection;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox textBox2;
     }
 }
