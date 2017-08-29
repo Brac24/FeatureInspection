@@ -157,6 +157,8 @@ namespace Feature_Inspection
             }
         }
 
+
+
         // INSPECTION TAB METHODS
 
         private void BindDataGridViewInspection(DataTable featuresTable)
@@ -366,8 +368,7 @@ namespace Feature_Inspection
         }
 
 
-
-        //INSPECTION ENTRY TAB HANDLERS
+        //HANDLER FOR BOTH TABS
 
         private void txtType3_KeyDown(object sender, KeyEventArgs e)
         {
@@ -383,6 +384,9 @@ namespace Feature_Inspection
             }
 
         }
+
+
+        //INSPECTION ENTRY TAB HANDLERS
 
         private void listBox5_SelectedIndexChanged(object sender, EventArgs e)
         {
