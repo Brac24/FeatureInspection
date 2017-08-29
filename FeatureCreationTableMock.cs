@@ -32,11 +32,10 @@ namespace Feature_Inspection
         {
             InitializeComponent();
             featureEditGridView.CellMouseUp += CellMouseUp;
-            //opKeyBoxInspection.KeyPress += checkEnterKeyPressedInspection;
-            //opKeyBoxInspection.KeyPress += 
-            opKeyBoxInspection.KeyDown += txtType3_KeyDown;
-            opKeyBoxFeature.KeyDown += txtType3_KeyDown;
+            opKeyBoxInspection.KeyDown += numOnly_KeyDown;
+            opKeyBoxFeature.KeyDown += numOnly_KeyDown;
         }
+
 
 
         /************************/
@@ -78,7 +77,6 @@ namespace Feature_Inspection
             get { return Int32.Parse(partsInspectedLabel.Text); }
             set { partsInspectedLabel.Text = value.ToString(); }
         }
-
 
 
 
@@ -157,6 +155,8 @@ namespace Feature_Inspection
             }
         }
 
+
+
         // INSPECTION TAB METHODS
 
         private void BindDataGridViewInspection(DataTable featuresTable)
@@ -198,11 +198,9 @@ namespace Feature_Inspection
             model.AdapterUpdateInspection((DataTable)bindingSourceInspection.DataSource);
         }
 
-        private void SetOpKeyInfo(int opkey)
+        private void SetOpKeyInfoInspection(int opkey)
         {
             DataTable info = new DataTable();
-
-
             info = model.GetInfoFromOpKeyEntry(opkey);
 
             if (info.Rows.Count > 0)
@@ -211,6 +209,7 @@ namespace Feature_Inspection
                 jobLabelInspection.Text = info.Rows[0]["Job_Number"].ToString();
                 opLabelInspection.Text = info.Rows[0]["Operation_Number"].ToString();
             }
+
             else
             {
                 partNumberLabelInspection.Text = null;
@@ -219,35 +218,23 @@ namespace Feature_Inspection
                 MessageBox.Show(opKeyBoxInspection.Text + " is and invalid please enter a valid Op Key", "Invalid OpKey");
                 opKeyBoxInspection.Clear();
             }
-
         }
 
         private void checkEnterKeyPressedInspection(object sender, KeyEventArgs e)
 
         {
-
             //Will work on an enter or tab key press
-
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
-
             {
-
                 e.Handled = true;
-
                 int opkey = Int32.Parse(opKeyBoxInspection.Text);
-
                 DataTable partList = model.GetPartsList(opkey);
-
-                SetOpKeyInfo(opkey);
-
-
-
+                SetOpKeyInfoInspection(opkey);
                 BindListBox(partList);
-
                 partNumberLabelInspection.Focus();
-
             }
         }
+
 
 
         // FEATURE TAB METHODS
@@ -332,7 +319,29 @@ namespace Feature_Inspection
             featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Edit Column"].Value = "Done";
         }
 
-        private void OpKeyEnter(object sender, KeyEventArgs e)
+        private void SetOpKeyInfoFeature(int opkey)
+        {
+            DataTable info = new DataTable();
+            info = model.GetInfoFromOpKeyEntry(opkey);
+
+            if (info.Rows.Count > 0)
+            {
+                partLabelFeature.Text = info.Rows[0]["Part_Number"].ToString();
+                jobLabelFeature.Text = info.Rows[0]["Job_Number"].ToString();
+                opLabelFeature.Text = info.Rows[0]["Operation_Number"].ToString();
+            }
+
+            else
+            {
+                partNumberLabelInspection.Text = null;
+                jobLabelInspection.Text = null;
+                opLabelInspection.Text = null;
+                MessageBox.Show(opKeyBoxInspection.Text + " is and invalid please enter a valid Op Key", "Invalid OpKey");
+                opKeyBoxInspection.Clear();
+            }
+        }
+
+        private void checkEnterKeyPressedFeatures(object sender, KeyEventArgs e)
         {
 
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
@@ -343,13 +352,20 @@ namespace Feature_Inspection
                 if (isValidOpKey)
                 {
                     DataTable partList = model.GetFeaturesOnOpKey(opkey);
+                    SetOpKeyInfoFeature(opkey);
                     DataBindTest(partList);
-                    featurePageHeader.Text = featureEditGridView.Rows[0].Cells["Part_Number_FK"].Value + " FEATURES";
+                    if (partList.Rows.Count > 0)
+                    {
+                        featurePageHeader.Text = featureEditGridView.Rows[0].Cells["Part_Number_FK"].Value + " FEATURES";
+                    }
+                    else
+                    {
+                        featurePageHeader.Text = "FEATURES PAGE";
+                    }
                 }
 
             }
         }
-
 
 
 
@@ -369,7 +385,7 @@ namespace Feature_Inspection
 
         //INSPECTION ENTRY TAB HANDLERS
 
-        private void txtType3_KeyDown(object sender, KeyEventArgs e)
+        private void numOnly_KeyDown(object sender, KeyEventArgs e)
         {
             filterTextBox(sender, e);
 
@@ -379,7 +395,7 @@ namespace Feature_Inspection
             }
             else if (sender == opKeyBoxFeature)
             {
-                OpKeyEnter(sender, e);
+                checkEnterKeyPressedFeatures(sender, e);
             }
 
         }
@@ -438,7 +454,6 @@ namespace Feature_Inspection
 
         }
 
-        //IP>Checks to make sure click event only triggers on the Edit column And changes ReadOnly.
         private void CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
         {
 
