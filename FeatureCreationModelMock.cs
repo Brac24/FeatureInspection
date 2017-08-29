@@ -18,8 +18,6 @@ namespace Feature_Inspection
 
         }
 
-
-
         public DataTable AdapterUpdate(DataTable dt)
         {
 

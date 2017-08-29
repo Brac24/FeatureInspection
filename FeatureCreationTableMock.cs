@@ -382,8 +382,7 @@ namespace Feature_Inspection
         }
 
 
-
-        //INSPECTION ENTRY TAB HANDLERS
+        //HANDLER FOR BOTH TABS
 
         private void numOnly_KeyDown(object sender, KeyEventArgs e)
         {
@@ -399,6 +398,9 @@ namespace Feature_Inspection
             }
 
         }
+
+
+        //INSPECTION ENTRY TAB HANDLERS
 
         private void listBox5_SelectedIndexChanged(object sender, EventArgs e)
         {
