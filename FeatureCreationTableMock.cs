@@ -276,15 +276,43 @@ namespace Feature_Inspection
 
         private void checkEnterKeyPressedInspection(object sender, KeyPressEventArgs e)
         {
+            
             //Will work on an enter or tab key press
             if ((Keys)e.KeyChar == Keys.Enter || (Keys)e.KeyChar == Keys.Tab)
             {
-                DataTable partList = model.GetPartsList(Int32.Parse(opKeyBoxInspection.Text));
+                int opkey = Int32.Parse(opKeyBoxInspection.Text);
+                DataTable partList = model.GetPartsList(opkey);
+                SetOpKeyInfo(opkey);
 
                 BindListBox(partList);
             }
         }
-        
+
+        private void SetOpKeyInfo(int opkey)
+        {
+            DataTable info = new DataTable();
+            
+
+            info = model.GetInfoFromOpKeyEntry(opkey);
+
+            if (info.Rows.Count > 0)
+            {
+                partNumberLabelInspection.Text = info.Rows[0]["Part_Number"].ToString();
+                jobLabelInspection.Text = info.Rows[0]["Job_Number"].ToString();
+                opLabelInspection.Text = info.Rows[0]["Operation_Number"].ToString();
+            }
+            else
+            {
+                partNumberLabelInspection.Text = null;
+                jobLabelInspection.Text = null;
+                opLabelInspection.Text = null;
+                MessageBox.Show("Invalid Op Key");
+            }
+            
+            
+
+        }
+
 
         private void AddTableRow(DataTable t)
         {
@@ -323,8 +351,12 @@ namespace Feature_Inspection
         private void nextPartButton_Click(object sender, EventArgs e)
         {
             //+1 to selectedindex because we need to check what index it is going in to first
-            partsListBox.SelectedIndex = (partsListBox.SelectedIndex + 1 < partsListBox.Items.Count) ? 
-                partsListBox.SelectedIndex += 1: partsListBox.SelectedIndex = 0;
+            if(partsListBox.Items.Count > 0)
+            {
+                partsListBox.SelectedIndex = (partsListBox.SelectedIndex + 1 < partsListBox.Items.Count) ?
+                partsListBox.SelectedIndex += 1 : partsListBox.SelectedIndex = 0;
+            }
+            
 
         }
 

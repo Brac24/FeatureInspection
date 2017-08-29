@@ -17,12 +17,12 @@ namespace Feature_Inspection
         {
 
         }
-       
-        
+
+
 
         public DataTable AdapterUpdate(DataTable dt)
         {
-            
+
             DataTable changedTable = new DataTable();
 
             using (OdbcConnection conn = new OdbcConnection(connection_string))
@@ -74,7 +74,7 @@ namespace Feature_Inspection
 
                 //End Command Initialization
 
-                
+
 
                 changedTable = dt.GetChanges();
 
@@ -137,7 +137,7 @@ namespace Feature_Inspection
 
                 dataAdapter = adapter;
 
-                
+
                 com.CommandText = query;
                 t = new DataTable();
                 dataAdapter.Fill(t);
@@ -151,7 +151,7 @@ namespace Feature_Inspection
         public DataTable GetPartsList(int opKey)
         {
             DataTable t;
-            
+
             using (OdbcConnection conn = new OdbcConnection(connection_string))
             using (OdbcCommand com = conn.CreateCommand())
             using (OdbcDataAdapter dataAdapter = new OdbcDataAdapter(com))
@@ -180,7 +180,7 @@ namespace Feature_Inspection
                 string query = "SELECT CAST(Features.Nominal AS varchar(50)) + ' +' + CAST(Features.Plus_Tolerance AS varchar(50)) + ' -' + CAST(Features.Minus_Tolerance AS varchar(50)) AS Feature, Position.Inspection_Key_FK, Features.Feature_Key,Position.Position_Key, Measured_Value AS 'Measured Actual', Position.InspectionTool FROM ATI_FeatureInspection.dbo.Position " +
                                 " LEFT JOIN ATI_FeatureInspection.dbo.Features ON Position.Feature_Key = Features.Feature_Key" +
                                 " WHERE Inspection_Key_FK = (SELECT Inspection_Key FROM ATI_FeatureInspection.dbo.Inspection" +
-                                " WHERE Op_Key = "+ opKey + ") AND Piece_ID = " + partIndex + ";";
+                                " WHERE Op_Key = " + opKey + ") AND Piece_ID = " + partIndex + ";";
 
                 com.CommandText = query;
                 t = new DataTable();
@@ -190,5 +190,31 @@ namespace Feature_Inspection
 
             return t;
         }
+
+        public DataTable GetInfoFromOpKeyEntry(int opkey)
+        {
+            DataTable t;
+
+            using (OdbcConnection conn = new OdbcConnection(connection_string))
+            using (OdbcCommand com = conn.CreateCommand())
+            using (OdbcDataAdapter dataAdapter = new OdbcDataAdapter(com))
+            {
+                conn.Open();
+
+                string query = "SELECT Job.Part_Number AS Part_Number, Job_Operation.Job AS Job_Number, Job_Operation.Operation_Service AS Operation_Number\n" +
+                               "FROM PRODUCTION.dbo.Job\n" +
+                               "INNER JOIN PRODUCTION.dbo.Job_Operation\n" +
+                               "ON Job.Job = Job_Operation.Job\n" +
+                               "WHERE Job_Operation.Job_Operation = '" + opkey + "';";
+
+                com.CommandText = query;
+                t = new DataTable();
+                dataAdapter.Fill(t);
+
+                return t;
+
+            }
+        }
+
     }
 }
