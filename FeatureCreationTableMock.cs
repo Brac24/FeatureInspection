@@ -309,8 +309,13 @@ namespace Feature_Inspection
 
             }
 
-            if (modifier || nonNumber)
+            if (modifier || nonNumber || e.KeyCode == Keys.OemPeriod || e.KeyCode == Keys.OemMinus || e.KeyCode == Keys.Oemcomma)
                 e.SuppressKeyPress = true;
+
+            if (e.KeyCode >= (Keys)96 && e.KeyCode <= (Keys)105)
+            {
+                e.SuppressKeyPress = false;
+            }
 
             //Handle pasted Text
             if (e.Control && e.KeyCode == Keys.V)
@@ -422,6 +427,10 @@ namespace Feature_Inspection
 
         }
 
+        private void opKeyBoxFeature_KeyPress(object sender, KeyPressEventArgs e)
+        {
+           
+        }
     }
 
 }
