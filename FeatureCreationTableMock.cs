@@ -154,7 +154,7 @@ namespace Feature_Inspection
             }
         }
 
-
+        #region Inspection Tab Methods
         // INSPECTION TAB METHODS
 
         private void BindDataGridViewInspection(DataTable featuresTable)
@@ -198,7 +198,7 @@ namespace Feature_Inspection
             model.AdapterUpdateInspection((DataTable)bindingSourceInspection.DataSource);
         }
 
-        private void SetOpKeyInfoInspection(int opkey)
+        private bool SetOpKeyInfoInspection(int opkey)
         {
             DataTable info = new DataTable();
             info = model.GetInfoFromOpKeyEntry(opkey);
@@ -208,6 +208,8 @@ namespace Feature_Inspection
                 partNumberLabelInspection.Text = info.Rows[0]["Part_Number"].ToString();
                 jobLabelInspection.Text = info.Rows[0]["Job_Number"].ToString();
                 opLabelInspection.Text = info.Rows[0]["Operation_Number"].ToString();
+
+                return true;
             }
 
             else
@@ -217,6 +219,8 @@ namespace Feature_Inspection
                 opLabelInspection.Text = null;
                 MessageBox.Show(opKeyBoxInspection.Text + " is invalid please enter a valid Op Key", "Invalid OpKey");
                 opKeyBoxInspection.Clear();
+
+                return false;
             }
         }
 
@@ -226,17 +230,54 @@ namespace Feature_Inspection
             //Will work on an enter or tab key press
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
             {
+                DataTable featureTable;
+                bool isValidOpKey = false;
+                bool inspectionExists = false;
                 e.Handled = true;
                 int opkey = Int32.Parse(opKeyBoxInspection.Text);
                 DataTable partList = model.GetPartsList(opkey);
-                SetOpKeyInfoInspection(opkey);
-                BindListBox(partList);
+                isValidOpKey = SetOpKeyInfoInspection(opkey);
+
+                if(isValidOpKey)
+                {
+                    inspectionExists = model.GetInspectionExistsOnOpKey(opkey);
+
+                    if(inspectionExists)
+                    {
+
+                    }
+                    else
+                    {
+                        //Create the inspection in inspection table
+                    }
+
+                    //Check if there are features realted on op and part numn
+                    featureTable = model.GetFeaturesOnOpKey(opkey);
+
+                    if(featureTable.Rows.Count > 0)
+                    {
+                        if(partList.Rows.Count > 0)
+                        {
+                            BindListBox(partList);
+                        }
+                    }
+                    else
+                    {
+                        //Message user to add features to this part num op num
+                    }
+
+
+                }
+                
                 partNumberLabelInspection.Focus();
             }
         }
 
+        #endregion
 
 
+
+        #region Feature Tab Methods
         // FEATURE TAB METHODS
 
         //IP>Test code to try combo box workability. Will be replaced with a .DataSource method.
@@ -368,6 +409,8 @@ namespace Feature_Inspection
             }
         }
 
+        #endregion
+
 
 
         /************************/
@@ -401,6 +444,8 @@ namespace Feature_Inspection
         }
 
 
+
+        #region Inspection Handlers
         //INSPECTION ENTRY TAB HANDLERS
 
         private void listBox5_SelectedIndexChanged(object sender, EventArgs e)
@@ -438,6 +483,9 @@ namespace Feature_Inspection
             }
         }
 
+        #endregion
+
+        #region Feature Handlers
 
         // FEATURE HANDLERS
 
@@ -511,6 +559,8 @@ namespace Feature_Inspection
         {
             AdapterUpdateInspection();
         }
+
+        #endregion
 
     }
 

@@ -220,5 +220,29 @@ namespace Feature_Inspection
             }
         }
 
+        public bool GetInspectionExistsOnOpKey(int opkey)
+        {
+            bool inspectionExists = false;
+            string query = "SELECT Inspection_Key FROM ATI_FeatureInspection.dbo.Inspection " +
+                           "WHERE Op_Key = " + opkey;
+
+            using (OdbcConnection conn = new OdbcConnection(connection_string))
+            {
+                conn.Open();
+
+
+                OdbcCommand com2 = new OdbcCommand(query, conn);
+                OdbcDataReader reader2 = com2.ExecuteReader();
+
+                //Check that query returned data
+                if (reader2.Read())
+                {
+                    inspectionExists = true;
+                }
+            }
+
+            return inspectionExists;
+        }
+
     }
 }
