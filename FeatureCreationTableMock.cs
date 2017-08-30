@@ -240,29 +240,42 @@ namespace Feature_Inspection
 
                     if(inspectionExists)
                     {
+                        //Check if there are features related on op and part numn
+                        featureTable = model.GetFeaturesOnOpKey(opkey);
 
-                    }
-                    else
-                    {
-                        //Create the inspection in inspection table
-                    }
-
-                    //Check if there are features realted on op and part numn
-                    featureTable = model.GetFeaturesOnOpKey(opkey);
-
-                    if(featureTable.Rows.Count > 0)
-                    {
-                        if(partList.Rows.Count > 0)
+                        if (featureTable.Rows.Count > 0)
                         {
-                            BindListBox(partList);
+                            //Check if there are parts in position
+                            if (partList.Rows.Count > 0)
+                            {
+                                //Get the parts if there are
+                                BindListBox(partList);
+                            }
+                            else
+                            {
+                                //Create the parts in the positions table
+
+                                //Get part list DataTable partList = model.GetPartsList(opkey);
+
+                                //Bind the part list box BindListBox(partList);
+                            }
+                        }
+                        else
+                        {
+                            //Message user to add features to this part num op num
                         }
                     }
                     else
                     {
-                        //Message user to add features to this part num op num
+                        //Create the inspection in inspection table
+
+                        //Run the logic inside the if loop above
                     }
 
-
+                }
+                else
+                {
+                    //Not valid opkey
                 }
                 
                 partNumberLabelInspection.Focus();
