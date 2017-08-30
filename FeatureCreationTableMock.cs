@@ -31,9 +31,11 @@ namespace Feature_Inspection
         public FeatureCreationTableMock()
         {
             InitializeComponent();
-            featureEditGridView.CellMouseUp += CellMouseUp;
             opKeyBoxInspection.KeyDown += numOnly_KeyDown;
-            opKeyBoxFeature.KeyDown += numOnly_KeyDown;
+            //partBoxFeature.KeyDown += numOnly_KeyDown;
+            //opBoxFeature.KeyDown += numOnly_KeyDown;
+            partBoxFeature.KeyDown += checkEnterKeyPressedFeatures;
+            opBoxFeature.KeyDown += checkEnterKeyPressedFeatures;
         }
 
 
@@ -63,12 +65,6 @@ namespace Feature_Inspection
         {
             get { return statusLabelInspection.Text; }
             set { statusLabelInspection.Text = value; }
-        }
-
-        public int LotSize
-        {
-            get { return Int32.Parse(lotLabelInspection.Text); }
-            set { lotLabelInspection.Text = value.ToString(); }
         }
 
         public int PartsInspected
@@ -245,6 +241,16 @@ namespace Feature_Inspection
                 "Surface Finish", "Linear", "Square", "GDT", "Depth");
         }
 
+        private static void SampleChoices(DataGridViewComboBoxColumn comboboxColumn)
+        {
+            comboboxColumn.Items.AddRange("100%", "First Piece", "First & Last", "Sample Plan");
+        }
+
+        private static void ToolCategories(DataGridViewComboBoxColumn comboboxColumn)
+        {
+            comboboxColumn.Items.AddRange("0-1 Mic", "Height Stand");
+        }
+
         private void DataBindTest(DataTable featureTable)
         {
 
@@ -264,17 +270,20 @@ namespace Feature_Inspection
             featureEditGridView.Columns["Active"].Visible = false;
             featureEditGridView.Columns["Plus_Tolerance"].HeaderText = "+";
             featureEditGridView.Columns["Minus_Tolerance"].HeaderText = "-";
+            featureEditGridView.Columns["Pieces"].Visible = false;
             featureEditGridView.Columns["FeatureType"].Visible = false;
+            featureEditGridView.Columns["Places"].Visible = false;
 
             maxRows = featureTable.Rows.Count;
 
-
+            /*
             for (int i = 0; i < featureEditGridView.Rows.Count; i++)
             {
                 featureEditGridView.Rows[i].ReadOnly = true;
             }
 
             //IP>Initializes and defines the edit button column.
+            
             DataGridViewButtonColumn EditButtonColumn = new DataGridViewButtonColumn();
             EditButtonColumn.Name = "Edit Column";
             featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, EditButtonColumn);
@@ -282,18 +291,35 @@ namespace Feature_Inspection
             {
                 featureEditGridView.Rows[i].Cells["Edit Column"].Value = "Edit";
             }
-            for (int j = 0; j < featureEditGridView.ColumnCount; j++)
-            {
-                featureEditGridView.Columns[j].SortMode = DataGridViewColumnSortMode.NotSortable;
-            }
+            */
+
 
 
             //IP>Initializes and defines the feature type column.
             DataGridViewComboBoxColumn FeatureDropColumn = new DataGridViewComboBoxColumn();
+            DataGridViewComboBoxColumn SamplingColumn = new DataGridViewComboBoxColumn();
+            DataGridViewTextBoxColumn BubbleColumn = new DataGridViewTextBoxColumn();
+            DataGridViewComboBoxColumn ToolCategoryColumn = new DataGridViewComboBoxColumn();
             FeatureDropColumn.HeaderText = "Feature Type";
             featureEditGridView.Columns.Insert(0, FeatureDropColumn);
+            FeatureDropColumn.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
             FeatureDropChoices(FeatureDropColumn);
+            BubbleColumn.HeaderText = "Sketch Bubble";
+            featureEditGridView.Columns.Insert(0, BubbleColumn);
+            featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, SamplingColumn);
+            SamplingColumn.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
+            SamplingColumn.HeaderText = "Sample";
+            SampleChoices(SamplingColumn);
+            featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, ToolCategoryColumn);
+            ToolCategoryColumn.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
+            ToolCategories(ToolCategoryColumn);
+            ToolCategoryColumn.HeaderText = "Tool";
 
+
+            for (int j = 0; j < featureEditGridView.ColumnCount; j++)
+            {
+                featureEditGridView.Columns[j].SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
 
         }
 
@@ -315,7 +341,6 @@ namespace Feature_Inspection
             }
             DataRow newRow = t.NewRow();
             t.Rows.Add(newRow);
-            featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Edit Column"].Value = "Done";
         }
 
         private void SetOpKeyInfoFeature(int opkey)
@@ -323,20 +348,10 @@ namespace Feature_Inspection
             DataTable info = new DataTable();
             info = model.GetInfoFromOpKeyEntry(opkey);
 
-            if (info.Rows.Count > 0)
+            if (info.Rows.Count <= 0)
             {
-                partLabelFeature.Text = info.Rows[0]["Part_Number"].ToString();
-                jobLabelFeature.Text = info.Rows[0]["Job_Number"].ToString();
-                opLabelFeature.Text = info.Rows[0]["Operation_Number"].ToString();
-            }
-
-            else
-            {
-                partLabelFeature.Text = null;
-                jobLabelFeature.Text = null;
-                opLabelFeature.Text = null;
-                MessageBox.Show(opKeyBoxFeature.Text + " is invalid please enter a valid Op Key", "Invalid OpKey");
-                opKeyBoxFeature.Clear();
+                MessageBox.Show(partBoxFeature.Text + " is invalid please enter a valid Op Key", "Invalid OpKey");
+                partBoxFeature.Clear();
             }
         }
 
@@ -346,22 +361,25 @@ namespace Feature_Inspection
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
             {
                 e.Handled = true;
-                int opkey;
-                bool isValidOpKey = Int32.TryParse(opKeyBoxFeature.Text, out opkey);
-                if (isValidOpKey)
+                string partNumber = partBoxFeature.Text;
+                string operationNum = opBoxFeature.Text; ;
+
+                if (partNumber != "" && operationNum != "")
                 {
-                    DataTable partList = model.GetFeaturesOnOpKey(opkey);
-                    SetOpKeyInfoFeature(opkey);
+                    DataTable partList = model.GetFeaturesOnOpKey(partNumber, operationNum);
                     DataBindTest(partList);
-                    partLabelFeature.Focus();
                     if (partList.Rows.Count > 0)
                     {
-                        featurePageHeader.Text = featureEditGridView.Rows[0].Cells["Part_Number_FK"].Value + " FEATURES";
+                        featurePageHeader.Text = "PART " + featureEditGridView.Rows[0].Cells["Part_Number_FK"].Value + " OP " + featureEditGridView.Rows[0].Cells["Operation_Number_FK"].Value + " FEATURES";
                     }
                     else
                     {
                         featurePageHeader.Text = "FEATURES PAGE";
                     }
+                }
+                else
+                {
+                    return;
                 }
 
             }
@@ -392,10 +410,14 @@ namespace Feature_Inspection
             {
                 checkEnterKeyPressedInspection(sender, e);
             }
-            else if (sender == opKeyBoxFeature)
+           /* else if (sender == partBoxFeature)
             {
                 checkEnterKeyPressedFeatures(sender, e);
             }
+            else if (sender == opBoxFeature)
+            {
+                checkEnterKeyPressedFeatures(sender, e);
+            }*/
 
         }
 
@@ -446,44 +468,6 @@ namespace Feature_Inspection
 
         }
 
-        private void CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
-        {
-
-            if (e.RowIndex == -1 || e.ColumnIndex == -1)
-                return;
-
-            var table = (DataGridView)sender;
-            var button = (DataGridViewButtonCell)table.Rows[e.RowIndex].Cells["Edit Column"];
-
-
-            if (e.ColumnIndex == featureEditGridView.Columns["Edit Column"].Index
-                && (string)featureEditGridView.Rows[e.RowIndex].Cells["Edit Column"].Value == "Edit")
-            {
-                button.UseColumnTextForButtonValue = false;
-                featureEditGridView.Rows[e.RowIndex].ReadOnly = false;
-                featureEditGridView.Rows[e.RowIndex].Cells["Edit Column"].Value = "Done";
-            }
-            else if (e.ColumnIndex == featureEditGridView.Columns["Edit Column"].Index
-                && (string)featureEditGridView.Rows[e.RowIndex].Cells["Edit Column"].Value == "Done")
-            {
-                DoneClicked(featureEditGridView.Rows[e.RowIndex], EventArgs.Empty);
-                featureEditGridView.Rows[e.RowIndex].ReadOnly = true;
-                featureEditGridView.Rows[e.RowIndex].Cells["Edit Column"].Value = "Edit";
-                AdapterUpdate();
-            }
-            else if (featureEditGridView.Columns[e.ColumnIndex] is DataGridViewComboBoxColumn
-                    && (string)featureEditGridView.Rows[e.RowIndex].Cells["Edit Column"].Value == "Done")
-            {
-                featureEditGridView.BeginEdit(true);
-                ((ComboBox)featureEditGridView.EditingControl).DroppedDown = true;
-            }
-            else
-            {
-                featureEditGridView.BeginEdit(true);
-            }
-
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
             if (bindingSource == null)
@@ -502,7 +486,6 @@ namespace Feature_Inspection
 
         private void dataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
-
             featureEditGridView.Rows[e.RowIndex].ReadOnly = false;
         }
 

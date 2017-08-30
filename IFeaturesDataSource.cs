@@ -13,7 +13,7 @@ namespace Feature_Inspection
         //Job JobInfo { get; }
 
         //Will bind data directly to view. No need to go through presenter
-        DataTable GetFeaturesOnOpKey(int opKey);
+        DataTable GetFeaturesOnOpKey(string partnumber, string operationNum);
 
         DataTable AdapterUpdate(DataTable table);
 
