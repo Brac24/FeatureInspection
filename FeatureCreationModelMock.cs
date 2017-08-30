@@ -93,7 +93,7 @@ namespace Feature_Inspection
             return changedTable;
         }
 
-        public DataTable GetFeaturesOnOpKey(int opKey)
+        public DataTable GetFeaturesOnOpKey(string partNumber, string operationNum)
         {
             DataTable t;
             OdbcDataAdapter dataAdapter;
@@ -101,7 +101,7 @@ namespace Feature_Inspection
             using (OdbcCommand com = conn.CreateCommand())
             using (OdbcDataAdapter adapter = new OdbcDataAdapter(com))
             {
-                string query = "SELECT * FROM ATI_FeatureInspection.dbo.Features WHERE Part_Number_FK = (SELECT Part_Number FROM ATI_FeatureInspection.dbo.Operation WHERE Op_Key =  " + opKey + ") AND Operation_Number_FK = (SELECT Operation_Number FROM ATI_FeatureInspection.dbo.Operation WHERE Op_Key = " + opKey + ");";
+                string query = "SELECT * FROM ATI_FeatureInspection.dbo.Features WHERE Part_Number_FK = '" + partNumber + "' AND Operation_Number_FK = '" + operationNum + "';";
 
                 dataAdapter = adapter;
 
