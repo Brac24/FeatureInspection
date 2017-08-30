@@ -263,11 +263,13 @@ namespace Feature_Inspection
                         else
                         {
                             //Message user to add features to this part num op num
+                            MessageBox.Show("Lead must add features to this Part and Operation number");
                         }
                     }
                     else
                     {
                         //Create the inspection in inspection table
+                        MessageBox.Show("Creating Inspection");
 
                         //Run the logic inside the if loop above
                     }
@@ -276,6 +278,7 @@ namespace Feature_Inspection
                 else
                 {
                     //Not valid opkey
+                    
                 }
                 
                 partNumberLabelInspection.Focus();
