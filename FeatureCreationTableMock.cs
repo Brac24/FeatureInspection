@@ -215,7 +215,7 @@ namespace Feature_Inspection
                 partNumberLabelInspection.Text = null;
                 jobLabelInspection.Text = null;
                 opLabelInspection.Text = null;
-                MessageBox.Show(opKeyBoxInspection.Text + " is and invalid please enter a valid Op Key", "Invalid OpKey");
+                MessageBox.Show(opKeyBoxInspection.Text + " is invalid please enter a valid Op Key", "Invalid OpKey");
                 opKeyBoxInspection.Clear();
             }
         }
@@ -333,11 +333,11 @@ namespace Feature_Inspection
 
             else
             {
-                partNumberLabelInspection.Text = null;
-                jobLabelInspection.Text = null;
-                opLabelInspection.Text = null;
-                MessageBox.Show(opKeyBoxInspection.Text + " is and invalid please enter a valid Op Key", "Invalid OpKey");
-                opKeyBoxInspection.Clear();
+                partLabelFeature.Text = null;
+                jobLabelFeature.Text = null;
+                opLabelFeature.Text = null;
+                MessageBox.Show(opKeyBoxFeature.Text + " is invalid please enter a valid Op Key", "Invalid OpKey");
+                opKeyBoxFeature.Clear();
             }
         }
 
@@ -354,6 +354,7 @@ namespace Feature_Inspection
                     DataTable partList = model.GetFeaturesOnOpKey(opkey);
                     SetOpKeyInfoFeature(opkey);
                     DataBindTest(partList);
+                    partLabelFeature.Focus();
                     if (partList.Rows.Count > 0)
                     {
                         featurePageHeader.Text = featureEditGridView.Rows[0].Cells["Part_Number_FK"].Value + " FEATURES";
@@ -412,6 +413,7 @@ namespace Feature_Inspection
             if (listBox.Text.Contains("Part"))
             {
                 int listBoxIndex = listBox.SelectedIndex;
+                inspectionPageHeader.Text = listBox.Text;
                 int pieceID = listBoxIndex + 1; //Due to 0 indexing
                 featureTable = model.GetFeaturesOnPartIndex(pieceID, Int32.Parse(opKeyBoxInspection.Text));
                 BindDataGridViewInspection(featureTable);
@@ -509,6 +511,7 @@ namespace Feature_Inspection
         {
             AdapterUpdateInspection();
         }
+
     }
 
 }
