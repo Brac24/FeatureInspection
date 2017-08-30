@@ -171,12 +171,13 @@ namespace Feature_Inspection
             inspectionEntryGridView.Columns["Measured Actual"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             inspectionEntryGridView.Columns["InspectionTool"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
+            
             inspectionEntryGridView.Columns["Feature"].ReadOnly = true;
 
             if (inspectionEntryGridView.RowCount != 0)
             {
                 inspectionEntryGridView.Rows[0].Cells["Measured Actual"].Selected = true;
-
+                inspectionEntryGridView.Rows[(inspectionEntryGridView.RowCount - 1)].ReadOnly = true;
             }
         }
 
