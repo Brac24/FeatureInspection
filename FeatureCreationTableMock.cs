@@ -308,6 +308,10 @@ namespace Feature_Inspection
         private static void ToolCategories(DataGridViewComboBoxColumn comboboxColumn)
         {
             comboboxColumn.Items.AddRange("0-1 Mic", "Height Stand");
+            
+            /*
+            string query = "SELECT Category FROM ATI_uniPoint_Live.dbo.PT_Equip WHERE Class = 'Inspection Tool' AND Category IS NOT NULL GROUP BY Category";
+            comboboxColumn.Items.AddRange(query); */
         }
 
         private void DataBindTest(DataTable featureTable)
@@ -332,13 +336,15 @@ namespace Feature_Inspection
             featureEditGridView.Columns["Pieces"].Visible = false;
             featureEditGridView.Columns["FeatureType"].Visible = false;
             featureEditGridView.Columns["Places"].Visible = false;
+            featureEditGridView.Columns["Sample"].Visible = false;
 
             maxRows = featureTable.Rows.Count;
             
-            //IP>Initializes and defines the feature type column.
+            //Creates extra columns in Feature Page
             DataGridViewComboBoxColumn FeatureDropColumn = new DataGridViewComboBoxColumn();
             DataGridViewComboBoxColumn SamplingColumn = new DataGridViewComboBoxColumn();
             DataGridViewTextBoxColumn BubbleColumn = new DataGridViewTextBoxColumn();
+            DataGridViewCellStyle cellStyle = new DataGridViewCellStyle();
             DataGridViewComboBoxColumn ToolCategoryColumn = new DataGridViewComboBoxColumn();
             DataGridViewButtonColumn DeleteButtonColumn = new DataGridViewButtonColumn();
             BubbleColumn.HeaderText = "Sketch Bubble (Optional)";
@@ -351,9 +357,6 @@ namespace Feature_Inspection
             featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, SamplingColumn);
             featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, ToolCategoryColumn);
             featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, DeleteButtonColumn);
-            //FeatureDropColumn.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
-            //ToolCategoryColumn.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
-            //SamplingColumn.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
             FeatureDropChoices(FeatureDropColumn);
             SampleChoices(SamplingColumn);
             ToolCategories(ToolCategoryColumn);
@@ -412,7 +415,7 @@ namespace Feature_Inspection
                     featureEditGridView.Focus();
                 }
                 string partNumber = partBoxFeature.Text;
-                string operationNum = opBoxFeature.Text; ;
+                string operationNum = opBoxFeature.Text;
 
                 if (partNumber != "" && operationNum != "")
                 {
@@ -604,7 +607,6 @@ namespace Feature_Inspection
         }
 
         #endregion
-
     }
 
 }
