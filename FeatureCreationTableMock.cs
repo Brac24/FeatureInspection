@@ -32,10 +32,11 @@ namespace Feature_Inspection
         {
             InitializeComponent();
             opKeyBoxInspection.KeyDown += numOnly_KeyDown;
-            //partBoxFeature.KeyDown += numOnly_KeyDown;
-            //opBoxFeature.KeyDown += numOnly_KeyDown;
             partBoxFeature.KeyDown += checkEnterKeyPressedFeatures;
             opBoxFeature.KeyDown += checkEnterKeyPressedFeatures;
+            lotSizeBoxInspection.KeyDown += numOnly_KeyDown;
+            featureEditGridView.CellMouseUp += DeleteRowFeature;
+
         }
 
 
@@ -296,7 +297,7 @@ namespace Feature_Inspection
         //IP>Test code to try combo box workability. Will be replaced with a .DataSource method.
         private static void FeatureDropChoices(DataGridViewComboBoxColumn comboboxColumn)
         {
-            comboboxColumn.Items.AddRange("Diameter", "Fillet", "Chamfer", "Angle", "M.O.W.",
+            comboboxColumn.Items.AddRange(" ", "Diameter", "Fillet", "Chamfer", "Angle", "M.O.W.",
                 "Surface Finish", "Linear", "Square", "GDT", "Depth");
         }
 
@@ -334,47 +335,30 @@ namespace Feature_Inspection
             featureEditGridView.Columns["Places"].Visible = false;
 
             maxRows = featureTable.Rows.Count;
-
-            /*
-            for (int i = 0; i < featureEditGridView.Rows.Count; i++)
-            {
-                featureEditGridView.Rows[i].ReadOnly = true;
-            }
-
-            //IP>Initializes and defines the edit button column.
             
-            DataGridViewButtonColumn EditButtonColumn = new DataGridViewButtonColumn();
-            EditButtonColumn.Name = "Edit Column";
-            featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, EditButtonColumn);
-            for (int i = 0; i < featureEditGridView.Rows.Count; i++)
-            {
-                featureEditGridView.Rows[i].Cells["Edit Column"].Value = "Edit";
-            }
-            */
-
-
-
             //IP>Initializes and defines the feature type column.
             DataGridViewComboBoxColumn FeatureDropColumn = new DataGridViewComboBoxColumn();
             DataGridViewComboBoxColumn SamplingColumn = new DataGridViewComboBoxColumn();
             DataGridViewTextBoxColumn BubbleColumn = new DataGridViewTextBoxColumn();
             DataGridViewComboBoxColumn ToolCategoryColumn = new DataGridViewComboBoxColumn();
-            FeatureDropColumn.HeaderText = "Feature Type";
-            featureEditGridView.Columns.Insert(0, FeatureDropColumn);
-            FeatureDropColumn.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
-            FeatureDropChoices(FeatureDropColumn);
-            BubbleColumn.HeaderText = "Sketch Bubble";
-            featureEditGridView.Columns.Insert(0, BubbleColumn);
-            featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, SamplingColumn);
-            SamplingColumn.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
+            DataGridViewButtonColumn DeleteButtonColumn = new DataGridViewButtonColumn();
+            BubbleColumn.HeaderText = "Sketch Bubble (Optional)";
             SamplingColumn.HeaderText = "Sample";
-            SamplingColumn.DataSource = featureTable.Columns["Sample"];
-            SampleChoices(SamplingColumn);
-            featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, ToolCategoryColumn);
-            ToolCategoryColumn.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
-            ToolCategories(ToolCategoryColumn);
             ToolCategoryColumn.HeaderText = "Tool";
-
+            FeatureDropColumn.HeaderText = "Feature Type (Optional)";
+            DeleteButtonColumn.HeaderText = "Delete Feature";
+            featureEditGridView.Columns.Insert(0, BubbleColumn);
+            featureEditGridView.Columns.Insert(0, FeatureDropColumn);
+            featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, SamplingColumn);
+            featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, ToolCategoryColumn);
+            featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, DeleteButtonColumn);
+            
+            FeatureDropChoices(FeatureDropColumn);
+            //SamplingColumn.DataSource = featureTable.Columns["Sample"];
+            SampleChoices(SamplingColumn);
+            ToolCategories(ToolCategoryColumn);
+            DeleteButtonColumn.Text = "Delete";
+            DeleteButtonColumn.UseColumnTextForButtonValue = true;
 
             for (int j = 0; j < featureEditGridView.ColumnCount; j++)
             {
@@ -407,20 +391,26 @@ namespace Feature_Inspection
         {
             DataTable info = new DataTable();
             info = model.GetInfoFromOpKeyEntry(opkey);
-
-            if (info.Rows.Count <= 0)
-            {
-                MessageBox.Show(partBoxFeature.Text + " is invalid please enter a valid Op Key", "Invalid OpKey");
-                partBoxFeature.Clear();
-            }
         }
 
         private void checkEnterKeyPressedFeatures(object sender, KeyEventArgs e)
         {
+            char currentKey = (char)e.KeyCode;
+            bool nonNumber = char.IsWhiteSpace(currentKey);
+
+            if (nonNumber)
+                e.SuppressKeyPress = true;
 
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
             {
-                e.Handled = true;
+                if (partBoxFeature.ContainsFocus)
+                {
+                    opBoxFeature.Focus();
+                }
+                else if (opBoxFeature.ContainsFocus)
+                {
+                    featureEditGridView.Focus();
+                }
                 string partNumber = partBoxFeature.Text;
                 string operationNum = opBoxFeature.Text; ;
 
@@ -440,6 +430,20 @@ namespace Feature_Inspection
                 else
                 {
                     return;
+                }
+
+            }
+        }
+
+        private void DeleteRowFeature(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            var table = (DataGridView)sender;
+
+            if (e.ColumnIndex != -1)
+            {
+                if (e.ColumnIndex == featureEditGridView.Columns[featureEditGridView.ColumnCount -1].Index)
+                {
+                    featureEditGridView.Rows.Remove(featureEditGridView.Rows[e.RowIndex]);
                 }
 
             }
@@ -540,7 +544,7 @@ namespace Feature_Inspection
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void addFeature_Click(object sender, EventArgs e)
         {
             if (bindingSource == null)
             {
@@ -556,18 +560,59 @@ namespace Feature_Inspection
 
         }
 
-        private void dataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        private void cancelChanges_Click(object sender, EventArgs e)
         {
-            featureEditGridView.Rows[e.RowIndex].ReadOnly = false;
+            const string message = "Are you sure you want to cancel all changes made to this set of features? " +
+                "Any changes to this table will be reverted.";
+            const string caption = "Cancel Changes";
+            var result = MessageBox.Show(message, caption,
+                                 MessageBoxButtons.YesNo,
+                                 MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                //Rebind Database
+                string partNumber = partBoxFeature.Text;
+                string operationNum = opBoxFeature.Text;
+                DataTable partList = model.GetFeaturesOnOpKey(partNumber, operationNum);
+                DataBindTest(partList);
+            }
         }
 
-        
+        private void saveChanges_Click(object sender, EventArgs e)
+        {
+            
+        }
+
 
         #endregion
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            AdapterUpdate();
+            const string message0 = "Are you sure you want to save all changes made to this set of features? " +
+                "All changes will save to the database.";
+            const string caption0 = "Save Changes";
+            var result = MessageBox.Show(message0, caption0,
+                                 MessageBoxButtons.YesNo,
+                                 MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                AdapterUpdate();
+                const string message1 = "All changes made to the table have been updated to the database";
+                const string caption1 = "Table Saved";
+                var result2 = MessageBox.Show(message1, caption1);
+                //Send featureEditGridView table back to database.
+
+            }
+
+            else if (result == DialogResult.No)
+            {
+                const string message2 = "Any Changes to the table have not been updated to the database";
+                const string caption2 = "Table Not Saved";
+                var result2 = MessageBox.Show(message2, caption2);
+            }
+
+            
         }
     }
 

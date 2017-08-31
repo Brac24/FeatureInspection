@@ -31,11 +31,13 @@ namespace Feature_Inspection
         public FeatureCreationTableMock()
         {
             InitializeComponent();
-            featureEditGridView.CellMouseUp += CellMouseUp;
             opKeyBoxInspection.KeyDown += numOnly_KeyDown;
-            opKeyBoxFeature.KeyDown += numOnly_KeyDown;
-        }
+            partBoxFeature.KeyDown += checkEnterKeyPressedFeatures;
+            opBoxFeature.KeyDown += checkEnterKeyPressedFeatures;
+            lotSizeBoxInspection.KeyDown += numOnly_KeyDown;
+            featureEditGridView.CellMouseUp += DeleteRowFeature;
 
+        }
 
 
         /************************/
@@ -64,12 +66,6 @@ namespace Feature_Inspection
         {
             get { return statusLabelInspection.Text; }
             set { statusLabelInspection.Text = value; }
-        }
-
-        public int LotSize
-        {
-            get { return Int32.Parse(lotLabelInspection.Text); }
-            set { lotLabelInspection.Text = value.ToString(); }
         }
 
         public int PartsInspected
@@ -155,7 +151,7 @@ namespace Feature_Inspection
             }
         }
 
-
+        #region Inspection Tab Methods
         // INSPECTION TAB METHODS
 
         private void BindDataGridViewInspection(DataTable featuresTable)
@@ -172,12 +168,13 @@ namespace Feature_Inspection
             inspectionEntryGridView.Columns["Measured Actual"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             inspectionEntryGridView.Columns["InspectionTool"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
+            
             inspectionEntryGridView.Columns["Feature"].ReadOnly = true;
 
             if (inspectionEntryGridView.RowCount != 0)
             {
                 inspectionEntryGridView.Rows[0].Cells["Measured Actual"].Selected = true;
-
+                inspectionEntryGridView.Rows[(inspectionEntryGridView.RowCount - 1)].ReadOnly = true;
             }
         }
 
@@ -198,7 +195,7 @@ namespace Feature_Inspection
             model.AdapterUpdateInspection((DataTable)bindingSourceInspection.DataSource);
         }
 
-        private void SetOpKeyInfoInspection(int opkey)
+        private bool SetOpKeyInfoInspection(int opkey)
         {
             DataTable info = new DataTable();
             info = model.GetInfoFromOpKeyEntry(opkey);
@@ -208,6 +205,8 @@ namespace Feature_Inspection
                 partNumberLabelInspection.Text = info.Rows[0]["Part_Number"].ToString();
                 jobLabelInspection.Text = info.Rows[0]["Job_Number"].ToString();
                 opLabelInspection.Text = info.Rows[0]["Operation_Number"].ToString();
+
+                return true;
             }
 
             else
@@ -215,8 +214,10 @@ namespace Feature_Inspection
                 partNumberLabelInspection.Text = null;
                 jobLabelInspection.Text = null;
                 opLabelInspection.Text = null;
-                MessageBox.Show(opKeyBoxInspection.Text + " is and invalid please enter a valid Op Key", "Invalid OpKey");
+                MessageBox.Show(opKeyBoxInspection.Text + " is invalid please enter a valid Op Key", "Invalid OpKey");
                 opKeyBoxInspection.Clear();
+
+                return false;
             }
         }
 
@@ -227,29 +228,91 @@ namespace Feature_Inspection
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
             {
                 e.Handled = true;
+                DataTable featureTable;
+                bool isValidOpKey = false;
+                bool inspectionExists = false;
+<<<<<<< HEAD
+                
+=======
+                //e.Handled = true;
+>>>>>>> ecd234d9b8a4cb0d26f7781af7cc6e15f076133a
                 int opkey = Int32.Parse(opKeyBoxInspection.Text);
                 DataTable partList = model.GetPartsList(opkey);
-<<<<<<< HEAD
+                isValidOpKey = SetOpKeyInfoInspection(opkey);
 
-                SetOpKeyInfo(opkey);
+                if(isValidOpKey)
+                {
+                    inspectionExists = model.GetInspectionExistsOnOpKey(opkey);
 
-=======
-                SetOpKeyInfoInspection(opkey);
->>>>>>> 7d7ec0c45665acf2101b5ce6b5aee71a61fc83c5
-                BindListBox(partList);
+                    if(inspectionExists)
+                    {
+                        //Check if there are features related on op and part numn
+                        featureTable = model.GetFeaturesOnOpKey(opkey);
+
+                        if (featureTable.Rows.Count > 0)
+                        {
+                            //Check if there are parts in position
+                            if (partList.Rows.Count > 0)
+                            {
+                                //Get the parts if there are
+                                BindListBox(partList);
+                            }
+                            else
+                            {
+                                //Create the parts in the positions table
+
+                                //Get part list DataTable partList = model.GetPartsList(opkey);
+
+                                //Bind the part list box BindListBox(partList);
+                            }
+                        }
+                        else
+                        {
+                            //Message user to add features to this part num op num
+                           // MessageBox.Show("Lead must add features to this Part and Operation number");
+
+                        }
+                    }
+                    else
+                    {
+                        //Create the inspection in inspection table
+                        MessageBox.Show("Creating Inspection");
+
+                        //Run the logic inside the if loop above
+                    }
+
+                }
+                else
+                {
+                    //Not valid opkey
+                    
+                }
+                
                 partNumberLabelInspection.Focus();
             }
         }
 
+        #endregion
 
 
+        #region Feature Tab Methods
         // FEATURE TAB METHODS
 
         //IP>Test code to try combo box workability. Will be replaced with a .DataSource method.
         private static void FeatureDropChoices(DataGridViewComboBoxColumn comboboxColumn)
         {
-            comboboxColumn.Items.AddRange("Diameter", "Fillet", "Chamfer", "Angle", "M.O.W.",
+            comboboxColumn.Items.AddRange(" ", "Diameter", "Fillet", "Chamfer", "Angle", "M.O.W.",
                 "Surface Finish", "Linear", "Square", "GDT", "Depth");
+        }
+
+        private static void SampleChoices(DataGridViewComboBoxColumn comboboxColumn)
+        {
+            comboboxColumn.Items.AddRange("100%", "First Piece", "First & Last", "Sample Plan");
+        }
+
+        private static void ToolCategories(DataGridViewComboBoxColumn comboboxColumn)
+        {
+            comboboxColumn.Items.AddRange("0-1 Mic", "Height Stand");
         }
 
         private void DataBindTest(DataTable featureTable)
@@ -271,36 +334,48 @@ namespace Feature_Inspection
             featureEditGridView.Columns["Active"].Visible = false;
             featureEditGridView.Columns["Plus_Tolerance"].HeaderText = "+";
             featureEditGridView.Columns["Minus_Tolerance"].HeaderText = "-";
+            featureEditGridView.Columns["Pieces"].Visible = false;
             featureEditGridView.Columns["FeatureType"].Visible = false;
+            featureEditGridView.Columns["Places"].Visible = false;
 
             maxRows = featureTable.Rows.Count;
+            
+            //IP>Initializes and defines the feature type column.
+            DataGridViewComboBoxColumn FeatureDropColumn = new DataGridViewComboBoxColumn();
+            DataGridViewComboBoxColumn SamplingColumn = new DataGridViewComboBoxColumn();
+            DataGridViewTextBoxColumn BubbleColumn = new DataGridViewTextBoxColumn();
+            DataGridViewComboBoxColumn ToolCategoryColumn = new DataGridViewComboBoxColumn();
+            DataGridViewButtonColumn DeleteButtonColumn = new DataGridViewButtonColumn();
+            BubbleColumn.HeaderText = "Sketch Bubble (Optional)";
+            SamplingColumn.HeaderText = "Sample";
+            ToolCategoryColumn.HeaderText = "Tool";
+            FeatureDropColumn.HeaderText = "Feature Type (Optional)";
+            DeleteButtonColumn.HeaderText = "Delete Feature";
+            featureEditGridView.Columns.Insert(0, BubbleColumn);
+            featureEditGridView.Columns.Insert(0, FeatureDropColumn);
+            featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, SamplingColumn);
+<<<<<<< HEAD
+            SamplingColumn.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
+            SamplingColumn.HeaderText = "Sample";
+            SamplingColumn.DataSource = featureTable.Columns["Sample"];
+            SampleChoices(SamplingColumn);
+=======
+>>>>>>> ecd234d9b8a4cb0d26f7781af7cc6e15f076133a
+            featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, ToolCategoryColumn);
+            featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, DeleteButtonColumn);
+            //FeatureDropColumn.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
+            //ToolCategoryColumn.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
+            //SamplingColumn.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
+            FeatureDropChoices(FeatureDropColumn);
+            SampleChoices(SamplingColumn);
+            ToolCategories(ToolCategoryColumn);
+            DeleteButtonColumn.Text = "Delete";
+            DeleteButtonColumn.UseColumnTextForButtonValue = true;
 
-
-            for (int i = 0; i < featureEditGridView.Rows.Count; i++)
-            {
-                featureEditGridView.Rows[i].ReadOnly = true;
-            }
-
-            //IP>Initializes and defines the edit button column.
-            DataGridViewButtonColumn EditButtonColumn = new DataGridViewButtonColumn();
-            EditButtonColumn.Name = "Edit Column";
-            featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, EditButtonColumn);
-            for (int i = 0; i < featureEditGridView.Rows.Count; i++)
-            {
-                featureEditGridView.Rows[i].Cells["Edit Column"].Value = "Edit";
-            }
             for (int j = 0; j < featureEditGridView.ColumnCount; j++)
             {
                 featureEditGridView.Columns[j].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
-
-
-            //IP>Initializes and defines the feature type column.
-            DataGridViewComboBoxColumn FeatureDropColumn = new DataGridViewComboBoxColumn();
-            FeatureDropColumn.HeaderText = "Feature Type";
-            featureEditGridView.Columns.Insert(0, FeatureDropColumn);
-            FeatureDropChoices(FeatureDropColumn);
-
 
         }
 
@@ -322,56 +397,71 @@ namespace Feature_Inspection
             }
             DataRow newRow = t.NewRow();
             t.Rows.Add(newRow);
-            featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Edit Column"].Value = "Done";
         }
 
         private void SetOpKeyInfoFeature(int opkey)
         {
             DataTable info = new DataTable();
             info = model.GetInfoFromOpKeyEntry(opkey);
-
-            if (info.Rows.Count > 0)
-            {
-                partLabelFeature.Text = info.Rows[0]["Part_Number"].ToString();
-                jobLabelFeature.Text = info.Rows[0]["Job_Number"].ToString();
-                opLabelFeature.Text = info.Rows[0]["Operation_Number"].ToString();
-            }
-
-            else
-            {
-                partNumberLabelInspection.Text = null;
-                jobLabelInspection.Text = null;
-                opLabelInspection.Text = null;
-                MessageBox.Show(opKeyBoxInspection.Text + " is and invalid please enter a valid Op Key", "Invalid OpKey");
-                opKeyBoxInspection.Clear();
-            }
         }
 
         private void checkEnterKeyPressedFeatures(object sender, KeyEventArgs e)
         {
+            char currentKey = (char)e.KeyCode;
+            bool nonNumber = char.IsWhiteSpace(currentKey);
+
+            if (nonNumber)
+                e.SuppressKeyPress = true;
 
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
             {
-                e.Handled = true;
-                int opkey;
-                bool isValidOpKey = Int32.TryParse(opKeyBoxFeature.Text, out opkey);
-                if (isValidOpKey)
+                if (partBoxFeature.ContainsFocus)
                 {
-                    DataTable partList = model.GetFeaturesOnOpKey(opkey);
-                    SetOpKeyInfoFeature(opkey);
+                    opBoxFeature.Focus();
+                }
+                else if (opBoxFeature.ContainsFocus)
+                {
+                    featureEditGridView.Focus();
+                }
+                string partNumber = partBoxFeature.Text;
+                string operationNum = opBoxFeature.Text; ;
+
+                if (partNumber != "" && operationNum != "")
+                {
+                    DataTable partList = model.GetFeaturesOnOpKey(partNumber, operationNum);
                     DataBindTest(partList);
                     if (partList.Rows.Count > 0)
                     {
-                        featurePageHeader.Text = featureEditGridView.Rows[0].Cells["Part_Number_FK"].Value + " FEATURES";
+                        featurePageHeader.Text = "PART " + featureEditGridView.Rows[0].Cells["Part_Number_FK"].Value + " OP " + featureEditGridView.Rows[0].Cells["Operation_Number_FK"].Value + " FEATURES";
                     }
                     else
                     {
                         featurePageHeader.Text = "FEATURES PAGE";
                     }
                 }
+                else
+                {
+                    return;
+                }
 
             }
         }
+
+        private void DeleteRowFeature(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            var table = (DataGridView)sender;
+
+            if (e.ColumnIndex != -1)
+            {
+                if (e.ColumnIndex == featureEditGridView.Columns[featureEditGridView.ColumnCount -1].Index)
+                {
+                    featureEditGridView.Rows.Remove(featureEditGridView.Rows[e.RowIndex]);
+                }
+
+            }
+        }
+
+        #endregion
 
 
 
@@ -398,14 +488,20 @@ namespace Feature_Inspection
             {
                 checkEnterKeyPressedInspection(sender, e);
             }
-            else if (sender == opKeyBoxFeature)
+           /* else if (sender == partBoxFeature)
             {
                 checkEnterKeyPressedFeatures(sender, e);
             }
+            else if (sender == opBoxFeature)
+            {
+                checkEnterKeyPressedFeatures(sender, e);
+            }*/
 
         }
 
 
+
+        #region Inspection Handlers
         //INSPECTION ENTRY TAB HANDLERS
 
         private void listBox5_SelectedIndexChanged(object sender, EventArgs e)
@@ -418,6 +514,7 @@ namespace Feature_Inspection
             if (listBox.Text.Contains("Part"))
             {
                 int listBoxIndex = listBox.SelectedIndex;
+                inspectionPageHeader.Text = listBox.Text;
                 int pieceID = listBoxIndex + 1; //Due to 0 indexing
                 featureTable = model.GetFeaturesOnPartIndex(pieceID, Int32.Parse(opKeyBoxInspection.Text));
                 BindDataGridViewInspection(featureTable);
@@ -442,6 +539,14 @@ namespace Feature_Inspection
             }
         }
 
+        private void inspectionEntryGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            AdapterUpdateInspection();
+        }
+
+        #endregion
+
+        #region Feature Handlers
 
         // FEATURE HANDLERS
 
@@ -451,45 +556,7 @@ namespace Feature_Inspection
 
         }
 
-        private void CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
-        {
-
-            if (e.RowIndex == -1 || e.ColumnIndex == -1)
-                return;
-
-            var table = (DataGridView)sender;
-            var button = (DataGridViewButtonCell)table.Rows[e.RowIndex].Cells["Edit Column"];
-
-
-            if (e.ColumnIndex == featureEditGridView.Columns["Edit Column"].Index
-                && (string)featureEditGridView.Rows[e.RowIndex].Cells["Edit Column"].Value == "Edit")
-            {
-                button.UseColumnTextForButtonValue = false;
-                featureEditGridView.Rows[e.RowIndex].ReadOnly = false;
-                featureEditGridView.Rows[e.RowIndex].Cells["Edit Column"].Value = "Done";
-            }
-            else if (e.ColumnIndex == featureEditGridView.Columns["Edit Column"].Index
-                && (string)featureEditGridView.Rows[e.RowIndex].Cells["Edit Column"].Value == "Done")
-            {
-                DoneClicked(featureEditGridView.Rows[e.RowIndex], EventArgs.Empty);
-                featureEditGridView.Rows[e.RowIndex].ReadOnly = true;
-                featureEditGridView.Rows[e.RowIndex].Cells["Edit Column"].Value = "Edit";
-                AdapterUpdate();
-            }
-            else if (featureEditGridView.Columns[e.ColumnIndex] is DataGridViewComboBoxColumn
-                    && (string)featureEditGridView.Rows[e.RowIndex].Cells["Edit Column"].Value == "Done")
-            {
-                featureEditGridView.BeginEdit(true);
-                ((ComboBox)featureEditGridView.EditingControl).DroppedDown = true;
-            }
-            else
-            {
-                featureEditGridView.BeginEdit(true);
-            }
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
+        private void addFeature_Click(object sender, EventArgs e)
         {
             if (bindingSource == null)
             {
@@ -505,15 +572,56 @@ namespace Feature_Inspection
 
         }
 
-        private void dataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        private void cancelChanges_Click(object sender, EventArgs e)
         {
-
-            featureEditGridView.Rows[e.RowIndex].ReadOnly = false;
+            const string message = "Are you sure you want to cancel all changes made to this set of features? " +
+                "Any changes to this table will be reverted.";
+            const string caption = "Cancel Changes";
+            var result = MessageBox.Show(message, caption,
+                                 MessageBoxButtons.YesNo,
+                                 MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                //Rebind Database
+                string partNumber = partBoxFeature.Text;
+                string operationNum = opBoxFeature.Text;
+                DataTable partList = model.GetFeaturesOnOpKey(partNumber, operationNum);
+                DataBindTest(partList);
+            }
         }
 
-        private void inspectionEntryGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        private void saveChanges_Click(object sender, EventArgs e)
         {
-            AdapterUpdateInspection();
+            const string message0 = "Are you sure you want to save all changes made to this set of features? " +
+                "All changes will save to the database.";
+            const string caption0 = "Save Changes";
+            var result = MessageBox.Show(message0, caption0,
+                                 MessageBoxButtons.YesNo,
+                                 MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                const string message1 = "All changes made to the table have been updated to the database";
+                const string caption1 = "Table Saved";
+                var result2 = MessageBox.Show(message1, caption1);
+                //Send featureEditGridView table back to database.
+            }
+
+            else if (result == DialogResult.No)
+            {
+                const string message2 = "Any Changes to the table have not been updated to the database";
+                const string caption2 = "Table Not Saved";
+                var result2 = MessageBox.Show(message2, caption2);
+            }
+        }
+
+        
+
+        #endregion
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            AdapterUpdate();
         }
     }
 
