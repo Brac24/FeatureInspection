@@ -227,10 +227,11 @@ namespace Feature_Inspection
             //Will work on an enter or tab key press
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
             {
+                e.Handled = true;
                 DataTable featureTable;
                 bool isValidOpKey = false;
                 bool inspectionExists = false;
-                //e.Handled = true;
+                
                 int opkey = Int32.Parse(opKeyBoxInspection.Text);
                 DataTable partList = model.GetPartsList(opkey);
                 isValidOpKey = SetOpKeyInfoInspection(opkey);
@@ -264,7 +265,8 @@ namespace Feature_Inspection
                         else
                         {
                             //Message user to add features to this part num op num
-                            MessageBox.Show("Lead must add features to this Part and Operation number");
+                           // MessageBox.Show("Lead must add features to this Part and Operation number");
+
                         }
                     }
                     else
@@ -287,7 +289,6 @@ namespace Feature_Inspection
         }
 
         #endregion
-
 
 
         #region Feature Tab Methods
@@ -358,6 +359,7 @@ namespace Feature_Inspection
             featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, ToolCategoryColumn);
             featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, DeleteButtonColumn);
             FeatureDropChoices(FeatureDropColumn);
+            //SamplingColumn.DataSource = featureTable.Columns["Sample"];
             SampleChoices(SamplingColumn);
             ToolCategories(ToolCategoryColumn);
             DeleteButtonColumn.Text = "Delete";
@@ -530,6 +532,11 @@ namespace Feature_Inspection
             }
         }
 
+        private void inspectionEntryGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            AdapterUpdateInspection();
+        }
+
         #endregion
 
         #region Feature Handlers
@@ -578,6 +585,14 @@ namespace Feature_Inspection
 
         private void saveChanges_Click(object sender, EventArgs e)
         {
+            
+        }
+
+
+        #endregion
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
             const string message0 = "Are you sure you want to save all changes made to this set of features? " +
                 "All changes will save to the database.";
             const string caption0 = "Save Changes";
@@ -587,10 +602,12 @@ namespace Feature_Inspection
 
             if (result == DialogResult.Yes)
             {
+                AdapterUpdate();
                 const string message1 = "All changes made to the table have been updated to the database";
                 const string caption1 = "Table Saved";
                 var result2 = MessageBox.Show(message1, caption1);
                 //Send featureEditGridView table back to database.
+
             }
 
             else if (result == DialogResult.No)
@@ -599,14 +616,10 @@ namespace Feature_Inspection
                 const string caption2 = "Table Not Saved";
                 var result2 = MessageBox.Show(message2, caption2);
             }
+
+            
         }
 
-        private void inspectionEntryGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-            AdapterUpdateInspection();
-        }
-
-        #endregion
     }
 
 }

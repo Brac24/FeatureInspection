@@ -30,7 +30,7 @@ namespace Feature_Inspection
             using (OdbcDataAdapter dataAdapter = new OdbcDataAdapter(com))
             {
                 string update = "UPDATE ATI_FeatureInspection.dbo.Features SET Nominal = ?, Plus_Tolerance = ?, Minus_Tolerance = ?, " +
-                                "Feature_Name = ?, Places = ?, Active = ?, Pieces = ? " +
+                                "Feature_Name = ?, Places = ?, Active = ?, Pieces = ?, Sample = ? " +
                                 "WHERE Feature_Key = ?;";
 
                 string insert = "INSERT INTO ATI_FeatureInspection.dbo.Features (Nominal, Plus_Tolerance, Minus_Tolerance, Feature_Name, Places, Active, Pieces, Part_Number_FK, Operation_Number_FK)" +
@@ -49,6 +49,7 @@ namespace Feature_Inspection
                 dataAdapter.UpdateCommand.Parameters.Add("@Places", OdbcType.Int, 1, "Places");
                 dataAdapter.UpdateCommand.Parameters.Add("@Active", OdbcType.NChar, 10, "Active");
                 dataAdapter.UpdateCommand.Parameters.Add("@Pieces", OdbcType.Int, 1, "Pieces");
+                dataAdapter.UpdateCommand.Parameters.Add("@Sample", OdbcType.Decimal, 1, "Sample");
                 dataAdapter.UpdateCommand.Parameters.Add("@Feature_Key", OdbcType.Int, 5, "Feature_Key");
 
 
