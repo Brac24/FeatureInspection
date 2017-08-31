@@ -226,10 +226,11 @@ namespace Feature_Inspection
             //Will work on an enter or tab key press
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
             {
+                e.Handled = true;
                 DataTable featureTable;
                 bool isValidOpKey = false;
                 bool inspectionExists = false;
-                e.Handled = true;
+                
                 int opkey = Int32.Parse(opKeyBoxInspection.Text);
                 DataTable partList = model.GetPartsList(opkey);
                 isValidOpKey = SetOpKeyInfoInspection(opkey);
@@ -263,7 +264,8 @@ namespace Feature_Inspection
                         else
                         {
                             //Message user to add features to this part num op num
-                            MessageBox.Show("Lead must add features to this Part and Operation number");
+                           // MessageBox.Show("Lead must add features to this Part and Operation number");
+
                         }
                     }
                     else
@@ -286,7 +288,6 @@ namespace Feature_Inspection
         }
 
         #endregion
-
 
 
         #region Feature Tab Methods
@@ -367,6 +368,7 @@ namespace Feature_Inspection
             featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, SamplingColumn);
             SamplingColumn.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
             SamplingColumn.HeaderText = "Sample";
+            SamplingColumn.DataSource = featureTable.Columns["Sample"];
             SampleChoices(SamplingColumn);
             featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, ToolCategoryColumn);
             ToolCategoryColumn.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
@@ -521,6 +523,11 @@ namespace Feature_Inspection
             }
         }
 
+        private void inspectionEntryGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            AdapterUpdateInspection();
+        }
+
         #endregion
 
         #region Feature Handlers
@@ -554,13 +561,14 @@ namespace Feature_Inspection
             featureEditGridView.Rows[e.RowIndex].ReadOnly = false;
         }
 
-        private void inspectionEntryGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-            AdapterUpdateInspection();
-        }
+        
 
         #endregion
 
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            AdapterUpdate();
+        }
     }
 
 }
