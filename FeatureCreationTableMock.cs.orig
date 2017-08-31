@@ -231,11 +231,7 @@ namespace Feature_Inspection
                 DataTable featureTable;
                 bool isValidOpKey = false;
                 bool inspectionExists = false;
-<<<<<<< HEAD
                 
-=======
-                //e.Handled = true;
->>>>>>> ecd234d9b8a4cb0d26f7781af7cc6e15f076133a
                 int opkey = Int32.Parse(opKeyBoxInspection.Text);
                 DataTable partList = model.GetPartsList(opkey);
                 isValidOpKey = SetOpKeyInfoInspection(opkey);
@@ -313,6 +309,10 @@ namespace Feature_Inspection
         private static void ToolCategories(DataGridViewComboBoxColumn comboboxColumn)
         {
             comboboxColumn.Items.AddRange("0-1 Mic", "Height Stand");
+            
+            /*
+            string query = "SELECT Category FROM ATI_uniPoint_Live.dbo.PT_Equip WHERE Class = 'Inspection Tool' AND Category IS NOT NULL GROUP BY Category";
+            comboboxColumn.Items.AddRange(query); */
         }
 
         private void DataBindTest(DataTable featureTable)
@@ -337,13 +337,15 @@ namespace Feature_Inspection
             featureEditGridView.Columns["Pieces"].Visible = false;
             featureEditGridView.Columns["FeatureType"].Visible = false;
             featureEditGridView.Columns["Places"].Visible = false;
+            featureEditGridView.Columns["Sample"].Visible = false;
 
             maxRows = featureTable.Rows.Count;
             
-            //IP>Initializes and defines the feature type column.
+            //Creates extra columns in Feature Page
             DataGridViewComboBoxColumn FeatureDropColumn = new DataGridViewComboBoxColumn();
             DataGridViewComboBoxColumn SamplingColumn = new DataGridViewComboBoxColumn();
             DataGridViewTextBoxColumn BubbleColumn = new DataGridViewTextBoxColumn();
+            DataGridViewCellStyle cellStyle = new DataGridViewCellStyle();
             DataGridViewComboBoxColumn ToolCategoryColumn = new DataGridViewComboBoxColumn();
             DataGridViewButtonColumn DeleteButtonColumn = new DataGridViewButtonColumn();
             BubbleColumn.HeaderText = "Sketch Bubble (Optional)";
@@ -354,19 +356,10 @@ namespace Feature_Inspection
             featureEditGridView.Columns.Insert(0, BubbleColumn);
             featureEditGridView.Columns.Insert(0, FeatureDropColumn);
             featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, SamplingColumn);
-<<<<<<< HEAD
-            SamplingColumn.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
-            SamplingColumn.HeaderText = "Sample";
-            SamplingColumn.DataSource = featureTable.Columns["Sample"];
-            SampleChoices(SamplingColumn);
-=======
->>>>>>> ecd234d9b8a4cb0d26f7781af7cc6e15f076133a
             featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, ToolCategoryColumn);
             featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, DeleteButtonColumn);
-            //FeatureDropColumn.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
-            //ToolCategoryColumn.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
-            //SamplingColumn.DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
             FeatureDropChoices(FeatureDropColumn);
+            //SamplingColumn.DataSource = featureTable.Columns["Sample"];
             SampleChoices(SamplingColumn);
             ToolCategories(ToolCategoryColumn);
             DeleteButtonColumn.Text = "Delete";
@@ -424,7 +417,7 @@ namespace Feature_Inspection
                     featureEditGridView.Focus();
                 }
                 string partNumber = partBoxFeature.Text;
-                string operationNum = opBoxFeature.Text; ;
+                string operationNum = opBoxFeature.Text;
 
                 if (partNumber != "" && operationNum != "")
                 {
@@ -590,7 +583,7 @@ namespace Feature_Inspection
             }
         }
 
-        private void saveChanges_Click(object sender, EventArgs e)
+        private void saveButton_Click(object sender, EventArgs e)
         {
             const string message0 = "Are you sure you want to save all changes made to this set of features? " +
                 "All changes will save to the database.";
@@ -601,10 +594,12 @@ namespace Feature_Inspection
 
             if (result == DialogResult.Yes)
             {
+                AdapterUpdate();
                 const string message1 = "All changes made to the table have been updated to the database";
                 const string caption1 = "Table Saved";
                 var result2 = MessageBox.Show(message1, caption1);
                 //Send featureEditGridView table back to database.
+
             }
 
             else if (result == DialogResult.No)
@@ -613,16 +608,17 @@ namespace Feature_Inspection
                 const string caption2 = "Table Not Saved";
                 var result2 = MessageBox.Show(message2, caption2);
             }
+
+
         }
 
-        
+<<<<<<< HEAD
 
         #endregion
 
-        private void saveButton_Click(object sender, EventArgs e)
-        {
-            AdapterUpdate();
-        }
+
+=======
+>>>>>>> 7c348d7050cbffb45a989c4a6a93069dd60d1f89
     }
 
 }

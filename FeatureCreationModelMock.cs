@@ -18,7 +18,6 @@ namespace Feature_Inspection
 
         }
 
-
         // FEATURE MODEL
 
         public DataTable AdapterUpdate(DataTable dt)
@@ -50,7 +49,7 @@ namespace Feature_Inspection
                 dataAdapter.UpdateCommand.Parameters.Add("@Places", OdbcType.Int, 1, "Places");
                 dataAdapter.UpdateCommand.Parameters.Add("@Active", OdbcType.NChar, 10, "Active");
                 dataAdapter.UpdateCommand.Parameters.Add("@Pieces", OdbcType.Int, 1, "Pieces");
-                dataAdapter.UpdateCommand.Parameters.Add("@Sample", OdbcType.Decimal, 1, "Sample");
+                dataAdapter.UpdateCommand.Parameters.Add("@Sample", OdbcType.NVarChar, 1, "Sample");
                 dataAdapter.UpdateCommand.Parameters.Add("@Feature_Key", OdbcType.Int, 5, "Feature_Key");
 
 
@@ -106,7 +105,6 @@ namespace Feature_Inspection
 
                 dataAdapter = adapter;
 
-
                 com.CommandText = query;
                 t = new DataTable();
                 dataAdapter.Fill(t);
@@ -128,7 +126,6 @@ namespace Feature_Inspection
                 string query = "SELECT * FROM ATI_FeatureInspection.dbo.Features WHERE Part_Number_FK = (SELECT Part_Number FROM ATI_FeatureInspection.dbo.Operation WHERE Op_Key =  " + opKey + ") AND Operation_Number_FK = (SELECT Operation_Number FROM ATI_FeatureInspection.dbo.Operation WHERE Op_Key = " + opKey + ");";
 
                 dataAdapter = adapter;
-
 
                 com.CommandText = query;
                 t = new DataTable();
