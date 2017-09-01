@@ -172,6 +172,7 @@
             this.featureEditGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.featureEditGridView.Size = new System.Drawing.Size(806, 384);
             this.featureEditGridView.TabIndex = 0;
+            this.featureEditGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.featureEditGridView_CellEndEdit);
             // 
             // addFeatureButton
             // 
