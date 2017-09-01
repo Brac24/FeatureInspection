@@ -31,11 +31,11 @@ namespace Feature_Inspection
             using (OdbcDataAdapter dataAdapter = new OdbcDataAdapter(com))
             {
                 string update = "UPDATE ATI_FeatureInspection.dbo.Features SET Nominal = ?, Plus_Tolerance = ?, Minus_Tolerance = ?, " +
-                                "Feature_Name = ?, Places = ?, Active = ?, Pieces = ?, Sample = ? " +
+                                "Feature_Name = ?, Places = ?, Active = ?, Pieces = ?, SampleID = ? " +
                                 "WHERE Feature_Key = ?;";
 
-                string insert = "INSERT INTO ATI_FeatureInspection.dbo.Features (Nominal, Plus_Tolerance, Minus_Tolerance, Feature_Name, Places, Active, Pieces, Part_Number_FK, Operation_Number_FK)" +
-                            "VALUES(?,?,?,?,?,?,?,?,?); ";
+                string insert = "INSERT INTO ATI_FeatureInspection.dbo.Features (Nominal, Plus_Tolerance, Minus_Tolerance, Feature_Name, Places, Active, Pieces, Part_Number_FK, Operation_Number_FK, SampleID)" +
+                            "VALUES(?,?,?,?,?,?,?,?,?,?); ";
 
                 string delete = "DELETE FROM ATI_FeatureInspection.dbo.Features WHERE Feature_Key = ?";
 
@@ -50,7 +50,7 @@ namespace Feature_Inspection
                 dataAdapter.UpdateCommand.Parameters.Add("@Places", OdbcType.Int, 1, "Places");
                 dataAdapter.UpdateCommand.Parameters.Add("@Active", OdbcType.NChar, 10, "Active");
                 dataAdapter.UpdateCommand.Parameters.Add("@Pieces", OdbcType.Int, 1, "Pieces");
-                dataAdapter.UpdateCommand.Parameters.Add("@Sample", OdbcType.NVarChar, 1, "Sample");
+                dataAdapter.UpdateCommand.Parameters.Add("@SampleID", OdbcType.Int, 1, "SampleID");
                 dataAdapter.UpdateCommand.Parameters.Add("@Feature_Key", OdbcType.Int, 5, "Feature_Key");
 
 
@@ -67,6 +67,7 @@ namespace Feature_Inspection
                 dataAdapter.InsertCommand.Parameters.Add("@Pieces", OdbcType.Int, 1, "Pieces");
                 dataAdapter.InsertCommand.Parameters.Add("@Part_Number_FK", OdbcType.NVarChar, 50, "Part_Number_FK");
                 dataAdapter.InsertCommand.Parameters.Add("@Operation_Number_FK", OdbcType.NVarChar, 50, "Operation_NUmber_FK");
+                dataAdapter.UpdateCommand.Parameters.Add("@SampleID", OdbcType.Int, 1, "SampleID");
 
                 /******DELETE COMMAND*****/
 
@@ -94,27 +95,47 @@ namespace Feature_Inspection
             return changedTable;
         }
 
+        
+
         public DataTable GetFeaturesOnOpKey(string partNumber, string operationNum)
         {
            
             DataTable t;
-            OdbcDataAdapter dataAdapter;
+            DataTable sampleChoices = new DataTable();
+            
             using (OdbcConnection conn = new OdbcConnection(connection_string))
             using (OdbcCommand com = conn.CreateCommand())
-            using (OdbcDataAdapter adapter = new OdbcDataAdapter(com))
+            using (OdbcDataAdapter dataAdapter = new OdbcDataAdapter(com))
             {
                 string query = "SELECT * FROM ATI_FeatureInspection.dbo.Features WHERE Part_Number_FK = '" + partNumber + "' AND Operation_Number_FK = '" + operationNum + "';";
-
-                dataAdapter = adapter;
-
+                                
                 com.CommandText = query;
                 t = new DataTable();
                 dataAdapter.Fill(t);
+
 
             }
 
             return t;
 
+        }
+
+        public DataTable GetSampleChoices()
+        {
+            DataTable sampleChoices = new DataTable();
+            string getSampleChoices = "SELECT * FROM ATI_FeatureInspection.dbo.SampleChoices;";
+
+            using (OdbcConnection connection = new OdbcConnection(connection_string))
+            using (OdbcCommand command = connection.CreateCommand())
+            using (OdbcDataAdapter dataAdapter = new OdbcDataAdapter(command))
+            {
+                command.CommandText = getSampleChoices;
+
+                dataAdapter.Fill(sampleChoices);
+
+
+            }
+            return sampleChoices;
         }
 
         public DataTable GetFeaturesOnOpKey(int opKey)
