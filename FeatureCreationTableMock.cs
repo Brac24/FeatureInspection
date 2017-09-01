@@ -216,6 +216,7 @@ namespace Feature_Inspection
                 opLabelInspection.Text = null;
                 MessageBox.Show(opKeyBoxInspection.Text + " is invalid please enter a valid Op Key", "Invalid OpKey");
                 opKeyBoxInspection.Clear();
+                lotSizeBoxInspection.Clear();
 
                 return false;
             }
