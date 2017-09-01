@@ -586,6 +586,14 @@ namespace Feature_Inspection
             }
         }
 
+        private void saveChanges_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+
+        #endregion
+
         private void saveButton_Click(object sender, EventArgs e)
         {
             const string message0 = "Are you sure you want to save all changes made to this set of features? " +
@@ -612,13 +620,8 @@ namespace Feature_Inspection
                 var result2 = MessageBox.Show(message2, caption2);
             }
 
-
+            
         }
-
-
-        #endregion
-
-
     }
 
 }
