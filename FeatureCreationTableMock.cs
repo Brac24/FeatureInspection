@@ -337,13 +337,17 @@ namespace Feature_Inspection
             featureEditGridView.Columns["Pieces"].Visible = false;
             featureEditGridView.Columns["FeatureType"].Visible = false;
             featureEditGridView.Columns["Places"].Visible = false;
-            //featureEditGridView.Columns["Sample"].Visible = false;
+            featureEditGridView.Columns["SampleID"].Visible = false;
 
             maxRows = featureTable.Rows.Count;
             
+
+
             //Creates extra columns in Feature Page
             DataGridViewComboBoxColumn FeatureDropColumn = new DataGridViewComboBoxColumn();
-            DataGridViewComboBoxColumn SamplingColumn = new DataGridViewComboBoxColumn();
+
+            SampleComboBind(); //Adds and binds the sample combo box column
+
             DataGridViewTextBoxColumn BubbleColumn = new DataGridViewTextBoxColumn();
             DataGridViewCellStyle cellStyle = new DataGridViewCellStyle();
             DataGridViewComboBoxColumn ToolCategoryColumn = new DataGridViewComboBoxColumn();
@@ -355,14 +359,11 @@ namespace Feature_Inspection
             DeleteButtonColumn.HeaderText = "Delete Feature";
             featureEditGridView.Columns.Insert(0, BubbleColumn);
             featureEditGridView.Columns.Insert(0, FeatureDropColumn);
-            featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, SamplingColumn);
+            
             featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, ToolCategoryColumn);
             featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, DeleteButtonColumn);
             FeatureDropChoices(FeatureDropColumn);
-            SamplingColumn.DataSource = featureTable;
-            SamplingColumn.DisplayMember = "Sample";
-            SamplingColumn.ValueMember = "Sample";
-            SampleChoices(SamplingColumn);
+            
             ToolCategories(ToolCategoryColumn);
             DeleteButtonColumn.Text = "Delete";
             DeleteButtonColumn.UseColumnTextForButtonValue = true;
@@ -374,14 +375,51 @@ namespace Feature_Inspection
 
         }
 
+
+        BindingSource sampleBindingSource = new BindingSource();
+        private void SampleComboBind()
+        {
+            DataGridViewComboBoxColumn SamplingColumn = new DataGridViewComboBoxColumn();
+            
+           
+            featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, SamplingColumn);
+
+            sampleBindingSource.DataSource = model.GetSampleChoices();
+
+            
+            //sampleBindingSource.DataMember = "SampleChoices"; //Name of table in Database
+
+            //Binding combo box to database table of sample choices
+            SamplingColumn.DisplayMember = "SampleChoice";
+            SamplingColumn.ValueMember = "SampleID";
+
+            SamplingColumn.HeaderText = "Sample";
+            SamplingColumn.Name = "Sample";
+            SamplingColumn.DataSource = sampleBindingSource;
+            
+            
+            //setting initial selected value to hidden SampleID column value for the current row
+            for(int i=0; i<featureEditGridView.Rows.Count; i++)
+            {
+                featureEditGridView.Rows[i].Cells["Sample"].Value = featureEditGridView.Rows[i].Cells["SampleID"].Value;
+            }
+
+
+        }
+
         private void AdapterUpdate()
         {
             //Must call EndEdit Method before trying to update database
             bindingSource.EndEdit();
+            sampleBindingSource.EndEdit();
 
-
+            
+            
             //Update database
             model.AdapterUpdate((DataTable)bindingSource.DataSource);
+            
+
+            
         }
 
         private void AddTableRow(DataTable t)
@@ -547,6 +585,10 @@ namespace Feature_Inspection
 
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
+            if(featureEditGridView.Columns["Sample"].Index == e.ColumnIndex)
+            {
+                featureEditGridView.Rows[e.RowIndex].Cells["SampleID"].Value = featureEditGridView.Rows[e.RowIndex].Cells["Sample"].Value;
+            }
             // AdapterUpdate((BindingSource)table.DataSource);
 
         }
