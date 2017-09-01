@@ -673,6 +673,19 @@ namespace Feature_Inspection
 
             
         }
+        private void featureEditGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                featureEditGridView.Update();
+            }
+            catch
+            {
+
+            }
+
+        }
+
 
         #endregion
 
