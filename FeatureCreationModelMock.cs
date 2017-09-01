@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Odbc;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -98,6 +99,7 @@ namespace Feature_Inspection
 
         public DataTable GetFeaturesOnOpKey(string partNumber, string operationNum)
         {
+           
             DataTable t;
             DataTable sampleChoices = new DataTable();
             

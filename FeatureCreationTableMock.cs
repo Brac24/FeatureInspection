@@ -174,7 +174,6 @@ namespace Feature_Inspection
             if (inspectionEntryGridView.RowCount != 0)
             {
                 inspectionEntryGridView.Rows[0].Cells["Measured Actual"].Selected = true;
-                inspectionEntryGridView.Rows[(inspectionEntryGridView.RowCount - 1)].ReadOnly = true;
             }
         }
 
@@ -216,6 +215,7 @@ namespace Feature_Inspection
                 opLabelInspection.Text = null;
                 MessageBox.Show(opKeyBoxInspection.Text + " is invalid please enter a valid Op Key", "Invalid OpKey");
                 opKeyBoxInspection.Clear();
+                lotSizeBoxInspection.Clear();
 
                 return false;
             }
@@ -340,33 +340,58 @@ namespace Feature_Inspection
             featureEditGridView.Columns["SampleID"].Visible = false;
 
             maxRows = featureTable.Rows.Count;
-            
 
 
             //Creates extra columns in Feature Page
+            DataGridViewTextBoxColumn BubbleColumn = new DataGridViewTextBoxColumn();
+            {
+                BubbleColumn.HeaderText = "Sketch Bubble (Optional)";
+                featureEditGridView.Columns.Insert(0, BubbleColumn);
+            }
             DataGridViewComboBoxColumn FeatureDropColumn = new DataGridViewComboBoxColumn();
+            {
+                FeatureDropColumn.FlatStyle = FlatStyle.Flat;
+                FeatureDropColumn.CellTemplate.Style.BackColor = Color.FromArgb(50, 50, 50);
+                featureEditGridView.Columns.Insert(0, FeatureDropColumn);
+                FeatureDropChoices(FeatureDropColumn);
+                FeatureDropColumn.HeaderText = "Feature Type (Optional)";
+            }
 
             SampleComboBind(); //Adds and binds the sample combo box column
 
-            DataGridViewTextBoxColumn BubbleColumn = new DataGridViewTextBoxColumn();
-            DataGridViewCellStyle cellStyle = new DataGridViewCellStyle();
+            DataGridViewComboBoxColumn SamplingColumn = new DataGridViewComboBoxColumn();
+            {
+                SamplingColumn.ValueMember = "Sample";
+                SamplingColumn.DisplayMember = "Sample";
+                featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, SamplingColumn);
+                SamplingColumn.DataSource = featureTable;
+                SampleChoices(SamplingColumn);
+                //SamplingColumn.DisplayMember = "Sample";
+                //SamplingColumn.HeaderText = "Sample";
+                SamplingColumn.FlatStyle = FlatStyle.Flat;
+                SamplingColumn.CellTemplate.Style.BackColor = Color.FromArgb(50, 50, 50);
+            }
+
             DataGridViewComboBoxColumn ToolCategoryColumn = new DataGridViewComboBoxColumn();
+            {
+                ToolCategoryColumn.FlatStyle = FlatStyle.Flat;
+                ToolCategoryColumn.CellTemplate.Style.BackColor = Color.FromArgb(50, 50, 50);
+                ToolCategoryColumn.HeaderText = "Tool";
+                featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, ToolCategoryColumn);
+                ToolCategories(ToolCategoryColumn);
+            }
+
             DataGridViewButtonColumn DeleteButtonColumn = new DataGridViewButtonColumn();
-            BubbleColumn.HeaderText = "Sketch Bubble (Optional)";
-            //SamplingColumn.HeaderText = "Sample";
-            ToolCategoryColumn.HeaderText = "Tool";
-            FeatureDropColumn.HeaderText = "Feature Type (Optional)";
-            DeleteButtonColumn.HeaderText = "Delete Feature";
-            featureEditGridView.Columns.Insert(0, BubbleColumn);
-            featureEditGridView.Columns.Insert(0, FeatureDropColumn);
             
-            featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, ToolCategoryColumn);
-            featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, DeleteButtonColumn);
-            FeatureDropChoices(FeatureDropColumn);
             
-            ToolCategories(ToolCategoryColumn);
-            DeleteButtonColumn.Text = "Delete";
-            DeleteButtonColumn.UseColumnTextForButtonValue = true;
+            {
+                DeleteButtonColumn.FlatStyle = FlatStyle.Flat;
+                DeleteButtonColumn.CellTemplate.Style.BackColor = Color.DarkRed;
+                DeleteButtonColumn.HeaderText = "Delete Feature";
+                DeleteButtonColumn.Text = "Delete";
+                featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, DeleteButtonColumn);
+                DeleteButtonColumn.UseColumnTextForButtonValue = true;
+            }
 
             for (int j = 0; j < featureEditGridView.ColumnCount; j++)
             {
@@ -564,14 +589,6 @@ namespace Feature_Inspection
             }
         }
 
-        private void inspectionEntryGridView_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex == inspectionEntryGridView.Columns["Measured Actual"].Index)
-            {
-                inspectionEntryGridView.BeginEdit(true);
-            }
-        }
-
         private void inspectionEntryGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             AdapterUpdateInspection();
@@ -585,10 +602,14 @@ namespace Feature_Inspection
 
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            if(featureEditGridView.Columns["Sample"].Index == e.ColumnIndex)
+            if(featureEditGridView.Columns["Sample"] != null)
             {
-                featureEditGridView.Rows[e.RowIndex].Cells["SampleID"].Value = featureEditGridView.Rows[e.RowIndex].Cells["Sample"].Value;
+                if (featureEditGridView.Columns["Sample"].Index == e.ColumnIndex)
+                {
+                    featureEditGridView.Rows[e.RowIndex].Cells["SampleID"].Value = featureEditGridView.Rows[e.RowIndex].Cells["Sample"].Value;
+                }
             }
+            
             // AdapterUpdate((BindingSource)table.DataSource);
 
         }
@@ -635,7 +656,6 @@ namespace Feature_Inspection
             var result = MessageBox.Show(message0, caption0,
                                  MessageBoxButtons.YesNo,
                                  MessageBoxIcon.Question);
-
             if (result == DialogResult.Yes)
             {
                 AdapterUpdate();
@@ -653,12 +673,10 @@ namespace Feature_Inspection
                 var result2 = MessageBox.Show(message2, caption2);
             }
 
-
+            
         }
 
-
         #endregion
-
 
     }
 
