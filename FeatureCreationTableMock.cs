@@ -36,6 +36,7 @@ namespace Feature_Inspection
             opBoxFeature.KeyDown += checkEnterKeyPressedFeatures;
             lotSizeBoxInspection.KeyDown += numOnly_KeyDown;
             featureEditGridView.CellMouseUp += DeleteRowFeature;
+            lotSizeBoxInspection.KeyDown += checkEnterKeyPressedInspection;
 
         }
 
@@ -245,6 +246,7 @@ namespace Feature_Inspection
                         //Check if there are features related on op and part numn
                         featureTable = model.GetFeaturesOnOpKey(opkey);
 
+
                         if (featureTable.Rows.Count > 0)
                         {
                             //Check if there are parts in position
@@ -253,8 +255,11 @@ namespace Feature_Inspection
                                 //Get the parts if there are
                                 BindListBox(partList);
                             }
-                            else
+                            else if(lotSizeBoxInspection.Text != "")
                             {
+                                //TODO: Need to get lot size inserted/updated to Inspection table
+                                // Insert Lot Size to Inspection Table
+                                model.InsertLotSizeToInspectionTable(Int32.Parse(lotSizeBoxInspection.Text), opkey);
                                 //Create the parts in the positions table
 
                                 //Get part list DataTable partList = model.GetPartsList(opkey);
@@ -283,8 +288,9 @@ namespace Feature_Inspection
                     //Not valid opkey
                     
                 }
+
+                lotSizeBoxInspection.Focus();
                 
-                partNumberLabelInspection.Focus();
             }
         }
 
@@ -411,9 +417,6 @@ namespace Feature_Inspection
 
             sampleBindingSource.DataSource = model.GetSampleChoices();
 
-            
-            //sampleBindingSource.DataMember = "SampleChoices"; //Name of table in Database
-
             //Binding combo box to database table of sample choices
             SamplingColumn.DisplayMember = "SampleChoice";
             SamplingColumn.ValueMember = "SampleID";
@@ -429,7 +432,6 @@ namespace Feature_Inspection
                 featureEditGridView.Rows[i].Cells["Sample"].Value = featureEditGridView.Rows[i].Cells["SampleID"].Value;
             }
 
-
         }
 
         private void AdapterUpdate()
@@ -437,14 +439,10 @@ namespace Feature_Inspection
             //Must call EndEdit Method before trying to update database
             bindingSource.EndEdit();
             sampleBindingSource.EndEdit();
-
-            
-            
+          
             //Update database
             model.AdapterUpdate((DataTable)bindingSource.DataSource);
-            
-
-            
+                  
         }
 
         private void AddTableRow(DataTable t)

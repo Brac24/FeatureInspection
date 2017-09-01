@@ -288,5 +288,19 @@ namespace Feature_Inspection
             return inspectionExists;
         }
 
+        public void InsertLotSizeToInspectionTable(int lotSize, int opkey)
+        {
+            string insertQuery = "INSERT INTO ATI_FeatureInspection (Lot_Size) " +
+                                 "VALUES (" + lotSize + ") WHERE Op_Key = " + opkey + ";";
+            using (OdbcConnection connection = new OdbcConnection(connection_string))
+            {
+                connection.Open();
+
+                OdbcCommand command = new OdbcCommand(insertQuery, connection);
+
+                command.ExecuteNonQuery();
+            }
+        }
+
     }
 }
