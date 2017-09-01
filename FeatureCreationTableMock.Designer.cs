@@ -42,23 +42,23 @@
             this.Inspection_Page = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.opKeyBoxInspection = new System.Windows.Forms.TextBox();
-            this.lotSizeBoxInspection = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel16 = new System.Windows.Forms.TableLayoutPanel();
             this.labelWhat = new System.Windows.Forms.Label();
             this.tableLayoutPanel14 = new System.Windows.Forms.TableLayoutPanel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.statusLabelInspection = new System.Windows.Forms.Label();
-            this.partsInspectedLabel = new System.Windows.Forms.Label();
+            this.lotSizeBoxInspection = new System.Windows.Forms.TextBox();
+            this.opKeyBoxInspection = new System.Windows.Forms.TextBox();
+            this.label22 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.opLabelInspection = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.jobLabelInspection = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.statusLabelInspection = new System.Windows.Forms.Label();
+            this.partsInspectedLabel = new System.Windows.Forms.Label();
+            this.opLabelInspection = new System.Windows.Forms.Label();
+            this.jobLabelInspection = new System.Windows.Forms.Label();
             this.partNumberLabelInspection = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel17 = new System.Windows.Forms.TableLayoutPanel();
             this.label15 = new System.Windows.Forms.Label();
@@ -143,7 +143,7 @@
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Gainsboro;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.featureEditGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.featureEditGridView.ColumnHeadersHeight = 50;
+            this.featureEditGridView.ColumnHeadersHeight = 64;
             this.featureEditGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
@@ -154,7 +154,7 @@
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.featureEditGridView.DefaultCellStyle = dataGridViewCellStyle2;
             this.featureEditGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.featureEditGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
+            this.featureEditGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.featureEditGridView.EnableHeadersVisualStyles = false;
             this.featureEditGridView.Location = new System.Drawing.Point(20, 100);
             this.featureEditGridView.Margin = new System.Windows.Forms.Padding(0);
@@ -170,9 +170,8 @@
             this.featureEditGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.featureEditGridView.RowHeadersVisible = false;
             this.featureEditGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.featureEditGridView.Size = new System.Drawing.Size(1534, 594);
+            this.featureEditGridView.Size = new System.Drawing.Size(806, 384);
             this.featureEditGridView.TabIndex = 0;
-            this.featureEditGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
             // 
             // addFeatureButton
             // 
@@ -200,7 +199,7 @@
             this.mainTabControl.Location = new System.Drawing.Point(0, 0);
             this.mainTabControl.Name = "mainTabControl";
             this.mainTabControl.SelectedIndex = 0;
-            this.mainTabControl.Size = new System.Drawing.Size(1877, 891);
+            this.mainTabControl.Size = new System.Drawing.Size(1149, 681);
             this.mainTabControl.TabIndex = 4;
             // 
             // Inspection_Page
@@ -211,7 +210,7 @@
             this.Inspection_Page.Location = new System.Drawing.Point(4, 28);
             this.Inspection_Page.Name = "Inspection_Page";
             this.Inspection_Page.Padding = new System.Windows.Forms.Padding(3);
-            this.Inspection_Page.Size = new System.Drawing.Size(1869, 859);
+            this.Inspection_Page.Size = new System.Drawing.Size(1141, 649);
             this.Inspection_Page.TabIndex = 0;
             this.Inspection_Page.Text = "INSPECTION";
             // 
@@ -234,7 +233,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel12);
             this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel11);
             this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel10);
-            this.splitContainer1.Size = new System.Drawing.Size(1863, 853);
+            this.splitContainer1.Size = new System.Drawing.Size(1135, 643);
             this.splitContainer1.SplitterDistance = 285;
             this.splitContainer1.TabIndex = 3;
             // 
@@ -256,33 +255,9 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.panel2);
-            this.splitContainer2.Size = new System.Drawing.Size(285, 853);
+            this.splitContainer2.Size = new System.Drawing.Size(285, 643);
             this.splitContainer2.SplitterDistance = 285;
             this.splitContainer2.TabIndex = 2;
-            // 
-            // opKeyBoxInspection
-            // 
-            this.opKeyBoxInspection.AcceptsTab = true;
-            this.opKeyBoxInspection.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.opKeyBoxInspection.BackColor = System.Drawing.Color.DimGray;
-            this.opKeyBoxInspection.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.opKeyBoxInspection.Location = new System.Drawing.Point(108, 3);
-            this.opKeyBoxInspection.Multiline = true;
-            this.opKeyBoxInspection.Name = "opKeyBoxInspection";
-            this.opKeyBoxInspection.Size = new System.Drawing.Size(150, 25);
-            this.opKeyBoxInspection.TabIndex = 0;
-            // 
-            // lotSizeBoxInspection
-            // 
-            this.lotSizeBoxInspection.AcceptsTab = true;
-            this.lotSizeBoxInspection.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.lotSizeBoxInspection.BackColor = System.Drawing.Color.DimGray;
-            this.lotSizeBoxInspection.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.lotSizeBoxInspection.Location = new System.Drawing.Point(108, 34);
-            this.lotSizeBoxInspection.Multiline = true;
-            this.lotSizeBoxInspection.Name = "lotSizeBoxInspection";
-            this.lotSizeBoxInspection.Size = new System.Drawing.Size(150, 25);
-            this.lotSizeBoxInspection.TabIndex = 23;
             // 
             // tableLayoutPanel16
             // 
@@ -343,41 +318,41 @@
             this.tableLayoutPanel14.Size = new System.Drawing.Size(285, 222);
             this.tableLayoutPanel14.TabIndex = 41;
             // 
-            // label1
+            // lotSizeBoxInspection
             // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label1.Location = new System.Drawing.Point(3, 7);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(59, 16);
-            this.label1.TabIndex = 22;
-            this.label1.Text = "OP KEY:";
+            this.lotSizeBoxInspection.AcceptsTab = true;
+            this.lotSizeBoxInspection.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lotSizeBoxInspection.BackColor = System.Drawing.Color.DimGray;
+            this.lotSizeBoxInspection.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.lotSizeBoxInspection.Location = new System.Drawing.Point(108, 34);
+            this.lotSizeBoxInspection.Multiline = true;
+            this.lotSizeBoxInspection.Name = "lotSizeBoxInspection";
+            this.lotSizeBoxInspection.Size = new System.Drawing.Size(150, 25);
+            this.lotSizeBoxInspection.TabIndex = 23;
             // 
-            // statusLabelInspection
+            // opKeyBoxInspection
             // 
-            this.statusLabelInspection.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.statusLabelInspection.AutoSize = true;
-            this.statusLabelInspection.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.statusLabelInspection.ForeColor = System.Drawing.Color.Gainsboro;
-            this.statusLabelInspection.Location = new System.Drawing.Point(108, 196);
-            this.statusLabelInspection.Name = "statusLabelInspection";
-            this.statusLabelInspection.Size = new System.Drawing.Size(16, 16);
-            this.statusLabelInspection.TabIndex = 40;
-            this.statusLabelInspection.Text = "  ";
+            this.opKeyBoxInspection.AcceptsTab = true;
+            this.opKeyBoxInspection.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.opKeyBoxInspection.BackColor = System.Drawing.Color.DimGray;
+            this.opKeyBoxInspection.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.opKeyBoxInspection.Location = new System.Drawing.Point(108, 3);
+            this.opKeyBoxInspection.Multiline = true;
+            this.opKeyBoxInspection.Name = "opKeyBoxInspection";
+            this.opKeyBoxInspection.Size = new System.Drawing.Size(150, 25);
+            this.opKeyBoxInspection.TabIndex = 0;
             // 
-            // partsInspectedLabel
+            // label22
             // 
-            this.partsInspectedLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.partsInspectedLabel.AutoSize = true;
-            this.partsInspectedLabel.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.partsInspectedLabel.ForeColor = System.Drawing.Color.Gainsboro;
-            this.partsInspectedLabel.Location = new System.Drawing.Point(108, 162);
-            this.partsInspectedLabel.Name = "partsInspectedLabel";
-            this.partsInspectedLabel.Size = new System.Drawing.Size(16, 16);
-            this.partsInspectedLabel.TabIndex = 39;
-            this.partsInspectedLabel.Text = "  ";
+            this.label22.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.ForeColor = System.Drawing.Color.Gainsboro;
+            this.label22.Location = new System.Drawing.Point(3, 38);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(70, 16);
+            this.label22.TabIndex = 35;
+            this.label22.Text = "LOT SIZE:";
             // 
             // label20
             // 
@@ -415,18 +390,6 @@
             this.label13.TabIndex = 31;
             this.label13.Text = "OPERATION:";
             // 
-            // opLabelInspection
-            // 
-            this.opLabelInspection.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.opLabelInspection.AutoSize = true;
-            this.opLabelInspection.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.opLabelInspection.ForeColor = System.Drawing.Color.Gainsboro;
-            this.opLabelInspection.Location = new System.Drawing.Point(108, 131);
-            this.opLabelInspection.Name = "opLabelInspection";
-            this.opLabelInspection.Size = new System.Drawing.Size(16, 16);
-            this.opLabelInspection.TabIndex = 34;
-            this.opLabelInspection.Text = "  ";
-            // 
             // label14
             // 
             this.label14.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -438,18 +401,6 @@
             this.label14.Size = new System.Drawing.Size(38, 16);
             this.label14.TabIndex = 30;
             this.label14.Text = "JOB:";
-            // 
-            // jobLabelInspection
-            // 
-            this.jobLabelInspection.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.jobLabelInspection.AutoSize = true;
-            this.jobLabelInspection.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.jobLabelInspection.ForeColor = System.Drawing.Color.Gainsboro;
-            this.jobLabelInspection.Location = new System.Drawing.Point(108, 100);
-            this.jobLabelInspection.Name = "jobLabelInspection";
-            this.jobLabelInspection.Size = new System.Drawing.Size(16, 16);
-            this.jobLabelInspection.TabIndex = 33;
-            this.jobLabelInspection.Text = "  ";
             // 
             // label16
             // 
@@ -463,6 +414,66 @@
             this.label16.TabIndex = 29;
             this.label16.Text = "PART:";
             // 
+            // label1
+            // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.Gainsboro;
+            this.label1.Location = new System.Drawing.Point(3, 7);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(59, 16);
+            this.label1.TabIndex = 22;
+            this.label1.Text = "OP KEY:";
+            // 
+            // statusLabelInspection
+            // 
+            this.statusLabelInspection.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.statusLabelInspection.AutoSize = true;
+            this.statusLabelInspection.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statusLabelInspection.ForeColor = System.Drawing.Color.Gainsboro;
+            this.statusLabelInspection.Location = new System.Drawing.Point(108, 196);
+            this.statusLabelInspection.Name = "statusLabelInspection";
+            this.statusLabelInspection.Size = new System.Drawing.Size(16, 16);
+            this.statusLabelInspection.TabIndex = 40;
+            this.statusLabelInspection.Text = "  ";
+            // 
+            // partsInspectedLabel
+            // 
+            this.partsInspectedLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.partsInspectedLabel.AutoSize = true;
+            this.partsInspectedLabel.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.partsInspectedLabel.ForeColor = System.Drawing.Color.Gainsboro;
+            this.partsInspectedLabel.Location = new System.Drawing.Point(108, 162);
+            this.partsInspectedLabel.Name = "partsInspectedLabel";
+            this.partsInspectedLabel.Size = new System.Drawing.Size(16, 16);
+            this.partsInspectedLabel.TabIndex = 39;
+            this.partsInspectedLabel.Text = "  ";
+            // 
+            // opLabelInspection
+            // 
+            this.opLabelInspection.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.opLabelInspection.AutoSize = true;
+            this.opLabelInspection.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.opLabelInspection.ForeColor = System.Drawing.Color.Gainsboro;
+            this.opLabelInspection.Location = new System.Drawing.Point(108, 131);
+            this.opLabelInspection.Name = "opLabelInspection";
+            this.opLabelInspection.Size = new System.Drawing.Size(16, 16);
+            this.opLabelInspection.TabIndex = 34;
+            this.opLabelInspection.Text = "  ";
+            // 
+            // jobLabelInspection
+            // 
+            this.jobLabelInspection.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.jobLabelInspection.AutoSize = true;
+            this.jobLabelInspection.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.jobLabelInspection.ForeColor = System.Drawing.Color.Gainsboro;
+            this.jobLabelInspection.Location = new System.Drawing.Point(108, 100);
+            this.jobLabelInspection.Name = "jobLabelInspection";
+            this.jobLabelInspection.Size = new System.Drawing.Size(16, 16);
+            this.jobLabelInspection.TabIndex = 33;
+            this.jobLabelInspection.Text = "  ";
+            // 
             // partNumberLabelInspection
             // 
             this.partNumberLabelInspection.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -475,18 +486,6 @@
             this.partNumberLabelInspection.TabIndex = 32;
             this.partNumberLabelInspection.Text = "  ";
             // 
-            // label22
-            // 
-            this.label22.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label22.AutoSize = true;
-            this.label22.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label22.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label22.Location = new System.Drawing.Point(3, 38);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(70, 16);
-            this.label22.TabIndex = 35;
-            this.label22.Text = "LOT SIZE:";
-            // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
@@ -494,7 +493,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(285, 564);
+            this.panel2.Size = new System.Drawing.Size(285, 354);
             this.panel2.TabIndex = 0;
             // 
             // tableLayoutPanel17
@@ -509,7 +508,7 @@
             this.tableLayoutPanel17.RowCount = 2;
             this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel17.Size = new System.Drawing.Size(285, 564);
+            this.tableLayoutPanel17.Size = new System.Drawing.Size(285, 354);
             this.tableLayoutPanel17.TabIndex = 6;
             // 
             // label15
@@ -537,7 +536,7 @@
             " "});
             this.partsListBox.Location = new System.Drawing.Point(3, 63);
             this.partsListBox.Name = "partsListBox";
-            this.partsListBox.Size = new System.Drawing.Size(279, 498);
+            this.partsListBox.Size = new System.Drawing.Size(279, 288);
             this.partsListBox.TabIndex = 5;
             this.partsListBox.SelectedIndexChanged += new System.EventHandler(this.listBox5_SelectedIndexChanged);
             // 
@@ -552,7 +551,7 @@
             this.tableLayoutPanel12.Padding = new System.Windows.Forms.Padding(20);
             this.tableLayoutPanel12.RowCount = 1;
             this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel12.Size = new System.Drawing.Size(1574, 100);
+            this.tableLayoutPanel12.Size = new System.Drawing.Size(846, 100);
             this.tableLayoutPanel12.TabIndex = 14;
             // 
             // tableLayoutPanel13
@@ -567,7 +566,7 @@
             this.tableLayoutPanel13.Name = "tableLayoutPanel13";
             this.tableLayoutPanel13.RowCount = 1;
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel13.Size = new System.Drawing.Size(1534, 60);
+            this.tableLayoutPanel13.Size = new System.Drawing.Size(806, 60);
             this.tableLayoutPanel13.TabIndex = 0;
             // 
             // inspectionPageHeader
@@ -576,7 +575,7 @@
             this.inspectionPageHeader.AutoSize = true;
             this.inspectionPageHeader.Font = new System.Drawing.Font("Arial Black", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.inspectionPageHeader.ForeColor = System.Drawing.Color.Gainsboro;
-            this.inspectionPageHeader.Location = new System.Drawing.Point(619, 11);
+            this.inspectionPageHeader.Location = new System.Drawing.Point(255, 11);
             this.inspectionPageHeader.Name = "inspectionPageHeader";
             this.inspectionPageHeader.Size = new System.Drawing.Size(296, 38);
             this.inspectionPageHeader.TabIndex = 2;
@@ -593,7 +592,7 @@
             this.tableLayoutPanel11.Padding = new System.Windows.Forms.Padding(20, 100, 20, 20);
             this.tableLayoutPanel11.RowCount = 1;
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel11.Size = new System.Drawing.Size(1574, 714);
+            this.tableLayoutPanel11.Size = new System.Drawing.Size(846, 504);
             this.tableLayoutPanel11.TabIndex = 13;
             // 
             // inspectionEntryGridView
@@ -615,7 +614,7 @@
             dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.inspectionEntryGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
-            this.inspectionEntryGridView.ColumnHeadersHeight = 50;
+            this.inspectionEntryGridView.ColumnHeadersHeight = 64;
             this.inspectionEntryGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
@@ -626,6 +625,7 @@
             dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.inspectionEntryGridView.DefaultCellStyle = dataGridViewCellStyle6;
             this.inspectionEntryGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.inspectionEntryGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.inspectionEntryGridView.EnableHeadersVisualStyles = false;
             this.inspectionEntryGridView.Location = new System.Drawing.Point(20, 100);
             this.inspectionEntryGridView.Margin = new System.Windows.Forms.Padding(0);
@@ -641,9 +641,8 @@
             this.inspectionEntryGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.inspectionEntryGridView.RowHeadersVisible = false;
             this.inspectionEntryGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.inspectionEntryGridView.Size = new System.Drawing.Size(1534, 594);
+            this.inspectionEntryGridView.Size = new System.Drawing.Size(806, 384);
             this.inspectionEntryGridView.TabIndex = 0;
-            this.inspectionEntryGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.inspectionEntryGridView_CellClick);
             this.inspectionEntryGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.inspectionEntryGridView_CellEndEdit);
             // 
             // tableLayoutPanel10
@@ -652,13 +651,13 @@
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel10.Controls.Add(this.nextPartButton, 0, 1);
             this.tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel10.Location = new System.Drawing.Point(0, 714);
+            this.tableLayoutPanel10.Location = new System.Drawing.Point(0, 504);
             this.tableLayoutPanel10.Name = "tableLayoutPanel10";
             this.tableLayoutPanel10.Padding = new System.Windows.Forms.Padding(20, 0, 20, 50);
             this.tableLayoutPanel10.RowCount = 2;
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel10.Size = new System.Drawing.Size(1574, 139);
+            this.tableLayoutPanel10.Size = new System.Drawing.Size(846, 139);
             this.tableLayoutPanel10.TabIndex = 12;
             // 
             // nextPartButton
@@ -668,7 +667,7 @@
             this.nextPartButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.nextPartButton.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.nextPartButton.ForeColor = System.Drawing.Color.Gainsboro;
-            this.nextPartButton.Location = new System.Drawing.Point(1356, 54);
+            this.nextPartButton.Location = new System.Drawing.Point(628, 54);
             this.nextPartButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
             this.nextPartButton.Name = "nextPartButton";
             this.nextPartButton.Size = new System.Drawing.Size(198, 34);
@@ -684,7 +683,7 @@
             this.Feature_Page.Location = new System.Drawing.Point(4, 28);
             this.Feature_Page.Name = "Feature_Page";
             this.Feature_Page.Padding = new System.Windows.Forms.Padding(3);
-            this.Feature_Page.Size = new System.Drawing.Size(1869, 859);
+            this.Feature_Page.Size = new System.Drawing.Size(1141, 649);
             this.Feature_Page.TabIndex = 1;
             this.Feature_Page.Text = "FEATURE CONTROL";
             this.Feature_Page.UseVisualStyleBackColor = true;
@@ -710,7 +709,7 @@
             this.splitContainer3.Panel2.Controls.Add(this.tableLayoutPanel3);
             this.splitContainer3.Panel2.Controls.Add(this.tableLayoutPanel2);
             this.splitContainer3.Panel2.Controls.Add(this.tableLayoutPanel1);
-            this.splitContainer3.Size = new System.Drawing.Size(1863, 853);
+            this.splitContainer3.Size = new System.Drawing.Size(1135, 643);
             this.splitContainer3.SplitterDistance = 285;
             this.splitContainer3.TabIndex = 4;
             // 
@@ -850,7 +849,7 @@
             this.tableLayoutPanel4.Padding = new System.Windows.Forms.Padding(20);
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(1574, 100);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(846, 100);
             this.tableLayoutPanel4.TabIndex = 16;
             // 
             // tableLayoutPanel5
@@ -865,7 +864,7 @@
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 1;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(1534, 60);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(806, 60);
             this.tableLayoutPanel5.TabIndex = 0;
             // 
             // featurePageHeader
@@ -874,7 +873,7 @@
             this.featurePageHeader.AutoSize = true;
             this.featurePageHeader.Font = new System.Drawing.Font("Arial Black", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.featurePageHeader.ForeColor = System.Drawing.Color.Gainsboro;
-            this.featurePageHeader.Location = new System.Drawing.Point(633, 11);
+            this.featurePageHeader.Location = new System.Drawing.Point(269, 11);
             this.featurePageHeader.Name = "featurePageHeader";
             this.featurePageHeader.Size = new System.Drawing.Size(267, 38);
             this.featurePageHeader.TabIndex = 3;
@@ -892,7 +891,7 @@
             this.tableLayoutPanel3.Padding = new System.Windows.Forms.Padding(20, 100, 20, 20);
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(1574, 714);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(846, 504);
             this.tableLayoutPanel3.TabIndex = 15;
             // 
             // tableLayoutPanel2
@@ -907,13 +906,13 @@
             this.tableLayoutPanel2.Controls.Add(this.cancelButton, 3, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel2.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 714);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 504);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.Padding = new System.Windows.Forms.Padding(20, 0, 20, 50);
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1574, 139);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(846, 139);
             this.tableLayoutPanel2.TabIndex = 14;
             // 
             // saveButton
@@ -941,7 +940,7 @@
             this.cancelButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.cancelButton.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cancelButton.ForeColor = System.Drawing.Color.Gainsboro;
-            this.cancelButton.Location = new System.Drawing.Point(1356, 54);
+            this.cancelButton.Location = new System.Drawing.Point(628, 54);
             this.cancelButton.Margin = new System.Windows.Forms.Padding(5, 10, 0, 0);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(198, 34);
@@ -957,11 +956,11 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 853);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 643);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1574, 0);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(846, 0);
             this.tableLayoutPanel1.TabIndex = 13;
             // 
             // textBox2
@@ -982,7 +981,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.ClientSize = new System.Drawing.Size(1877, 891);
+            this.ClientSize = new System.Drawing.Size(1149, 681);
             this.Controls.Add(this.mainTabControl);
             this.ForeColor = System.Drawing.Color.Gainsboro;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
