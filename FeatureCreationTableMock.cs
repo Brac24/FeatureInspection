@@ -365,6 +365,7 @@ namespace Feature_Inspection
 
             SampleComboBind(); //Adds and binds the sample combo box column
 
+            /* UNLESS CHRISTIAN STILL NEEDS, THIS SECTION SHOULD BE DELETED.
             DataGridViewComboBoxColumn SamplingColumn = new DataGridViewComboBoxColumn();
             {
                 SamplingColumn.ValueMember = "Sample";
@@ -377,6 +378,7 @@ namespace Feature_Inspection
                 SamplingColumn.FlatStyle = FlatStyle.Flat;
                 SamplingColumn.CellTemplate.Style.BackColor = Color.FromArgb(50, 50, 50);
             }
+            */
 
             DataGridViewComboBoxColumn ToolCategoryColumn = new DataGridViewComboBoxColumn();
             {
@@ -411,8 +413,10 @@ namespace Feature_Inspection
         private void SampleComboBind()
         {
             DataGridViewComboBoxColumn SamplingColumn = new DataGridViewComboBoxColumn();
-            
-           
+            SamplingColumn.FlatStyle = FlatStyle.Flat;
+            SamplingColumn.CellTemplate.Style.BackColor = Color.FromArgb(50, 50, 50);
+
+
             featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, SamplingColumn);
 
             sampleBindingSource.DataSource = model.GetSampleChoices();
@@ -602,10 +606,12 @@ namespace Feature_Inspection
         {
             if(featureEditGridView.Columns["Sample"] != null)
             {
+
                 if (featureEditGridView.Columns["Sample"].Index == e.ColumnIndex)
                 {
                     featureEditGridView.Rows[e.RowIndex].Cells["SampleID"].Value = featureEditGridView.Rows[e.RowIndex].Cells["Sample"].Value;
                 }
+
             }
             
             // AdapterUpdate((BindingSource)table.DataSource);
