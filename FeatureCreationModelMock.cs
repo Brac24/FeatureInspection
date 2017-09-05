@@ -35,7 +35,7 @@ namespace Feature_Inspection
                                 "WHERE Feature_Key = ?;";
 
                 string insert = "INSERT INTO ATI_FeatureInspection.dbo.Features (Nominal, Plus_Tolerance, Minus_Tolerance, Feature_Name, Places, Active, Pieces, Part_Number_FK, Operation_Number_FK, SampleID)" +
-                            "VALUES(?,?,?,?,?,?,?,?,?,?); ";
+                            " VALUES(?,?,?,?,?,?,?,?,?,?); ";
 
                 string delete = "DELETE FROM ATI_FeatureInspection.dbo.Features WHERE Feature_Key = ?";
 

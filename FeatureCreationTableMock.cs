@@ -630,9 +630,17 @@ namespace Feature_Inspection
             DataTable data = (DataTable)(bindingSource.DataSource);
             data = AddTableRow(data);
 
-            //Set the last row Part_Number_FK and Operation_Number_FK to the same value as in the first row
-            featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Part_Number_FK"].Value = partBoxFeature.Text;
-            featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Operation_Number_FK"].Value = opBoxFeature.Text;
+            if(featureEditGridView.Rows.Count > 0)
+            {
+                //Set the last row Part_Number_FK and Operation_Number_FK to the same value as in the first row
+                featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Part_Number_FK"].Value = partBoxFeature.Text;
+                featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Operation_Number_FK"].Value = opBoxFeature.Text;
+            }
+            else
+            {
+
+            }
+            
 
         }
 
