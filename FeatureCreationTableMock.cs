@@ -445,14 +445,16 @@ namespace Feature_Inspection
                   
         }
 
-        private void AddTableRow(DataTable t)
+        private DataTable AddTableRow(DataTable t)
         {
             if (featureEditGridView.DataSource == null)
             {
-                return;
+                return t;
             }
             DataRow newRow = t.NewRow();
             t.Rows.Add(newRow);
+
+            return t;
         }
 
         private void SetOpKeyInfoFeature(int opkey)
@@ -620,11 +622,21 @@ namespace Feature_Inspection
             }
 
             DataTable data = (DataTable)(bindingSource.DataSource);
-            AddTableRow(data);
+            data = AddTableRow(data);
+            bindingSource.DataSource = data;
+            featureEditGridView.DataSource = bindingSource;
 
-            //Set the last row Part_Number_FK and Operation_Number_FK to the same value as in the first row
-            featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Part_Number_FK"].Value = featureEditGridView.Rows[0].Cells["Part_Number_FK"].Value;
-            featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Operation_Number_FK"].Value = featureEditGridView.Rows[0].Cells["Operation_Number_FK"].Value;
+            if (featureEditGridView.Rows.Count > 0)
+            {
+                //Set the last row Part_Number_FK and Operation_Number_FK to the same value as in the first row
+                featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Part_Number_FK"].Value = partBoxFeature.Text;
+                featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Operation_Number_FK"].Value = opBoxFeature.Text;
+            }
+            else
+            {
+                //bindingSource.DataSource = data;
+                //featureEditGridView.DataSource = bindingSource;
+            }
 
         }
 
