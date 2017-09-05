@@ -66,8 +66,8 @@ namespace Feature_Inspection
                 dataAdapter.InsertCommand.Parameters.Add("@Active", OdbcType.NChar, 10, "Active");
                 dataAdapter.InsertCommand.Parameters.Add("@Pieces", OdbcType.Int, 1, "Pieces");
                 dataAdapter.InsertCommand.Parameters.Add("@Part_Number_FK", OdbcType.NVarChar, 50, "Part_Number_FK");
-                dataAdapter.InsertCommand.Parameters.Add("@Operation_Number_FK", OdbcType.NVarChar, 50, "Operation_NUmber_FK");
-                dataAdapter.UpdateCommand.Parameters.Add("@SampleID", OdbcType.Int, 1, "SampleID");
+                dataAdapter.InsertCommand.Parameters.Add("@Operation_Number_FK", OdbcType.NVarChar, 50, "Operation_Number_FK");
+                dataAdapter.InsertCommand.Parameters.Add("@SampleID", OdbcType.Int, 1, "SampleID");
 
                 /******DELETE COMMAND*****/
 
@@ -290,8 +290,7 @@ namespace Feature_Inspection
 
         public void InsertLotSizeToInspectionTable(int lotSize, int opkey)
         {
-            string insertQuery = "INSERT INTO ATI_FeatureInspection (Lot_Size) " +
-                                 "VALUES (" + lotSize + ") WHERE Op_Key = " + opkey + ";";
+            string insertQuery = "UPDATE ATI_FeatureInspection.dbo.Inspection SET Lot_Size =  " + lotSize + " WHERE Op_Key = " + opkey + ";";
             using (OdbcConnection connection = new OdbcConnection(connection_string))
             {
                 connection.Open();

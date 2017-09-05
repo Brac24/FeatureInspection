@@ -258,9 +258,11 @@ namespace Feature_Inspection
                             else if (lotSizeBoxInspection.Text != "")
                             {
                                 //TODO: Need to get lot size inserted/updated to Inspection table
+                                
                                 // Insert Lot Size to Inspection Table
                                 model.InsertLotSizeToInspectionTable(Int32.Parse(lotSizeBoxInspection.Text), opkey);
                                 //Create the parts in the positions table
+
 
                                 //Get part list DataTable partList = model.GetPartsList(opkey);
 
