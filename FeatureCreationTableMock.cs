@@ -169,7 +169,7 @@ namespace Feature_Inspection
             inspectionEntryGridView.Columns["Measured Actual"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             inspectionEntryGridView.Columns["InspectionTool"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-            
+
             inspectionEntryGridView.Columns["Feature"].ReadOnly = true;
 
             if (inspectionEntryGridView.RowCount != 0)
@@ -232,16 +232,16 @@ namespace Feature_Inspection
                 DataTable featureTable;
                 bool isValidOpKey = false;
                 bool inspectionExists = false;
-                
+
                 int opkey = Int32.Parse(opKeyBoxInspection.Text);
                 DataTable partList = model.GetPartsList(opkey);
                 isValidOpKey = SetOpKeyInfoInspection(opkey);
 
-                if(isValidOpKey)
+                if (isValidOpKey)
                 {
                     inspectionExists = model.GetInspectionExistsOnOpKey(opkey);
 
-                    if(inspectionExists)
+                    if (inspectionExists)
                     {
                         //Check if there are features related on op and part numn
                         featureTable = model.GetFeaturesOnOpKey(opkey);
@@ -255,7 +255,7 @@ namespace Feature_Inspection
                                 //Get the parts if there are
                                 BindListBox(partList);
                             }
-                            else if(lotSizeBoxInspection.Text != "")
+                            else if (lotSizeBoxInspection.Text != "")
                             {
                                 //TODO: Need to get lot size inserted/updated to Inspection table
                                 // Insert Lot Size to Inspection Table
@@ -270,7 +270,7 @@ namespace Feature_Inspection
                         else
                         {
                             //Message user to add features to this part num op num
-                           // MessageBox.Show("Lead must add features to this Part and Operation number");
+                            // MessageBox.Show("Lead must add features to this Part and Operation number");
 
                         }
                     }
@@ -286,11 +286,11 @@ namespace Feature_Inspection
                 else
                 {
                     //Not valid opkey
-                    
+
                 }
 
                 lotSizeBoxInspection.Focus();
-                
+
             }
         }
 
@@ -315,7 +315,7 @@ namespace Feature_Inspection
         private static void ToolCategories(DataGridViewComboBoxColumn comboboxColumn)
         {
             comboboxColumn.Items.AddRange("0-1 Mic", "Height Stand");
-            
+
             /*
             string query = "SELECT Category FROM ATI_uniPoint_Live.dbo.PT_Equip WHERE Class = 'Inspection Tool' AND Category IS NOT NULL GROUP BY Category";
             comboboxColumn.Items.AddRange(query); */
@@ -388,8 +388,8 @@ namespace Feature_Inspection
             }
 
             DataGridViewButtonColumn DeleteButtonColumn = new DataGridViewButtonColumn();
-            
-            
+
+
             {
                 DeleteButtonColumn.FlatStyle = FlatStyle.Flat;
                 DeleteButtonColumn.CellTemplate.Style.BackColor = Color.DarkRed;
@@ -411,8 +411,8 @@ namespace Feature_Inspection
         private void SampleComboBind()
         {
             DataGridViewComboBoxColumn SamplingColumn = new DataGridViewComboBoxColumn();
-            
-           
+
+
             featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, SamplingColumn);
 
             sampleBindingSource.DataSource = model.GetSampleChoices();
@@ -424,10 +424,10 @@ namespace Feature_Inspection
             SamplingColumn.HeaderText = "Sample";
             SamplingColumn.Name = "Sample";
             SamplingColumn.DataSource = sampleBindingSource;
-            
-            
+
+
             //setting initial selected value to hidden SampleID column value for the current row
-            for(int i=0; i<featureEditGridView.Rows.Count; i++)
+            for (int i = 0; i < featureEditGridView.Rows.Count; i++)
             {
                 featureEditGridView.Rows[i].Cells["Sample"].Value = featureEditGridView.Rows[i].Cells["SampleID"].Value;
             }
@@ -439,10 +439,10 @@ namespace Feature_Inspection
             //Must call EndEdit Method before trying to update database
             bindingSource.EndEdit();
             sampleBindingSource.EndEdit();
-          
+
             //Update database
             model.AdapterUpdate((DataTable)bindingSource.DataSource);
-                  
+
         }
 
         private DataTable AddTableRow(DataTable t)
@@ -511,7 +511,7 @@ namespace Feature_Inspection
 
             if (e.ColumnIndex != -1)
             {
-                if (e.ColumnIndex == featureEditGridView.Columns[featureEditGridView.ColumnCount -1].Index)
+                if (e.ColumnIndex == featureEditGridView.Columns[featureEditGridView.ColumnCount - 1].Index)
                 {
                     featureEditGridView.Rows.Remove(featureEditGridView.Rows[e.RowIndex]);
                 }
@@ -546,14 +546,14 @@ namespace Feature_Inspection
             {
                 checkEnterKeyPressedInspection(sender, e);
             }
-           /* else if (sender == partBoxFeature)
-            {
-                checkEnterKeyPressedFeatures(sender, e);
-            }
-            else if (sender == opBoxFeature)
-            {
-                checkEnterKeyPressedFeatures(sender, e);
-            }*/
+            /* else if (sender == partBoxFeature)
+             {
+                 checkEnterKeyPressedFeatures(sender, e);
+             }
+             else if (sender == opBoxFeature)
+             {
+                 checkEnterKeyPressedFeatures(sender, e);
+             }*/
 
         }
 
@@ -602,14 +602,14 @@ namespace Feature_Inspection
 
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            if(featureEditGridView.Columns["Sample"] != null)
+            if (featureEditGridView.Columns["Sample"] != null)
             {
                 if (featureEditGridView.Columns["Sample"].Index == e.ColumnIndex)
                 {
                     featureEditGridView.Rows[e.RowIndex].Cells["SampleID"].Value = featureEditGridView.Rows[e.RowIndex].Cells["Sample"].Value;
                 }
             }
-            
+
             // AdapterUpdate((BindingSource)table.DataSource);
 
         }
@@ -623,20 +623,14 @@ namespace Feature_Inspection
 
             DataTable data = (DataTable)(bindingSource.DataSource);
             data = AddTableRow(data);
-            bindingSource.DataSource = data;
-            featureEditGridView.DataSource = bindingSource;
 
-            if (featureEditGridView.Rows.Count > 0)
-            {
-                //Set the last row Part_Number_FK and Operation_Number_FK to the same value as in the first row
-                featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Part_Number_FK"].Value = partBoxFeature.Text;
-                featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Operation_Number_FK"].Value = opBoxFeature.Text;
-            }
-            else
-            {
-                //bindingSource.DataSource = data;
-                //featureEditGridView.DataSource = bindingSource;
-            }
+
+
+            //Set the last row Part_Number_FK and Operation_Number_FK to the same value as in the first row
+            featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Part_Number_FK"].Value = partBoxFeature.Text;
+            featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Operation_Number_FK"].Value = opBoxFeature.Text;
+
+
 
         }
 
@@ -683,7 +677,7 @@ namespace Feature_Inspection
                 var result2 = MessageBox.Show(message2, caption2);
             }
 
-            
+
         }
         private void featureEditGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
