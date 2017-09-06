@@ -30,69 +30,72 @@ namespace Feature_Inspection
             using (OdbcCommand com = conn.CreateCommand())
             using (OdbcDataAdapter dataAdapter = new OdbcDataAdapter(com))
             {
-                string update = "UPDATE ATI_FeatureInspection.dbo.Features SET Nominal = ?, Plus_Tolerance = ?, Minus_Tolerance = ?, " +
-                                "Feature_Name = ?, Places = ?, Active = ?, Pieces = ?, SampleID = ? " +
-                                "WHERE Feature_Key = ?;";
 
-                string insert = "INSERT INTO ATI_FeatureInspection.dbo.Features (Nominal, Plus_Tolerance, Minus_Tolerance, Feature_Name, Places, Active, Pieces, Part_Number_FK, Operation_Number_FK, SampleID)" +
-                            " VALUES(?,?,?,?,?,?,?,?,?,?); ";
+                    string update = "UPDATE ATI_FeatureInspection.dbo.Features SET Nominal = ?, Plus_Tolerance = ?, Minus_Tolerance = ?, " +
+                                    "Feature_Name = ?, Places = ?, Active = ?, Pieces = ?, SampleID = ? " +
+                                    "WHERE Feature_Key = ?;";
 
-                string delete = "DELETE FROM ATI_FeatureInspection.dbo.Features WHERE Feature_Key = ?";
+                    string insert = "INSERT INTO ATI_FeatureInspection.dbo.Features (Nominal, Plus_Tolerance, Minus_Tolerance, Feature_Name, Places, Active, Pieces, Part_Number_FK, Operation_Number_FK, SampleID)" +
+                                " VALUES(?,?,?,?,?,?,?,?,?,?); ";
+
+                    string delete = "DELETE FROM ATI_FeatureInspection.dbo.Features WHERE Feature_Key = ?";
 
                 /*****UPDATE COMMAND*****/
 
-                dataAdapter.UpdateCommand = new OdbcCommand(update, conn);
+                    dataAdapter.UpdateCommand = new OdbcCommand(update, conn);
 
-                dataAdapter.UpdateCommand.Parameters.Add("@Nominal", OdbcType.Decimal, 3, "Nominal");
-                dataAdapter.UpdateCommand.Parameters.Add("@Plus_Tolerance", OdbcType.Decimal, 3, "Plus_Tolerance");
-                dataAdapter.UpdateCommand.Parameters.Add("@Minus_Tolerance", OdbcType.Decimal, 3, "Minus_Tolerance");
-                dataAdapter.UpdateCommand.Parameters.Add("@Feature_Name", OdbcType.NVarChar, 50, "Feature_Name");
-                dataAdapter.UpdateCommand.Parameters.Add("@Places", OdbcType.Int, 1, "Places");
-                dataAdapter.UpdateCommand.Parameters.Add("@Active", OdbcType.NChar, 10, "Active");
-                dataAdapter.UpdateCommand.Parameters.Add("@Pieces", OdbcType.Int, 1, "Pieces");
-                dataAdapter.UpdateCommand.Parameters.Add("@SampleID", OdbcType.Int, 1, "SampleID");
-                dataAdapter.UpdateCommand.Parameters.Add("@Feature_Key", OdbcType.Int, 5, "Feature_Key");
+                    dataAdapter.UpdateCommand.Parameters.Add("@Nominal", OdbcType.Decimal, 3, "Nominal");
+                    dataAdapter.UpdateCommand.Parameters.Add("@Plus_Tolerance", OdbcType.Decimal, 3, "Plus_Tolerance");
+                    dataAdapter.UpdateCommand.Parameters.Add("@Minus_Tolerance", OdbcType.Decimal, 3, "Minus_Tolerance");
+                    dataAdapter.UpdateCommand.Parameters.Add("@Feature_Name", OdbcType.NVarChar, 50, "Feature_Name");
+                    dataAdapter.UpdateCommand.Parameters.Add("@Places", OdbcType.Int, 1, "Places");
+                    dataAdapter.UpdateCommand.Parameters.Add("@Active", OdbcType.NChar, 10, "Active");
+                    dataAdapter.UpdateCommand.Parameters.Add("@Pieces", OdbcType.Int, 1, "Pieces");
+                    dataAdapter.UpdateCommand.Parameters.Add("@SampleID", OdbcType.Int, 1, "SampleID");
+                    dataAdapter.UpdateCommand.Parameters.Add("@Feature_Key", OdbcType.Int, 5, "Feature_Key");
 
 
                 /****INSERT COMMAND*****/
 
-                dataAdapter.InsertCommand = new OdbcCommand(insert, conn);
+                    dataAdapter.InsertCommand = new OdbcCommand(insert, conn);
 
-                dataAdapter.InsertCommand.Parameters.Add("@Nominal", OdbcType.Decimal, 3, "Nominal");
-                dataAdapter.InsertCommand.Parameters.Add("@Plus_Tolerance", OdbcType.Decimal, 3, "Plus_Tolerance");
-                dataAdapter.InsertCommand.Parameters.Add("@Minus_Tolerance", OdbcType.Decimal, 3, "Minus_Tolerance");
-                dataAdapter.InsertCommand.Parameters.Add("@Feature_Name", OdbcType.NVarChar, 50, "Feature_Name");
-                dataAdapter.InsertCommand.Parameters.Add("@Places", OdbcType.Int, 1, "Places");
-                dataAdapter.InsertCommand.Parameters.Add("@Active", OdbcType.NChar, 10, "Active");
-                dataAdapter.InsertCommand.Parameters.Add("@Pieces", OdbcType.Int, 1, "Pieces");
-                dataAdapter.InsertCommand.Parameters.Add("@Part_Number_FK", OdbcType.NVarChar, 50, "Part_Number_FK");
-                dataAdapter.InsertCommand.Parameters.Add("@Operation_Number_FK", OdbcType.NVarChar, 50, "Operation_Number_FK");
-                dataAdapter.InsertCommand.Parameters.Add("@SampleID", OdbcType.Int, 1, "SampleID");
-
-                /******DELETE COMMAND*****/
-
-                dataAdapter.DeleteCommand = new OdbcCommand(delete, conn);
-
-                dataAdapter.DeleteCommand.Parameters.Add("@Feature_Key", OdbcType.Int, 5, "Feature_Key");
-
-                //End Command Initialization
+                    dataAdapter.InsertCommand.Parameters.Add("@Nominal", OdbcType.Decimal, 3, "Nominal");
+                    dataAdapter.InsertCommand.Parameters.Add("@Plus_Tolerance", OdbcType.Decimal, 3, "Plus_Tolerance");
+                    dataAdapter.InsertCommand.Parameters.Add("@Minus_Tolerance", OdbcType.Decimal, 3, "Minus_Tolerance");
+                    dataAdapter.InsertCommand.Parameters.Add("@Feature_Name", OdbcType.NVarChar, 50, "Feature_Name");
+                    dataAdapter.InsertCommand.Parameters.Add("@Places", OdbcType.Int, 1, "Places");
+                    dataAdapter.InsertCommand.Parameters.Add("@Active", OdbcType.NChar, 10, "Active");
+                    dataAdapter.InsertCommand.Parameters.Add("@Pieces", OdbcType.Int, 1, "Pieces");
+                    dataAdapter.InsertCommand.Parameters.Add("@Part_Number_FK", OdbcType.NVarChar, 50, "Part_Number_FK");
+                    dataAdapter.InsertCommand.Parameters.Add("@Operation_Number_FK", OdbcType.NVarChar, 50, "Operation_Number_FK");
+                    dataAdapter.InsertCommand.Parameters.Add("@SampleID", OdbcType.Int, 1, "SampleID");
 
 
+                    /******DELETE COMMAND*****/
 
-                changedTable = dt.GetChanges();
+                    dataAdapter.DeleteCommand = new OdbcCommand(delete, conn);
 
-                int rowsInChangedTable;
+                    dataAdapter.DeleteCommand.Parameters.Add("@Feature_Key", OdbcType.Int, 5, "Feature_Key");
 
-                if (changedTable != null)
-                {
-                    rowsInChangedTable = changedTable.Rows.Count;
+                    //End Command Initialization
+
+
+
+                    changedTable = dt.GetChanges();
+
+                    int rowsInChangedTable;
+
+                    if (changedTable != null)
+                    {
+                        rowsInChangedTable = changedTable.Rows.Count;
+
+                    }
+
+                    dataAdapter.Update(dt);
 
                 }
-
-                dataAdapter.Update(dt);
-
-            }
             return changedTable;
+
         }
 
         

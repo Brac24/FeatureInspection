@@ -279,6 +279,7 @@ namespace Feature_Inspection
                     else
                     {
                         //Create the inspection in inspection table
+                        lotSizeBoxInspection.Clear();
                         MessageBox.Show("Creating Inspection");
 
                         //Run the logic inside the if loop above
@@ -512,6 +513,7 @@ namespace Feature_Inspection
         }
 
         private void DeleteRowFeature(object sender, DataGridViewCellMouseEventArgs e)
+
         {
             var table = (DataGridView)sender;
 
@@ -704,8 +706,21 @@ namespace Feature_Inspection
 
         }
 
+        private void inspectionEntryGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            inspectionEntryGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = 0;
+            MessageBox.Show(e.Exception.Message);
+        }
+
+        private void featureEditGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            featureEditGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = 0;
+            MessageBox.Show(e.Exception.Message);
+        }
+
 
         #endregion
+
 
     }
 
