@@ -173,6 +173,7 @@
             this.featureEditGridView.Size = new System.Drawing.Size(806, 384);
             this.featureEditGridView.TabIndex = 0;
             this.featureEditGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
+            this.featureEditGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.featureEditGridView_DataError);
             // 
             // addFeatureButton
             // 
@@ -645,6 +646,7 @@
             this.inspectionEntryGridView.Size = new System.Drawing.Size(806, 384);
             this.inspectionEntryGridView.TabIndex = 0;
             this.inspectionEntryGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.inspectionEntryGridView_CellEndEdit);
+            this.inspectionEntryGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.inspectionEntryGridView_DataError);
             // 
             // tableLayoutPanel10
             // 

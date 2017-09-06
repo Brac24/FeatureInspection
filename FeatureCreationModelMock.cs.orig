@@ -30,10 +30,22 @@ namespace Feature_Inspection
             using (OdbcCommand com = conn.CreateCommand())
             using (OdbcDataAdapter dataAdapter = new OdbcDataAdapter(com))
             {
+<<<<<<< HEAD
+                string update = "UPDATE ATI_FeatureInspection.dbo.Features SET Nominal = ?, Plus_Tolerance = ?, Minus_Tolerance = ?, " +
                                 "Feature_Name = ?, Places = ?, Active = ?, Pieces = ?, SampleID = ?, FeatureType = ? " +
+                                "WHERE Feature_Key = ?;";
 
                 string insert = "INSERT INTO ATI_FeatureInspection.dbo.Features (Nominal, Plus_Tolerance, Minus_Tolerance, Feature_Name, Places, Active, Pieces, Part_Number_FK, Operation_Number_FK, SampleID, FeatureType)" +
                             " VALUES(?,?,?,?,?,?,?,?,?,?,?); ";
+=======
+
+                    string update = "UPDATE ATI_FeatureInspection.dbo.Features SET Nominal = ?, Plus_Tolerance = ?, Minus_Tolerance = ?, " +
+                                    "Feature_Name = ?, Places = ?, Active = ?, Pieces = ?, SampleID = ? " +
+                                    "WHERE Feature_Key = ?;";
+>>>>>>> 3aec9c4d693e08f491fdee1d9f724c1278badd43
+
+                    string insert = "INSERT INTO ATI_FeatureInspection.dbo.Features (Nominal, Plus_Tolerance, Minus_Tolerance, Feature_Name, Places, Active, Pieces, Part_Number_FK, Operation_Number_FK, SampleID)" +
+                                " VALUES(?,?,?,?,?,?,?,?,?,?); ";
 
                     string delete = "DELETE FROM ATI_FeatureInspection.dbo.Features WHERE Feature_Key = ?";
 
@@ -41,6 +53,7 @@ namespace Feature_Inspection
 
                     dataAdapter.UpdateCommand = new OdbcCommand(update, conn);
 
+<<<<<<< HEAD
                 dataAdapter.UpdateCommand.Parameters.Add("@Nominal", OdbcType.Decimal, 3, "Nominal");
                 dataAdapter.UpdateCommand.Parameters.Add("@Plus_Tolerance", OdbcType.Decimal, 3, "Plus_Tolerance");
                 dataAdapter.UpdateCommand.Parameters.Add("@Minus_Tolerance", OdbcType.Decimal, 3, "Minus_Tolerance");
@@ -51,12 +64,24 @@ namespace Feature_Inspection
                 dataAdapter.UpdateCommand.Parameters.Add("@SampleID", OdbcType.Int, 1, "SampleID");
                 dataAdapter.UpdateCommand.Parameters.Add("@FeatureType", OdbcType.NVarChar, 50, "FeatureType");
                 dataAdapter.UpdateCommand.Parameters.Add("@Feature_Key", OdbcType.Int, 5, "Feature_Key");
+=======
+                    dataAdapter.UpdateCommand.Parameters.Add("@Nominal", OdbcType.Decimal, 3, "Nominal");
+                    dataAdapter.UpdateCommand.Parameters.Add("@Plus_Tolerance", OdbcType.Decimal, 3, "Plus_Tolerance");
+                    dataAdapter.UpdateCommand.Parameters.Add("@Minus_Tolerance", OdbcType.Decimal, 3, "Minus_Tolerance");
+                    dataAdapter.UpdateCommand.Parameters.Add("@Feature_Name", OdbcType.NVarChar, 50, "Feature_Name");
+                    dataAdapter.UpdateCommand.Parameters.Add("@Places", OdbcType.Int, 1, "Places");
+                    dataAdapter.UpdateCommand.Parameters.Add("@Active", OdbcType.NChar, 10, "Active");
+                    dataAdapter.UpdateCommand.Parameters.Add("@Pieces", OdbcType.Int, 1, "Pieces");
+                    dataAdapter.UpdateCommand.Parameters.Add("@SampleID", OdbcType.Int, 1, "SampleID");
+                    dataAdapter.UpdateCommand.Parameters.Add("@Feature_Key", OdbcType.Int, 5, "Feature_Key");
+>>>>>>> 3aec9c4d693e08f491fdee1d9f724c1278badd43
 
 
                 /****INSERT COMMAND*****/
 
                     dataAdapter.InsertCommand = new OdbcCommand(insert, conn);
 
+<<<<<<< HEAD
                 dataAdapter.InsertCommand.Parameters.Add("@Nominal", OdbcType.Decimal, 3, "Nominal");
                 dataAdapter.InsertCommand.Parameters.Add("@Plus_Tolerance", OdbcType.Decimal, 3, "Plus_Tolerance");
                 dataAdapter.InsertCommand.Parameters.Add("@Minus_Tolerance", OdbcType.Decimal, 3, "Minus_Tolerance");
@@ -68,6 +93,19 @@ namespace Feature_Inspection
                 dataAdapter.InsertCommand.Parameters.Add("@Operation_Number_FK", OdbcType.NVarChar, 50, "Operation_Number_FK");
                 dataAdapter.InsertCommand.Parameters.Add("@SampleID", OdbcType.Int, 1, "SampleID");
                 dataAdapter.InsertCommand.Parameters.Add("@FeatureType", OdbcType.NVarChar, 50, "FeatureType");
+=======
+                    dataAdapter.InsertCommand.Parameters.Add("@Nominal", OdbcType.Decimal, 3, "Nominal");
+                    dataAdapter.InsertCommand.Parameters.Add("@Plus_Tolerance", OdbcType.Decimal, 3, "Plus_Tolerance");
+                    dataAdapter.InsertCommand.Parameters.Add("@Minus_Tolerance", OdbcType.Decimal, 3, "Minus_Tolerance");
+                    dataAdapter.InsertCommand.Parameters.Add("@Feature_Name", OdbcType.NVarChar, 50, "Feature_Name");
+                    dataAdapter.InsertCommand.Parameters.Add("@Places", OdbcType.Int, 1, "Places");
+                    dataAdapter.InsertCommand.Parameters.Add("@Active", OdbcType.NChar, 10, "Active");
+                    dataAdapter.InsertCommand.Parameters.Add("@Pieces", OdbcType.Int, 1, "Pieces");
+                    dataAdapter.InsertCommand.Parameters.Add("@Part_Number_FK", OdbcType.NVarChar, 50, "Part_Number_FK");
+                    dataAdapter.InsertCommand.Parameters.Add("@Operation_Number_FK", OdbcType.NVarChar, 50, "Operation_Number_FK");
+                    dataAdapter.InsertCommand.Parameters.Add("@SampleID", OdbcType.Int, 1, "SampleID");
+>>>>>>> 3aec9c4d693e08f491fdee1d9f724c1278badd43
+
 
                     /******DELETE COMMAND*****/
 
