@@ -363,6 +363,7 @@ namespace Feature_Inspection
                 featureEditGridView.Columns.Insert(0, FeatureDropColumn);
                 FeatureDropChoices(FeatureDropColumn);
                 FeatureDropColumn.HeaderText = "Feature Type (Optional)";
+                FeatureDropColumn.Name = "FeatureTypeColumn";
             }
 
             SampleComboBind(); //Adds and binds the sample combo box column
@@ -436,6 +437,7 @@ namespace Feature_Inspection
             for (int i = 0; i < featureEditGridView.Rows.Count; i++)
             {
                 featureEditGridView.Rows[i].Cells["Sample"].Value = featureEditGridView.Rows[i].Cells["SampleID"].Value;
+                featureEditGridView.Rows[i].Cells["FeatureTypeColumn"].Value = featureEditGridView.Rows[i].Cells["FeatureType"].Value;
             }
 
         }
@@ -608,12 +610,18 @@ namespace Feature_Inspection
 
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            if (featureEditGridView.Columns["Sample"] != null)
+
+            
+            if (featureEditGridView.Columns["Sample"] != null || featureEditGridView.Columns["FeatureTypeColumn"] != null)
             {
 
                 if (featureEditGridView.Columns["Sample"].Index == e.ColumnIndex)
                 {
                     featureEditGridView.Rows[e.RowIndex].Cells["SampleID"].Value = featureEditGridView.Rows[e.RowIndex].Cells["Sample"].Value;
+                }
+                else if (featureEditGridView.Columns["FeatureTypeColumn"].Index == e.ColumnIndex)
+                {
+                    featureEditGridView.Rows[e.RowIndex].Cells["FeatureType"].Value = featureEditGridView.Rows[e.RowIndex].Cells["FeatureTypeColumn"].Value;
                 }
 
             }
