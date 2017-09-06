@@ -30,7 +30,10 @@ namespace Feature_Inspection
             using (OdbcCommand com = conn.CreateCommand())
             using (OdbcDataAdapter dataAdapter = new OdbcDataAdapter(com))
             {
+                string update = "UPDATE ATI_FeatureInspection.dbo.Features SET Nominal = ?, Plus_Tolerance = ?, Minus_Tolerance = ?, " +
                                 "Feature_Name = ?, Places = ?, Active = ?, Pieces = ?, SampleID = ?, FeatureType = ? " +
+                                "WHERE Feature_Key = ?;";
+
 
                 string insert = "INSERT INTO ATI_FeatureInspection.dbo.Features (Nominal, Plus_Tolerance, Minus_Tolerance, Feature_Name, Places, Active, Pieces, Part_Number_FK, Operation_Number_FK, SampleID, FeatureType)" +
                             " VALUES(?,?,?,?,?,?,?,?,?,?,?); ";
