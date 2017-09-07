@@ -327,9 +327,8 @@
             this.lotSizeBoxInspection.BackColor = System.Drawing.Color.DimGray;
             this.lotSizeBoxInspection.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.lotSizeBoxInspection.Location = new System.Drawing.Point(108, 34);
-            this.lotSizeBoxInspection.Multiline = true;
             this.lotSizeBoxInspection.Name = "lotSizeBoxInspection";
-            this.lotSizeBoxInspection.Size = new System.Drawing.Size(150, 25);
+            this.lotSizeBoxInspection.Size = new System.Drawing.Size(150, 26);
             this.lotSizeBoxInspection.TabIndex = 1;
             // 
             // opKeyBoxInspection
@@ -339,9 +338,8 @@
             this.opKeyBoxInspection.BackColor = System.Drawing.Color.DimGray;
             this.opKeyBoxInspection.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.opKeyBoxInspection.Location = new System.Drawing.Point(108, 3);
-            this.opKeyBoxInspection.Multiline = true;
             this.opKeyBoxInspection.Name = "opKeyBoxInspection";
-            this.opKeyBoxInspection.Size = new System.Drawing.Size(150, 25);
+            this.opKeyBoxInspection.Size = new System.Drawing.Size(150, 26);
             this.opKeyBoxInspection.TabIndex = 0;
             // 
             // label22

@@ -38,11 +38,11 @@ namespace Feature_Inspection
                 string insert = "INSERT INTO ATI_FeatureInspection.dbo.Features (Nominal, Plus_Tolerance, Minus_Tolerance, Feature_Name, Places, Active, Pieces, Part_Number_FK, Operation_Number_FK, SampleID, FeatureType)" +
                             " VALUES(?,?,?,?,?,?,?,?,?,?,?); ";
 
-                    string delete = "DELETE FROM ATI_FeatureInspection.dbo.Features WHERE Feature_Key = ?";
+                string delete = "DELETE FROM ATI_FeatureInspection.dbo.Features WHERE Feature_Key = ?";
 
                 /*****UPDATE COMMAND*****/
 
-                    dataAdapter.UpdateCommand = new OdbcCommand(update, conn);
+                dataAdapter.UpdateCommand = new OdbcCommand(update, conn);
 
                 dataAdapter.UpdateCommand.Parameters.Add("@Nominal", OdbcType.Decimal, 3, "Nominal");
                 dataAdapter.UpdateCommand.Parameters.Add("@Plus_Tolerance", OdbcType.Decimal, 3, "Plus_Tolerance");
@@ -58,7 +58,7 @@ namespace Feature_Inspection
 
                 /****INSERT COMMAND*****/
 
-                    dataAdapter.InsertCommand = new OdbcCommand(insert, conn);
+                dataAdapter.InsertCommand = new OdbcCommand(insert, conn);
 
                 dataAdapter.InsertCommand.Parameters.Add("@Nominal", OdbcType.Decimal, 3, "Nominal");
                 dataAdapter.InsertCommand.Parameters.Add("@Plus_Tolerance", OdbcType.Decimal, 3, "Plus_Tolerance");
@@ -72,47 +72,47 @@ namespace Feature_Inspection
                 dataAdapter.InsertCommand.Parameters.Add("@SampleID", OdbcType.Int, 1, "SampleID");
                 dataAdapter.InsertCommand.Parameters.Add("@FeatureType", OdbcType.NVarChar, 50, "FeatureType");
 
-                    /******DELETE COMMAND*****/
+                /******DELETE COMMAND*****/
 
-                    dataAdapter.DeleteCommand = new OdbcCommand(delete, conn);
+                dataAdapter.DeleteCommand = new OdbcCommand(delete, conn);
 
-                    dataAdapter.DeleteCommand.Parameters.Add("@Feature_Key", OdbcType.Int, 5, "Feature_Key");
+                dataAdapter.DeleteCommand.Parameters.Add("@Feature_Key", OdbcType.Int, 5, "Feature_Key");
 
-                    //End Command Initialization
+                //End Command Initialization
 
 
 
-                    changedTable = dt.GetChanges();
+                changedTable = dt.GetChanges();
 
-                    int rowsInChangedTable;
+                int rowsInChangedTable;
 
-                    if (changedTable != null)
-                    {
-                        rowsInChangedTable = changedTable.Rows.Count;
-
-                    }
-
-                    dataAdapter.Update(dt);
+                if (changedTable != null)
+                {
+                    rowsInChangedTable = changedTable.Rows.Count;
 
                 }
+
+                dataAdapter.Update(dt);
+
+            }
             return changedTable;
 
         }
 
-        
+
 
         public DataTable GetFeaturesOnOpKey(string partNumber, string operationNum)
         {
-           
+
             DataTable t;
             DataTable sampleChoices = new DataTable();
-            
+
             using (OdbcConnection conn = new OdbcConnection(connection_string))
             using (OdbcCommand com = conn.CreateCommand())
             using (OdbcDataAdapter dataAdapter = new OdbcDataAdapter(com))
             {
                 string query = "SELECT * FROM ATI_FeatureInspection.dbo.Features WHERE Part_Number_FK = '" + partNumber + "' AND Operation_Number_FK = '" + operationNum + "';";
-                                
+
                 com.CommandText = query;
                 t = new DataTable();
                 dataAdapter.Fill(t);
@@ -221,6 +221,37 @@ namespace Feature_Inspection
             return t;
         }
 
+        internal string GetLotSize(int opkey)
+        {
+            int lotSize = 0;
+            string query = "SELECT Lot_Size FROM ATI_FeatureInspection.dbo.Inspection WHERE Op_Key = " + opkey + ";";
+
+            using (OdbcConnection connection = new OdbcConnection(connection_string))
+            {
+                connection.Open();
+
+                OdbcCommand command = new OdbcCommand(query, connection);
+
+                OdbcDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    try
+                    {
+                        lotSize = reader.GetInt32(reader.GetOrdinal("Lot_Size"));
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Could not get Lot Size from query");
+                    }
+
+                }
+
+            }
+
+            return lotSize.ToString();
+        }
+
         public DataTable GetFeaturesOnPartIndex(int partIndex, int opKey)
         {
             DataTable t;
@@ -305,9 +336,54 @@ namespace Feature_Inspection
             }
         }
 
-        public void InsertPartsToPositionTable(int opkey)
+        public void InsertPartsToPositionTable(int opkey, int lotSize)
+        {
+            string insert = "DECLARE @Count INT, @RowFeature INT,  @MaxParts INT, @TotalFeatures INT " +
+            "DECLARE @InspectionKey INT, @FeatureKey INT" +
+            " SET @InspectionKey = (SELECT Inspection_Key FROM ATI_FeatureInspection.dbo.Inspection WHERE Op_Key = " + opkey + "); " +
+            " SET @TotalFeatures = (SELECT COUNT(Feature_Key) FROM ATI_FeatureInspection.dbo.Features WHERE Part_Number_FK = (SELECT Part_Number FROM ATI_FeatureInspection.dbo.Operation WHERE Op_Key = " + opkey + ") AND Operation_Number_FK = (SELECT Operation_Number FROM ATI_FeatureInspection.dbo.Operation WHERE Op_Key = " + opkey + ")); " +
+            " SET @Count = 0; " +
+            " SET @RowFeature = 0 " +
+            " SET @MaxParts = " + lotSize +
+            " WHILE(@RowFeature < @TotalFeatures) " +
+            " BEGIN " +
+            " SET @RowFeature = @RowFeature + 1 " +
+            " SET @FeatureKey = (SELECT Feature_Key FROM (SELECT ROW_NUMBER() OVER(ORDER BY Feature_Key ASC) AS RowNumber, Feature_Key  FROM ATI_FeatureInspection.dbo.Features WHERE Part_Number_FK = (SELECT Part_Number FROM ATI_FeatureInspection.dbo.Operation WHERE Op_Key = " + opkey + ") AND Operation_Number_FK = (SELECT Operation_Number FROM ATI_FeatureInspection.dbo.Operation WHERE Op_Key = " + opkey + ") ) AS foo " +
+            " WHERE RowNumber = @RowFeature) " +
+            " WHILE(@Count < @MaxParts) " +
+            " BEGIN " +
+            " INSERT INTO ATI_FeatureInspection.dbo.Position(Inspection_Key_FK, Piece_ID, Feature_Key) " +
+            " VALUES(@InspectionKey, @Count + 1, @FeatureKey) " +
+            " SET @Count = @Count + 1 " +
+            " END " +
+            " SET @Count = 0 "+
+            " END";
+
+           
+
+            using (OdbcConnection connection = new OdbcConnection(connection_string))
+            {
+                connection.Open();
+
+                OdbcCommand command = new OdbcCommand(insert, connection);
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public void CreateInspectionInInspectionTable(int opkey)
         {
 
+            string insert = "INSERT INTO ATI_FeatureInspection.dbo.Inspection(Op_Key)" +
+                            "VALUES(" + opkey + ");";
+            using (OdbcConnection connection = new OdbcConnection(connection_string))
+            {
+                connection.Open();
+
+                OdbcCommand command = new OdbcCommand(insert, connection);
+
+                command.ExecuteNonQuery();
+            }
         }
     }
 }
