@@ -235,7 +235,6 @@ namespace Feature_Inspection
                 int opkey = 0;
                 DataTable partList = null;
                 String s = opKeyBoxInspection.Text;
-                s.TrimStart('0');
 
                 try
                 {
@@ -477,7 +476,6 @@ namespace Feature_Inspection
 
             //Update database
             model.AdapterUpdate((DataTable)bindingSource.DataSource);
-
         }
 
         private DataTable AddTableRow(DataTable t)
@@ -536,7 +534,6 @@ namespace Feature_Inspection
                 {
                     return;
                 }
-
             }
         }
 
@@ -680,10 +677,10 @@ namespace Feature_Inspection
             if (result == DialogResult.Yes)
             {
                 //Rebind Database
-                string partNumber = partBoxFeature.Text;
-                string operationNum = opBoxFeature.Text;
-                DataTable partList = model.GetFeaturesOnOpKey(partNumber, operationNum);
-                DataBindTest(partList);
+                //string partNumber = partBoxFeature.Text;
+                //string operationNum = opBoxFeature.Text;
+                //DataTable partList = model.GetFeaturesOnOpKey(partNumber, operationNum);
+                //DataBindTest(partList);
             }
         }
 
@@ -738,6 +735,18 @@ namespace Feature_Inspection
         }
 
         #endregion
+
+        private void firstCharZeroNull(object sender, KeyEventArgs e)
+        {
+            if (opKeyBoxInspection.Text == "0")
+            {
+                opKeyBoxInspection.Text = null;
+            }
+            if (lotSizeBoxInspection.Text == "0")
+            {
+                lotSizeBoxInspection.Text = null;
+            }
+        }
 
     }
 

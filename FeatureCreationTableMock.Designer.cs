@@ -330,6 +330,9 @@
             this.lotSizeBoxInspection.Name = "lotSizeBoxInspection";
             this.lotSizeBoxInspection.Size = new System.Drawing.Size(150, 26);
             this.lotSizeBoxInspection.TabIndex = 1;
+            this.lotSizeBoxInspection.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.lotSizeBoxInspection.KeyDown += new System.Windows.Forms.KeyEventHandler(this.firstCharZeroNull);
+            this.lotSizeBoxInspection.KeyUp += new System.Windows.Forms.KeyEventHandler(this.firstCharZeroNull);
             // 
             // opKeyBoxInspection
             // 
@@ -341,6 +344,9 @@
             this.opKeyBoxInspection.Name = "opKeyBoxInspection";
             this.opKeyBoxInspection.Size = new System.Drawing.Size(150, 26);
             this.opKeyBoxInspection.TabIndex = 0;
+            this.opKeyBoxInspection.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.opKeyBoxInspection.KeyDown += new System.Windows.Forms.KeyEventHandler(this.firstCharZeroNull);
+            this.opKeyBoxInspection.KeyUp += new System.Windows.Forms.KeyEventHandler(this.firstCharZeroNull);
             // 
             // label22
             // 
@@ -810,10 +816,13 @@
             this.opBoxFeature.BackColor = System.Drawing.Color.DimGray;
             this.opBoxFeature.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.opBoxFeature.Location = new System.Drawing.Point(108, 34);
+            this.opBoxFeature.MaxLength = 3;
             this.opBoxFeature.Multiline = true;
             this.opBoxFeature.Name = "opBoxFeature";
+            this.opBoxFeature.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.opBoxFeature.Size = new System.Drawing.Size(150, 25);
             this.opBoxFeature.TabIndex = 1;
+            this.opBoxFeature.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // labely
             // 
@@ -838,6 +847,7 @@
             this.partBoxFeature.Name = "partBoxFeature";
             this.partBoxFeature.Size = new System.Drawing.Size(150, 25);
             this.partBoxFeature.TabIndex = 0;
+            this.partBoxFeature.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // tableLayoutPanel4
             // 
@@ -929,7 +939,7 @@
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(196, 35);
             this.saveButton.TabIndex = 5;
-            this.saveButton.Text = "SAVE";
+            this.saveButton.Text = "SAVE CHANGES";
             this.saveButton.UseVisualStyleBackColor = false;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
@@ -946,7 +956,7 @@
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(198, 34);
             this.cancelButton.TabIndex = 6;
-            this.cancelButton.Text = "CANCEL";
+            this.cancelButton.Text = "UNDO CHANGES";
             this.cancelButton.UseVisualStyleBackColor = false;
             this.cancelButton.Click += new System.EventHandler(this.cancelChanges_Click);
             // 
