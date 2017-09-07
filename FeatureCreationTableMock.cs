@@ -439,8 +439,9 @@ namespace Feature_Inspection
 
 
             {
-                DeleteButtonColumn.FlatStyle = FlatStyle.Flat;
+                DeleteButtonColumn.FlatStyle = FlatStyle.Popup;
                 DeleteButtonColumn.CellTemplate.Style.BackColor = Color.DarkRed;
+                DeleteButtonColumn.CellTemplate.Style.SelectionBackColor = Color.DarkRed;
                 DeleteButtonColumn.HeaderText = "Delete Feature";
                 DeleteButtonColumn.Text = "Delete";
                 featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, DeleteButtonColumn);
@@ -566,6 +567,8 @@ namespace Feature_Inspection
                 if (e.ColumnIndex == featureEditGridView.Columns[featureEditGridView.ColumnCount - 1].Index)
                 {
                     featureEditGridView.Rows.Remove(featureEditGridView.Rows[e.RowIndex]);
+                    //this.featureEditGridView.CurrentCell = this.featureEditGridView[1, 1];
+
                 }
 
             }
@@ -758,13 +761,11 @@ namespace Feature_Inspection
 
         private void inspectionEntryGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
-            inspectionEntryGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = 0;
             MessageBox.Show(e.Exception.Message);
         }
 
         private void featureEditGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
-            featureEditGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = 0;
             MessageBox.Show(e.Exception.Message);
         }
 
