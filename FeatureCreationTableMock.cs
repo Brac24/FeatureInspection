@@ -228,6 +228,7 @@ namespace Feature_Inspection
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
             {
                 e.Handled = true;
+                lotSizeBoxInspection.ReadOnly = false;
                 DataTable featureTable;
                 bool isValidOpKey = false;
                 bool inspectionExists = false;
@@ -264,6 +265,8 @@ namespace Feature_Inspection
                             {
                                 //Get the parts if there are
                                 BindListBox(partList);
+                                lotSizeBoxInspection.Text = model.GetLotSize(opkey);
+                                lotSizeBoxInspection.ReadOnly = true;
                             }
                             else if (lotSizeBoxInspection.Text != "")
                             {
@@ -272,17 +275,19 @@ namespace Feature_Inspection
                                 // Insert Lot Size to Inspection Table
                                 model.InsertLotSizeToInspectionTable(Int32.Parse(lotSizeBoxInspection.Text), opkey);
                                 //Create the parts in the positions table
-
+                                model.InsertPartsToPositionTable(opkey, Int32.Parse(lotSizeBoxInspection.Text));
 
                                 //Get part list DataTable partList = model.GetPartsList(opkey);
+                                partList = model.GetPartsList(opkey);
 
                                 //Bind the part list box BindListBox(partList);
+                                BindListBox(partList);
                             }
                         }
                         else
                         {
                             //Message user to add features to this part num op num
-                            // MessageBox.Show("Lead must add features to this Part and Operation number");
+                             MessageBox.Show("Lead must add features to this Part and Operation number");
 
                         }
                     }
@@ -290,9 +295,46 @@ namespace Feature_Inspection
                     {
                         //Create the inspection in inspection table
                         lotSizeBoxInspection.Clear();
+                        model.CreateInspectionInInspectionTable(opkey);
                         MessageBox.Show("Creating Inspection");
 
                         //Run the logic inside the if loop above
+                        //Check if there are features related on op and part numn
+                        featureTable = model.GetFeaturesOnOpKey(opkey);
+
+
+                        if (featureTable.Rows.Count > 0)
+                        {
+                            //Check if there are parts in position
+                            if (partList.Rows.Count > 0)
+                            {
+                                //Get the parts if there are
+                                BindListBox(partList);
+                                lotSizeBoxInspection.Text = model.GetLotSize(opkey);
+                                lotSizeBoxInspection.ReadOnly = true;
+                            }
+                            else if (lotSizeBoxInspection.Text != "")
+                            {
+                                //TODO: Need to get lot size inserted/updated to Inspection table
+
+                                // Insert Lot Size to Inspection Table
+                                model.InsertLotSizeToInspectionTable(Int32.Parse(lotSizeBoxInspection.Text), opkey);
+                                //Create the parts in the positions table
+                                model.InsertPartsToPositionTable(opkey, Int32.Parse(lotSizeBoxInspection.Text));
+
+                                //Get part list DataTable partList = model.GetPartsList(opkey);
+                                partList = model.GetPartsList(opkey);
+
+                                //Bind the part list box BindListBox(partList);
+                                BindListBox(partList);
+                            }
+                        }
+                        else
+                        {
+                            //Message user to add features to this part num op num
+                             MessageBox.Show("Lead must add features to this Part and Operation number");
+
+                        }
                     }
 
                 }
