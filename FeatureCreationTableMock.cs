@@ -22,11 +22,9 @@ namespace Feature_Inspection
         public event EventHandler EnterClicked;
         public event EventHandler LotInspectionReadyClicked;
 
-
         BindingSource bindingSource;
         BindingSource bindingSourceInspection = new BindingSource();
         BindingSource bindingSourceListBox = new BindingSource();
-
 
         public FeatureCreationTableMock()
         {
@@ -37,6 +35,7 @@ namespace Feature_Inspection
             lotSizeBoxInspection.KeyDown += numOnly_KeyDown;
             featureEditGridView.CellMouseUp += DeleteRowFeature;
             lotSizeBoxInspection.KeyDown += checkEnterKeyPressedInspection;
+            partsListBox.Text = null;
 
         }
 
@@ -119,8 +118,6 @@ namespace Feature_Inspection
                              char.IsSeparator(currentKey) ||
                              char.IsUpper(currentKey);
 
-
-
             if (modifier || nonNumber || e.KeyCode == Keys.OemPeriod || e.KeyCode == Keys.OemMinus || e.KeyCode == Keys.Oemcomma)
                 e.SuppressKeyPress = true;
 
@@ -156,6 +153,7 @@ namespace Feature_Inspection
 
         private void BindDataGridViewInspection(DataTable featuresTable)
         {
+            inspectionEntryGridView.Columns.Clear();
             inspectionEntryGridView.DataSource = null;
             bindingSourceInspection.DataSource = featuresTable;
             inspectionEntryGridView.DataSource = bindingSourceInspection;
@@ -168,8 +166,19 @@ namespace Feature_Inspection
             inspectionEntryGridView.Columns["Measured Actual"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             inspectionEntryGridView.Columns["InspectionTool"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-
             inspectionEntryGridView.Columns["Feature"].ReadOnly = true;
+
+            DataGridViewTextBoxColumn BubbleColumn = new DataGridViewTextBoxColumn();
+            {
+                BubbleColumn.HeaderText = "Drawing Bubble";
+                inspectionEntryGridView.Columns.Insert(0, BubbleColumn);
+            }
+
+            DataGridViewTextBoxColumn InspectorID = new DataGridViewTextBoxColumn();
+            {
+                InspectorID.HeaderText = "Inspector";
+                inspectionEntryGridView.Columns.Insert(inspectionEntryGridView.ColumnCount, InspectorID);
+            }
 
             if (inspectionEntryGridView.RowCount != 0)
             {
@@ -210,6 +219,7 @@ namespace Feature_Inspection
 
             else
             {
+                inspectionEntryGridView.Columns.Clear();
                 partNumberLabelInspection.Text = null;
                 jobLabelInspection.Text = null;
                 opLabelInspection.Text = null;
@@ -224,6 +234,7 @@ namespace Feature_Inspection
 
         private void checkEnterKeyPressedInspection(object sender, KeyEventArgs e)
         {
+
             //Will work on an enter or tab key press
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
             {
@@ -234,16 +245,24 @@ namespace Feature_Inspection
                 bool inspectionExists = false;
                 int opkey = 0;
                 DataTable partList = null;
-                String s = opKeyBoxInspection.Text;
+                String text = opKeyBoxInspection.Text;
 
                 try
                 {
-                    opkey = Int32.Parse(s);
+                    opkey = Int32.Parse(text);
                     partList = model.GetPartsList(opkey);
                     isValidOpKey = SetOpKeyInfoInspection(opkey);
                 }
                 catch
                 {
+                    inspectionEntryGridView.DataSource = null;
+                    partsListBox.DataSource = null;
+                    lotSizeBoxInspection.Text = null;
+                    partNumberLabelInspection.Text = null;
+                    jobLabelInspection.Text = null;
+                    opLabelInspection.Text = null;
+                    inspectionEntryGridView.Columns.Clear();
+                    inspectionPageHeader.Text = "INSPECTION PAGE";
                     MessageBox.Show("Please enter a valid Op Key", "Invalid OpKey");
                 }
 
@@ -286,7 +305,13 @@ namespace Feature_Inspection
                         else
                         {
                             //Message user to add features to this part num op num
-                             MessageBox.Show("Lead must add features to this Part and Operation number");
+                            inspectionEntryGridView.DataSource = null;
+                            partsListBox.DataSource = null;
+                            lotSizeBoxInspection.Text = null;
+                            inspectionPageHeader.Text = "INSPECTION PAGE";
+                            inspectionEntryGridView.Columns.Clear();
+
+                            MessageBox.Show("Lead must add features to this Part and Operation number");
 
                         }
                     }
@@ -331,7 +356,7 @@ namespace Feature_Inspection
                         else
                         {
                             //Message user to add features to this part num op num
-                             MessageBox.Show("Lead must add features to this Part and Operation number");
+                            MessageBox.Show("Lead must add features to this Part and Operation number");
 
                         }
                     }
@@ -348,7 +373,6 @@ namespace Feature_Inspection
 
         #endregion
 
-
         #region Feature Tab Methods
         // FEATURE TAB METHODS
 
@@ -362,7 +386,6 @@ namespace Feature_Inspection
         private static void ToolCategories(DataGridViewComboBoxColumn comboboxColumn)
         {
             comboboxColumn.Items.AddRange("0-1 Mic", "Height Stand");
-
         }
 
         private void DataBindTest(DataTable featureTable)
@@ -435,7 +458,6 @@ namespace Feature_Inspection
             {
                 featureEditGridView.Columns[j].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
-
         }
 
         BindingSource sampleBindingSource = new BindingSource();
@@ -444,7 +466,6 @@ namespace Feature_Inspection
             DataGridViewComboBoxColumn SamplingColumn = new DataGridViewComboBoxColumn();
             SamplingColumn.FlatStyle = FlatStyle.Flat;
             SamplingColumn.CellTemplate.Style.BackColor = Color.FromArgb(50, 50, 50);
-
 
             featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, SamplingColumn);
 
@@ -458,24 +479,29 @@ namespace Feature_Inspection
             SamplingColumn.Name = "Sample";
             SamplingColumn.DataSource = sampleBindingSource;
 
-
             //setting initial selected value to hidden SampleID column value for the current row
             for (int i = 0; i < featureEditGridView.Rows.Count; i++)
             {
                 featureEditGridView.Rows[i].Cells["Sample"].Value = featureEditGridView.Rows[i].Cells["SampleID"].Value;
                 featureEditGridView.Rows[i].Cells["FeatureTypeColumn"].Value = featureEditGridView.Rows[i].Cells["FeatureType"].Value;
             }
-
         }
 
         private void AdapterUpdate()
         {
-            //Must call EndEdit Method before trying to update database
-            bindingSource.EndEdit();
-            sampleBindingSource.EndEdit();
+            try
+            {
+                //Must call EndEdit Method before trying to update database
+                bindingSource.EndEdit();
+                sampleBindingSource.EndEdit();
 
-            //Update database
-            model.AdapterUpdate((DataTable)bindingSource.DataSource);
+                //Update database
+                model.AdapterUpdate((DataTable)bindingSource.DataSource);
+            }
+            catch
+            {
+
+            }
         }
 
         private DataTable AddTableRow(DataTable t)
@@ -546,9 +572,7 @@ namespace Feature_Inspection
                 if (e.ColumnIndex == featureEditGridView.Columns[featureEditGridView.ColumnCount - 1].Index)
                 {
                     featureEditGridView.Rows.Remove(featureEditGridView.Rows[e.RowIndex]);
-
                 }
-
             }
         }
 
@@ -576,7 +600,6 @@ namespace Feature_Inspection
             {
                 checkEnterKeyPressedInspection(sender, e);
             }
-
         }
 
         #region Inspection Handlers
@@ -584,7 +607,6 @@ namespace Feature_Inspection
 
         private void listBox5_SelectedIndexChanged(object sender, EventArgs e)
         {
-
             //Use (listbox)sender.SelectedIndex
             var listBox = (ListBox)sender;
             DataTable featureTable;
@@ -607,6 +629,10 @@ namespace Feature_Inspection
                 partsListBox.SelectedIndex = (partsListBox.SelectedIndex + 1 < partsListBox.Items.Count) ?
                 partsListBox.SelectedIndex += 1 : partsListBox.SelectedIndex = 0;
             }
+            else
+            {
+
+            }
         }
 
         private void inspectionEntryGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
@@ -623,7 +649,6 @@ namespace Feature_Inspection
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
 
-            
             if (featureEditGridView.Columns["Sample"] != null || featureEditGridView.Columns["FeatureTypeColumn"] != null)
             {
 
@@ -662,8 +687,6 @@ namespace Feature_Inspection
             {
 
             }
-            
-
         }
 
         private void cancelChanges_Click(object sender, EventArgs e)
@@ -677,10 +700,10 @@ namespace Feature_Inspection
             if (result == DialogResult.Yes)
             {
                 //Rebind Database
-                //string partNumber = partBoxFeature.Text;
-                //string operationNum = opBoxFeature.Text;
-                //DataTable partList = model.GetFeaturesOnOpKey(partNumber, operationNum);
-                //DataBindTest(partList);
+                string partNumber = partBoxFeature.Text;
+                string operationNum = opBoxFeature.Text;
+                DataTable partList = model.GetFeaturesOnOpKey(partNumber, operationNum);
+                DataBindTest(partList);
             }
         }
 
@@ -734,19 +757,21 @@ namespace Feature_Inspection
             MessageBox.Show(e.Exception.Message);
         }
 
-        #endregion
-
-        private void firstCharZeroNull(object sender, KeyEventArgs e)
+        private void firstCharZeroNull (object sender, KeyEventArgs e)
         {
-            if (opKeyBoxInspection.Text == "0")
+            /*
+            if (e.KeyCode == Keys.D0)
             {
-                opKeyBoxInspection.Text = null;
+                e.SuppressKeyPress = true;
             }
-            if (lotSizeBoxInspection.Text == "0")
+            else if (e.KeyCode == Keys.NumPad0)
             {
-                lotSizeBoxInspection.Text = null;
+                e.SuppressKeyPress = true;
             }
+            */
         }
+
+        #endregion
 
     }
 
