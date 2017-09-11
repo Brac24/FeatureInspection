@@ -29,14 +29,25 @@ namespace Feature_Inspection
         public FeatureCreationTableMock()
         {
             InitializeComponent();
-            opKeyBoxInspection.KeyDown += numOnly_KeyDown;
             partBoxFeature.KeyDown += checkEnterKeyPressedFeatures;
             opBoxFeature.KeyDown += checkEnterKeyPressedFeatures;
-            lotSizeBoxInspection.KeyDown += numOnly_KeyDown;
             featureEditGridView.CellMouseUp += DeleteRowFeature;
             lotSizeBoxInspection.KeyDown += checkEnterKeyPressedInspection;
+            opKeyBoxInspection.KeyDown += numOnly_KeyDown;
+            lotSizeBoxInspection.KeyDown += numOnly_KeyDown;
+            opKeyBoxInspection.KeyDown += firstCharOp;
+            lotSizeBoxInspection.KeyDown += firstCharLot;
             partsListBox.Text = null;
 
+            for (int i = 0; i < inspectionEntryGridView.ColumnCount; i++)
+            {
+                inspectionEntryGridView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+
+            for (int j = 0; j < featureEditGridView.ColumnCount; j++)
+            {
+                featureEditGridView.Columns[j].SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
         }
 
 
@@ -92,6 +103,19 @@ namespace Feature_Inspection
 
         private void filterTextBox(object sender, KeyEventArgs e)
         {
+            int opChars = opKeyBoxInspection.Text.Length;
+            int lotChars = lotSizeBoxInspection.Text.Length;
+
+            //Block non-number characters
+            char currentKey = (char)e.KeyCode;
+            bool modifier = e.Control || e.Alt || e.Shift;
+            bool nonNumber = char.IsLetter(currentKey) ||
+                             char.IsSymbol(currentKey) ||
+                             char.IsWhiteSpace(currentKey) ||
+                             char.IsPunctuation(currentKey) ||
+                             char.IsSeparator(currentKey) ||
+                             char.IsUpper(currentKey);
+
             //Allow navigation keyboard arrows
             switch (e.KeyCode)
             {
@@ -108,19 +132,8 @@ namespace Feature_Inspection
                     break;
             }
 
-            //Block non-number characters
-            char currentKey = (char)e.KeyCode;
-            bool modifier = e.Control || e.Alt || e.Shift;
-            bool nonNumber = char.IsLetter(currentKey) ||
-                             char.IsSymbol(currentKey) ||
-                             char.IsWhiteSpace(currentKey) ||
-                             char.IsPunctuation(currentKey) ||
-                             char.IsSeparator(currentKey) ||
-                             char.IsUpper(currentKey);
-
             if (modifier || nonNumber || e.KeyCode == Keys.OemPeriod || e.KeyCode == Keys.OemMinus || e.KeyCode == Keys.Oemcomma)
                 e.SuppressKeyPress = true;
-
             if (e.KeyCode >= (Keys)96 && e.KeyCode <= (Keys)105)
             {
                 e.SuppressKeyPress = false;
@@ -162,10 +175,6 @@ namespace Feature_Inspection
             inspectionEntryGridView.Columns["Feature_Key"].Visible = false;
             inspectionEntryGridView.Columns["Position_Key"].Visible = false;
 
-            inspectionEntryGridView.Columns["Feature"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            inspectionEntryGridView.Columns["Measured Actual"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            inspectionEntryGridView.Columns["InspectionTool"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
             inspectionEntryGridView.Columns["Feature"].ReadOnly = true;
 
             DataGridViewTextBoxColumn BubbleColumn = new DataGridViewTextBoxColumn();
@@ -184,6 +193,12 @@ namespace Feature_Inspection
             {
                 inspectionEntryGridView.Rows[0].Cells["Measured Actual"].Selected = true;
             }
+
+            for (int j = 0; j < inspectionEntryGridView.ColumnCount; j++)
+            {
+                inspectionEntryGridView.Columns[j].SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+
         }
 
         private void BindListBox(DataTable partsTable)
@@ -734,6 +749,9 @@ namespace Feature_Inspection
 
 
         }
+
+        #endregion
+
         private void featureEditGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -757,21 +775,37 @@ namespace Feature_Inspection
             MessageBox.Show(e.Exception.Message);
         }
 
-        private void firstCharZeroNull (object sender, KeyEventArgs e)
+        private void firstCharOp (object sender, KeyEventArgs e)
         {
-            /*
-            if (e.KeyCode == Keys.D0)
+            int opChars = opKeyBoxInspection.Text.Length;
+            if (opChars == 0)
             {
-                e.SuppressKeyPress = true;
+                if (e.KeyCode == Keys.D0)
+                {
+                    e.SuppressKeyPress = true;
+                }
+                else if (e.KeyCode == Keys.NumPad0)
+                {
+                    e.SuppressKeyPress = true;
+                }
             }
-            else if (e.KeyCode == Keys.NumPad0)
-            {
-                e.SuppressKeyPress = true;
-            }
-            */
         }
 
-        #endregion
+        private void firstCharLot(object sender, KeyEventArgs e)
+        {
+            int lotChars = lotSizeBoxInspection.Text.Length;
+            if (lotChars == 0)
+            {
+                if (e.KeyCode == Keys.D0)
+                {
+                    e.SuppressKeyPress = true;
+                }
+                else if (e.KeyCode == Keys.NumPad0)
+                {
+                    e.SuppressKeyPress = true;
+                }
+            }
+        }
 
     }
 
