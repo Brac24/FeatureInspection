@@ -31,10 +31,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -43,8 +39,20 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FeatureCreationTableMock));
             this.featureEditGridView = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Nominal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Plus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Minus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Sample = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Delete = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.addFeatureButton = new System.Windows.Forms.Button();
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.Inspection_Page = new System.Windows.Forms.TabPage();
@@ -76,6 +84,11 @@
             this.inspectionPageHeader = new System.Windows.Forms.Label();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
             this.inspectionEntryGridView = new System.Windows.Forms.DataGridView();
+            this.Bubble = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Feature = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Measured = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Tool = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Inspector = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
             this.nextPartButton = new System.Windows.Forms.Button();
             this.Feature_Page = new System.Windows.Forms.TabPage();
@@ -98,19 +111,6 @@
             this.cancelButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.Bubble = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Feature = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Measured = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Tool = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Inspector = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Nominal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Plus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Minus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Sample = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Delete = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.featureEditGridView)).BeginInit();
             this.mainTabControl.SuspendLayout();
             this.Inspection_Page.SuspendLayout();
@@ -204,6 +204,62 @@
             this.featureEditGridView.TabIndex = 0;
             this.featureEditGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
             this.featureEditGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.featureEditGridView_DataError);
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dataGridViewTextBoxColumn1.HeaderText = "Feature Type (Optional)";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle3;
+            this.dataGridViewTextBoxColumn2.HeaderText = "Sketch Bubble (Optional)";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            // 
+            // Nominal
+            // 
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Nominal.DefaultCellStyle = dataGridViewCellStyle4;
+            this.Nominal.HeaderText = "Nominal";
+            this.Nominal.Name = "Nominal";
+            // 
+            // Plus
+            // 
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Plus.DefaultCellStyle = dataGridViewCellStyle5;
+            this.Plus.HeaderText = "+";
+            this.Plus.Name = "Plus";
+            // 
+            // Minus
+            // 
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Minus.DefaultCellStyle = dataGridViewCellStyle6;
+            this.Minus.HeaderText = "-";
+            this.Minus.Name = "Minus";
+            // 
+            // Sample
+            // 
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Sample.DefaultCellStyle = dataGridViewCellStyle7;
+            this.Sample.HeaderText = "Sample";
+            this.Sample.Name = "Sample";
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle8;
+            this.dataGridViewTextBoxColumn3.HeaderText = "Tool";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            // 
+            // Delete
+            // 
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Delete.DefaultCellStyle = dataGridViewCellStyle9;
+            this.Delete.HeaderText = "Delete Feature";
+            this.Delete.Name = "Delete";
             // 
             // addFeatureButton
             // 
@@ -696,6 +752,31 @@
             this.inspectionEntryGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.inspectionEntryGridView_CellEndEdit);
             this.inspectionEntryGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.inspectionEntryGridView_DataError);
             // 
+            // Bubble
+            // 
+            this.Bubble.HeaderText = "Drawing Bubble";
+            this.Bubble.Name = "Bubble";
+            // 
+            // Feature
+            // 
+            this.Feature.HeaderText = "Feature";
+            this.Feature.Name = "Feature";
+            // 
+            // Measured
+            // 
+            this.Measured.HeaderText = "Measured Actual";
+            this.Measured.Name = "Measured";
+            // 
+            // Tool
+            // 
+            this.Tool.HeaderText = "Inspection Tool";
+            this.Tool.Name = "Tool";
+            // 
+            // Inspector
+            // 
+            this.Inspector.HeaderText = "Inspector";
+            this.Inspector.Name = "Inspector";
+            // 
             // tableLayoutPanel10
             // 
             this.tableLayoutPanel10.ColumnCount = 1;
@@ -1033,87 +1114,6 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(172, 26);
             this.textBox2.TabIndex = 0;
-            // 
-            // Bubble
-            // 
-            this.Bubble.HeaderText = "Drawing Bubble";
-            this.Bubble.Name = "Bubble";
-            // 
-            // Feature
-            // 
-            this.Feature.HeaderText = "Feature";
-            this.Feature.Name = "Feature";
-            // 
-            // Measured
-            // 
-            this.Measured.HeaderText = "Measured Actual";
-            this.Measured.Name = "Measured";
-            // 
-            // Tool
-            // 
-            this.Tool.HeaderText = "Inspection Tool";
-            this.Tool.Name = "Tool";
-            // 
-            // Inspector
-            // 
-            this.Inspector.HeaderText = "Inspector";
-            this.Inspector.Name = "Inspector";
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dataGridViewTextBoxColumn1.HeaderText = "Feature Type (Optional)";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle3;
-            this.dataGridViewTextBoxColumn2.HeaderText = "Sketch Bubble (Optional)";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            // 
-            // Nominal
-            // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Nominal.DefaultCellStyle = dataGridViewCellStyle4;
-            this.Nominal.HeaderText = "Nominal";
-            this.Nominal.Name = "Nominal";
-            // 
-            // Plus
-            // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Plus.DefaultCellStyle = dataGridViewCellStyle5;
-            this.Plus.HeaderText = "+";
-            this.Plus.Name = "Plus";
-            // 
-            // Minus
-            // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Minus.DefaultCellStyle = dataGridViewCellStyle6;
-            this.Minus.HeaderText = "-";
-            this.Minus.Name = "Minus";
-            // 
-            // Sample
-            // 
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Sample.DefaultCellStyle = dataGridViewCellStyle7;
-            this.Sample.HeaderText = "Sample";
-            this.Sample.Name = "Sample";
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle8;
-            this.dataGridViewTextBoxColumn3.HeaderText = "Tool";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            // 
-            // Delete
-            // 
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Delete.DefaultCellStyle = dataGridViewCellStyle9;
-            this.Delete.HeaderText = "Delete Feature";
-            this.Delete.Name = "Delete";
             // 
             // FeatureCreationTableMock
             // 

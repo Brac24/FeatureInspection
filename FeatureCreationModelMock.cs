@@ -99,7 +99,57 @@ namespace Feature_Inspection
 
         }
 
+        public bool PartNumberExists(string partNumber)
+        {
+            string query = "SELECT Part_Number FROM PRODUCTION.dbo.Job " +
+                           "WHERE Part_Number = '" + partNumber + "' GROUP BY Part_Number";
 
+            bool partExists = false;
+
+            using (OdbcConnection connection = new OdbcConnection(connection_string))
+            {
+                connection.Open();
+
+                OdbcCommand command = new OdbcCommand(query, connection);
+
+                OdbcDataReader reader = command.ExecuteReader();
+
+                if(reader.Read())
+                {
+                    //Means part number exists
+                    partExists = true;
+                }
+
+                
+            }
+
+            return partExists;
+        }
+
+        public bool OpExists(string op, string partNumber)
+        {
+            bool opExists = false;
+
+            string query = "SELECT Operation_Service, Part_Number FROM PRODUCTION.dbo.Job_Operation " +
+                           "INNER JOIN PRODUCTION.dbo.Job ON Job_Operation.Job = Job.Job " +            
+                           "WHERE Operation_Service = '" + op + "' AND Part_Number = '" + partNumber + "' GROUP BY Operation_Service, Part_Number";
+
+            using (OdbcConnection connection = new OdbcConnection(connection_string))
+            {
+                connection.Open();
+
+                OdbcCommand command = new OdbcCommand(query, connection);
+
+                OdbcDataReader reader = command.ExecuteReader();
+
+                if(reader.Read())
+                {
+                    opExists = true;
+                }
+            }
+
+            return opExists;
+        }
 
         public DataTable GetFeaturesOnOpKey(string partNumber, string operationNum)
         {
