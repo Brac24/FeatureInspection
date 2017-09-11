@@ -807,6 +807,20 @@ namespace Feature_Inspection
             }
         }
 
+        private void ReportSwitch (object sender, EventArgs e)
+        {
+            if (summaryChart.Visible == true)
+            {
+                summaryChart.Visible = false;
+                SummaryList.Visible = true;
+            }
+            else
+            {
+                summaryChart.Visible = true;
+                SummaryList.Visible = false;
+            }
+        }
+
     }
 
 }
