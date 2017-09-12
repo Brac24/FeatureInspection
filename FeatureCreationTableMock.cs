@@ -73,12 +73,6 @@ namespace Feature_Inspection
             set { opLabelInspection.Text = value; }
         }
 
-        public string Status
-        {
-            get { return statusLabelInspection.Text; }
-            set { statusLabelInspection.Text = value; }
-        }
-
         public int PartsInspected
         {
             get { return Int32.Parse(partsInspectedLabel.Text); }
@@ -537,59 +531,9 @@ namespace Feature_Inspection
             info = model.GetInfoFromOpKeyEntry(opkey);
         }
 
-        private void checkEnterKeyPressedFeatures(object sender, KeyEventArgs e)
-        {
-            char currentKey = (char)e.KeyCode;
-            bool nonNumber = char.IsWhiteSpace(currentKey);
+        
 
-            if (nonNumber)
-                e.SuppressKeyPress = true;
-
-            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
-            {
-                if (partBoxFeature.ContainsFocus)
-                {
-                    opBoxFeature.Focus();
-                }
-                else if (opBoxFeature.ContainsFocus)
-                {
-                    featureEditGridView.Focus();
-                }
-                string partNumber = partBoxFeature.Text;
-                string operationNum = opBoxFeature.Text;
-
-                if (partNumber != "" && operationNum != "")
-                {
-                    DataTable partList = model.GetFeaturesOnOpKey(partNumber, operationNum);
-                    DataBindTest(partList);
-                    if (partList.Rows.Count > 0)
-                    {
-                        featurePageHeader.Text = "PART " + featureEditGridView.Rows[0].Cells["Part_Number_FK"].Value + " OP " + featureEditGridView.Rows[0].Cells["Operation_Number_FK"].Value + " FEATURES";
-                    }
-                    else
-                    {
-                        featurePageHeader.Text = "FEATURES PAGE";
-                    }
-                }
-                else
-                {
-                    return;
-                }
-            }
-        }
-
-        private void DeleteRowFeature(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            var table = (DataGridView)sender;
-
-            if (e.RowIndex != -1)
-            {
-                if (e.ColumnIndex == featureEditGridView.Columns[featureEditGridView.ColumnCount - 1].Index)
-                {
-                    featureEditGridView.Rows.Remove(featureEditGridView.Rows[e.RowIndex]);
-                }
-            }
-        }
+        
 
         #endregion
 
@@ -616,6 +560,8 @@ namespace Feature_Inspection
                 checkEnterKeyPressedInspection(sender, e);
             }
         }
+
+        
 
         #region Inspection Handlers
         //INSPECTION ENTRY TAB HANDLERS
@@ -661,6 +607,65 @@ namespace Feature_Inspection
 
         // FEATURE HANDLERS
 
+        private void checkEnterKeyPressedFeatures(object sender, KeyEventArgs e)
+        {
+            char currentKey = (char)e.KeyCode;
+            bool nonNumber = char.IsWhiteSpace(currentKey);
+
+            if (nonNumber)
+                e.SuppressKeyPress = true;
+
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
+            {
+                if (partBoxFeature.ContainsFocus)
+                {
+                    if(model.PartNumberExists(partBoxFeature.Text)) //Check if part number entered exists
+                    {
+                        opBoxFeature.Focus();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Part Number does not exist");
+                        partBoxFeature.Clear();
+                    }
+                    
+                }
+                else if (opBoxFeature.ContainsFocus)
+                {
+                    if(model.OpExists(opBoxFeature.Text, partBoxFeature.Text))
+                    {
+                        featureEditGridView.Focus();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Op Number does not exist for this Part Number");
+                        opBoxFeature.Clear();
+                    }
+                    
+                }
+                string partNumber = partBoxFeature.Text;
+                string operationNum = opBoxFeature.Text;
+
+                if (partNumber != "" && operationNum != "")
+                {
+                    DataTable partList = model.GetFeaturesOnOpKey(partNumber, operationNum);
+                    DataBindTest(partList);
+                    if (partList.Rows.Count > 0)
+                    {
+                        featurePageHeader.Text = "PART " + featureEditGridView.Rows[0].Cells["Part_Number_FK"].Value + " OP " + featureEditGridView.Rows[0].Cells["Operation_Number_FK"].Value + " FEATURES";
+                    }
+                    else
+                    {
+                        featurePageHeader.Text = "FEATURES PAGE";
+                    }
+                }
+                else
+                {
+                    return;
+                }
+            }
+        }
+
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
 
@@ -701,6 +706,19 @@ namespace Feature_Inspection
             else
             {
 
+            }
+        }
+
+        private void DeleteRowFeature(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            var table = (DataGridView)sender;
+
+            if (e.RowIndex != -1)
+            {
+                if (e.ColumnIndex == featureEditGridView.Columns[featureEditGridView.ColumnCount - 1].Index)
+                {
+                    featureEditGridView.Rows.Remove(featureEditGridView.Rows[e.RowIndex]);
+                }
             }
         }
 
@@ -820,7 +838,6 @@ namespace Feature_Inspection
                 SummaryList.Visible = false;
             }
         }
-
     }
 
 }
