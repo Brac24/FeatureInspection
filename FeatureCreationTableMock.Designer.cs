@@ -366,7 +366,7 @@
             this.mainTabControl.Location = new System.Drawing.Point(0, 0);
             this.mainTabControl.Name = "mainTabControl";
             this.mainTabControl.SelectedIndex = 0;
-            this.mainTabControl.Size = new System.Drawing.Size(1149, 681);
+            this.mainTabControl.Size = new System.Drawing.Size(1165, 720);
             this.mainTabControl.TabIndex = 4;
             // 
             // Inspection_Page
@@ -377,7 +377,7 @@
             this.Inspection_Page.Location = new System.Drawing.Point(4, 28);
             this.Inspection_Page.Name = "Inspection_Page";
             this.Inspection_Page.Padding = new System.Windows.Forms.Padding(3);
-            this.Inspection_Page.Size = new System.Drawing.Size(1141, 649);
+            this.Inspection_Page.Size = new System.Drawing.Size(1157, 688);
             this.Inspection_Page.TabIndex = 0;
             this.Inspection_Page.Text = "INSPECTION";
             // 
@@ -400,7 +400,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel12);
             this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel11);
             this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel10);
-            this.splitContainer1.Size = new System.Drawing.Size(1135, 643);
+            this.splitContainer1.Size = new System.Drawing.Size(1151, 682);
             this.splitContainer1.SplitterDistance = 285;
             this.splitContainer1.TabIndex = 3;
             // 
@@ -422,7 +422,7 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.panel2);
-            this.splitContainer2.Size = new System.Drawing.Size(285, 643);
+            this.splitContainer2.Size = new System.Drawing.Size(285, 682);
             this.splitContainer2.SplitterDistance = 285;
             this.splitContainer2.TabIndex = 2;
             // 
@@ -670,7 +670,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(285, 354);
+            this.panel2.Size = new System.Drawing.Size(285, 393);
             this.panel2.TabIndex = 0;
             // 
             // tableLayoutPanel17
@@ -685,7 +685,7 @@
             this.tableLayoutPanel17.RowCount = 2;
             this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel17.Size = new System.Drawing.Size(285, 354);
+            this.tableLayoutPanel17.Size = new System.Drawing.Size(285, 393);
             this.tableLayoutPanel17.TabIndex = 6;
             // 
             // label15
@@ -712,7 +712,7 @@
             this.partsListBox.Location = new System.Drawing.Point(20, 63);
             this.partsListBox.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
             this.partsListBox.Name = "partsListBox";
-            this.partsListBox.Size = new System.Drawing.Size(262, 288);
+            this.partsListBox.Size = new System.Drawing.Size(262, 327);
             this.partsListBox.TabIndex = 5;
             this.partsListBox.SelectedIndexChanged += new System.EventHandler(this.listBox5_SelectedIndexChanged);
             // 
@@ -727,7 +727,7 @@
             this.tableLayoutPanel12.Padding = new System.Windows.Forms.Padding(20);
             this.tableLayoutPanel12.RowCount = 1;
             this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel12.Size = new System.Drawing.Size(846, 100);
+            this.tableLayoutPanel12.Size = new System.Drawing.Size(862, 100);
             this.tableLayoutPanel12.TabIndex = 14;
             // 
             // tableLayoutPanel13
@@ -742,7 +742,7 @@
             this.tableLayoutPanel13.Name = "tableLayoutPanel13";
             this.tableLayoutPanel13.RowCount = 1;
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel13.Size = new System.Drawing.Size(806, 60);
+            this.tableLayoutPanel13.Size = new System.Drawing.Size(822, 60);
             this.tableLayoutPanel13.TabIndex = 0;
             // 
             // inspectionPageHeader
@@ -751,7 +751,7 @@
             this.inspectionPageHeader.AutoSize = true;
             this.inspectionPageHeader.Font = new System.Drawing.Font("Arial Black", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.inspectionPageHeader.ForeColor = System.Drawing.Color.Gainsboro;
-            this.inspectionPageHeader.Location = new System.Drawing.Point(255, 11);
+            this.inspectionPageHeader.Location = new System.Drawing.Point(263, 11);
             this.inspectionPageHeader.Name = "inspectionPageHeader";
             this.inspectionPageHeader.Size = new System.Drawing.Size(296, 38);
             this.inspectionPageHeader.TabIndex = 2;
@@ -769,7 +769,7 @@
             this.tableLayoutPanel11.RowCount = 1;
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 298F));
-            this.tableLayoutPanel11.Size = new System.Drawing.Size(846, 418);
+            this.tableLayoutPanel11.Size = new System.Drawing.Size(862, 457);
             this.tableLayoutPanel11.TabIndex = 13;
             // 
             // inspectionEntryGridView
@@ -815,7 +815,7 @@
             this.inspectionEntryGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.inspectionEntryGridView.RowHeadersVisible = false;
             this.inspectionEntryGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.inspectionEntryGridView.Size = new System.Drawing.Size(806, 298);
+            this.inspectionEntryGridView.Size = new System.Drawing.Size(822, 337);
             this.inspectionEntryGridView.TabIndex = 0;
             this.inspectionEntryGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.inspectionEntryGridView_CellEndEdit);
             this.inspectionEntryGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.inspectionEntryGridView_DataError);
@@ -853,14 +853,14 @@
             this.tableLayoutPanel10.Controls.Add(this.chart1, 0, 0);
             this.tableLayoutPanel10.Controls.Add(this.nextPartButton, 1, 0);
             this.tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel10.Location = new System.Drawing.Point(0, 418);
+            this.tableLayoutPanel10.Location = new System.Drawing.Point(0, 457);
             this.tableLayoutPanel10.MaximumSize = new System.Drawing.Size(0, 500);
             this.tableLayoutPanel10.MinimumSize = new System.Drawing.Size(0, 225);
             this.tableLayoutPanel10.Name = "tableLayoutPanel10";
             this.tableLayoutPanel10.Padding = new System.Windows.Forms.Padding(20, 0, 20, 20);
             this.tableLayoutPanel10.RowCount = 1;
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel10.Size = new System.Drawing.Size(846, 225);
+            this.tableLayoutPanel10.Size = new System.Drawing.Size(862, 225);
             this.tableLayoutPanel10.TabIndex = 12;
             // 
             // chart1
@@ -955,7 +955,7 @@
             this.nextPartButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.nextPartButton.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.nextPartButton.ForeColor = System.Drawing.Color.Gainsboro;
-            this.nextPartButton.Location = new System.Drawing.Point(630, 170);
+            this.nextPartButton.Location = new System.Drawing.Point(646, 170);
             this.nextPartButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
             this.nextPartButton.Name = "nextPartButton";
             this.nextPartButton.Size = new System.Drawing.Size(196, 35);
@@ -1654,12 +1654,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.ClientSize = new System.Drawing.Size(1149, 681);
+            this.ClientSize = new System.Drawing.Size(1165, 720);
             this.Controls.Add(this.mainTabControl);
             this.ForeColor = System.Drawing.Color.Gainsboro;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(1165, 720);
             this.Name = "FeatureCreationTableMock";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FeatureCreationTableMock";
             this.Load += new System.EventHandler(this.FeatureCreationTableMock_Load);
             ((System.ComponentModel.ISupportInitialize)(this.featureEditGridView)).EndInit();
