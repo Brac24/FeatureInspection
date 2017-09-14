@@ -25,6 +25,7 @@ namespace Feature_Inspection
         BindingSource bindingSource;
         BindingSource bindingSourceInspection = new BindingSource();
         BindingSource bindingSourceListBox = new BindingSource();
+        BindingSource bindingSourceFocusCombo = new BindingSource();
 
         public FeatureCreationTableMock()
         {
@@ -203,6 +204,15 @@ namespace Feature_Inspection
             partsListBox.DisplayMember = "PartList";
         }
 
+        private void BindComboBox(DataTable featuresTable)
+        {
+            inspectionFocusCombo.DataSource = null;
+            bindingSourceFocusCombo.DataSource = featuresTable;
+            inspectionFocusCombo.DataSource = bindingSourceFocusCombo;
+            inspectionFocusCombo.DisplayMember = "Nominal";
+            inspectionFocusCombo.ValueMember = "Feature_Key";
+        }
+
         private void AdapterUpdateInspection()
         {
             //Call EndEdit method before updating database
@@ -255,6 +265,7 @@ namespace Feature_Inspection
                 int opkey = 0;
                 DataTable partList = null;
                 String text = opKeyBoxInspection.Text;
+                DataTable featureList = null;
 
                 try
                 {
@@ -284,6 +295,8 @@ namespace Feature_Inspection
                         //Check if there are features related on op and part numn
                         featureTable = model.GetFeaturesOnOpKey(opkey);
 
+                        featureList = model.GetFeatureList(opkey);
+                        BindComboBox(featureList);
 
                         if (featureTable.Rows.Count > 0)
                         {
@@ -298,7 +311,7 @@ namespace Feature_Inspection
                             else if (lotSizeBoxInspection.Text != "")
                             {
                                 //TODO: Need to get lot size inserted/updated to Inspection table
-                                
+
                                 // Insert Lot Size to Inspection Table
                                 model.InsertLotSizeToInspectionTable(Int32.Parse(lotSizeBoxInspection.Text), opkey);
                                 //Create the parts in the positions table
@@ -309,6 +322,7 @@ namespace Feature_Inspection
 
                                 //Bind the part list box BindListBox(partList);
                                 BindListBox(partList);
+
                             }
                         }
                         else
@@ -531,9 +545,6 @@ namespace Feature_Inspection
             info = model.GetInfoFromOpKeyEntry(opkey);
         }
 
-        
-
-        
 
         #endregion
 
@@ -561,7 +572,6 @@ namespace Feature_Inspection
             }
         }
 
-        
 
         #region Inspection Handlers
         //INSPECTION ENTRY TAB HANDLERS
@@ -601,6 +611,48 @@ namespace Feature_Inspection
             AdapterUpdateInspection();
         }
 
+        private void inspectionEntryGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            MessageBox.Show(e.Exception.Message);
+        }
+
+        private void featureEditGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            MessageBox.Show(e.Exception.Message);
+        }
+
+        private void firstCharOp(object sender, KeyEventArgs e)
+        {
+            int opChars = opKeyBoxInspection.Text.Length;
+            if (opChars == 0)
+            {
+                if (e.KeyCode == Keys.D0)
+                {
+                    e.SuppressKeyPress = true;
+                }
+                else if (e.KeyCode == Keys.NumPad0)
+                {
+                    e.SuppressKeyPress = true;
+                }
+            }
+        }
+
+        private void firstCharLot(object sender, KeyEventArgs e)
+        {
+            int lotChars = lotSizeBoxInspection.Text.Length;
+            if (lotChars == 0)
+            {
+                if (e.KeyCode == Keys.D0)
+                {
+                    e.SuppressKeyPress = true;
+                }
+                else if (e.KeyCode == Keys.NumPad0)
+                {
+                    e.SuppressKeyPress = true;
+                }
+            }
+        }
+
         #endregion
 
         #region Feature Handlers
@@ -619,7 +671,7 @@ namespace Feature_Inspection
             {
                 if (partBoxFeature.ContainsFocus)
                 {
-                    if(model.PartNumberExists(partBoxFeature.Text)) //Check if part number entered exists
+                    if (model.PartNumberExists(partBoxFeature.Text)) //Check if part number entered exists
                     {
                         opBoxFeature.Focus();
                     }
@@ -628,11 +680,11 @@ namespace Feature_Inspection
                         MessageBox.Show("Part Number does not exist");
                         partBoxFeature.Clear();
                     }
-                    
+
                 }
                 else if (opBoxFeature.ContainsFocus)
                 {
-                    if(model.OpExists(opBoxFeature.Text, partBoxFeature.Text))
+                    if (model.OpExists(opBoxFeature.Text, partBoxFeature.Text))
                     {
                         featureEditGridView.Focus();
                     }
@@ -641,7 +693,7 @@ namespace Feature_Inspection
                         MessageBox.Show("Op Number does not exist for this Part Number");
                         opBoxFeature.Clear();
                     }
-                    
+
                 }
                 string partNumber = partBoxFeature.Text;
                 string operationNum = opBoxFeature.Text;
@@ -697,7 +749,7 @@ namespace Feature_Inspection
             DataTable data = (DataTable)(bindingSource.DataSource);
             data = AddTableRow(data);
 
-            if(featureEditGridView.Rows.Count > 0)
+            if (featureEditGridView.Rows.Count > 0)
             {
                 //Set the last row Part_Number_FK and Operation_Number_FK to the same value as in the first row
                 featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Part_Number_FK"].Value = partBoxFeature.Text;
@@ -768,8 +820,6 @@ namespace Feature_Inspection
 
         }
 
-        #endregion
-
         private void featureEditGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -780,52 +830,13 @@ namespace Feature_Inspection
             {
 
             }
-
         }
 
-        private void inspectionEntryGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
-        {
-            MessageBox.Show(e.Exception.Message);
-        }
+        #endregion
 
-        private void featureEditGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
-        {
-            MessageBox.Show(e.Exception.Message);
-        }
+        #region Report Handlers
 
-        private void firstCharOp (object sender, KeyEventArgs e)
-        {
-            int opChars = opKeyBoxInspection.Text.Length;
-            if (opChars == 0)
-            {
-                if (e.KeyCode == Keys.D0)
-                {
-                    e.SuppressKeyPress = true;
-                }
-                else if (e.KeyCode == Keys.NumPad0)
-                {
-                    e.SuppressKeyPress = true;
-                }
-            }
-        }
-
-        private void firstCharLot(object sender, KeyEventArgs e)
-        {
-            int lotChars = lotSizeBoxInspection.Text.Length;
-            if (lotChars == 0)
-            {
-                if (e.KeyCode == Keys.D0)
-                {
-                    e.SuppressKeyPress = true;
-                }
-                else if (e.KeyCode == Keys.NumPad0)
-                {
-                    e.SuppressKeyPress = true;
-                }
-            }
-        }
-
-        private void ReportSwitch (object sender, EventArgs e)
+        private void ReportSwitch(object sender, EventArgs e)
         {
             if (summaryChart.Visible == true)
             {
@@ -838,6 +849,8 @@ namespace Feature_Inspection
                 SummaryList.Visible = false;
             }
         }
-    }
 
+        #endregion
+
+    }
 }
