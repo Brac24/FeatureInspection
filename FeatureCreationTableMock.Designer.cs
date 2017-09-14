@@ -297,6 +297,7 @@
             this.featureEditGridView.Size = new System.Drawing.Size(822, 423);
             this.featureEditGridView.TabIndex = 0;
             this.featureEditGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
+            this.featureEditGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DeleteRowFeature);
             this.featureEditGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.featureEditGridView_DataError);
             // 
             // Feature
@@ -1481,6 +1482,7 @@
             this.opBoxFeature.Size = new System.Drawing.Size(143, 25);
             this.opBoxFeature.TabIndex = 1;
             this.opBoxFeature.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.opBoxFeature.KeyDown += new System.Windows.Forms.KeyEventHandler(this.checkEnterKeyPressedFeatures);
             // 
             // labely
             // 
@@ -1508,6 +1510,7 @@
             this.partBoxFeature.Size = new System.Drawing.Size(143, 25);
             this.partBoxFeature.TabIndex = 0;
             this.partBoxFeature.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.partBoxFeature.KeyDown += new System.Windows.Forms.KeyEventHandler(this.checkEnterKeyPressedFeatures);
             // 
             // tableLayoutPanel4
             // 

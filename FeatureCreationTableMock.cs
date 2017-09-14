@@ -33,9 +33,6 @@ namespace Feature_Inspection
         public FeatureCreationTableMock()
         {
             InitializeComponent();
-            partBoxFeature.KeyDown += checkEnterKeyPressedFeatures;
-            opBoxFeature.KeyDown += checkEnterKeyPressedFeatures;
-            featureEditGridView.CellMouseUp += DeleteRowFeature;
             lotSizeBoxInspection.KeyDown += checkEnterKeyPressedInspection;
             opKeyBoxInspection.KeyDown += numOnly_KeyDown;
             lotSizeBoxInspection.KeyDown += numOnly_KeyDown;
@@ -92,10 +89,21 @@ namespace Feature_Inspection
             set { inspectionPageHeader.Text = value.ToString(); }
         }
 
+        public int ListBoxIndex
+        {
+            get { return partsListBox.SelectedIndex; }
+            set { partsListBox.SelectedIndex = value; }
+        }
         public int FeatureCount
         {
             get { return featureEditGridView.Rows.Count; }
         }
+
+        public int ListBoxCount
+        {
+            get { return partsListBox.Items.Count; }
+        }
+
 
         public object FeaturePartNumberFK { set { featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Part_Number_FK"].Value = value; } }
         public object FeatureOperationNumberFK { set { featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Operation_Number_FK"].Value = value; } }
@@ -279,144 +287,6 @@ namespace Feature_Inspection
         private void checkEnterKeyPressedInspection(object sender, KeyEventArgs e)
         {
 
-            //Will work on an enter or tab key press
-            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
-            {
-                e.Handled = true;
-                lotSizeBoxInspection.ReadOnly = false;
-                DataTable featureTable;
-                bool isValidOpKey = false;
-                bool inspectionExists = false;
-                int opkey = 0;
-                DataTable partList = null;
-                String text = opKeyBoxInspection.Text;
-                DataTable featureList = null;
-
-                try
-                {
-                    opkey = Int32.Parse(text);
-                    partList = model.GetPartsList(opkey);
-                    isValidOpKey = SetOpKeyInfoInspection(opkey);
-                }
-                catch
-                {
-                    inspectionEntryGridView.DataSource = null;
-                    partsListBox.DataSource = null;
-                    lotSizeBoxInspection.Text = null;
-                    partNumberLabelInspection.Text = null;
-                    jobLabelInspection.Text = null;
-                    opLabelInspection.Text = null;
-                    inspectionEntryGridView.Columns.Clear();
-                    inspectionPageHeader.Text = "INSPECTION PAGE";
-                    MessageBox.Show("Please enter a valid Op Key", "Invalid OpKey");
-                }
-
-                if (isValidOpKey)
-                {
-                    inspectionExists = model.GetInspectionExistsOnOpKey(opkey);
-
-                    if (inspectionExists)
-                    {
-                        //Check if there are features related on op and part numn
-                        featureTable = model.GetFeaturesOnOpKey(opkey);
-
-                        featureList = model.GetFeatureList(opkey);
-                        BindComboBox(featureList);
-
-                        if (featureTable.Rows.Count > 0)
-                        {
-                            //Check if there are parts in position
-                            if (partList.Rows.Count > 0)
-                            {
-                                //Get the parts if there are
-                                BindListBox(partList);
-                                lotSizeBoxInspection.Text = model.GetLotSize(opkey);
-                                lotSizeBoxInspection.ReadOnly = true;
-                            }
-                            else if (lotSizeBoxInspection.Text != "")
-                            {
-                                //TODO: Need to get lot size inserted/updated to Inspection table
-
-                                // Insert Lot Size to Inspection Table
-                                model.InsertLotSizeToInspectionTable(Int32.Parse(lotSizeBoxInspection.Text), opkey);
-                                //Create the parts in the positions table
-                                model.InsertPartsToPositionTable(opkey, Int32.Parse(lotSizeBoxInspection.Text));
-
-                                //Get part list DataTable partList = model.GetPartsList(opkey);
-                                partList = model.GetPartsList(opkey);
-
-                                //Bind the part list box BindListBox(partList);
-                                BindListBox(partList);
-
-                            }
-                        }
-                        else
-                        {
-                            //Message user to add features to this part num op num
-                            inspectionEntryGridView.DataSource = null;
-                            partsListBox.DataSource = null;
-                            lotSizeBoxInspection.Text = null;
-                            inspectionPageHeader.Text = "INSPECTION PAGE";
-                            inspectionEntryGridView.Columns.Clear();
-
-                            MessageBox.Show("Lead must add features to this Part and Operation number");
-
-                        }
-                    }
-                    else
-                    {
-                        //Create the inspection in inspection table
-                        lotSizeBoxInspection.Clear();
-                        model.CreateInspectionInInspectionTable(opkey);
-                        MessageBox.Show("Creating Inspection");
-
-                        //Run the logic inside the if loop above
-                        //Check if there are features related on op and part numn
-                        featureTable = model.GetFeaturesOnOpKey(opkey);
-
-
-                        if (featureTable.Rows.Count > 0)
-                        {
-                            //Check if there are parts in position
-                            if (partList.Rows.Count > 0)
-                            {
-                                //Get the parts if there are
-                                BindListBox(partList);
-                                lotSizeBoxInspection.Text = model.GetLotSize(opkey);
-                                lotSizeBoxInspection.ReadOnly = true;
-                            }
-                            else if (lotSizeBoxInspection.Text != "")
-                            {
-                                //TODO: Need to get lot size inserted/updated to Inspection table
-
-                                // Insert Lot Size to Inspection Table
-                                model.InsertLotSizeToInspectionTable(Int32.Parse(lotSizeBoxInspection.Text), opkey);
-                                //Create the parts in the positions table
-                                model.InsertPartsToPositionTable(opkey, Int32.Parse(lotSizeBoxInspection.Text));
-
-                                //Get part list DataTable partList = model.GetPartsList(opkey);
-                                partList = model.GetPartsList(opkey);
-
-                                //Bind the part list box BindListBox(partList);
-                                BindListBox(partList);
-                            }
-                        }
-                        else
-                        {
-                            //Message user to add features to this part num op num
-                            MessageBox.Show("Lead must add features to this Part and Operation number");
-
-                        }
-                    }
-
-                }
-                else
-                {
-                    //Not valid opkey
-
-                }
-
-            }
         }
 
         #endregion
@@ -602,20 +472,13 @@ namespace Feature_Inspection
 
         private void nextPartButton_Click(object sender, EventArgs e)
         {
-            //+1 to selectedindex because we need to check what index it is going in to first
-            if (partsListBox.Items.Count > 0)
-            {
-                partsListBox.SelectedIndex = (partsListBox.SelectedIndex + 1 < partsListBox.Items.Count) ?
-                partsListBox.SelectedIndex += 1 : partsListBox.SelectedIndex = 0;
-            }
+            inspectionPresenter.GotToNextPart();
         }
 
         private void listBox5_SelectedIndexChanged(object sender, EventArgs e)
         {
             inspectionPresenter.updateGridViewOnIndexChange(sender);
         }
-
-
 
         private void inspectionEntryGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {

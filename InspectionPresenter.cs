@@ -64,5 +64,15 @@ namespace Feature_Inspection
             }
         }
 
+        public void GotToNextPart()
+        {
+            //+1 to selectedindex because we need to check what index it is going in to first
+            if (view.ListBoxCount > 0)
+            {
+                view.ListBoxIndex = (view.ListBoxIndex + 1 < view.ListBoxCount) ?
+                view.ListBoxIndex += 1 : view.ListBoxIndex = 0;
+            }
+        }
+
     }
 }
