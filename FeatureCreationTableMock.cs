@@ -576,51 +576,6 @@ namespace Feature_Inspection
         #region Inspection Handlers
         //INSPECTION ENTRY TAB HANDLERS
 
-        private void listBox5_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //Use (listbox)sender.SelectedIndex
-            var listBox = (ListBox)sender;
-            DataTable featureTable;
-
-            if (listBox.Text.Contains("Part"))
-            {
-                int listBoxIndex = listBox.SelectedIndex;
-                inspectionPageHeader.Text = listBox.Text;
-                int pieceID = listBoxIndex + 1; //Due to 0 indexing
-                featureTable = model.GetFeaturesOnPartIndex(pieceID, Int32.Parse(opKeyBoxInspection.Text));
-                BindDataGridViewInspection(featureTable);
-            }
-        }
-
-        private void nextPartButton_Click(object sender, EventArgs e)
-        {
-            //+1 to selectedindex because we need to check what index it is going in to first
-            if (partsListBox.Items.Count > 0)
-            {
-                partsListBox.SelectedIndex = (partsListBox.SelectedIndex + 1 < partsListBox.Items.Count) ?
-                partsListBox.SelectedIndex += 1 : partsListBox.SelectedIndex = 0;
-            }
-            else
-            {
-
-            }
-        }
-
-        private void inspectionEntryGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-            AdapterUpdateInspection();
-        }
-
-        private void inspectionEntryGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
-        {
-            MessageBox.Show(e.Exception.Message);
-        }
-
-        private void featureEditGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
-        {
-            MessageBox.Show(e.Exception.Message);
-        }
-
         private void firstCharOp(object sender, KeyEventArgs e)
         {
             int opChars = opKeyBoxInspection.Text.Length;
@@ -653,12 +608,52 @@ namespace Feature_Inspection
             }
         }
 
+        private void nextPartButton_Click(object sender, EventArgs e)
+        {
+            //+1 to selectedindex because we need to check what index it is going in to first
+            if (partsListBox.Items.Count > 0)
+            {
+                partsListBox.SelectedIndex = (partsListBox.SelectedIndex + 1 < partsListBox.Items.Count) ?
+                partsListBox.SelectedIndex += 1 : partsListBox.SelectedIndex = 0;
+            }
+            else
+            {
+
+            }
+        }
+
+        private void listBox5_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //Use (listbox)sender.SelectedIndex
+            var listBox = (ListBox)sender;
+            DataTable featureTable;
+
+            if (listBox.Text.Contains("Part"))
+            {
+                int listBoxIndex = listBox.SelectedIndex;
+                inspectionPageHeader.Text = listBox.Text;
+                int pieceID = listBoxIndex + 1; //Due to 0 indexing
+                featureTable = model.GetFeaturesOnPartIndex(pieceID, Int32.Parse(opKeyBoxInspection.Text));
+                BindDataGridViewInspection(featureTable);
+            }
+        }
+
+        private void inspectionEntryGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            AdapterUpdateInspection();
+        }
+
+        private void inspectionEntryGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            MessageBox.Show(e.Exception.Message);
+        }
+
         #endregion
 
         #region Feature Handlers
 
         // FEATURE HANDLERS
-        
+
         /// <summary>
         /// This event handler is fired on part and operation number text boxes and checks 
         /// the enter key was pressed in each of these
@@ -829,6 +824,11 @@ namespace Feature_Inspection
             }
 
 
+        }
+
+        private void featureEditGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            MessageBox.Show(e.Exception.Message);
         }
 
         #endregion
