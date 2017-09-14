@@ -280,7 +280,7 @@ namespace Feature_Inspection
             {
 
                 string query = "SELECT Nominal, Feature_Key FROM ATI_FeatureInspection.dbo.Features" + 
-                               " JOIN ATI_FeatureInspection.dbo.Operation ON Part_Number = Part_Number_FK" +
+                               " JOIN ATI_FeatureInspection.dbo.Operation ON Part_Number_FK = Part_Number AND Operation_Number_FK = Operation_Number" +
                                " WHERE Op_Key = " + opKey + ";";
 
                 com.CommandText = query;
@@ -290,37 +290,6 @@ namespace Feature_Inspection
             }
             return t;
         } 
-        /*
-        internal float GetFeatureList(int opKey)
-        {
-            float fill = 0;
-            string query = "SELECT Nominal FROM ATI_FeatureInspection.dbo.Features" +
-               " JOIN ATI_FeatureInspection.dbo.Operation ON Part_Number = Part_Number_FK" +
-               " WHERE Op_Key = " + opKey + ";";
-
-            using (OdbcConnection connection = new OdbcConnection(connection_string))
-            {
-                connection.Open();
-                OdbcCommand command = new OdbcCommand(query, connection);
-                OdbcDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    try
-                    {
-                        fill = reader.GetFloat(reader.GetOrdinal("Nominal"));
-                    }
-
-                    catch
-                    {
-
-                    }
-                 
-                }
-
-            }
-            return fill;
-        } */
 
         internal string GetLotSize(int opkey)
         {

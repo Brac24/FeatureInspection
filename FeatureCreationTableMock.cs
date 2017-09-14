@@ -11,10 +11,11 @@ using System.Windows.Forms;
 
 namespace Feature_Inspection
 {
-    public partial class FeatureCreationTableMock : Form, IFeatureCreationView
+    public partial class FeatureCreationTableMock : Form, IFeatureCreationView, IInspectionView
     {
         public FeatureCreationPresenter presenter;
         private FeatureCreationModelMock model;
+        private InspectionPresenter inspectionPresenter;
 
         public event EventHandler AddFeatureClicked;
         public event EventHandler<EventArgs> EditClicked;
@@ -38,8 +39,8 @@ namespace Feature_Inspection
             lotSizeBoxInspection.KeyDown += checkEnterKeyPressedInspection;
             opKeyBoxInspection.KeyDown += numOnly_KeyDown;
             lotSizeBoxInspection.KeyDown += numOnly_KeyDown;
-            opKeyBoxInspection.KeyDown += firstCharOp;
-            lotSizeBoxInspection.KeyDown += firstCharLot;
+            opKeyBoxInspection.KeyDown += keyDownOpLot_Textbox;
+            lotSizeBoxInspection.KeyDown += keyDownOpLot_Textbox;
             partsListBox.Text = null;
 
             for (int i = 0; i < inspectionEntryGridView.ColumnCount; i++)
@@ -80,6 +81,16 @@ namespace Feature_Inspection
         {
             get { return Int32.Parse(partsInspectedLabel.Text); }
             set { partsInspectedLabel.Text = value.ToString(); }
+        }
+
+        public int OpKey
+        {
+            get { return Int32.Parse(opKeyBoxInspection.Text); }
+        }
+
+        public string InspectionHeader
+        {
+            set { inspectionPageHeader.Text = value.ToString(); }
         }
 
 
@@ -161,7 +172,7 @@ namespace Feature_Inspection
         #region Inspection Tab Methods
         // INSPECTION TAB METHODS
 
-        private void BindDataGridViewInspection(DataTable featuresTable)
+        public void BindDataGridViewInspection(DataTable featuresTable)
         {
             inspectionEntryGridView.Columns.Clear();
             inspectionEntryGridView.DataSource = null;
@@ -563,6 +574,7 @@ namespace Feature_Inspection
         {
             model = new FeatureCreationModelMock();
             presenter = new FeatureCreationPresenter(this, model); //Give a reference of the view and model to the presenter class
+            inspectionPresenter = new InspectionPresenter(this, model);
         }
 
         //HANDLER FOR BOTH TABS
@@ -581,20 +593,9 @@ namespace Feature_Inspection
         #region Inspection Handlers
         //INSPECTION ENTRY TAB HANDLERS
 
-        private void listBox5_SelectedIndexChanged(object sender, EventArgs e)
+        private void keyDownOpLot_Textbox(object sender, KeyEventArgs e)
         {
-            //Use (listbox)sender.SelectedIndex
-            var listBox = (ListBox)sender;
-            DataTable featureTable;
-
-            if (listBox.Text.Contains("Part"))
-            {
-                int listBoxIndex = listBox.SelectedIndex;
-                inspectionPageHeader.Text = listBox.Text;
-                int pieceID = listBoxIndex + 1; //Due to 0 indexing
-                featureTable = model.GetFeaturesOnPartIndex(pieceID, Int32.Parse(opKeyBoxInspection.Text));
-                BindDataGridViewInspection(featureTable);
-            }
+            inspectionPresenter.suppressZeroFirstChar(sender, e);
         }
 
         private void nextPartButton_Click(object sender, EventArgs e)
@@ -605,11 +606,14 @@ namespace Feature_Inspection
                 partsListBox.SelectedIndex = (partsListBox.SelectedIndex + 1 < partsListBox.Items.Count) ?
                 partsListBox.SelectedIndex += 1 : partsListBox.SelectedIndex = 0;
             }
-            else
-            {
-
-            }
         }
+
+        private void listBox5_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            inspectionPresenter.updateGridViewOnIndexChange(sender);
+        }
+
+
 
         private void inspectionEntryGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
@@ -621,44 +625,12 @@ namespace Feature_Inspection
             MessageBox.Show(e.Exception.Message);
         }
 
-        private void firstCharOp(object sender, KeyEventArgs e)
-        {
-            int opChars = opKeyBoxInspection.Text.Length;
-            if (opChars == 0)
-            {
-                if (e.KeyCode == Keys.D0)
-                {
-                    e.SuppressKeyPress = true;
-                }
-                else if (e.KeyCode == Keys.NumPad0)
-                {
-                    e.SuppressKeyPress = true;
-                }
-            }
-        }
-
-        private void firstCharLot(object sender, KeyEventArgs e)
-        {
-            int lotChars = lotSizeBoxInspection.Text.Length;
-            if (lotChars == 0)
-            {
-                if (e.KeyCode == Keys.D0)
-                {
-                    e.SuppressKeyPress = true;
-                }
-                else if (e.KeyCode == Keys.NumPad0)
-                {
-                    e.SuppressKeyPress = true;
-                }
-            }
-        }
-
         #endregion
 
         #region Feature Handlers
 
         // FEATURE HANDLERS
-        
+
         /// <summary>
         /// This event handler is fired on part and operation number text boxes and checks 
         /// the enter key was pressed in each of these

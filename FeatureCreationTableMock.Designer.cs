@@ -640,7 +640,7 @@
             // inspectionFocusCombo
             // 
             this.inspectionFocusCombo.BackColor = System.Drawing.Color.DimGray;
-            this.inspectionFocusCombo.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.inspectionFocusCombo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.inspectionFocusCombo.ForeColor = System.Drawing.Color.Gainsboro;
             this.inspectionFocusCombo.FormattingEnabled = true;
             this.inspectionFocusCombo.Location = new System.Drawing.Point(122, 189);
