@@ -131,7 +131,10 @@
     </Compile>
     <Compile Include="IFeatureCreationView.cs" />
     <Compile Include="IFeaturesDataSource.cs" />
+    <Compile Include="IInspectionDataSource.cs" />
+    <Compile Include="IInspectionView.cs" />
     <Compile Include="Inspection.cs" />
+    <Compile Include="InspectionPresenter.cs" />
     <Compile Include="Job.cs" />
     <Compile Include="messagePrompt.cs">
       <SubType>Form</SubType>

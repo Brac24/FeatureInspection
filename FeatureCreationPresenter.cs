@@ -14,7 +14,6 @@ namespace Feature_Inspection
         private IFeaturesDataSource model;
         
         
-
         public FeatureCreationPresenter (IFeatureCreationView view, IFeaturesDataSource model)
         {
             this.view = view;
@@ -27,6 +26,20 @@ namespace Feature_Inspection
         {
             view.EditClicked += EditClick;
             view.DoneClicked += DoneClick;
+        }
+
+        public void DelteRow(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            var table = (DataGridView)sender;
+            
+
+            if (e.RowIndex != -1)
+            {
+                if (e.ColumnIndex == table.Columns[table.ColumnCount - 1].Index)
+                {
+                    table.Rows.Remove(table.Rows[e.RowIndex]);
+                }
+            }
         }
 
         public bool ViewExists()

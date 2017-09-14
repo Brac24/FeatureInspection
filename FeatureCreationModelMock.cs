@@ -280,7 +280,7 @@ namespace Feature_Inspection
             {
 
                 string query = "SELECT Nominal, Feature_Key FROM ATI_FeatureInspection.dbo.Features" + 
-                               " JOIN ATI_FeatureInspection.dbo.Operation ON Part_Number = Part_Number_FK" +
+                               " JOIN ATI_FeatureInspection.dbo.Operation ON Part_Number_FK = Part_Number AND Operation_Number_FK = Operation_Number" +
                                " WHERE Op_Key = " + opKey + ";";
 
                 com.CommandText = query;
