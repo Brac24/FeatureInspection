@@ -40,19 +40,40 @@ namespace Feature_Inspection
             }
         }
 
-        public void DelteRow(object sender, DataGridViewCellMouseEventArgs e)
+        public void AddFeatureRow(DataTable data)
         {
-            var table = (DataGridView)sender;
             
+            data = AddTableRow(data);
 
-            if (e.RowIndex != -1)
-            {
-                if (e.ColumnIndex == table.Columns[table.ColumnCount - 1].Index)
-                {
-                    table.Rows.Remove(table.Rows[e.RowIndex]);
-                }
-            }
+            SetPartAndOpNumInTable();
         }
+
+        private void SetPartAndOpNumInTable()
+        {
+            if (view.FeatureCount > 0)
+            {
+                //Set the last row Part_Number_FK and Operation_Number_FK to the same value as in the first row
+                view.FeaturePartNumberFK = view.PartNumber;
+                view.FeatureOperationNumberFK = view.OperationNumber;
+            }
+
+        }
+
+        private DataTable AddTableRow(DataTable t)
+        {
+            if (view.FeatureDataSource == null)
+            {
+                return t;
+            }
+            DataRow newRow = t.NewRow();
+            t.Rows.Add(newRow);
+
+            return t;
+        }
+
+
+
+
 
         public bool ViewExists()
         {
