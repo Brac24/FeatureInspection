@@ -33,9 +33,6 @@ namespace Feature_Inspection
         public FeatureCreationTableMock()
         {
             InitializeComponent();
-            partBoxFeature.KeyDown += checkEnterKeyPressedFeatures;
-            opBoxFeature.KeyDown += checkEnterKeyPressedFeatures;
-            featureEditGridView.CellMouseUp += DeleteRowFeature;
             lotSizeBoxInspection.KeyDown += checkEnterKeyPressedInspection;
             opKeyBoxInspection.KeyDown += numOnly_KeyDown;
             lotSizeBoxInspection.KeyDown += numOnly_KeyDown;
@@ -91,6 +88,17 @@ namespace Feature_Inspection
         public string InspectionHeader
         {
             set { inspectionPageHeader.Text = value.ToString(); }
+        }
+
+        public int ListBoxIndex
+        {
+            get { return partsListBox.SelectedIndex; }
+            set { partsListBox.SelectedIndex = value; }
+        }
+
+        public int ListBoxCount
+        {
+            get { return partsListBox.Items.Count; }
         }
 
 
@@ -600,20 +608,13 @@ namespace Feature_Inspection
 
         private void nextPartButton_Click(object sender, EventArgs e)
         {
-            //+1 to selectedindex because we need to check what index it is going in to first
-            if (partsListBox.Items.Count > 0)
-            {
-                partsListBox.SelectedIndex = (partsListBox.SelectedIndex + 1 < partsListBox.Items.Count) ?
-                partsListBox.SelectedIndex += 1 : partsListBox.SelectedIndex = 0;
-            }
+            inspectionPresenter.GotToNextPart();
         }
 
         private void listBox5_SelectedIndexChanged(object sender, EventArgs e)
         {
             inspectionPresenter.updateGridViewOnIndexChange(sender);
         }
-
-
 
         private void inspectionEntryGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {

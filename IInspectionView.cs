@@ -12,6 +12,9 @@ namespace Feature_Inspection
         int OpKey { get; }
         string InspectionHeader { set; }
 
+        int ListBoxIndex { get; set; }
+        int ListBoxCount { get; }
+
         void BindDataGridViewInspection(DataTable featureTable);
     }
 }
