@@ -403,7 +403,7 @@ namespace Feature_Inspection
             comboboxColumn.Items.AddRange("0-1 Mic", "Height Stand");
         }
 
-        private void DataBindTest(DataTable featureTable)
+        private void DataBindFeature(DataTable featureTable)
         {
 
             int maxRows;
@@ -612,7 +612,13 @@ namespace Feature_Inspection
         #region Feature Handlers
 
         // FEATURE HANDLERS
-
+        
+        /// <summary>
+        /// This event handler is fired on part and operation number text boxes and checks 
+        /// the enter key was pressed in each of these
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void checkEnterKeyPressedFeatures(object sender, KeyEventArgs e)
         {
             char currentKey = (char)e.KeyCode;
@@ -654,9 +660,9 @@ namespace Feature_Inspection
 
                 if (partNumber != "" && operationNum != "")
                 {
-                    DataTable partList = model.GetFeaturesOnOpKey(partNumber, operationNum);
-                    DataBindTest(partList);
-                    if (partList.Rows.Count > 0)
+                    DataTable featureList = model.GetFeaturesOnOpKey(partNumber, operationNum);
+                    DataBindFeature(featureList);
+                    if (featureList.Rows.Count > 0)
                     {
                         featurePageHeader.Text = "PART " + featureEditGridView.Rows[0].Cells["Part_Number_FK"].Value + " OP " + featureEditGridView.Rows[0].Cells["Operation_Number_FK"].Value + " FEATURES";
                     }
@@ -672,6 +678,11 @@ namespace Feature_Inspection
             }
         }
 
+        /// <summary>
+        /// Used to set the type of sampling and the feature type
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
 
@@ -742,7 +753,7 @@ namespace Feature_Inspection
                 string partNumber = partBoxFeature.Text;
                 string operationNum = opBoxFeature.Text;
                 DataTable partList = model.GetFeaturesOnOpKey(partNumber, operationNum);
-                DataBindTest(partList);
+                DataBindFeature(partList);
             }
         }
 
@@ -775,19 +786,6 @@ namespace Feature_Inspection
         }
 
         #endregion
-
-        private void featureEditGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-            try
-            {
-                featureEditGridView.Update();
-            }
-            catch
-            {
-
-            }
-
-        }
 
         private void inspectionEntryGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
