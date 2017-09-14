@@ -26,6 +26,8 @@ namespace Feature_Inspection
         BindingSource bindingSourceInspection = new BindingSource();
         BindingSource bindingSourceListBox = new BindingSource();
         BindingSource bindingSourceFocusCombo = new BindingSource();
+        BindingSource sampleBindingSource = new BindingSource();
+
 
         public FeatureCreationTableMock()
         {
@@ -58,8 +60,8 @@ namespace Feature_Inspection
 
         public string PartNumber
         {
-            get { return partNumberLabelInspection.Text; }
-            set { partNumberLabelInspection.Text = value; }
+            get { return partBoxFeature.Text; }
+            set { partBoxFeature.Text = value; }
         }
 
         public string JobNumber
@@ -428,6 +430,8 @@ namespace Feature_Inspection
             featureEditGridView.Columns["Operation_Number_FK"].Visible = false;
             featureEditGridView.Columns["Feature_Name"].Visible = false;
             featureEditGridView.Columns["Active"].Visible = false;
+            featureEditGridView.Columns["Sketch_Bubble"].HeaderText = "Sketch Bubble (Optional)";
+            
             featureEditGridView.Columns["Plus_Tolerance"].HeaderText = "+";
             featureEditGridView.Columns["Minus_Tolerance"].HeaderText = "-";
             featureEditGridView.Columns["Pieces"].Visible = false;
@@ -437,13 +441,15 @@ namespace Feature_Inspection
 
             maxRows = featureTable.Rows.Count;
 
-
+            /*
             //Creates extra columns in Feature Page
             DataGridViewTextBoxColumn BubbleColumn = new DataGridViewTextBoxColumn();
             {
                 BubbleColumn.HeaderText = "Sketch Bubble (Optional)";
                 featureEditGridView.Columns.Insert(0, BubbleColumn);
             }
+            */
+
             DataGridViewComboBoxColumn FeatureDropColumn = new DataGridViewComboBoxColumn();
             {
                 FeatureDropColumn.FlatStyle = FlatStyle.Flat;
@@ -483,7 +489,6 @@ namespace Feature_Inspection
             }
         }
 
-        BindingSource sampleBindingSource = new BindingSource();
         private void SampleComboBind()
         {
             DataGridViewComboBoxColumn SamplingColumn = new DataGridViewComboBoxColumn();
@@ -612,11 +617,6 @@ namespace Feature_Inspection
         }
 
         private void inspectionEntryGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
-        {
-            MessageBox.Show(e.Exception.Message);
-        }
-
-        private void featureEditGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             MessageBox.Show(e.Exception.Message);
         }
@@ -750,6 +750,12 @@ namespace Feature_Inspection
 
         }
 
+        /// <summary>
+        /// Will add an empty row to FeatureGridView and set invisible part number and op number columns
+        /// so that the feature will properly get inserted to the database with the correct info
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void addFeature_Click(object sender, EventArgs e)
         {
             if (bindingSource == null)
@@ -757,9 +763,11 @@ namespace Feature_Inspection
                 return;
             }
 
-            DataTable data = (DataTable)(bindingSource.DataSource);
-            data = AddTableRow(data);
+            AddFeatureRow();         
+        }
 
+        private void SetPartAndOpNumInTable()
+        {
             if (featureEditGridView.Rows.Count > 0)
             {
                 //Set the last row Part_Number_FK and Operation_Number_FK to the same value as in the first row
@@ -772,19 +780,32 @@ namespace Feature_Inspection
             }
         }
 
-        private void DeleteRowFeature(object sender, DataGridViewCellMouseEventArgs e)
+        private void AddFeatureRow()
         {
-            var table = (DataGridView)sender;
+            DataTable data = (DataTable)(bindingSource.DataSource);
+            data = AddTableRow(data);
 
-            if (e.RowIndex != -1)
-            {
-                if (e.ColumnIndex == featureEditGridView.Columns[featureEditGridView.ColumnCount - 1].Index)
-                {
-                    featureEditGridView.Rows.Remove(featureEditGridView.Rows[e.RowIndex]);
-                }
-            }
+            SetPartAndOpNumInTable();
         }
 
+        /// <summary>
+        /// Deletes the row that the user clicks delete on
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DeleteRowFeature(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            presenter.DeleteDataGridViewRow(sender, e);
+        }
+
+        
+
+        /// <summary>
+        /// Will simply rebind feature data grid view without updating the database.
+        /// To have the old state the user started with
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cancelChanges_Click(object sender, EventArgs e)
         {
             const string message = "Are you sure you want to cancel all changes made to this set of features? " +
@@ -803,6 +824,11 @@ namespace Feature_Inspection
             }
         }
 
+        /// <summary>
+        /// Updates, deletes, or inserts any data needed to the database
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void saveButton_Click(object sender, EventArgs e)
         {
             const string message0 = "Are you sure you want to save all changes made to this set of features? " +
@@ -829,6 +855,16 @@ namespace Feature_Inspection
             }
 
 
+        }
+
+        /// <summary>
+        /// Handle invalid data input to datagridview and alert the user
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void featureEditGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            MessageBox.Show(e.Exception.Message);
         }
 
         #endregion

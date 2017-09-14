@@ -648,7 +648,6 @@
             this.inspectionFocusCombo.Name = "inspectionFocusCombo";
             this.inspectionFocusCombo.Size = new System.Drawing.Size(143, 27);
             this.inspectionFocusCombo.TabIndex = 42;
-
             // 
             // label7
             // 

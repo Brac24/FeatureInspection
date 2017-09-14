@@ -25,8 +25,20 @@ namespace Feature_Inspection
 
         private void Initialize()
         {
-            view.EditClicked += EditClick;
-            view.DoneClicked += DoneClick;
+            
+        }
+
+        public void DeleteDataGridViewRow(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            var table = (DataGridView)sender;
+
+            if (e.RowIndex != -1)
+            {
+                if (e.ColumnIndex == table.Columns[table.ColumnCount - 1].Index)
+                {
+                    table.Rows.Remove(table.Rows[e.RowIndex]);
+                }
+            }
         }
 
         public bool ViewExists()
@@ -39,17 +51,7 @@ namespace Feature_Inspection
                 return true;
         }
 
-        public void EditClick(object sender, EventArgs e)
-        {
-
-        }
-
-        public void DoneClick(object t, EventArgs e)
-        {
-            
-            //var feature = (Feature)t;       
-
-        }
+        
 
        
     }
