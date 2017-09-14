@@ -128,7 +128,7 @@
             this.opLabelInspection = new System.Windows.Forms.Label();
             this.jobLabelInspection = new System.Windows.Forms.Label();
             this.partNumberLabelInspection = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.inspectionFocusCombo = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel17 = new System.Windows.Forms.TableLayoutPanel();
@@ -469,7 +469,7 @@
             this.tableLayoutPanel14.Controls.Add(this.opLabelInspection, 1, 4);
             this.tableLayoutPanel14.Controls.Add(this.jobLabelInspection, 1, 3);
             this.tableLayoutPanel14.Controls.Add(this.partNumberLabelInspection, 1, 2);
-            this.tableLayoutPanel14.Controls.Add(this.comboBox1, 1, 6);
+            this.tableLayoutPanel14.Controls.Add(this.inspectionFocusCombo, 1, 6);
             this.tableLayoutPanel14.Controls.Add(this.label7, 0, 6);
             this.tableLayoutPanel14.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel14.Location = new System.Drawing.Point(0, 63);
@@ -637,16 +637,18 @@
             this.partNumberLabelInspection.TabIndex = 32;
             this.partNumberLabelInspection.Text = "  ";
             // 
-            // comboBox1
+            // inspectionFocusCombo
             // 
-            this.comboBox1.BackColor = System.Drawing.Color.DimGray;
-            this.comboBox1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(122, 189);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(3, 3, 20, 3);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(143, 27);
-            this.comboBox1.TabIndex = 42;
+            this.inspectionFocusCombo.BackColor = System.Drawing.Color.DimGray;
+            this.inspectionFocusCombo.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.inspectionFocusCombo.ForeColor = System.Drawing.Color.Gainsboro;
+            this.inspectionFocusCombo.FormattingEnabled = true;
+            this.inspectionFocusCombo.Location = new System.Drawing.Point(122, 189);
+            this.inspectionFocusCombo.Margin = new System.Windows.Forms.Padding(3, 3, 20, 3);
+            this.inspectionFocusCombo.Name = "inspectionFocusCombo";
+            this.inspectionFocusCombo.Size = new System.Drawing.Size(143, 27);
+            this.inspectionFocusCombo.TabIndex = 42;
+
             // 
             // label7
             // 
@@ -935,7 +937,7 @@
             this.chart1.Series.Add(series1);
             this.chart1.Series.Add(series2);
             this.chart1.Series.Add(series3);
-            this.chart1.Size = new System.Drawing.Size(403, 205);
+            this.chart1.Size = new System.Drawing.Size(411, 205);
             this.chart1.TabIndex = 19;
             this.chart1.TabStop = false;
             this.chart1.Text = "chart1";
@@ -1814,7 +1816,7 @@
         private System.Windows.Forms.ListBox SummaryList;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox inspectionFocusCombo;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;

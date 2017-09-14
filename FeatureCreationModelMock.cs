@@ -187,7 +187,6 @@ namespace Feature_Inspection
 
                 dataAdapter.Fill(sampleChoices);
 
-
             }
             return sampleChoices;
         }
@@ -270,6 +269,58 @@ namespace Feature_Inspection
 
             return t;
         }
+
+        public DataTable GetFeatureList(int opKey)
+        {
+            DataTable t;
+
+            using (OdbcConnection conn = new OdbcConnection(connection_string))
+            using (OdbcCommand com = conn.CreateCommand())
+            using (OdbcDataAdapter dataAdapter = new OdbcDataAdapter(com))
+            {
+
+                string query = "SELECT Nominal, Feature_Key FROM ATI_FeatureInspection.dbo.Features" + 
+                               " JOIN ATI_FeatureInspection.dbo.Operation ON Part_Number = Part_Number_FK" +
+                               " WHERE Op_Key = " + opKey + ";";
+
+                com.CommandText = query;
+                t = new DataTable();
+                dataAdapter.Fill(t);
+
+            }
+            return t;
+        } 
+        /*
+        internal float GetFeatureList(int opKey)
+        {
+            float fill = 0;
+            string query = "SELECT Nominal FROM ATI_FeatureInspection.dbo.Features" +
+               " JOIN ATI_FeatureInspection.dbo.Operation ON Part_Number = Part_Number_FK" +
+               " WHERE Op_Key = " + opKey + ";";
+
+            using (OdbcConnection connection = new OdbcConnection(connection_string))
+            {
+                connection.Open();
+                OdbcCommand command = new OdbcCommand(query, connection);
+                OdbcDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    try
+                    {
+                        fill = reader.GetFloat(reader.GetOrdinal("Nominal"));
+                    }
+
+                    catch
+                    {
+
+                    }
+                 
+                }
+
+            }
+            return fill;
+        } */
 
         internal string GetLotSize(int opkey)
         {
