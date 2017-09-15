@@ -14,10 +14,15 @@ namespace Feature_Inspection
         string OperationNumber { get; }
 
         string PartNumber { get; }
+
         int FeatureCount { get; }
-        object FeaturePartNumberFK { set; }
-        object FeatureOperationNumberFK { set; }
+
+        object LastRowFeaturePartNumberFK { set; }
+
+        object LastRowFeatureOperationNumberFK { set; }
+
         object FeatureDataSource { get; set; }
+
         #region Show Methods
 
         void ShowRelatedFeatures(IList<Feature> relatedFeaures);

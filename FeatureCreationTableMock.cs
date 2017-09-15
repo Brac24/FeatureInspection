@@ -105,9 +105,11 @@ namespace Feature_Inspection
         }
 
 
-        public object FeaturePartNumberFK { set { featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Part_Number_FK"].Value = value; } }
-        public object FeatureOperationNumberFK { set { featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Operation_Number_FK"].Value = value; } }
-         public object FeatureDataSource
+        public object LastRowFeaturePartNumberFK { set { featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Part_Number_FK"].Value = value; } }
+
+        public object LastRowFeatureOperationNumberFK { set { featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Operation_Number_FK"].Value = value; } }
+
+        public object FeatureDataSource
         {
             get { return featureEditGridView.DataSource; }
             set { featureEditGridView.DataSource = value; }
@@ -324,7 +326,7 @@ namespace Feature_Inspection
             featureEditGridView.Columns["Feature_Name"].Visible = false;
             featureEditGridView.Columns["Active"].Visible = false;
             featureEditGridView.Columns["Sketch_Bubble"].HeaderText = "Sketch Bubble (Optional)";
-            
+
             featureEditGridView.Columns["Plus_Tolerance"].HeaderText = "+";
             featureEditGridView.Columns["Minus_Tolerance"].HeaderText = "-";
             featureEditGridView.Columns["Pieces"].Visible = false;
@@ -410,18 +412,15 @@ namespace Feature_Inspection
 
         private void AdapterUpdate()
         {
-            
-                //Must call EndEdit Method before trying to update database
-                bindingSource.EndEdit();
-                sampleBindingSource.EndEdit();
+            //Must call EndEdit Method before trying to update database
+            bindingSource.EndEdit();
+            sampleBindingSource.EndEdit();
 
-                //Update database
-                model.AdapterUpdate((DataTable)bindingSource.DataSource);
-            
-            
+            //Update database
+            model.AdapterUpdate((DataTable)bindingSource.DataSource);
         }
 
-        
+
 
         private void SetOpKeyInfoFeature(int opkey)
         {
@@ -564,7 +563,14 @@ namespace Feature_Inspection
         /// <param name="e"></param>
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
+            SetSampleIDAndFeatureTypeHiddenColumns(e);
 
+            // AdapterUpdate((BindingSource)table.DataSource);
+
+        }
+
+        private void SetSampleIDAndFeatureTypeHiddenColumns(DataGridViewCellEventArgs e)
+        {
             if (featureEditGridView.Columns["Sample"] != null || featureEditGridView.Columns["FeatureTypeColumn"] != null)
             {
 
@@ -578,9 +584,6 @@ namespace Feature_Inspection
                 }
 
             }
-
-            // AdapterUpdate((BindingSource)table.DataSource);
-
         }
 
         /// <summary>
@@ -596,12 +599,8 @@ namespace Feature_Inspection
                 return;
             }
 
-            presenter.AddFeatureRow((DataTable)(bindingSource.DataSource));     
+            presenter.AddFeatureRow((DataTable)(bindingSource.DataSource));
         }
-
-        
-
-
 
 
         /// <summary>
@@ -609,12 +608,12 @@ namespace Feature_Inspection
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DeleteRowFeature(object sender, DataGridViewCellMouseEventArgs e)
+        private void DeleteRowFeature_MouseUp(object sender, DataGridViewCellMouseEventArgs e)
         {
             presenter.DeleteDataGridViewRow(sender, e);
         }
 
-        
+
 
         /// <summary>
         /// Will simply rebind feature data grid view without updating the database.
@@ -624,20 +623,29 @@ namespace Feature_Inspection
         /// <param name="e"></param>
         private void cancelChanges_Click(object sender, EventArgs e)
         {
-            const string message = "Are you sure you want to cancel all changes made to this set of features? " +
-                "Any changes to this table will be reverted.";
-            const string caption = "Cancel Changes";
-            var result = MessageBox.Show(message, caption,
-                                 MessageBoxButtons.YesNo,
-                                 MessageBoxIcon.Question);
+            DialogResult result = AskIfChangesWillBeUndone();
+
             if (result == DialogResult.Yes)
             {
-                //Rebind Database
-                string partNumber = partBoxFeature.Text;
-                string operationNum = opBoxFeature.Text;
-                DataTable partList = model.GetFeaturesOnOpKey(partNumber, operationNum);
+                DataTable partList = model.GetFeaturesOnOpKey(PartNumber, OperationNumber);
                 DataBindFeature(partList);
             }
+        }
+
+        private static DialogResult AskIfChangesWillBeUndone()
+        {
+            const string message = "Are you sure you want to cancel all changes made to this set of features? " +
+                            "Any changes to this table will be reverted.";
+            const string caption = "Cancel Changes";
+            DialogResult result = CreateYesNoMessage(message, caption);
+            return result;
+        }
+
+        private static DialogResult CreateYesNoMessage(string message, string caption)
+        {
+            return MessageBox.Show(message, caption,
+                                 MessageBoxButtons.YesNo,
+                                 MessageBoxIcon.Question);
         }
 
         /// <summary>
@@ -647,30 +655,46 @@ namespace Feature_Inspection
         /// <param name="e"></param>
         private void saveButton_Click(object sender, EventArgs e)
         {
-            const string message0 = "Are you sure you want to save all changes made to this set of features? " +
-                "All changes will save to the database.";
-            const string caption0 = "Save Changes";
-            var result = MessageBox.Show(message0, caption0,
-                                 MessageBoxButtons.YesNo,
-                                 MessageBoxIcon.Question);
+            DialogResult result = AskIfChangesWillBeSaved();
+
             if (result == DialogResult.Yes)
             {
+                //Save Changes made in gridview back to the database
                 AdapterUpdate();
-                const string message1 = "All changes made to the table have been updated to the database";
-                const string caption1 = "Table Saved";
-                var result2 = MessageBox.Show(message1, caption1);
-                //Send featureEditGridView table back to database.
 
+                //Prompt user that changes have been saved
+                Message_ChangesSaved();
             }
 
             else if (result == DialogResult.No)
             {
-                const string message2 = "Any Changes to the table have not been updated to the database";
-                const string caption2 = "Table Not Saved";
-                var result2 = MessageBox.Show(message2, caption2);
+                Message_ChangesNotSaved();
             }
 
+        }
 
+        private static DialogResult AskIfChangesWillBeSaved()
+        {
+            const string message0 = "Are you sure you want to save all changes made to this set of features? " +
+                            "All changes will save to the database.";
+            const string caption0 = "Save Changes";
+
+            var result = CreateYesNoMessage(message0, caption0);
+            return result;
+        }
+
+        private static void Message_ChangesNotSaved()
+        {
+            const string message2 = "Any Changes to the table have not been updated to the database";
+            const string caption2 = "Table Not Saved";
+            var result2 = MessageBox.Show(message2, caption2);
+        }
+
+        private static void Message_ChangesSaved()
+        {
+            const string message1 = "All changes made to the table have been updated to the database";
+            const string caption1 = "Table Saved";
+            var result2 = MessageBox.Show(message1, caption1);
         }
 
         /// <summary>

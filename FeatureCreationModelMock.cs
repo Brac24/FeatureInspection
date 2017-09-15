@@ -52,8 +52,9 @@ namespace Feature_Inspection
                 dataAdapter.UpdateCommand.Parameters.Add("@Active", OdbcType.NChar, 10, "Active");
                 dataAdapter.UpdateCommand.Parameters.Add("@Pieces", OdbcType.Int, 1, "Pieces");
                 dataAdapter.UpdateCommand.Parameters.Add("@SampleID", OdbcType.Int, 1, "SampleID");
-                dataAdapter.UpdateCommand.Parameters.Add("@FeatureType", OdbcType.NVarChar, 50, "FeatureType");
                 dataAdapter.UpdateCommand.Parameters.Add("@Sketch_Bubble", OdbcType.NVarChar, 50, "Sketch_Bubble");
+                dataAdapter.UpdateCommand.Parameters.Add("@FeatureType", OdbcType.NVarChar, 50, "FeatureType");
+                
                 dataAdapter.UpdateCommand.Parameters.Add("@Feature_Key", OdbcType.Int, 5, "Feature_Key");
 
 

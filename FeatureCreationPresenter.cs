@@ -53,8 +53,8 @@ namespace Feature_Inspection
             if (view.FeatureCount > 0)
             {
                 //Set the last row Part_Number_FK and Operation_Number_FK to the same value as in the first row
-                view.FeaturePartNumberFK = view.PartNumber;
-                view.FeatureOperationNumberFK = view.OperationNumber;
+                view.LastRowFeaturePartNumberFK = view.PartNumber;
+                view.LastRowFeatureOperationNumberFK = view.OperationNumber;
             }
 
         }

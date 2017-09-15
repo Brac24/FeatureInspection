@@ -297,7 +297,7 @@
             this.featureEditGridView.Size = new System.Drawing.Size(822, 423);
             this.featureEditGridView.TabIndex = 0;
             this.featureEditGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
-            this.featureEditGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DeleteRowFeature);
+            this.featureEditGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DeleteRowFeature_MouseUp);
             this.featureEditGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.featureEditGridView_DataError);
             // 
             // Feature
