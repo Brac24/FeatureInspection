@@ -135,6 +135,9 @@
     <Compile Include="IInspectionView.cs" />
     <Compile Include="Inspection.cs" />
     <Compile Include="InspectionPresenter.cs" />
+    <Compile Include="InspectionTabView.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Job.cs" />
     <Compile Include="messagePrompt.cs">
       <SubType>Form</SubType>

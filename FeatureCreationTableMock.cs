@@ -70,8 +70,7 @@ namespace Feature_Inspection
 
         public string OperationNumber
         {
-            get { return opLabelInspection.Text; }
-            set { opLabelInspection.Text = value; }
+            get { return opBoxFeature.Text; }
         }
 
         public int PartsInspected
@@ -95,10 +94,23 @@ namespace Feature_Inspection
             get { return partsListBox.SelectedIndex; }
             set { partsListBox.SelectedIndex = value; }
         }
+        public int FeatureCount
+        {
+            get { return featureEditGridView.Rows.Count; }
+        }
 
         public int ListBoxCount
         {
             get { return partsListBox.Items.Count; }
+        }
+
+
+        public object FeaturePartNumberFK { set { featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Part_Number_FK"].Value = value; } }
+        public object FeatureOperationNumberFK { set { featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Operation_Number_FK"].Value = value; } }
+         public object FeatureDataSource
+        {
+            get { return featureEditGridView.DataSource; }
+            set { featureEditGridView.DataSource = value; }
         }
 
 
@@ -211,7 +223,6 @@ namespace Feature_Inspection
                 return false;
             }
         }
-
 
         #endregion
 
@@ -349,17 +360,7 @@ namespace Feature_Inspection
             }
         }
 
-        private DataTable AddTableRow(DataTable t)
-        {
-            if (featureEditGridView.DataSource == null)
-            {
-                return t;
-            }
-            DataRow newRow = t.NewRow();
-            t.Rows.Add(newRow);
-
-            return t;
-        }
+        
 
         private void SetOpKeyInfoFeature(int opkey)
         {
@@ -764,30 +765,13 @@ namespace Feature_Inspection
                 return;
             }
 
-            AddFeatureRow();         
+            presenter.AddFeatureRow((DataTable)(bindingSource.DataSource));     
         }
 
-        private void SetPartAndOpNumInTable()
-        {
-            if (featureEditGridView.Rows.Count > 0)
-            {
-                //Set the last row Part_Number_FK and Operation_Number_FK to the same value as in the first row
-                featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Part_Number_FK"].Value = partBoxFeature.Text;
-                featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Operation_Number_FK"].Value = opBoxFeature.Text;
-            }
-            else
-            {
+        
 
-            }
-        }
 
-        private void AddFeatureRow()
-        {
-            DataTable data = (DataTable)(bindingSource.DataSource);
-            data = AddTableRow(data);
 
-            SetPartAndOpNumInTable();
-        }
 
         /// <summary>
         /// Deletes the row that the user clicks delete on

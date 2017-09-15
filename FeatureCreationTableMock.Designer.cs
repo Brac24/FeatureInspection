@@ -714,7 +714,7 @@
             this.partsListBox.Name = "partsListBox";
             this.partsListBox.Size = new System.Drawing.Size(262, 327);
             this.partsListBox.TabIndex = 5;
-            this.partsListBox.SelectedIndexChanged += new System.EventHandler(this.listBox5_SelectedIndexChanged);
+            this.partsListBox.SelectedIndexChanged += new System.EventHandler(this.inspectionEntryGridView_ChangeWithPart);
             // 
             // tableLayoutPanel12
             // 
@@ -1482,7 +1482,7 @@
             this.opBoxFeature.Size = new System.Drawing.Size(143, 25);
             this.opBoxFeature.TabIndex = 1;
             this.opBoxFeature.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.opBoxFeature.KeyDown += new System.Windows.Forms.KeyEventHandler(this.checkEnterKeyPressedInspection);
+            this.opBoxFeature.KeyDown += new System.Windows.Forms.KeyEventHandler(this.checkEnterKeyPressedFeatures);
             // 
             // labely
             // 
@@ -1510,7 +1510,7 @@
             this.partBoxFeature.Size = new System.Drawing.Size(143, 25);
             this.partBoxFeature.TabIndex = 0;
             this.partBoxFeature.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.partBoxFeature.KeyDown += new System.Windows.Forms.KeyEventHandler(this.checkEnterKeyPressedInspection);
+            this.partBoxFeature.KeyDown += new System.Windows.Forms.KeyEventHandler(this.checkEnterKeyPressedFeatures);
             // 
             // tableLayoutPanel4
             // 
