@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Feature_Inspection
 {
@@ -31,8 +32,9 @@ namespace Feature_Inspection
 
         #endregion
 
-        
 
+        
+        
         event EventHandler<EventArgs> EditClicked;
         event EventHandler<EventArgs> DoneClicked;
         event EventHandler EnterClicked;

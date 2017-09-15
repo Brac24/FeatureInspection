@@ -1,6 +1,6 @@
 ﻿namespace Feature_Inspection
 {
-    partial class FeatureCreationTableMock
+    partial class FeatureCreationTableMock : IFeatureCreationView
     {
         /// <summary>
         /// Required designer variable.

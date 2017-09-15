@@ -51,6 +51,8 @@ namespace Feature_Inspection
             }
         }
 
+       
+
 
         /************************/
         /***** Properties *******/
@@ -105,9 +107,18 @@ namespace Feature_Inspection
         }
 
 
-        public object LastRowFeaturePartNumberFK { set { featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Part_Number_FK"].Value = value; } }
+        public object LastRowFeaturePartNumberFK
+        {
+            get { return featureEditGridView.Rows[0].Cells["Part_Number_FK"].Value; }
+            set { featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Part_Number_FK"].Value = value; }
 
-        public object LastRowFeatureOperationNumberFK { set { featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Operation_Number_FK"].Value = value; } }
+        }
+
+        public object LastRowFeatureOperationNumberFK
+        {
+            get { return featureEditGridView.Rows[0].Cells["Operation_Number_FK"].Value; }
+            set { featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Operation_Number_FK"].Value = value; }
+        }
 
         public object FeatureDataSource
         {
@@ -499,60 +510,96 @@ namespace Feature_Inspection
         /// <param name="e"></param>
         private void checkEnterKeyPressedFeatures(object sender, KeyEventArgs e)
         {
+            SuppressKeyIfNotANumber(e);
+
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
+            {
+                ValidateTextBoxes();
+
+                InitializeFeatureGridView();
+            }
+        }
+
+        private static void SuppressKeyIfNotANumber(KeyEventArgs e)
+        {
             char currentKey = (char)e.KeyCode;
             bool nonNumber = char.IsWhiteSpace(currentKey);
 
             if (nonNumber)
                 e.SuppressKeyPress = true;
+        }
 
-            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
+        private void ValidateTextBoxes()
+        {
+            //Pressing enter key on part number text box
+            if (partBoxFeature.ContainsFocus)
             {
-                if (partBoxFeature.ContainsFocus)
-                {
-                    if (model.PartNumberExists(partBoxFeature.Text)) //Check if part number entered exists
-                    {
-                        opBoxFeature.Focus();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Part Number does not exist");
-                        partBoxFeature.Clear();
-                    }
+                CheckPartNumberExists();
+            }
+            //Pressing enter on op number text box
+            else if (opBoxFeature.ContainsFocus)
+            {
+                CheckOpNumberExists();
+            }
+        }
 
-                }
-                else if (opBoxFeature.ContainsFocus)
-                {
-                    if (model.OpExists(opBoxFeature.Text, partBoxFeature.Text))
-                    {
-                        featureEditGridView.Focus();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Op Number does not exist for this Part Number");
-                        opBoxFeature.Clear();
-                    }
+        private void CheckOpNumberExists()
+        {
+            if(opBoxFeature.Text == "")
+            {
+                MessageBox.Show("Please Enter an Operation Number");
+            }
+            else if (model.OpExists(opBoxFeature.Text, partBoxFeature.Text))
+            {
+                featureEditGridView.Focus();
+            }
+            else
+            {
+                MessageBox.Show("Op Number does not exist for this Part Number");
+                opBoxFeature.Clear();
+            }
+        }
 
-                }
-                string partNumber = partBoxFeature.Text;
-                string operationNum = opBoxFeature.Text;
+        private void CheckPartNumberExists()
+        {
+            //TODO: ADD CHECK IF EMPTY. IF IT IS TELL USER TO ENTER A PART NUMBER
 
-                if (partNumber != "" && operationNum != "")
-                {
-                    DataTable featureList = model.GetFeaturesOnOpKey(partNumber, operationNum);
-                    DataBindFeature(featureList);
-                    if (featureList.Rows.Count > 0)
-                    {
-                        featurePageHeader.Text = "PART " + featureEditGridView.Rows[0].Cells["Part_Number_FK"].Value + " OP " + featureEditGridView.Rows[0].Cells["Operation_Number_FK"].Value + " FEATURES";
-                    }
-                    else
-                    {
-                        featurePageHeader.Text = "FEATURES PAGE";
-                    }
-                }
-                else
-                {
-                    return;
-                }
+            if(partBoxFeature.Text == "")
+            {
+                MessageBox.Show("Please Enter a Part Number");
+            }
+            else if (model.PartNumberExists(PartNumber)) //Check if part number entered exists
+            {
+                opBoxFeature.Focus();
+            }
+            else
+            {
+                MessageBox.Show("Part Number does not exist");
+                partBoxFeature.Clear();
+            }
+        }
+
+        private void InitializeFeatureGridView()
+        {
+            //As long as both textboxes are not empty
+            if (PartNumber != "" && OperationNumber != "")
+            {
+                DataTable featureList = model.GetFeaturesOnOpKey(PartNumber, OperationNumber);
+                DataBindFeature(featureList);
+                SetFeatureGridViewHeader();
+            }
+        }
+
+        private void SetFeatureGridViewHeader()
+        {
+            if (FeatureCount > 0)
+            {
+
+                featurePageHeader.Text = "PART " + LastRowFeaturePartNumberFK + " OP " + LastRowFeatureOperationNumberFK + " FEATURES";
+            }
+            else
+            {
+                featurePageHeader.Text = "FEATURES PAGE";
             }
         }
 
