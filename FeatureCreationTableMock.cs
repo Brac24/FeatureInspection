@@ -410,19 +410,15 @@ namespace Feature_Inspection
 
         private void AdapterUpdate()
         {
-            try
-            {
+            
                 //Must call EndEdit Method before trying to update database
                 bindingSource.EndEdit();
                 sampleBindingSource.EndEdit();
 
                 //Update database
                 model.AdapterUpdate((DataTable)bindingSource.DataSource);
-            }
-            catch
-            {
-
-            }
+            
+            
         }
 
         

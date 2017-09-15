@@ -31,12 +31,12 @@ namespace Feature_Inspection
             using (OdbcDataAdapter dataAdapter = new OdbcDataAdapter(com))
             {
                 string update = "UPDATE ATI_FeatureInspection.dbo.Features SET Nominal = ?, Plus_Tolerance = ?, Minus_Tolerance = ?, " +
-                                "Feature_Name = ?, Places = ?, Active = ?, Pieces = ?, SampleID = ?, FeatureType = ? " +
+                                "Feature_Name = ?, Places = ?, Active = ?, Pieces = ?, SampleID = ?, Sketch_Bubble = ?, FeatureType = ? " +
                                 "WHERE Feature_Key = ?;";
 
 
-                string insert = "INSERT INTO ATI_FeatureInspection.dbo.Features (Nominal, Plus_Tolerance, Minus_Tolerance, Feature_Name, Places, Active, Pieces, Part_Number_FK, Operation_Number_FK, SampleID, FeatureType)" +
-                            " VALUES(?,?,?,?,?,?,?,?,?,?,?); ";
+                string insert = "INSERT INTO ATI_FeatureInspection.dbo.Features (Nominal, Plus_Tolerance, Minus_Tolerance, Feature_Name, Places, Active, Pieces, Part_Number_FK, Operation_Number_FK, SampleID, Sketch_Bubble, FeatureType)" +
+                            " VALUES(?,?,?,?,?,?,?,?,?,?,?,?); ";
 
                 string delete = "DELETE FROM ATI_FeatureInspection.dbo.Features WHERE Feature_Key = ?";
 
@@ -53,6 +53,7 @@ namespace Feature_Inspection
                 dataAdapter.UpdateCommand.Parameters.Add("@Pieces", OdbcType.Int, 1, "Pieces");
                 dataAdapter.UpdateCommand.Parameters.Add("@SampleID", OdbcType.Int, 1, "SampleID");
                 dataAdapter.UpdateCommand.Parameters.Add("@FeatureType", OdbcType.NVarChar, 50, "FeatureType");
+                dataAdapter.UpdateCommand.Parameters.Add("@Sketch_Bubble", OdbcType.NVarChar, 50, "Sketch_Bubble");
                 dataAdapter.UpdateCommand.Parameters.Add("@Feature_Key", OdbcType.Int, 5, "Feature_Key");
 
 
@@ -70,6 +71,7 @@ namespace Feature_Inspection
                 dataAdapter.InsertCommand.Parameters.Add("@Part_Number_FK", OdbcType.NVarChar, 50, "Part_Number_FK");
                 dataAdapter.InsertCommand.Parameters.Add("@Operation_Number_FK", OdbcType.NVarChar, 50, "Operation_Number_FK");
                 dataAdapter.InsertCommand.Parameters.Add("@SampleID", OdbcType.Int, 1, "SampleID");
+                dataAdapter.InsertCommand.Parameters.Add("@Sketch_Bubble", OdbcType.NVarChar, 50, "Sketch_Bubble");
                 dataAdapter.InsertCommand.Parameters.Add("@FeatureType", OdbcType.NVarChar, 50, "FeatureType");
 
                 /******DELETE COMMAND*****/
