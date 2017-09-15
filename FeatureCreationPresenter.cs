@@ -24,14 +24,11 @@ namespace Feature_Inspection
 
         private void Initialize()
         {
-            view.checkEnterKeyPressedFeatures += View_checkEnterKeyPressedFeatures;
+            
             
         }
 
-        private void View_checkEnterKeyPressedFeatures(object sender, KeyEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
+      
 
         public void DeleteDataGridViewRow(object sender, DataGridViewCellMouseEventArgs e)
         {
