@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Feature_Inspection
 {
@@ -14,10 +15,16 @@ namespace Feature_Inspection
         string OperationNumber { get; }
 
         string PartNumber { get; }
+
+
         int FeatureCount { get; }
-        object FeaturePartNumberFK { set; }
-        object FeatureOperationNumberFK { set; }
+
+        object LastRowFeaturePartNumberFK { set; }
+
+        object LastRowFeatureOperationNumberFK { set; }
+
         object FeatureDataSource { get; set; }
+
         #region Show Methods
 
         void ShowRelatedFeatures(IList<Feature> relatedFeaures);
@@ -26,8 +33,9 @@ namespace Feature_Inspection
 
         #endregion
 
-        
 
+        
+        
         event EventHandler<EventArgs> EditClicked;
         event EventHandler<EventArgs> DoneClicked;
         event EventHandler EnterClicked;

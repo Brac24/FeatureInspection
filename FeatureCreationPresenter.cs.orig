@@ -28,6 +28,8 @@ namespace Feature_Inspection
             
         }
 
+      
+
         public void DeleteDataGridViewRow(object sender, DataGridViewCellMouseEventArgs e)
         {
             var table = (DataGridView)sender;
@@ -54,6 +56,26 @@ namespace Feature_Inspection
             if (view.FeatureCount > 0)
             {
                 //Set the last row Part_Number_FK and Operation_Number_FK to the same value as in the first row
+<<<<<<< HEAD
+                view.FeaturePartNumberFK = view.PartNumber;
+                view.FeatureOperationNumberFK = view.OperationNumber;
+            }
+
+        }
+
+        private DataTable AddTableRow(DataTable t)
+        {
+            if (view.FeatureDataSource == null)
+            {
+                return t;
+            }
+            DataRow newRow = t.NewRow();
+            t.Rows.Add(newRow);
+
+            return t;
+        }
+
+=======
                 view.LastRowFeaturePartNumberFK = view.PartNumber;
                 view.LastRowFeatureOperationNumberFK = view.OperationNumber;
             }
@@ -71,6 +93,10 @@ namespace Feature_Inspection
 
             return t;
         }
+
+>>>>>>> 9c3481d17a9e123801e30b5db3e61824e07efb6b
+
+
 
 
         public bool ViewExists()
