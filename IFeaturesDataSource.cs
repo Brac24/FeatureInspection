@@ -18,5 +18,8 @@ namespace Feature_Inspection
 
         DataTable AdapterUpdate(DataTable table);
         DataTable GetFeaturesOnPartIndex(int pieceID, int opKey);
+        bool PartNumberExists(string partNumber);
+        bool OpExists(string operationNumber, string partNumber);
+        DataTable GetSampleChoices();
     }
 }

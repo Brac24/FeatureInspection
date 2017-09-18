@@ -64,6 +64,23 @@ namespace Feature_Inspection
             set { partBoxFeature.Text = value; }
         }
 
+        public TextBox PartTextBox
+        {
+            get { return partBoxFeature; }
+            set { }
+        }
+
+        public TextBox OpTextBox
+        {
+            get { return opBoxFeature; }
+        }
+
+        public DataGridView FeatureGridView { get { return featureEditGridView; } }
+
+        public BindingSource BindingSource { get { return bindingSource; } set { bindingSource = value; } }
+
+        public BindingSource SampleBindingSource { get { return sampleBindingSource; } set { sampleBindingSource = value; } }
+
         public string JobNumber
         {
             get { return jobLabelInspection.Text; }
@@ -106,6 +123,7 @@ namespace Feature_Inspection
             get { return partsListBox.Items.Count; }
         }
 
+        public string FeaturePageHeader { set { featurePageHeader.Text = value; } }
 
         public object LastRowFeaturePartNumberFK
         {
@@ -144,6 +162,7 @@ namespace Feature_Inspection
 
         private void filterTextBox(object sender, KeyEventArgs e)
         {
+            
             int opChars = opKeyBoxInspection.Text.Length;
             int lotChars = lotSizeBoxInspection.Text.Length;
 
@@ -307,131 +326,35 @@ namespace Feature_Inspection
         #region Feature Tab Methods
         // FEATURE TAB METHODS
 
-        //IP>Test code to try combo box workability. Will be replaced with a .DataSource method.
-        private static void FeatureDropChoices(DataGridViewComboBoxColumn comboboxColumn)
-        {
-            comboboxColumn.Items.AddRange(" ", "Diameter", "Fillet", "Chamfer", "Angle", "M.O.W.",
-                "Surface Finish", "Linear", "Square", "Depth", "Straightness", "Flatness", "Parallelism", "Perpendicularity", "Circular Runout", "Total Runout", "Position", "Concentricity");
-        }
+        
 
-        private static void ToolCategories(DataGridViewComboBoxColumn comboboxColumn)
-        {
-            comboboxColumn.Items.AddRange("0-1 Mic", "Height Stand");
-        }
+        
 
-        private void DataBindFeature(DataTable featureTable)
-        {
+        
 
-            int maxRows;
-            featureEditGridView.Columns.Clear();
+        
 
-            bindingSource = new BindingSource();
+        
 
-            featureEditGridView.DataSource = null;
-            bindingSource.DataSource = featureTable;
-            featureEditGridView.DataSource = bindingSource;
+        
 
-            featureEditGridView.Columns["Feature_Key"].Visible = false;
-            featureEditGridView.Columns["Part_Number_FK"].Visible = false;
-            featureEditGridView.Columns["Operation_Number_FK"].Visible = false;
-            featureEditGridView.Columns["Feature_Name"].Visible = false;
-            featureEditGridView.Columns["Active"].Visible = false;
-            featureEditGridView.Columns["Sketch_Bubble"].HeaderText = "Sketch Bubble (Optional)";
+        
 
-            featureEditGridView.Columns["Plus_Tolerance"].HeaderText = "+";
-            featureEditGridView.Columns["Minus_Tolerance"].HeaderText = "-";
-            featureEditGridView.Columns["Pieces"].Visible = false;
-            featureEditGridView.Columns["FeatureType"].Visible = false;
-            featureEditGridView.Columns["Places"].Visible = false;
-            featureEditGridView.Columns["SampleID"].Visible = false;
+        
 
-            maxRows = featureTable.Rows.Count;
+        
 
-            /*
-            //Creates extra columns in Feature Page
-            DataGridViewTextBoxColumn BubbleColumn = new DataGridViewTextBoxColumn();
-            {
-                BubbleColumn.HeaderText = "Sketch Bubble (Optional)";
-                featureEditGridView.Columns.Insert(0, BubbleColumn);
-            }
-            */
+        
 
-            DataGridViewComboBoxColumn FeatureDropColumn = new DataGridViewComboBoxColumn();
-            {
-                FeatureDropColumn.FlatStyle = FlatStyle.Flat;
-                FeatureDropColumn.CellTemplate.Style.BackColor = Color.FromArgb(50, 50, 50);
-                featureEditGridView.Columns.Insert(0, FeatureDropColumn);
-                FeatureDropChoices(FeatureDropColumn);
-                FeatureDropColumn.HeaderText = "Feature Type (Optional)";
-                FeatureDropColumn.Name = "FeatureTypeColumn";
-                FeatureDropColumn.DropDownWidth = 160;
-            }
+        
 
-            SampleComboBind(); //Adds and binds the sample combo box column
+        
 
-            DataGridViewComboBoxColumn ToolCategoryColumn = new DataGridViewComboBoxColumn();
-            {
-                ToolCategoryColumn.FlatStyle = FlatStyle.Flat;
-                ToolCategoryColumn.CellTemplate.Style.BackColor = Color.FromArgb(50, 50, 50);
-                ToolCategoryColumn.HeaderText = "Tool";
-                featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, ToolCategoryColumn);
-                ToolCategories(ToolCategoryColumn);
-            }
+        
 
-            DataGridViewButtonColumn DeleteButtonColumn = new DataGridViewButtonColumn();
-            {
-                DeleteButtonColumn.FlatStyle = FlatStyle.Popup;
-                DeleteButtonColumn.CellTemplate.Style.BackColor = Color.DarkRed;
-                DeleteButtonColumn.CellTemplate.Style.SelectionBackColor = Color.DarkRed;
-                DeleteButtonColumn.HeaderText = "Delete Feature";
-                DeleteButtonColumn.Text = "Delete";
-                featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, DeleteButtonColumn);
-                DeleteButtonColumn.UseColumnTextForButtonValue = true;
-            }
+        
 
-            for (int j = 0; j < featureEditGridView.ColumnCount; j++)
-            {
-                featureEditGridView.Columns[j].SortMode = DataGridViewColumnSortMode.NotSortable;
-            }
-        }
-
-        private void SampleComboBind()
-        {
-            DataGridViewComboBoxColumn SamplingColumn = new DataGridViewComboBoxColumn();
-            SamplingColumn.FlatStyle = FlatStyle.Flat;
-            SamplingColumn.CellTemplate.Style.BackColor = Color.FromArgb(50, 50, 50);
-
-            featureEditGridView.Columns.Insert(featureEditGridView.Columns.Count, SamplingColumn);
-
-            sampleBindingSource.DataSource = model.GetSampleChoices();
-
-            //Binding combo box to database table of sample choices
-            SamplingColumn.DisplayMember = "SampleChoice";
-            SamplingColumn.ValueMember = "SampleID";
-
-            SamplingColumn.HeaderText = "Sample";
-            SamplingColumn.Name = "Sample";
-            SamplingColumn.DataSource = sampleBindingSource;
-
-            //setting initial selected value to hidden SampleID column value for the current row
-            for (int i = 0; i < featureEditGridView.Rows.Count; i++)
-            {
-                featureEditGridView.Rows[i].Cells["Sample"].Value = featureEditGridView.Rows[i].Cells["SampleID"].Value;
-                featureEditGridView.Rows[i].Cells["FeatureTypeColumn"].Value = featureEditGridView.Rows[i].Cells["FeatureType"].Value;
-            }
-        }
-
-        private void AdapterUpdate()
-        {
-            //Must call EndEdit Method before trying to update database
-            bindingSource.EndEdit();
-            sampleBindingSource.EndEdit();
-
-            //Update database
-            model.AdapterUpdate((DataTable)bindingSource.DataSource);
-        }
-
-
+        
 
         private void SetOpKeyInfoFeature(int opkey)
         {
@@ -510,98 +433,19 @@ namespace Feature_Inspection
         /// <param name="e"></param>
         private void checkEnterKeyPressedFeatures(object sender, KeyEventArgs e)
         {
-            SuppressKeyIfNotANumber(e);
-
-            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
-            {
-                ValidateTextBoxes();
-
-                InitializeFeatureGridView();
-            }
+            presenter.checkEnterKeyPressed(e);
         }
 
-        private static void SuppressKeyIfNotANumber(KeyEventArgs e)
-        {
-            char currentKey = (char)e.KeyCode;
-            bool nonNumber = char.IsWhiteSpace(currentKey);
+        
 
-            if (nonNumber)
-                e.SuppressKeyPress = true;
-        }
+        
 
-        private void ValidateTextBoxes()
-        {
-            //Pressing enter key on part number text box
-            if (partBoxFeature.ContainsFocus)
-            {
-                CheckPartNumberExists();
-            }
-            //Pressing enter on op number text box
-            else if (opBoxFeature.ContainsFocus)
-            {
-                CheckOpNumberExists();
-            }
-        }
+        
 
-        private void CheckOpNumberExists()
-        {
-            if(opBoxFeature.Text == "")
-            {
-                MessageBox.Show("Please Enter an Operation Number");
-            }
-            else if (model.OpExists(opBoxFeature.Text, partBoxFeature.Text))
-            {
-                featureEditGridView.Focus();
-            }
-            else
-            {
-                MessageBox.Show("Op Number does not exist for this Part Number");
-                opBoxFeature.Clear();
-            }
-        }
+        
 
-        private void CheckPartNumberExists()
-        {
-            //TODO: ADD CHECK IF EMPTY. IF IT IS TELL USER TO ENTER A PART NUMBER
-
-            if(partBoxFeature.Text == "")
-            {
-                MessageBox.Show("Please Enter a Part Number");
-            }
-            else if (model.PartNumberExists(PartNumber)) //Check if part number entered exists
-            {
-                opBoxFeature.Focus();
-            }
-            else
-            {
-                MessageBox.Show("Part Number does not exist");
-                partBoxFeature.Clear();
-            }
-        }
-
-        private void InitializeFeatureGridView()
-        {
-            //As long as both textboxes are not empty
-            if (PartNumber != "" && OperationNumber != "")
-            {
-                DataTable featureList = model.GetFeaturesOnOpKey(PartNumber, OperationNumber);
-                DataBindFeature(featureList);
-                SetFeatureGridViewHeader();
-            }
-        }
-
-        private void SetFeatureGridViewHeader()
-        {
-            if (FeatureCount > 0)
-            {
-
-                featurePageHeader.Text = "PART " + LastRowFeaturePartNumberFK + " OP " + LastRowFeatureOperationNumberFK + " FEATURES";
-            }
-            else
-            {
-                featurePageHeader.Text = "FEATURES PAGE";
-            }
-        }
+        
+        
 
         /// <summary>
         /// Used to set the type of sampling and the feature type
@@ -610,28 +454,15 @@ namespace Feature_Inspection
         /// <param name="e"></param>
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            SetSampleIDAndFeatureTypeHiddenColumns(e);
+
+            presenter.dataGridView1_CellEndEdit(e);
+            
 
             // AdapterUpdate((BindingSource)table.DataSource);
 
         }
 
-        private void SetSampleIDAndFeatureTypeHiddenColumns(DataGridViewCellEventArgs e)
-        {
-            if (featureEditGridView.Columns["Sample"] != null || featureEditGridView.Columns["FeatureTypeColumn"] != null)
-            {
-
-                if (featureEditGridView.Columns["Sample"].Index == e.ColumnIndex)
-                {
-                    featureEditGridView.Rows[e.RowIndex].Cells["SampleID"].Value = featureEditGridView.Rows[e.RowIndex].Cells["Sample"].Value;
-                }
-                else if (featureEditGridView.Columns["FeatureTypeColumn"].Index == e.ColumnIndex)
-                {
-                    featureEditGridView.Rows[e.RowIndex].Cells["FeatureType"].Value = featureEditGridView.Rows[e.RowIndex].Cells["FeatureTypeColumn"].Value;
-                }
-
-            }
-        }
+        
 
         /// <summary>
         /// Will add an empty row to FeatureGridView and set invisible part number and op number columns
@@ -641,12 +472,7 @@ namespace Feature_Inspection
         /// <param name="e"></param>
         private void addFeature_Click(object sender, EventArgs e)
         {
-            if (bindingSource == null)
-            {
-                return;
-            }
-
-            presenter.AddFeatureRow((DataTable)(bindingSource.DataSource));
+            presenter.addFeature_Click();
         }
 
 
@@ -670,30 +496,12 @@ namespace Feature_Inspection
         /// <param name="e"></param>
         private void cancelChanges_Click(object sender, EventArgs e)
         {
-            DialogResult result = AskIfChangesWillBeUndone();
-
-            if (result == DialogResult.Yes)
-            {
-                DataTable partList = model.GetFeaturesOnOpKey(PartNumber, OperationNumber);
-                DataBindFeature(partList);
-            }
+            presenter.cancelChanges_Click();
         }
 
-        private static DialogResult AskIfChangesWillBeUndone()
-        {
-            const string message = "Are you sure you want to cancel all changes made to this set of features? " +
-                            "Any changes to this table will be reverted.";
-            const string caption = "Cancel Changes";
-            DialogResult result = CreateYesNoMessage(message, caption);
-            return result;
-        }
+        
 
-        private static DialogResult CreateYesNoMessage(string message, string caption)
-        {
-            return MessageBox.Show(message, caption,
-                                 MessageBoxButtons.YesNo,
-                                 MessageBoxIcon.Question);
-        }
+        
 
         /// <summary>
         /// Updates, deletes, or inserts any data needed to the database
@@ -702,47 +510,13 @@ namespace Feature_Inspection
         /// <param name="e"></param>
         private void saveButton_Click(object sender, EventArgs e)
         {
-            DialogResult result = AskIfChangesWillBeSaved();
-
-            if (result == DialogResult.Yes)
-            {
-                //Save Changes made in gridview back to the database
-                AdapterUpdate();
-
-                //Prompt user that changes have been saved
-                Message_ChangesSaved();
-            }
-
-            else if (result == DialogResult.No)
-            {
-                Message_ChangesNotSaved();
-            }
+            presenter.saveButton_Click();
 
         }
 
-        private static DialogResult AskIfChangesWillBeSaved()
-        {
-            const string message0 = "Are you sure you want to save all changes made to this set of features? " +
-                            "All changes will save to the database.";
-            const string caption0 = "Save Changes";
+        
 
-            var result = CreateYesNoMessage(message0, caption0);
-            return result;
-        }
-
-        private static void Message_ChangesNotSaved()
-        {
-            const string message2 = "Any Changes to the table have not been updated to the database";
-            const string caption2 = "Table Not Saved";
-            var result2 = MessageBox.Show(message2, caption2);
-        }
-
-        private static void Message_ChangesSaved()
-        {
-            const string message1 = "All changes made to the table have been updated to the database";
-            const string caption1 = "Table Saved";
-            var result2 = MessageBox.Show(message1, caption1);
-        }
+        
 
         /// <summary>
         /// Handle invalid data input to datagridview and alert the user

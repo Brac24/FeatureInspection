@@ -10,6 +10,17 @@ namespace Feature_Inspection
 {
     public interface IFeatureCreationView
     {
+
+        TextBox PartTextBox { get; }
+
+        TextBox OpTextBox { get; }
+
+        string FeaturePageHeader { set; }
+       
+        BindingSource BindingSource { get; set; }
+
+        BindingSource SampleBindingSource { get; set; }
+
         int OpKey { get; }
 
         string OperationNumber { get; }
@@ -18,11 +29,12 @@ namespace Feature_Inspection
 
         int FeatureCount { get; }
 
-        object LastRowFeaturePartNumberFK { set; }
+        object LastRowFeaturePartNumberFK { get; set; }
 
-        object LastRowFeatureOperationNumberFK { set; }
+        object LastRowFeatureOperationNumberFK { get; set; }
 
         object FeatureDataSource { get; set; }
+        DataGridView FeatureGridView { get; }
 
         #region Show Methods
 
