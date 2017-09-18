@@ -27,6 +27,7 @@ namespace Feature_Inspection
 
         string PartNumber { get; }
 
+
         int FeatureCount { get; }
 
         object LastRowFeaturePartNumberFK { get; set; }

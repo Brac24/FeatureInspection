@@ -714,7 +714,7 @@
             this.partsListBox.Name = "partsListBox";
             this.partsListBox.Size = new System.Drawing.Size(262, 327);
             this.partsListBox.TabIndex = 5;
-            this.partsListBox.SelectedIndexChanged += new System.EventHandler(this.listBox5_SelectedIndexChanged);
+            this.partsListBox.SelectedIndexChanged += new System.EventHandler(this.inspectionEntryGridView_ChangeWithPart);
             // 
             // tableLayoutPanel12
             // 

@@ -30,6 +30,7 @@ namespace Feature_Inspection
             
         }
 
+<<<<<<< HEAD
       
         public void checkEnterKeyPressed(KeyEventArgs e)
         {
@@ -390,6 +391,8 @@ namespace Feature_Inspection
             }
         }
 
+=======
+>>>>>>> 75b331f52118111164790e2c7b8ee6e574a02684
         public void DeleteDataGridViewRow(object sender, DataGridViewCellMouseEventArgs e)
         {
             var table = (DataGridView)sender;

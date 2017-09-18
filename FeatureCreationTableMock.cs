@@ -316,45 +316,10 @@ namespace Feature_Inspection
             }
         }
 
-        private void checkEnterKeyPressedInspection(object sender, KeyEventArgs e)
-        {
-
-        }
-
         #endregion
 
         #region Feature Tab Methods
         // FEATURE TAB METHODS
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
 
         private void SetOpKeyInfoFeature(int opkey)
         {
@@ -390,36 +355,205 @@ namespace Feature_Inspection
             }
         }
 
-
         #region Inspection Handlers
+
         //INSPECTION ENTRY TAB HANDLERS
 
+        private void checkEnterKeyPressedInspection(object sender, KeyEventArgs e)
+        {
+
+            //Will work on an enter or tab key press
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
+            {
+                e.Handled = true;
+                lotSizeBoxInspection.ReadOnly = false;
+                DataTable featureTable;
+                bool isValidOpKey = false;
+                bool inspectionExists = false;
+                int opkey = 0;
+                DataTable partList = null;
+                String text = opKeyBoxInspection.Text;
+                DataTable featureList = null;
+
+                try
+                {
+                    opkey = Int32.Parse(text);
+                    partList = model.GetPartsList(opkey);
+                    isValidOpKey = SetOpKeyInfoInspection(opkey);
+                }
+                catch
+                {
+                    inspectionEntryGridView.DataSource = null;
+                    partsListBox.DataSource = null;
+                    lotSizeBoxInspection.Text = null;
+                    partNumberLabelInspection.Text = null;
+                    jobLabelInspection.Text = null;
+                    opLabelInspection.Text = null;
+                    inspectionEntryGridView.Columns.Clear();
+                    inspectionPageHeader.Text = "INSPECTION PAGE";
+                    MessageBox.Show("Please enter a valid Op Key", "Invalid OpKey");
+                }
+
+                if (isValidOpKey)
+                {
+                    inspectionExists = model.GetInspectionExistsOnOpKey(opkey);
+
+                    if (inspectionExists)
+                    {
+                        //Check if there are features related on op and part numn
+                        featureTable = model.GetFeaturesOnOpKey(opkey);
+
+                        featureList = model.GetFeatureList(opkey);
+                        BindComboBox(featureList);
+
+                        if (featureTable.Rows.Count > 0)
+                        {
+                            //Check if there are parts in position
+                            if (partList.Rows.Count > 0)
+                            {
+                                //Get the parts if there are
+                                BindListBox(partList);
+                                lotSizeBoxInspection.Text = model.GetLotSize(opkey);
+                                lotSizeBoxInspection.ReadOnly = true;
+                            }
+                            else if (lotSizeBoxInspection.Text != "")
+                            {
+                                //TODO: Need to get lot size inserted/updated to Inspection table
+
+                                // Insert Lot Size to Inspection Table
+                                model.InsertLotSizeToInspectionTable(Int32.Parse(lotSizeBoxInspection.Text), opkey);
+                                //Create the parts in the positions table
+                                model.InsertPartsToPositionTable(opkey, Int32.Parse(lotSizeBoxInspection.Text));
+
+                                //Get part list DataTable partList = model.GetPartsList(opkey);
+                                partList = model.GetPartsList(opkey);
+
+                                //Bind the part list box BindListBox(partList);
+                                BindListBox(partList);
+
+                            }
+                        }
+                        else
+                        {
+                            //Message user to add features to this part num op num
+                            inspectionEntryGridView.DataSource = null;
+                            partsListBox.DataSource = null;
+                            lotSizeBoxInspection.Text = null;
+                            inspectionPageHeader.Text = "INSPECTION PAGE";
+                            inspectionEntryGridView.Columns.Clear();
+
+                            MessageBox.Show("Lead must add features to this Part and Operation number");
+
+                        }
+                    }
+                    else
+                    {
+                        //Create the inspection in inspection table
+                        lotSizeBoxInspection.Clear();
+                        model.CreateInspectionInInspectionTable(opkey);
+                        MessageBox.Show("Creating Inspection");
+
+                        //Run the logic inside the if loop above
+                        //Check if there are features related on op and part numn
+                        featureTable = model.GetFeaturesOnOpKey(opkey);
+
+
+                        if (featureTable.Rows.Count > 0)
+                        {
+                            //Check if there are parts in position
+                            if (partList.Rows.Count > 0)
+                            {
+                                //Get the parts if there are
+                                BindListBox(partList);
+                                lotSizeBoxInspection.Text = model.GetLotSize(opkey);
+                                lotSizeBoxInspection.ReadOnly = true;
+                            }
+                            else if (lotSizeBoxInspection.Text != "")
+                            {
+                                //TODO: Need to get lot size inserted/updated to Inspection table
+
+                                // Insert Lot Size to Inspection Table
+                                model.InsertLotSizeToInspectionTable(Int32.Parse(lotSizeBoxInspection.Text), opkey);
+                                //Create the parts in the positions table
+                                model.InsertPartsToPositionTable(opkey, Int32.Parse(lotSizeBoxInspection.Text));
+
+                                //Get part list DataTable partList = model.GetPartsList(opkey);
+                                partList = model.GetPartsList(opkey);
+
+                                //Bind the part list box BindListBox(partList);
+                                BindListBox(partList);
+                            }
+                        }
+                        else
+                        {
+                            //Message user to add features to this part num op num
+                            MessageBox.Show("Lead must add features to this Part and Operation number");
+
+                        }
+                    }
+
+                }
+                else
+                {
+                    //Not valid opkey
+
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// This event handler stops Inspection page textboxes from accepting 0's as their first character.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void keyDownOpLot_Textbox(object sender, KeyEventArgs e)
         {
             inspectionPresenter.suppressZeroFirstChar(sender, e);
         }
 
+        /// <summary>
+        /// This event handler will cycle through parts in the part list box when the user clicks on the 'next part' button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void nextPartButton_Click(object sender, EventArgs e)
         {
             inspectionPresenter.GotToNextPart();
         }
 
-        private void listBox5_SelectedIndexChanged(object sender, EventArgs e)
+        /// <summary>
+        /// This will update the grid view to follow what part is highlighted in the listbox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void inspectionEntryGridView_ChangeWithPart(object sender, EventArgs e)
         {
             inspectionPresenter.updateGridViewOnIndexChange(sender);
         }
 
+        /// <summary>
+        /// Handles updating the DB when the Inspection grid view is done being edited.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void inspectionEntryGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             AdapterUpdateInspection();
         }
 
+        /// <summary>
+        /// Handles exception error on the inspection grid view.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void inspectionEntryGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             MessageBox.Show(e.Exception.Message);
         }
 
         #endregion
+
 
         #region Feature Handlers
 
@@ -485,7 +619,6 @@ namespace Feature_Inspection
         {
             presenter.DeleteDataGridViewRow(sender, e);
         }
-
 
 
         /// <summary>
