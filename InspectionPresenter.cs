@@ -74,6 +74,9 @@ namespace Feature_Inspection
             }
         }
 
-
+        internal void nextPartButton_Click()
+        {
+            GotToNextPart();
+        }
     }
 }

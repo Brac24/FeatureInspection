@@ -54,7 +54,7 @@ namespace Feature_Inspection
                 dataAdapter.UpdateCommand.Parameters.Add("@SampleID", OdbcType.Int, 1, "SampleID");
                 dataAdapter.UpdateCommand.Parameters.Add("@Sketch_Bubble", OdbcType.NVarChar, 50, "Sketch_Bubble");
                 dataAdapter.UpdateCommand.Parameters.Add("@FeatureType", OdbcType.NVarChar, 50, "FeatureType");
-                
+
                 dataAdapter.UpdateCommand.Parameters.Add("@Feature_Key", OdbcType.Int, 5, "Feature_Key");
 
 
@@ -117,13 +117,13 @@ namespace Feature_Inspection
 
                 OdbcDataReader reader = command.ExecuteReader();
 
-                if(reader.Read())
+                if (reader.Read())
                 {
                     //Means part number exists
                     partExists = true;
                 }
 
-                
+
             }
 
             return partExists;
@@ -134,7 +134,7 @@ namespace Feature_Inspection
             bool opExists = false;
 
             string query = "SELECT Operation_Service, Part_Number FROM PRODUCTION.dbo.Job_Operation " +
-                           "INNER JOIN PRODUCTION.dbo.Job ON Job_Operation.Job = Job.Job " +            
+                           "INNER JOIN PRODUCTION.dbo.Job ON Job_Operation.Job = Job.Job " +
                            "WHERE Operation_Service = '" + op + "' AND Part_Number = '" + partNumber + "' GROUP BY Operation_Service, Part_Number";
 
             using (OdbcConnection connection = new OdbcConnection(connection_string))
@@ -145,7 +145,7 @@ namespace Feature_Inspection
 
                 OdbcDataReader reader = command.ExecuteReader();
 
-                if(reader.Read())
+                if (reader.Read())
                 {
                     opExists = true;
                 }
@@ -175,6 +175,23 @@ namespace Feature_Inspection
 
             return t;
 
+        }
+
+        public DataTable GetChartData()
+        {
+            DataTable features = new DataTable();
+            string getFeatures = "SELECT Measured_Value, Piece_ID FROM ATI_FeatureInspection.dbo.Position WHERE Inspection_Key_FK = (SELECT Inspection_Key FROM ATI_FeatureInspection.dbo.Inspection WHERE Op_Key = 2050) AND Feature_Key = 1141;";
+
+            using (OdbcConnection connection = new OdbcConnection(connection_string))
+            using (OdbcCommand command = connection.CreateCommand())
+            using (OdbcDataAdapter dataAdapter = new OdbcDataAdapter(command))
+            {
+                command.CommandText = getFeatures;
+
+                dataAdapter.Fill(features);
+            }
+
+            return features;
         }
 
         public DataTable GetSampleChoices()
@@ -282,7 +299,7 @@ namespace Feature_Inspection
             using (OdbcDataAdapter dataAdapter = new OdbcDataAdapter(com))
             {
 
-                string query = "SELECT Nominal, Feature_Key FROM ATI_FeatureInspection.dbo.Features" + 
+                string query = "SELECT Nominal, Feature_Key FROM ATI_FeatureInspection.dbo.Features" +
                                " JOIN ATI_FeatureInspection.dbo.Operation ON Part_Number_FK = Part_Number AND Operation_Number_FK = Operation_Number" +
                                " WHERE Op_Key = " + opKey + ";";
 
@@ -292,7 +309,7 @@ namespace Feature_Inspection
 
             }
             return t;
-        } 
+        }
 
         internal string GetLotSize(int opkey)
         {
@@ -429,10 +446,10 @@ namespace Feature_Inspection
             " VALUES(@InspectionKey, @Count + 1, @FeatureKey) " +
             " SET @Count = @Count + 1 " +
             " END " +
-            " SET @Count = 0 "+
+            " SET @Count = 0 " +
             " END";
 
-           
+
 
             using (OdbcConnection connection = new OdbcConnection(connection_string))
             {

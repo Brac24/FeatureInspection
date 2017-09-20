@@ -34,6 +34,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4307D);
@@ -65,49 +66,9 @@
             System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint25 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4295D);
             System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint26 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4295D);
             System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint27 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4295D);
-            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint28 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4307D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint29 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4306D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint30 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4301D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint31 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4301D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint32 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4305D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint33 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.43D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint34 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4296D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint35 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4301D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint36 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4299D);
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint37 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4305D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint38 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4305D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint39 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4305D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint40 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4305D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint41 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4305D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint42 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4305D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint43 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4305D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint44 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4305D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint45 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4305D);
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint46 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4295D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint47 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4295D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint48 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4295D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint49 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4295D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint50 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4295D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint51 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4295D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint52 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4295D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint53 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4295D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint54 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4295D);
             System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FeatureCreationTableMock));
             this.featureEditGridView = new System.Windows.Forms.DataGridView();
-            this.Feature = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Bubble = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Nominal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Plus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Minus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Sample = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Tool = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Delete = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.addFeatureButton = new System.Windows.Forms.Button();
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.Inspection_Page = new System.Windows.Forms.TabPage();
@@ -139,13 +100,8 @@
             this.inspectionPageHeader = new System.Windows.Forms.Label();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
             this.inspectionEntryGridView = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.inspectionChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.nextPartButton = new System.Windows.Forms.Button();
             this.Report_Page = new System.Windows.Forms.TabPage();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
@@ -187,6 +143,19 @@
             this.cancelButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.textBox2 = new System.Windows.Forms.TextBox();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Feature = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Bubble = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Nominal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Plus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Minus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Sample = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Tool = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Delete = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.featureEditGridView)).BeginInit();
             this.mainTabControl.SuspendLayout();
             this.Inspection_Page.SuspendLayout();
@@ -207,7 +176,7 @@
             this.tableLayoutPanel11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.inspectionEntryGridView)).BeginInit();
             this.tableLayoutPanel10.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.inspectionChart)).BeginInit();
             this.Report_Page.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
             this.splitContainer4.Panel1.SuspendLayout();
@@ -299,46 +268,6 @@
             this.featureEditGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
             this.featureEditGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DeleteRowFeature_MouseUp);
             this.featureEditGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.featureEditGridView_DataError);
-            // 
-            // Feature
-            // 
-            this.Feature.HeaderText = "Feature type (Optional)";
-            this.Feature.Name = "Feature";
-            // 
-            // Bubble
-            // 
-            this.Bubble.HeaderText = "Sketch Bubble (Optional)";
-            this.Bubble.Name = "Bubble";
-            // 
-            // Nominal
-            // 
-            this.Nominal.HeaderText = "Nominal";
-            this.Nominal.Name = "Nominal";
-            // 
-            // Plus
-            // 
-            this.Plus.HeaderText = "+";
-            this.Plus.Name = "Plus";
-            // 
-            // Minus
-            // 
-            this.Minus.HeaderText = "-";
-            this.Minus.Name = "Minus";
-            // 
-            // Sample
-            // 
-            this.Sample.HeaderText = "Sample";
-            this.Sample.Name = "Sample";
-            // 
-            // Tool
-            // 
-            this.Tool.HeaderText = "Tool";
-            this.Tool.Name = "Tool";
-            // 
-            // Delete
-            // 
-            this.Delete.HeaderText = "Delete Feature";
-            this.Delete.Name = "Delete";
             // 
             // addFeatureButton
             // 
@@ -818,39 +747,15 @@
             this.inspectionEntryGridView.Size = new System.Drawing.Size(822, 337);
             this.inspectionEntryGridView.TabIndex = 0;
             this.inspectionEntryGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.inspectionEntryGridView_CellEndEdit);
+            this.inspectionEntryGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.inspectionEntryGridView_DataBindingComplete);
             this.inspectionEntryGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.inspectionEntryGridView_DataError);
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.HeaderText = "Drawing Bubble";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.HeaderText = "Feature";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.HeaderText = "Measured Actual";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.HeaderText = "Inspection Tool";
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.HeaderText = "Inspector";
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
             // 
             // tableLayoutPanel10
             // 
             this.tableLayoutPanel10.ColumnCount = 2;
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel10.Controls.Add(this.chart1, 0, 0);
+            this.tableLayoutPanel10.Controls.Add(this.inspectionChart, 0, 0);
             this.tableLayoutPanel10.Controls.Add(this.nextPartButton, 1, 0);
             this.tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel10.Location = new System.Drawing.Point(0, 457);
@@ -863,89 +768,21 @@
             this.tableLayoutPanel10.Size = new System.Drawing.Size(862, 225);
             this.tableLayoutPanel10.TabIndex = 12;
             // 
-            // chart1
+            // inspectionChart
             // 
-            this.chart1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            chartArea1.AxisX.IsLabelAutoFit = false;
-            chartArea1.AxisX.LabelStyle.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea1.AxisX.LabelStyle.ForeColor = System.Drawing.Color.Gainsboro;
-            chartArea1.AxisX.TitleFont = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea1.AxisX.TitleForeColor = System.Drawing.Color.Gainsboro;
-            chartArea1.AxisY.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
-            chartArea1.AxisY.IsLabelAutoFit = false;
-            chartArea1.AxisY.IsStartedFromZero = false;
-            chartArea1.AxisY.LabelStyle.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea1.AxisY.LabelStyle.ForeColor = System.Drawing.Color.Gainsboro;
-            chartArea1.AxisY.Maximum = 0.431D;
-            chartArea1.AxisY.Minimum = 0.429D;
-            chartArea1.AxisY.ScaleView.SizeType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
-            chartArea1.AxisY.TitleFont = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea1.AxisY.TitleForeColor = System.Drawing.Color.Gainsboro;
-            chartArea1.AxisY2.ScaleView.Size = 0.4D;
-            chartArea1.BackColor = System.Drawing.Color.Gray;
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            this.chart1.Location = new System.Drawing.Point(20, 0);
-            this.chart1.Margin = new System.Windows.Forms.Padding(0);
-            this.chart1.Name = "chart1";
-            series1.BorderWidth = 5;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
-            series1.Color = System.Drawing.Color.MediumSeaGreen;
-            series1.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            series1.Name = "Dimension Actuals";
-            series1.Points.Add(dataPoint1);
-            series1.Points.Add(dataPoint2);
-            series1.Points.Add(dataPoint3);
-            series1.Points.Add(dataPoint4);
-            series1.Points.Add(dataPoint5);
-            series1.Points.Add(dataPoint6);
-            series1.Points.Add(dataPoint7);
-            series1.Points.Add(dataPoint8);
-            series1.Points.Add(dataPoint9);
-            series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Single;
-            series2.BorderColor = System.Drawing.Color.Red;
-            series2.BorderWidth = 3;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
-            series2.Color = System.Drawing.Color.DarkRed;
-            series2.IsVisibleInLegend = false;
-            series2.Name = "Series2";
-            series2.Points.Add(dataPoint10);
-            series2.Points.Add(dataPoint11);
-            series2.Points.Add(dataPoint12);
-            series2.Points.Add(dataPoint13);
-            series2.Points.Add(dataPoint14);
-            series2.Points.Add(dataPoint15);
-            series2.Points.Add(dataPoint16);
-            series2.Points.Add(dataPoint17);
-            series2.Points.Add(dataPoint18);
-            series3.BorderWidth = 3;
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series3.Color = System.Drawing.Color.DarkRed;
-            series3.Name = "Dimension Limits";
-            series3.Points.Add(dataPoint19);
-            series3.Points.Add(dataPoint20);
-            series3.Points.Add(dataPoint21);
-            series3.Points.Add(dataPoint22);
-            series3.Points.Add(dataPoint23);
-            series3.Points.Add(dataPoint24);
-            series3.Points.Add(dataPoint25);
-            series3.Points.Add(dataPoint26);
-            series3.Points.Add(dataPoint27);
-            this.chart1.Series.Add(series1);
-            this.chart1.Series.Add(series2);
-            this.chart1.Series.Add(series3);
-            this.chart1.Size = new System.Drawing.Size(411, 205);
-            this.chart1.TabIndex = 19;
-            this.chart1.TabStop = false;
-            this.chart1.Text = "chart1";
+            this.inspectionChart.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.inspectionChart.Location = new System.Drawing.Point(20, 0);
+            this.inspectionChart.Margin = new System.Windows.Forms.Padding(0);
+            this.inspectionChart.Name = "inspectionChart";
+            this.inspectionChart.Size = new System.Drawing.Size(411, 205);
+            this.inspectionChart.TabIndex = 19;
+            this.inspectionChart.TabStop = false;
+            this.inspectionChart.Text = "chart1";
             title1.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             title1.ForeColor = System.Drawing.Color.Gainsboro;
             title1.Name = "Title";
             title1.Text = "XXX ± XXX GRAPH";
-            this.chart1.Titles.Add(title1);
+            this.inspectionChart.Titles.Add(title1);
             // 
             // nextPartButton
             // 
@@ -1132,79 +969,79 @@
             // summaryChart
             // 
             this.summaryChart.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            chartArea2.AxisX.IsLabelAutoFit = false;
-            chartArea2.AxisX.LabelStyle.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea2.AxisX.LabelStyle.ForeColor = System.Drawing.Color.Gainsboro;
-            chartArea2.AxisX.TitleFont = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea2.AxisX.TitleForeColor = System.Drawing.Color.Gainsboro;
-            chartArea2.AxisY.Interval = 0.0001D;
-            chartArea2.AxisY.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
-            chartArea2.AxisY.IsLabelAutoFit = false;
-            chartArea2.AxisY.IsStartedFromZero = false;
-            chartArea2.AxisY.LabelStyle.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea2.AxisY.LabelStyle.ForeColor = System.Drawing.Color.Gainsboro;
-            chartArea2.AxisY.Maximum = 0.431D;
-            chartArea2.AxisY.Minimum = 0.429D;
-            chartArea2.AxisY.ScaleView.SizeType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
-            chartArea2.AxisY.TitleFont = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea2.AxisY.TitleForeColor = System.Drawing.Color.Gainsboro;
-            chartArea2.AxisY2.ScaleView.Size = 0.4D;
-            chartArea2.BackColor = System.Drawing.Color.Gray;
-            chartArea2.Name = "ChartArea1";
-            this.summaryChart.ChartAreas.Add(chartArea2);
+            chartArea1.AxisX.IsLabelAutoFit = false;
+            chartArea1.AxisX.LabelStyle.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chartArea1.AxisX.LabelStyle.ForeColor = System.Drawing.Color.Gainsboro;
+            chartArea1.AxisX.TitleFont = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chartArea1.AxisX.TitleForeColor = System.Drawing.Color.Gainsboro;
+            chartArea1.AxisY.Interval = 0.0001D;
+            chartArea1.AxisY.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
+            chartArea1.AxisY.IsLabelAutoFit = false;
+            chartArea1.AxisY.IsStartedFromZero = false;
+            chartArea1.AxisY.LabelStyle.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chartArea1.AxisY.LabelStyle.ForeColor = System.Drawing.Color.Gainsboro;
+            chartArea1.AxisY.Maximum = 0.431D;
+            chartArea1.AxisY.Minimum = 0.429D;
+            chartArea1.AxisY.ScaleView.SizeType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
+            chartArea1.AxisY.TitleFont = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chartArea1.AxisY.TitleForeColor = System.Drawing.Color.Gainsboro;
+            chartArea1.AxisY2.ScaleView.Size = 0.4D;
+            chartArea1.BackColor = System.Drawing.Color.Gray;
+            chartArea1.Name = "ChartArea1";
+            this.summaryChart.ChartAreas.Add(chartArea1);
             this.summaryChart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.summaryChart.Location = new System.Drawing.Point(20, 0);
             this.summaryChart.Margin = new System.Windows.Forms.Padding(0);
             this.summaryChart.Name = "summaryChart";
-            series4.BorderWidth = 5;
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
-            series4.Color = System.Drawing.Color.MediumSeaGreen;
-            series4.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            series4.Name = "Dimension Actuals";
-            series4.Points.Add(dataPoint28);
-            series4.Points.Add(dataPoint29);
-            series4.Points.Add(dataPoint30);
-            series4.Points.Add(dataPoint31);
-            series4.Points.Add(dataPoint32);
-            series4.Points.Add(dataPoint33);
-            series4.Points.Add(dataPoint34);
-            series4.Points.Add(dataPoint35);
-            series4.Points.Add(dataPoint36);
-            series4.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Single;
-            series5.BorderColor = System.Drawing.Color.Red;
-            series5.BorderWidth = 3;
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
-            series5.Color = System.Drawing.Color.DarkRed;
-            series5.IsVisibleInLegend = false;
-            series5.Name = "Series2";
-            series5.Points.Add(dataPoint37);
-            series5.Points.Add(dataPoint38);
-            series5.Points.Add(dataPoint39);
-            series5.Points.Add(dataPoint40);
-            series5.Points.Add(dataPoint41);
-            series5.Points.Add(dataPoint42);
-            series5.Points.Add(dataPoint43);
-            series5.Points.Add(dataPoint44);
-            series5.Points.Add(dataPoint45);
-            series6.BorderWidth = 3;
-            series6.ChartArea = "ChartArea1";
-            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series6.Color = System.Drawing.Color.DarkRed;
-            series6.Name = "Dimension Limits";
-            series6.Points.Add(dataPoint46);
-            series6.Points.Add(dataPoint47);
-            series6.Points.Add(dataPoint48);
-            series6.Points.Add(dataPoint49);
-            series6.Points.Add(dataPoint50);
-            series6.Points.Add(dataPoint51);
-            series6.Points.Add(dataPoint52);
-            series6.Points.Add(dataPoint53);
-            series6.Points.Add(dataPoint54);
-            this.summaryChart.Series.Add(series4);
-            this.summaryChart.Series.Add(series5);
-            this.summaryChart.Series.Add(series6);
+            series1.BorderWidth = 5;
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
+            series1.Color = System.Drawing.Color.MediumSeaGreen;
+            series1.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            series1.Name = "Dimension Actuals";
+            series1.Points.Add(dataPoint1);
+            series1.Points.Add(dataPoint2);
+            series1.Points.Add(dataPoint3);
+            series1.Points.Add(dataPoint4);
+            series1.Points.Add(dataPoint5);
+            series1.Points.Add(dataPoint6);
+            series1.Points.Add(dataPoint7);
+            series1.Points.Add(dataPoint8);
+            series1.Points.Add(dataPoint9);
+            series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Single;
+            series2.BorderColor = System.Drawing.Color.Red;
+            series2.BorderWidth = 3;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
+            series2.Color = System.Drawing.Color.DarkRed;
+            series2.IsVisibleInLegend = false;
+            series2.Name = "Series2";
+            series2.Points.Add(dataPoint10);
+            series2.Points.Add(dataPoint11);
+            series2.Points.Add(dataPoint12);
+            series2.Points.Add(dataPoint13);
+            series2.Points.Add(dataPoint14);
+            series2.Points.Add(dataPoint15);
+            series2.Points.Add(dataPoint16);
+            series2.Points.Add(dataPoint17);
+            series2.Points.Add(dataPoint18);
+            series3.BorderWidth = 3;
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Color = System.Drawing.Color.DarkRed;
+            series3.Name = "Dimension Limits";
+            series3.Points.Add(dataPoint19);
+            series3.Points.Add(dataPoint20);
+            series3.Points.Add(dataPoint21);
+            series3.Points.Add(dataPoint22);
+            series3.Points.Add(dataPoint23);
+            series3.Points.Add(dataPoint24);
+            series3.Points.Add(dataPoint25);
+            series3.Points.Add(dataPoint26);
+            series3.Points.Add(dataPoint27);
+            this.summaryChart.Series.Add(series1);
+            this.summaryChart.Series.Add(series2);
+            this.summaryChart.Series.Add(series3);
             this.summaryChart.Size = new System.Drawing.Size(822, 443);
             this.summaryChart.TabIndex = 15;
             this.summaryChart.Text = "chart1";
@@ -1649,6 +1486,71 @@
             this.textBox2.Size = new System.Drawing.Size(172, 26);
             this.textBox2.TabIndex = 0;
             // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "Drawing Bubble";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.HeaderText = "Feature";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.HeaderText = "Measured Actual";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.HeaderText = "Inspection Tool";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.HeaderText = "Redo Entry";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            // 
+            // Feature
+            // 
+            this.Feature.HeaderText = "Feature Type (Optional)";
+            this.Feature.Name = "Feature";
+            // 
+            // Bubble
+            // 
+            this.Bubble.HeaderText = "Sketch Bubble (Optional)";
+            this.Bubble.Name = "Bubble";
+            // 
+            // Nominal
+            // 
+            this.Nominal.HeaderText = "Nominal";
+            this.Nominal.Name = "Nominal";
+            // 
+            // Plus
+            // 
+            this.Plus.HeaderText = "+";
+            this.Plus.Name = "Plus";
+            // 
+            // Minus
+            // 
+            this.Minus.HeaderText = "-";
+            this.Minus.Name = "Minus";
+            // 
+            // Sample
+            // 
+            this.Sample.HeaderText = "Sample";
+            this.Sample.Name = "Sample";
+            // 
+            // Tool
+            // 
+            this.Tool.HeaderText = "Tool";
+            this.Tool.Name = "Tool";
+            // 
+            // Delete
+            // 
+            this.Delete.HeaderText = "Delete Feature";
+            this.Delete.Name = "Delete";
+            // 
             // FeatureCreationTableMock
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1688,7 +1590,7 @@
             this.tableLayoutPanel11.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.inspectionEntryGridView)).EndInit();
             this.tableLayoutPanel10.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.inspectionChart)).EndInit();
             this.Report_Page.ResumeLayout(false);
             this.splitContainer4.Panel1.ResumeLayout(false);
             this.splitContainer4.Panel2.ResumeLayout(false);
@@ -1786,19 +1688,6 @@
         private System.Windows.Forms.TextBox partBoxFeature;
         private System.Windows.Forms.TextBox lotSizeBoxInspection;
         private System.Windows.Forms.Label partNumberLabelInspection;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Feature;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Bubble;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Nominal;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Plus;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Minus;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Sample;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Tool;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Delete;
         private System.Windows.Forms.TabPage Report_Page;
         private System.Windows.Forms.SplitContainer splitContainer4;
         private System.Windows.Forms.SplitContainer splitContainer5;
@@ -1821,6 +1710,19 @@
         private System.Windows.Forms.ComboBox inspectionFocusCombo;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.DataVisualization.Charting.Chart inspectionChart;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Feature;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Bubble;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Nominal;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Plus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Minus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Sample;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Tool;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Delete;
     }
 }
