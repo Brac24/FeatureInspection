@@ -569,7 +569,7 @@ namespace Feature_Inspection
         /// <param name="e"></param>
         private void keyDownOpLot_Textbox(object sender, KeyEventArgs e)
         {
-            inspectionPresenter.keyDownOpLot_TextBox(sender, e);       
+            inspectionPresenter.suppressZeroFirstChar(sender, e);       
         }
 
         /// <summary>
