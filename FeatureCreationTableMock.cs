@@ -280,20 +280,9 @@ namespace Feature_Inspection
 
         private void CreateCharts(DataTable table)
         {
-            try
-            {
-                inspectionChart.ChartAreas.Add("Test");
-                inspectionChart.Series.Add("Test");
-
-                inspectionChart.Series["Test"].XValueMember = "Piece_ID";
-                inspectionChart.Series["Test"].YValueMembers = "Measured_Value";
-            }
-            catch
-            {
-
-            }
             inspectionChart.DataSource = table;
             inspectionChart.DataBind();
+
             /*
             for(int i = 0; i < inspectionFocusCombo.Items.Count; i++)
             {
@@ -399,7 +388,11 @@ namespace Feature_Inspection
             presenter = new FeatureCreationPresenter(this, model); //Give a reference of the view and model to the presenter class
             inspectionPresenter = new InspectionPresenter(this, model);
 
-            
+            inspectionChart.ChartAreas.Add("Test");
+            inspectionChart.Series.Add("Test");
+            inspectionChart.Series["Test"].ChartType = SeriesChartType.Line;
+            inspectionChart.Series["Test"].XValueMember = "Piece_ID";
+            inspectionChart.Series["Test"].YValueMembers = "Measured_Value";
         }
 
         //HANDLER FOR BOTH TABS
@@ -599,6 +592,7 @@ namespace Feature_Inspection
         /// <param name="e"></param>
         private void inspectionEntryGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
+            //TODO: Table should be binding everytime the Measured value has been edited
             AdapterUpdateInspection();
         }
 
