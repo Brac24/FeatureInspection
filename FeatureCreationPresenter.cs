@@ -15,21 +15,21 @@ namespace Feature_Inspection
         private IFeaturesDataSource model;
         
 
-        public FeatureCreationPresenter (IFeatureCreationView view, IFeaturesDataSource model)
+        public FeatureCreationPresenter(IFeatureCreationView view, IFeaturesDataSource model)
         {
             this.view = view;
             this.model = model;
             Initialize();
-            
+
         }
 
         private void Initialize()
         {
-            
-            
+
+
         }
 
-      
+
         public void checkEnterKeyPressed(KeyEventArgs e)
         {
             SuppressKeyIfWhiteSpaceChar(e);
@@ -352,7 +352,7 @@ namespace Feature_Inspection
             }
             else
             {
-               
+
                 MessageBox.Show("Part Number does not exist");
                 view.PartTextBox.Clear();
                 
@@ -367,6 +367,7 @@ namespace Feature_Inspection
             }
             else if (model.OpExists(view.OperationNumber, view.PartNumber))
             {
+                MessageBox.Show("Enter Features for operation");
                 view.FeatureGridView.Focus();
             }
             else
@@ -391,7 +392,7 @@ namespace Feature_Inspection
 
         public void AddFeatureRow(DataTable data)
         {
-            
+
             data = AddTableRow(data);
 
             SetPartAndOpNumInTable();
@@ -408,7 +409,7 @@ namespace Feature_Inspection
 
         }
 
-        
+
 
         private void SetSampleIDAndFeatureTypeHiddenColumns(DataGridViewCellEventArgs e)
         {
@@ -450,8 +451,8 @@ namespace Feature_Inspection
                 return true;
         }
 
-        
 
-       
+
+
     }
 }

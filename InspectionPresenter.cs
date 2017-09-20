@@ -74,9 +74,9 @@ namespace Feature_Inspection
             }
         }
 
-        internal void keyDownOpLot_TextBox(object sender, KeyEventArgs e)
+        internal void nextPartButton_Click()
         {
-            suppressZeroFirstChar(sender, e);
+            GotToNextPart();
         }
     }
 }

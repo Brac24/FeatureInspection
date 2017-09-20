@@ -7,6 +7,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
+using System.Windows.Forms.DataVisualization.Charting;
 using System.Windows.Forms;
 
 namespace Feature_Inspection
@@ -45,7 +47,7 @@ namespace Feature_Inspection
             }
         }
 
-       
+
 
 
         /************************/
@@ -157,7 +159,7 @@ namespace Feature_Inspection
 
         private void filterTextBox(object sender, KeyEventArgs e)
         {
-            
+
             int opChars = opKeyBoxInspection.Text.Length;
             int lotChars = lotSizeBoxInspection.Text.Length;
 
@@ -238,10 +240,15 @@ namespace Feature_Inspection
                 inspectionEntryGridView.Columns.Insert(0, BubbleColumn);
             }
 
-            DataGridViewTextBoxColumn InspectorID = new DataGridViewTextBoxColumn();
+            DataGridViewButtonColumn RedoButtonColumn = new DataGridViewButtonColumn();
             {
-                InspectorID.HeaderText = "Inspector";
-                inspectionEntryGridView.Columns.Insert(inspectionEntryGridView.ColumnCount, InspectorID);
+                RedoButtonColumn.FlatStyle = FlatStyle.Popup;
+                RedoButtonColumn.CellTemplate.Style.BackColor = Color.DarkRed;
+                RedoButtonColumn.CellTemplate.Style.SelectionBackColor = Color.DarkRed;
+                RedoButtonColumn.HeaderText = "Redo Entry";
+                RedoButtonColumn.Text = "Redo";
+                inspectionEntryGridView.Columns.Insert(inspectionEntryGridView.Columns.Count, RedoButtonColumn);
+                RedoButtonColumn.UseColumnTextForButtonValue = true;
             }
 
             if (inspectionEntryGridView.RowCount != 0)
@@ -266,11 +273,57 @@ namespace Feature_Inspection
 
         private void BindComboBox(DataTable featuresTable)
         {
-            inspectionFocusCombo.DataSource = null;
-            bindingSourceFocusCombo.DataSource = featuresTable;
-            inspectionFocusCombo.DataSource = bindingSourceFocusCombo;
             inspectionFocusCombo.DisplayMember = "Nominal";
             inspectionFocusCombo.ValueMember = "Feature_Key";
+            inspectionFocusCombo.DataSource = featuresTable;
+        }
+
+        private void CreateCharts(DataTable table)
+        {
+            try
+            {
+                inspectionChart.ChartAreas.Add("Test");
+                inspectionChart.Series.Add("Test");
+
+                inspectionChart.Series["Test"].XValueMember = "Piece_ID";
+                inspectionChart.Series["Test"].YValueMembers = "Measured_Value";
+            }
+            catch
+            {
+
+            }
+            inspectionChart.DataSource = table;
+            inspectionChart.DataBind();
+            /*
+            for(int i = 0; i < inspectionFocusCombo.Items.Count; i++)
+            {
+                int j = i * 3;
+                int k = j + 1;
+                int l = k + 1;
+
+                string chartName = "ChartArea" + i;
+                string nominalSeries = "Series" + i;
+                string lowSeries = "Series" + i + "L";
+                string highSeries = "Series" + i + "H";
+
+                inspectionChart.ChartAreas.Add(chartName);
+                //inspectionChart.ChartAreas[i].Visible = false;
+                inspectionChart.Series.Add(nominalSeries);
+                inspectionChart.Series[j].ChartType = SeriesChartType.Line;
+                inspectionChart.Series[j].ChartArea = "ChartArea" + i;
+                inspectionChart.Series.Add(lowSeries);
+                inspectionChart.Series[k].ChartType = SeriesChartType.Line;
+                inspectionChart.Series[k].ChartArea = "ChartArea" + i;
+                inspectionChart.Series.Add(highSeries);
+                inspectionChart.Series[l].ChartType = SeriesChartType.Line;
+                inspectionChart.Series[l].ChartArea = "ChartArea" + i;
+            }
+            */
+        }
+
+        private void ClearCharts()
+        {
+            //TODO: Remember to clear charts
         }
 
         private void AdapterUpdateInspection()
@@ -411,6 +464,7 @@ namespace Feature_Inspection
 
                         featureList = model.GetFeatureList(opkey);
                         BindComboBox(featureList);
+                        //CreateCharts();
 
                         if (featureTable.Rows.Count > 0)
                         {
@@ -525,7 +579,7 @@ namespace Feature_Inspection
         /// <param name="e"></param>
         private void nextPartButton_Click(object sender, EventArgs e)
         {
-            inspectionPresenter.GotToNextPart();
+            inspectionPresenter.nextPartButton_Click();
         }
 
         /// <summary>
@@ -585,7 +639,7 @@ namespace Feature_Inspection
         {
 
             presenter.dataGridView1_CellEndEdit(e);
-            
+
 
             // AdapterUpdate((BindingSource)table.DataSource);
 
@@ -602,7 +656,6 @@ namespace Feature_Inspection
             presenter.addFeature_Click();
         }
 
-
         /// <summary>
         /// Deletes the row that the user clicks delete on
         /// </summary>
@@ -612,7 +665,6 @@ namespace Feature_Inspection
         {
             presenter.DeleteDataGridViewRow(sender, e);
         }
-
 
         /// <summary>
         /// Will simply rebind feature data grid view without updating the database.
@@ -648,6 +700,7 @@ namespace Feature_Inspection
 
         #endregion
 
+
         #region Report Handlers
 
         private void ReportSwitch(object sender, EventArgs e)
@@ -666,5 +719,11 @@ namespace Feature_Inspection
 
         #endregion
 
+        private void inspectionEntryGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            DataTable table = model.GetChartData();
+
+            CreateCharts(table);
+        }
     }
 }
