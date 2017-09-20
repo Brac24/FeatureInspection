@@ -74,6 +74,9 @@ namespace Feature_Inspection
             }
         }
 
-
+        internal void keyDownOpLot_TextBox(object sender, KeyEventArgs e)
+        {
+            suppressZeroFirstChar(sender, e);
+        }
     }
 }

@@ -13,8 +13,7 @@ namespace Feature_Inspection
     {
         private IFeatureCreationView view;
         private IFeaturesDataSource model;
-        private BindingSource bindingSource;
-        private BindingSource sampleBindingSource;
+        
 
         public FeatureCreationPresenter (IFeatureCreationView view, IFeaturesDataSource model)
         {
@@ -33,8 +32,8 @@ namespace Feature_Inspection
       
         public void checkEnterKeyPressed(KeyEventArgs e)
         {
-            SuppressKeyIfSpace(e);
-
+            SuppressKeyIfWhiteSpaceChar(e);
+                       
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
             {
                 ValidateTextBoxes();
@@ -45,9 +44,9 @@ namespace Feature_Inspection
 
         public void cancelChanges_Click()
         {
-            DialogResult result = AskIfChangesWillBeUndone();
+            var result = AskIfChangesWillBeUndone();
 
-            if (result == DialogResult.Yes)
+            if (result == "Yes")
             {
                 DataTable partList = model.GetFeaturesOnOpKey(view.PartNumber, view.OperationNumber);
                 DataBindFeature(partList);
@@ -56,9 +55,9 @@ namespace Feature_Inspection
 
         public void saveButton_Click()
         {
-            DialogResult result = AskIfChangesWillBeSaved();
+            var result = AskIfChangesWillBeSaved();
 
-            if (result == DialogResult.Yes)
+            if (result == "Yes")
             {
                 //Save Changes made in gridview back to the database
                 AdapterUpdate();
@@ -67,7 +66,7 @@ namespace Feature_Inspection
                 Message_ChangesSaved();
             }
 
-            else if (result == DialogResult.No)
+            else if (result == "No")
             {
                 Message_ChangesNotSaved();
             }
@@ -87,7 +86,6 @@ namespace Feature_Inspection
 
             AddFeatureRow((DataTable)(view.BindingSource.DataSource));
         }
-
 
         private static void Message_ChangesNotSaved()
         {
@@ -113,50 +111,38 @@ namespace Feature_Inspection
             model.AdapterUpdate((DataTable)view.BindingSource.DataSource);
         }
 
-        private static DialogResult AskIfChangesWillBeSaved()
+        private string AskIfChangesWillBeSaved()
         {
             const string message0 = "Are you sure you want to save all changes made to this set of features? " +
                             "All changes will save to the database.";
             const string caption0 = "Save Changes";
 
-            var result = CreateYesNoMessage(message0, caption0);
-            return result;
+            var result = view.CreateYesNoMessage(message0, caption0);
+            return result.ToString();
         }
 
 
-        private static DialogResult AskIfChangesWillBeUndone()
+        private string AskIfChangesWillBeUndone()
         {
             const string message = "Are you sure you want to cancel all changes made to this set of features? " +
                             "Any changes to this table will be reverted.";
             const string caption = "Cancel Changes";
-            DialogResult result = CreateYesNoMessage(message, caption);
-            return result;
+            var result = view.CreateYesNoMessage(message, caption);
+            return result.ToString();
         }
 
-        private static DialogResult CreateYesNoMessage(string message, string caption)
-        {
-            return MessageBox.Show(message, caption,
-                                 MessageBoxButtons.YesNo,
-                                 MessageBoxIcon.Question);
-        }
+        
 
-
-
-
-
-
-
-
-        private static void SuppressKeyIfSpace(KeyEventArgs e)
+        public void SuppressKeyIfWhiteSpaceChar(KeyEventArgs e)
         {
             char currentKey = (char)e.KeyCode;
-            bool nonNumber = char.IsWhiteSpace(currentKey);
+            bool nonNumber = char.IsWhiteSpace(currentKey); //Deals with all white space characters which inlcude tab, return, etc.
 
             if (nonNumber)
                 e.SuppressKeyPress = true;
         }
 
-        private void ValidateTextBoxes()
+        internal void ValidateTextBoxes()
         {
             //Pressing enter key on part number text box
             if (view.PartTextBox.ContainsFocus)//partBoxFeature.ContainsFocus
@@ -369,7 +355,7 @@ namespace Feature_Inspection
                
                 MessageBox.Show("Part Number does not exist");
                 view.PartTextBox.Clear();
-                //partBoxFeature.Clear();
+                
             }
         }
 

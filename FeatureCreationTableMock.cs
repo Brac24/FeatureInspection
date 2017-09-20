@@ -17,12 +17,6 @@ namespace Feature_Inspection
         private FeatureCreationModelMock model;
         private InspectionPresenter inspectionPresenter;
 
-        public event EventHandler AddFeatureClicked;
-        public event EventHandler<EventArgs> EditClicked;
-        public event EventHandler<EventArgs> DoneClicked;
-        public event EventHandler EnterClicked;
-        public event EventHandler LotInspectionReadyClicked;
-
         BindingSource bindingSource;
         BindingSource bindingSourceInspection = new BindingSource();
         BindingSource bindingSourceListBox = new BindingSource();
@@ -113,6 +107,7 @@ namespace Feature_Inspection
             get { return partsListBox.SelectedIndex; }
             set { partsListBox.SelectedIndex = value; }
         }
+
         public int FeatureCount
         {
             get { return featureEditGridView.Rows.Count; }
@@ -321,6 +316,15 @@ namespace Feature_Inspection
         #region Feature Tab Methods
         // FEATURE TAB METHODS
 
+        public string CreateYesNoMessage(string message, string caption)
+        {
+            DialogResult result = MessageBox.Show(message, caption,
+                                 MessageBoxButtons.YesNo,
+                                 MessageBoxIcon.Question);
+
+            return result.ToString();
+        }
+
         private void SetOpKeyInfoFeature(int opkey)
         {
             DataTable info = new DataTable();
@@ -341,6 +345,8 @@ namespace Feature_Inspection
             model = new FeatureCreationModelMock();
             presenter = new FeatureCreationPresenter(this, model); //Give a reference of the view and model to the presenter class
             inspectionPresenter = new InspectionPresenter(this, model);
+
+            
         }
 
         //HANDLER FOR BOTH TABS
@@ -348,7 +354,7 @@ namespace Feature_Inspection
         private void numOnly_KeyDown(object sender, KeyEventArgs e)
         {
             filterTextBox(sender, e);
-
+            
             if (sender == opKeyBoxInspection)
             {
                 checkEnterKeyPressedInspection(sender, e);
@@ -509,7 +515,7 @@ namespace Feature_Inspection
         /// <param name="e"></param>
         private void keyDownOpLot_Textbox(object sender, KeyEventArgs e)
         {
-            inspectionPresenter.suppressZeroFirstChar(sender, e);
+            inspectionPresenter.keyDownOpLot_TextBox(sender, e);       
         }
 
         /// <summary>
@@ -568,18 +574,7 @@ namespace Feature_Inspection
         private void checkEnterKeyPressedFeatures(object sender, KeyEventArgs e)
         {
             presenter.checkEnterKeyPressed(e);
-        }
-
-        
-
-        
-
-        
-
-        
-
-        
-        
+        }  
 
         /// <summary>
         /// Used to set the type of sampling and the feature type
@@ -595,8 +590,6 @@ namespace Feature_Inspection
             // AdapterUpdate((BindingSource)table.DataSource);
 
         }
-
-        
 
         /// <summary>
         /// Will add an empty row to FeatureGridView and set invisible part number and op number columns
@@ -632,10 +625,6 @@ namespace Feature_Inspection
             presenter.cancelChanges_Click();
         }
 
-        
-
-        
-
         /// <summary>
         /// Updates, deletes, or inserts any data needed to the database
         /// </summary>
@@ -646,10 +635,6 @@ namespace Feature_Inspection
             presenter.saveButton_Click();
 
         }
-
-        
-
-        
 
         /// <summary>
         /// Handle invalid data input to datagridview and alert the user

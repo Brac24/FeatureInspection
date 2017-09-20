@@ -43,16 +43,9 @@ namespace Feature_Inspection
 
         void ShowJobInformation(Job job);
 
+        string CreateYesNoMessage(string message, string caption);
+
         #endregion
-
-
-        
-        
-        event EventHandler<EventArgs> EditClicked;
-        event EventHandler<EventArgs> DoneClicked;
-        event EventHandler EnterClicked;
-        event EventHandler AddFeatureClicked;
-        event EventHandler LotInspectionReadyClicked;
 
         
         
