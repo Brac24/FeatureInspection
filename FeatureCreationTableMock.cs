@@ -237,8 +237,8 @@ namespace Feature_Inspection
             inspectionEntryGridView.Columns["Inspection_Key_FK"].Visible = false;
             inspectionEntryGridView.Columns["Feature_Key"].Visible = false;
             inspectionEntryGridView.Columns["Position_Key"].Visible = false;
-            //inspectionEntryGridView.Columns["Old_Value"].Visible = false;
-            //inspectionEntryGridView.Columns["Oldest_Value"].Visible = false;
+            inspectionEntryGridView.Columns["Old Value"].Visible = false;
+            inspectionEntryGridView.Columns["Oldest Value"].Visible = false;
 
             inspectionEntryGridView.Columns["Feature"].ReadOnly = true;
 
@@ -364,14 +364,14 @@ namespace Feature_Inspection
             presenter = new FeatureCreationPresenter(this, model); //Give a reference of the view and model to the presenter class
             inspectionPresenter = new InspectionPresenter(this, model);
 
-            inspectionChart.ChartAreas.Add("Test");
-            inspectionChart.Series.Add("Test");
-            inspectionChart.Titles.Add("Test");
-            inspectionChart.Series["Test"].XValueMember = "Piece_ID";
-            inspectionChart.Series["Test"].YValueMembers = "Measured_Value";
+            inspectionChart.ChartAreas.Add("InspectionChart");
+            inspectionChart.Series.Add("NominalSeries");
+            inspectionChart.Titles.Add("TEST");
+            inspectionChart.Series["NominalSeries"].XValueMember = "Piece_ID";
+            inspectionChart.Series["NominalSeries"].YValueMembers = "Measured_Value";
 
             //Chart Styling
-            inspectionChart.Series["Test"].ChartType = SeriesChartType.Line;
+            inspectionChart.Series["NominalSeries"].ChartType = SeriesChartType.Line;
             inspectionChart.Titles[0].Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             inspectionChart.Titles[0].ForeColor = Color.Gainsboro;
             inspectionChart.ChartAreas[0].BackColor = Color.DimGray;
@@ -383,31 +383,6 @@ namespace Feature_Inspection
             inspectionChart.ChartAreas[0].AxisX.LabelStyle.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             inspectionChart.ChartAreas[0].AxisY.LabelStyle.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 
-            /*
-            for(int i = 0; i < inspectionFocusCombo.Items.Count; i++)
-            {
-                int j = i * 3;
-                int k = j + 1;
-                int l = k + 1;
-
-                string chartName = "ChartArea" + i;
-                string nominalSeries = "Series" + i;
-                string lowSeries = "Series" + i + "L";
-                string highSeries = "Series" + i + "H";
-
-                inspectionChart.ChartAreas.Add(chartName);
-                //inspectionChart.ChartAreas[i].Visible = false;
-                inspectionChart.Series.Add(nominalSeries);
-                inspectionChart.Series[j].ChartType = SeriesChartType.Line;
-                inspectionChart.Series[j].ChartArea = "ChartArea" + i;
-                inspectionChart.Series.Add(lowSeries);
-                inspectionChart.Series[k].ChartType = SeriesChartType.Line;
-                inspectionChart.Series[k].ChartArea = "ChartArea" + i;
-                inspectionChart.Series.Add(highSeries);
-                inspectionChart.Series[l].ChartType = SeriesChartType.Line;
-                inspectionChart.Series[l].ChartArea = "ChartArea" + i;
-            }
-            */
         }
 
         //HANDLER FOR BOTH TABS
@@ -742,15 +717,12 @@ namespace Feature_Inspection
 
         private void inspectionFocusCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
             int opKey = Int32.Parse(opKeyBoxInspection.Text);
             int featureKey = (int)inspectionFocusCombo.SelectedValue;
             DataTable table = model.GetChartData(opKey, featureKey);
             inspectionChart.Visible = true;
             CreateCharts(table);
-            
         }
-        
     }
 }
 

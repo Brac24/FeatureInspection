@@ -62,6 +62,19 @@ namespace Feature_Inspection
                 featureTable = UpdateTable(pieceID);
                 view.BindDataGridViewInspection(featureTable);
             }
+
+            for (int i = 0; i < view.inspectionGrid.RowCount; i++)
+            {
+                float test = float.Parse(view.inspectionGrid.Rows[i].Cells[5].Value.ToString());
+                if (test != 0)
+                {
+                    view.inspectionGrid.Rows[i].ReadOnly = true;
+                }
+                else
+                {
+                    view.inspectionGrid.Rows[i].ReadOnly = false;
+                }
+            }
         }
 
         public void GotToNextPart()
@@ -82,13 +95,27 @@ namespace Feature_Inspection
         internal void lockCellInspection(object sender, DataGridViewCellEventArgs e)
         {
             var table = (DataGridView)sender;
-            table.Rows[e.RowIndex].ReadOnly = true;
+
+                float test = float.Parse(view.inspectionGrid.Rows[e.RowIndex].Cells[5].Value.ToString());
+                if (test != 0)
+                {
+                    view.inspectionGrid.Rows[e.RowIndex].ReadOnly = true;
+                }
+                else
+                {
+                    view.inspectionGrid.Rows[e.RowIndex].ReadOnly = false;
+                }
+
             //TODO: Remember to make the table row ReadOnly
         }
 
         internal void RedoDataGridViewRow(object sender, DataGridViewCellMouseEventArgs e)
         {
             var table = (DataGridView)sender;
+
+            //float measured = (float)view.inspectionGrid.Rows[e.RowIndex].Cells["Measured Actual"].Value;
+            //float old = (float)view.inspectionGrid.Rows[e.RowIndex].Cells["Old Value"].Value;
+            //float oldest = (float)view.inspectionGrid.Rows[e.RowIndex].Cells["Oldest Value"].Value;
 
             if (e.RowIndex != -1)
             {
@@ -107,7 +134,6 @@ namespace Feature_Inspection
                     }
                 }
             }
-
         }
     }
 }
