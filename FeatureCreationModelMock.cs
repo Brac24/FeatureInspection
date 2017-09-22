@@ -177,10 +177,12 @@ namespace Feature_Inspection
 
         }
 
-        public DataTable GetChartData()
+        //TODO: Put opkey and feature key paramters inputs for this method
+        //Feature key is located in the inspectionEntryGridView it is one of the hidden columns
+        public DataTable GetChartData(int opKey, int featureKey)
         {
             DataTable features = new DataTable();
-            string getFeatures = "SELECT Measured_Value, Piece_ID FROM ATI_FeatureInspection.dbo.Position WHERE Inspection_Key_FK = (SELECT Inspection_Key FROM ATI_FeatureInspection.dbo.Inspection WHERE Op_Key = 2050) AND Feature_Key = 1141;";
+            string getFeatures = "SELECT Measured_Value, Piece_ID FROM ATI_FeatureInspection.dbo.Position WHERE Inspection_Key_FK = (SELECT Inspection_Key FROM ATI_FeatureInspection.dbo.Inspection WHERE Op_Key = " + opKey + ") AND Feature_Key = "+ featureKey + "; ";
 
             using (OdbcConnection connection = new OdbcConnection(connection_string))
             using (OdbcCommand command = connection.CreateCommand())
@@ -238,7 +240,7 @@ namespace Feature_Inspection
 
         public DataTable AdapterUpdateInspection(DataTable dt)
         {
-            string update = "UPDATE ATI_FeatureInspection.dbo.Position SET Measured_Value = ? " +
+            string update = "UPDATE ATI_FeatureInspection.dbo.Position SET Measured_Value = ?, Old_Value = ?, Oldest_Value = ? " +
                             "WHERE Position_Key = ?;";
 
             DataTable changedTable = new DataTable();
@@ -251,6 +253,8 @@ namespace Feature_Inspection
 
                 dataAdapter.UpdateCommand.Parameters.Add("@Measured_Value", OdbcType.Decimal, 3, "Measured Actual");
                 dataAdapter.UpdateCommand.Parameters.Add("@Position_Key", OdbcType.Int, 3, "Position_Key");
+                dataAdapter.UpdateCommand.Parameters.Add("@Old_Value", OdbcType.Decimal, 3, "Old Value");
+                dataAdapter.UpdateCommand.Parameters.Add("@Oldest_Value", OdbcType.Decimal, 3, "Oldest Value");
                 changedTable = dt.GetChanges();
 
                 int rowsInChangedTable;
@@ -311,6 +315,27 @@ namespace Feature_Inspection
             return t;
         }
 
+        public DataTable GetFeatureKey(int opKey, int feature)
+        {
+            DataTable t;
+
+            using (OdbcConnection conn = new OdbcConnection(connection_string))
+            using (OdbcCommand com = conn.CreateCommand())
+            using (OdbcDataAdapter dataAdapter = new OdbcDataAdapter(com))
+            {
+
+                string query = "SELECT Feature_Key FROM ATI_FeatureInspection.dbo.Features" +
+                               " JOIN ATI_FeatureInspection.dbo.Operation ON Part_Number_FK = Part_Number AND Operation_Number_FK = Operation_Number" +
+                               " WHERE Op_Key = " + opKey + " AND Nominal = " + feature + ";";
+
+                com.CommandText = query;
+                t = new DataTable();
+                dataAdapter.Fill(t);
+
+            }
+            return t;
+        }
+
         internal string GetLotSize(int opkey)
         {
             int lotSize = 0;
@@ -350,8 +375,8 @@ namespace Feature_Inspection
             using (OdbcCommand com = conn.CreateCommand())
             using (OdbcDataAdapter dataAdapter = new OdbcDataAdapter(com))
             {
-                string query = "SELECT CAST(Features.FeatureType AS varchar(50)) + ' ' + CAST(Features.Nominal AS varchar(50)) + ' +' + CAST(Features.Plus_Tolerance AS varchar(50)) + ' -' + CAST(Features.Minus_Tolerance AS varchar(50)) AS Feature, "
-                    + "Position.Inspection_Key_FK, Features.Feature_Key,Position.Position_Key, Measured_Value AS 'Measured Actual', Position.InspectionTool FROM ATI_FeatureInspection.dbo.Position " +
+                string query = "SELECT Features.Sketch_Bubble AS 'Sketch Bubble', CAST(Features.FeatureType AS varchar(50)) + ' ' + CAST(Features.Nominal AS varchar(50)) + ' +' + CAST(Features.Plus_Tolerance AS varchar(50)) + ' -' + CAST(Features.Minus_Tolerance AS varchar(50)) AS Feature, "
+                    + "Position.Inspection_Key_FK, Features.Feature_Key, Position.Position_Key, Measured_Value AS 'Measured Actual', Position.Old_Value AS 'Old Value', Position.Oldest_Value AS 'Oldest Value', Position.InspectionTool FROM ATI_FeatureInspection.dbo.Position " +
                                 " LEFT JOIN ATI_FeatureInspection.dbo.Features ON Position.Feature_Key = Features.Feature_Key" +
                                 " WHERE Inspection_Key_FK = (SELECT Inspection_Key FROM ATI_FeatureInspection.dbo.Inspection" +
                                 " WHERE Op_Key = " + opKey + ") AND Piece_ID = " + partIndex + ";";

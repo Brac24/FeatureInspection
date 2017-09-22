@@ -89,12 +89,6 @@ namespace Feature_Inspection
             get { return opBoxFeature.Text; }
         }
 
-        public int PartsInspected
-        {
-            get { return Int32.Parse(partsInspectedLabel.Text); }
-            set { partsInspectedLabel.Text = value.ToString(); }
-        }
-
         public int OpKey
         {
             get { return Int32.Parse(opKeyBoxInspection.Text); }
@@ -129,6 +123,17 @@ namespace Feature_Inspection
             set { featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Part_Number_FK"].Value = value; }
 
         }
+
+        public DataGridView inspectionGrid { get { return inspectionEntryGridView; } }
+
+        /*
+        public object getRowE
+        {
+            get { return; }
+            set { }
+        }
+        */
+
 
         public object LastRowFeatureOperationNumberFK
         {
@@ -232,14 +237,10 @@ namespace Feature_Inspection
             inspectionEntryGridView.Columns["Inspection_Key_FK"].Visible = false;
             inspectionEntryGridView.Columns["Feature_Key"].Visible = false;
             inspectionEntryGridView.Columns["Position_Key"].Visible = false;
+            //inspectionEntryGridView.Columns["Old_Value"].Visible = false;
+            //inspectionEntryGridView.Columns["Oldest_Value"].Visible = false;
 
             inspectionEntryGridView.Columns["Feature"].ReadOnly = true;
-
-            DataGridViewTextBoxColumn BubbleColumn = new DataGridViewTextBoxColumn();
-            {
-                BubbleColumn.HeaderText = "Drawing Bubble";
-                inspectionEntryGridView.Columns.Insert(0, BubbleColumn);
-            }
 
             DataGridViewButtonColumn RedoButtonColumn = new DataGridViewButtonColumn();
             {
@@ -283,32 +284,6 @@ namespace Feature_Inspection
         {
             inspectionChart.DataSource = table;
             inspectionChart.DataBind();
-
-            /*
-            for(int i = 0; i < inspectionFocusCombo.Items.Count; i++)
-            {
-                int j = i * 3;
-                int k = j + 1;
-                int l = k + 1;
-
-                string chartName = "ChartArea" + i;
-                string nominalSeries = "Series" + i;
-                string lowSeries = "Series" + i + "L";
-                string highSeries = "Series" + i + "H";
-
-                inspectionChart.ChartAreas.Add(chartName);
-                //inspectionChart.ChartAreas[i].Visible = false;
-                inspectionChart.Series.Add(nominalSeries);
-                inspectionChart.Series[j].ChartType = SeriesChartType.Line;
-                inspectionChart.Series[j].ChartArea = "ChartArea" + i;
-                inspectionChart.Series.Add(lowSeries);
-                inspectionChart.Series[k].ChartType = SeriesChartType.Line;
-                inspectionChart.Series[k].ChartArea = "ChartArea" + i;
-                inspectionChart.Series.Add(highSeries);
-                inspectionChart.Series[l].ChartType = SeriesChartType.Line;
-                inspectionChart.Series[l].ChartArea = "ChartArea" + i;
-            }
-            */
         }
 
         private void ClearCharts()
@@ -391,9 +366,48 @@ namespace Feature_Inspection
 
             inspectionChart.ChartAreas.Add("Test");
             inspectionChart.Series.Add("Test");
-            inspectionChart.Series["Test"].ChartType = SeriesChartType.Line;
+            inspectionChart.Titles.Add("Test");
             inspectionChart.Series["Test"].XValueMember = "Piece_ID";
             inspectionChart.Series["Test"].YValueMembers = "Measured_Value";
+
+            //Chart Styling
+            inspectionChart.Series["Test"].ChartType = SeriesChartType.Line;
+            inspectionChart.Titles[0].Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            inspectionChart.Titles[0].ForeColor = Color.Gainsboro;
+            inspectionChart.ChartAreas[0].BackColor = Color.DimGray;
+            inspectionChart.Series[0].Color = Color.MediumSeaGreen;
+            inspectionChart.Series[0].BorderWidth = 3;
+            inspectionChart.ChartAreas[0].Area3DStyle.Enable3D = true;
+            inspectionChart.ChartAreas[0].AxisX.LabelStyle.ForeColor = Color.Gainsboro;
+            inspectionChart.ChartAreas[0].AxisY.LabelStyle.ForeColor = Color.Gainsboro;
+            inspectionChart.ChartAreas[0].AxisX.LabelStyle.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            inspectionChart.ChartAreas[0].AxisY.LabelStyle.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+
+            /*
+            for(int i = 0; i < inspectionFocusCombo.Items.Count; i++)
+            {
+                int j = i * 3;
+                int k = j + 1;
+                int l = k + 1;
+
+                string chartName = "ChartArea" + i;
+                string nominalSeries = "Series" + i;
+                string lowSeries = "Series" + i + "L";
+                string highSeries = "Series" + i + "H";
+
+                inspectionChart.ChartAreas.Add(chartName);
+                //inspectionChart.ChartAreas[i].Visible = false;
+                inspectionChart.Series.Add(nominalSeries);
+                inspectionChart.Series[j].ChartType = SeriesChartType.Line;
+                inspectionChart.Series[j].ChartArea = "ChartArea" + i;
+                inspectionChart.Series.Add(lowSeries);
+                inspectionChart.Series[k].ChartType = SeriesChartType.Line;
+                inspectionChart.Series[k].ChartArea = "ChartArea" + i;
+                inspectionChart.Series.Add(highSeries);
+                inspectionChart.Series[l].ChartType = SeriesChartType.Line;
+                inspectionChart.Series[l].ChartArea = "ChartArea" + i;
+            }
+            */
         }
 
         //HANDLER FOR BOTH TABS
@@ -458,7 +472,6 @@ namespace Feature_Inspection
 
                         featureList = model.GetFeatureList(opkey);
                         BindComboBox(featureList);
-                        //CreateCharts();
 
                         if (featureTable.Rows.Count > 0)
                         {
@@ -595,6 +608,7 @@ namespace Feature_Inspection
         {
             //TODO: Table should be binding everytime the Measured value has been edited
             AdapterUpdateInspection();
+            inspectionPresenter.lockCellInspection(sender, e);
         }
 
         /// <summary>
@@ -662,6 +676,16 @@ namespace Feature_Inspection
         }
 
         /// <summary>
+        /// Allows user to redo an inspection entry
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void RedoRowInspection_MouseUp(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            inspectionPresenter.RedoDataGridViewRow(sender, e);
+        }
+
+        /// <summary>
         /// Will simply rebind feature data grid view without updating the database.
         /// To have the old state the user started with
         /// </summary>
@@ -716,9 +740,20 @@ namespace Feature_Inspection
 
         private void inspectionEntryGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
-            DataTable table = model.GetChartData();
 
-            CreateCharts(table);
         }
+
+        private void inspectionFocusCombo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+            int opKey = Int32.Parse(opKeyBoxInspection.Text);
+            int featureKey = (int)inspectionFocusCombo.SelectedValue;
+            DataTable table = model.GetChartData(opKey, featureKey);
+            inspectionChart.Visible = true;
+            CreateCharts(table);
+            
+        }
+        
     }
 }
+
