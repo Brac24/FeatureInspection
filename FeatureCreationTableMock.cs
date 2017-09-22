@@ -25,6 +25,7 @@ namespace Feature_Inspection
         BindingSource bindingSourceFocusCombo = new BindingSource();
         BindingSource sampleBindingSource = new BindingSource();
 
+        
 
         public FeatureCreationTableMock()
         {
@@ -359,9 +360,9 @@ namespace Feature_Inspection
 
         public void FeatureCreationTableMock_Load(object sender, EventArgs e)
         {
-            model = new FeatureCreationModelMock();
-            presenter = new FeatureCreationPresenter(this, model); //Give a reference of the view and model to the presenter class
-            inspectionPresenter = new InspectionPresenter(this, model);
+            //model = new FeatureCreationModelMock();
+            //presenter = new FeatureCreationPresenter(this, model); //Give a reference of the view and model to the presenter class
+            //inspectionPresenter = new InspectionPresenter(this, model);
 
             inspectionChart.ChartAreas.Add("Test");
             inspectionChart.Series.Add("Test");

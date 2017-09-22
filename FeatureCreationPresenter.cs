@@ -32,6 +32,7 @@ namespace Feature_Inspection
 
         public void checkEnterKeyPressed(KeyEventArgs e)
         {
+            
             SuppressKeyIfWhiteSpaceChar(e);
                        
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
@@ -147,7 +148,7 @@ namespace Feature_Inspection
             //Pressing enter key on part number text box
             if (view.PartTextBox.ContainsFocus)//partBoxFeature.ContainsFocus
             {
-                CheckPartNumberExists();
+                CheckPartNumberExists(view.PartNumber);
             }
             //Pressing enter on op number text box
             else if (view.OpTextBox.ContainsFocus)
@@ -339,14 +340,14 @@ namespace Feature_Inspection
                 "Surface Finish", "Linear", "Square", "Depth", "Straightness", "Flatness", "Parallelism", "Perpendicularity", "Circular Runout", "Total Runout", "Position", "Concentricity");
         }
 
-        private void CheckPartNumberExists()
+        public void CheckPartNumberExists(string partNumber)
         {
 
-            if (view.PartTextBox.Text == "")
+            if (partNumber == "")
             {
                 MessageBox.Show("Please Enter a Part Number");
             }
-            else if (model.PartNumberExists(view.PartNumber)) //Check if part number entered exists
+            else if (model.PartNumberExists(partNumber)) //Check if part number entered exists
             {
                 view.OpTextBox.Focus();//opBoxFeature.Focus();
             }
