@@ -451,8 +451,5 @@ namespace Feature_Inspection
                 return true;
         }
 
-
-
-
     }
 }
