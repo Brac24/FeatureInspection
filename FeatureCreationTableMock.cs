@@ -738,10 +738,7 @@ namespace Feature_Inspection
 
         #endregion
 
-        private void inspectionEntryGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
-        {
-
-        }
+        
 
         private void inspectionFocusCombo_SelectedIndexChanged(object sender, EventArgs e)
         {

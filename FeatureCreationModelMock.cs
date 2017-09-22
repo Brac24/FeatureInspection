@@ -252,9 +252,10 @@ namespace Feature_Inspection
                 dataAdapter.UpdateCommand = new OdbcCommand(update, conn);
 
                 dataAdapter.UpdateCommand.Parameters.Add("@Measured_Value", OdbcType.Decimal, 3, "Measured Actual");
-                dataAdapter.UpdateCommand.Parameters.Add("@Position_Key", OdbcType.Int, 3, "Position_Key");
                 dataAdapter.UpdateCommand.Parameters.Add("@Old_Value", OdbcType.Decimal, 3, "Old Value");
                 dataAdapter.UpdateCommand.Parameters.Add("@Oldest_Value", OdbcType.Decimal, 3, "Oldest Value");
+                dataAdapter.UpdateCommand.Parameters.Add("@Position_Key", OdbcType.Int, 3, "Position_Key");
+                
                 changedTable = dt.GetChanges();
 
                 int rowsInChangedTable;

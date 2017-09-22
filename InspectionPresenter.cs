@@ -94,7 +94,7 @@ namespace Feature_Inspection
             {
                 if (e.ColumnIndex == table.Columns[table.ColumnCount - 1].Index)
                 {
-                    if (view.inspectionGrid.Rows[e.RowIndex].Cells["Oldest Value"].Value == DBNull.Value)
+                    if (Int32.Parse(view.inspectionGrid.Rows[e.RowIndex].Cells["Oldest Value"].Value.ToString()) == 0)
                     {
                         view.inspectionGrid.Rows[e.RowIndex].Cells["Oldest Value"].Value = view.inspectionGrid.Rows[e.RowIndex].Cells["Old Value"].Value;
                         view.inspectionGrid.Rows[e.RowIndex].Cells["Old Value"].Value = view.inspectionGrid.Rows[e.RowIndex].Cells["Measured Actual"].Value;

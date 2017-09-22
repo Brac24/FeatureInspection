@@ -791,7 +791,7 @@
             this.inspectionEntryGridView.TabIndex = 0;
             this.inspectionEntryGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.inspectionEntryGridView_CellEndEdit);
             this.inspectionEntryGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.RedoRowInspection_MouseUp);
-            this.inspectionEntryGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.inspectionEntryGridView_DataBindingComplete);
+            
             this.inspectionEntryGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.inspectionEntryGridView_DataError);
             // 
             // dataGridViewTextBoxColumn1
