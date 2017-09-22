@@ -237,8 +237,8 @@ namespace Feature_Inspection
             inspectionEntryGridView.Columns["Inspection_Key_FK"].Visible = false;
             inspectionEntryGridView.Columns["Feature_Key"].Visible = false;
             inspectionEntryGridView.Columns["Position_Key"].Visible = false;
-            //inspectionEntryGridView.Columns["Old_Value"].Visible = false;
-            //inspectionEntryGridView.Columns["Oldest_Value"].Visible = false;
+            inspectionEntryGridView.Columns["Old Value"].Visible = false;
+            inspectionEntryGridView.Columns["Oldest Value"].Visible = false;
 
             inspectionEntryGridView.Columns["Feature"].ReadOnly = true;
 
