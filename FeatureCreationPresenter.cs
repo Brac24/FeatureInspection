@@ -349,7 +349,8 @@ namespace Feature_Inspection
             }
             else if (model.PartNumberExists(partNumber)) //Check if part number entered exists
             {
-                view.OpTextBox.Focus();//opBoxFeature.Focus();
+                view.OpTextBox.Select();//opBoxFeature.Focus();
+                
             }
             else
             {
