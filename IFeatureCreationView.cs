@@ -10,7 +10,6 @@ namespace Feature_Inspection
 {
     public interface IFeatureCreationView
     {
-
         TextBox PartTextBox { get; }
 
         TextBox OpTextBox { get; }
