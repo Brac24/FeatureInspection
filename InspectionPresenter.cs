@@ -121,16 +121,16 @@ namespace Feature_Inspection
             {
                 if (e.ColumnIndex == table.Columns[table.ColumnCount - 1].Index)
                 {
-                    if (Int32.Parse(view.inspectionGrid.Rows[e.RowIndex].Cells["Oldest Value"].Value.ToString()) == 0)
+                    if (float.Parse(view.inspectionGrid.Rows[e.RowIndex].Cells["Oldest Value"].Value.ToString()) == 0)
                     {
                         view.inspectionGrid.Rows[e.RowIndex].Cells["Oldest Value"].Value = view.inspectionGrid.Rows[e.RowIndex].Cells["Old Value"].Value;
                         view.inspectionGrid.Rows[e.RowIndex].Cells["Old Value"].Value = view.inspectionGrid.Rows[e.RowIndex].Cells["Measured Actual"].Value;
-                        MessageBox.Show("Have a Cookie");
+                        
                         table.Rows[e.RowIndex].ReadOnly = false;
                     }
                     else
                     {
-                        MessageBox.Show("No Cookie for you!");
+                        MessageBox.Show("Maximum allowed of Redo's reached");
                     }
                 }
             }

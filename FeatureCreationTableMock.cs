@@ -583,6 +583,7 @@ namespace Feature_Inspection
         {
             //TODO: Table should be binding everytime the Measured value has been edited
             AdapterUpdateInspection();
+            BindDataCharts();
             inspectionPresenter.lockCellInspection(sender, e);
         }
 
@@ -716,6 +717,16 @@ namespace Feature_Inspection
         
 
         private void inspectionFocusCombo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            BindDataCharts();
+        }
+
+        private void inspectionEntryGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            BindDataCharts();
+        }
+
+        private void BindDataCharts()
         {
             int opKey = Int32.Parse(opKeyBoxInspection.Text);
             int featureKey = (int)inspectionFocusCombo.SelectedValue;

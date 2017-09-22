@@ -369,7 +369,7 @@ namespace Feature_Inspection
             }
             else if (model.OpExists(view.OperationNumber, view.PartNumber))
             {
-                MessageBox.Show("Enter Features for operation");
+                MessageBox.Show("This is a valid Part and Operation Number");
                 view.FeatureGridView.Focus();
             }
             else
