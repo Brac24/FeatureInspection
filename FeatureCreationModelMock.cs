@@ -170,7 +170,6 @@ namespace Feature_Inspection
                 t = new DataTable();
                 dataAdapter.Fill(t);
 
-
             }
 
             return t;

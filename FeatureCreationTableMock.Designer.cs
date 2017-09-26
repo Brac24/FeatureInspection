@@ -84,7 +84,7 @@
             this.tableLayoutPanel16 = new System.Windows.Forms.TableLayoutPanel();
             this.labelWhat = new System.Windows.Forms.Label();
             this.tableLayoutPanel14 = new System.Windows.Forms.TableLayoutPanel();
-            this.label6 = new System.Windows.Forms.Label();
+            this.jobBossLabel = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.opKeyBoxInspection = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -147,6 +147,8 @@
             this.opBoxFeature = new System.Windows.Forms.TextBox();
             this.labely = new System.Windows.Forms.Label();
             this.partBoxFeature = new System.Windows.Forms.TextBox();
+            this.partStorageLabel = new System.Windows.Forms.Label();
+            this.opStorageLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.featurePageHeader = new System.Windows.Forms.Label();
@@ -428,7 +430,7 @@
             this.tableLayoutPanel14.ColumnCount = 2;
             this.tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 42F));
             this.tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 58F));
-            this.tableLayoutPanel14.Controls.Add(this.label6, 1, 1);
+            this.tableLayoutPanel14.Controls.Add(this.jobBossLabel, 1, 1);
             this.tableLayoutPanel14.Controls.Add(this.label5, 0, 1);
             this.tableLayoutPanel14.Controls.Add(this.opKeyBoxInspection, 1, 0);
             this.tableLayoutPanel14.Controls.Add(this.label1, 0, 0);
@@ -457,17 +459,16 @@
             this.tableLayoutPanel14.Size = new System.Drawing.Size(285, 222);
             this.tableLayoutPanel14.TabIndex = 41;
             // 
-            // label6
+            // jobBossLabel
             // 
-            this.label6.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label6.Location = new System.Drawing.Point(122, 39);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(59, 15);
-            this.label6.TabIndex = 44;
-            this.label6.Text = " X PARTS";
+            this.jobBossLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.jobBossLabel.AutoSize = true;
+            this.jobBossLabel.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.jobBossLabel.ForeColor = System.Drawing.Color.Gainsboro;
+            this.jobBossLabel.Location = new System.Drawing.Point(122, 39);
+            this.jobBossLabel.Name = "jobBossLabel";
+            this.jobBossLabel.Size = new System.Drawing.Size(0, 15);
+            this.jobBossLabel.TabIndex = 44;
             // 
             // label5
             // 
@@ -1357,6 +1358,8 @@
             this.tableLayoutPanel7.Controls.Add(this.opBoxFeature, 1, 1);
             this.tableLayoutPanel7.Controls.Add(this.labely, 0, 1);
             this.tableLayoutPanel7.Controls.Add(this.partBoxFeature, 1, 0);
+            this.tableLayoutPanel7.Controls.Add(this.partStorageLabel, 1, 2);
+            this.tableLayoutPanel7.Controls.Add(this.opStorageLabel, 1, 3);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel7.Location = new System.Drawing.Point(0, 63);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
@@ -1428,6 +1431,26 @@
             this.partBoxFeature.TabIndex = 0;
             this.partBoxFeature.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.partBoxFeature.KeyDown += new System.Windows.Forms.KeyEventHandler(this.checkEnterKeyPressedFeatures);
+            // 
+            // partStorageLabel
+            // 
+            this.partStorageLabel.AutoSize = true;
+            this.partStorageLabel.Location = new System.Drawing.Point(122, 62);
+            this.partStorageLabel.Name = "partStorageLabel";
+            this.partStorageLabel.Size = new System.Drawing.Size(54, 19);
+            this.partStorageLabel.TabIndex = 26;
+            this.partStorageLabel.Text = "label9";
+            this.partStorageLabel.Visible = false;
+            // 
+            // opStorageLabel
+            // 
+            this.opStorageLabel.AutoSize = true;
+            this.opStorageLabel.Location = new System.Drawing.Point(122, 93);
+            this.opStorageLabel.Name = "opStorageLabel";
+            this.opStorageLabel.Size = new System.Drawing.Size(63, 19);
+            this.opStorageLabel.TabIndex = 27;
+            this.opStorageLabel.Text = "label10";
+            this.opStorageLabel.Visible = false;
             // 
             // tableLayoutPanel4
             // 
@@ -1733,14 +1756,16 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Sample;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tool;
         private System.Windows.Forms.DataGridViewTextBoxColumn Delete;
+        private System.Windows.Forms.Label jobBossLabel;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel21;
+        private System.Windows.Forms.Button nextPartButton;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel21;
-        private System.Windows.Forms.Button nextPartButton;
+        private System.Windows.Forms.Label partStorageLabel;
+        private System.Windows.Forms.Label opStorageLabel;
     }
 }

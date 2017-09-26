@@ -92,6 +92,14 @@ namespace Feature_Inspection
             GotToNextPart();
         }
 
+        public void DisableSortableColumns()
+        {
+            for (int j = 0; j < view.inspectionGrid.ColumnCount; j++)
+            {
+                view.inspectionGrid.Columns[j].SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+        }
+
         internal void lockCellInspection(object sender, DataGridViewCellEventArgs e)
         {
             var table = (DataGridView)sender;
@@ -135,5 +143,6 @@ namespace Feature_Inspection
                 }
             }
         }
+
     }
 }

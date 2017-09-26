@@ -49,7 +49,7 @@ namespace Feature_Inspection
 
             if (result == "Yes")
             {
-                DataTable partList = model.GetFeaturesOnOpKey(view.PartNumber, view.OperationNumber);
+                DataTable partList = model.GetFeaturesOnOpKey(view.PartStorage, view.OpStorage);
                 DataBindFeature(partList);
             }
         }
@@ -62,9 +62,6 @@ namespace Feature_Inspection
             {
                 //Save Changes made in gridview back to the database
                 AdapterUpdate();
-
-                //Prompt user that changes have been saved
-                Message_ChangesSaved();
             }
 
             else if (result == "No")
@@ -104,12 +101,23 @@ namespace Feature_Inspection
 
         private void AdapterUpdate()
         {
-            //Must call EndEdit Method before trying to update database
-            view.BindingSource.EndEdit();
-            view.SampleBindingSource.EndEdit();
+           
+            try
+            {
+                //Must call EndEdit Method before trying to update database
+                view.BindingSource.EndEdit();
+                view.SampleBindingSource.EndEdit();
 
-            //Update database
-            model.AdapterUpdate((DataTable)view.BindingSource.DataSource);
+                //Update database
+                model.AdapterUpdate((DataTable)view.BindingSource.DataSource);
+
+                //Prompt user that changes have been saved
+                Message_ChangesSaved();
+            }
+            catch
+            {
+                MessageBox.Show("Error: There was a problem with saving to the database. Check your entries and try again or contact the application development team if the problem persists.");
+            }
         }
 
         private string AskIfChangesWillBeSaved()
@@ -165,7 +173,14 @@ namespace Feature_Inspection
                 DataTable featureList = model.GetFeaturesOnOpKey(view.PartNumber, view.OperationNumber);
                 DataBindFeature(featureList);
                 SetFeatureGridViewHeader();
+                StorePartOpNumbers();
             }
+        }
+
+        private void StorePartOpNumbers()
+        {
+            view.PartStorage = view.PartNumber;
+            view.OpStorage = view.OperationNumber;
         }
 
         private void SetFeatureGridViewHeader()
@@ -217,7 +232,7 @@ namespace Feature_Inspection
             DisableSortableColumns();
         }
 
-        private void DisableSortableColumns()
+        public void DisableSortableColumns()
         {
             for (int j = 0; j < view.FeatureGridView.ColumnCount; j++)
             {
@@ -355,9 +370,12 @@ namespace Feature_Inspection
             else
             {
 
-                MessageBox.Show("Part Number does not exist");
+                view.FeaturePageHeader = "FEATURES PAGE";
                 view.PartTextBox.Clear();
-                
+                view.OpTextBox.Clear();
+                view.FeatureGridView.DataSource = null;
+                MessageBox.Show("Part Number does not exist");
+
             }
         }
 

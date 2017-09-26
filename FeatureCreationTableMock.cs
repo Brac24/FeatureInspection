@@ -37,6 +37,8 @@ namespace Feature_Inspection
             lotSizeBoxInspection.KeyDown += keyDownOpLot_Textbox;
             partsListBox.Text = null;
 
+
+
             for (int i = 0; i < inspectionEntryGridView.ColumnCount; i++)
             {
                 inspectionEntryGridView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -66,6 +68,19 @@ namespace Feature_Inspection
             get { return partBoxFeature; }
             set { }
         }
+
+        public string PartStorage
+        {
+            get { return partStorageLabel.Text;  }
+            set { partStorageLabel.Text = value; }
+        }
+
+        public string OpStorage
+        {
+            get { return opStorageLabel.Text; }
+            set { opStorageLabel.Text = value; }
+        }
+
 
         public TextBox OpTextBox
         {
@@ -115,7 +130,11 @@ namespace Feature_Inspection
             get { return partsListBox.Items.Count; }
         }
 
-        public string FeaturePageHeader { set { featurePageHeader.Text = value; } }
+        public string FeaturePageHeader
+        {
+            get { return featurePageHeader.Text;  }
+            set { featurePageHeader.Text = value; }
+        }
 
         public object LastRowFeaturePartNumberFK
         {
@@ -125,15 +144,6 @@ namespace Feature_Inspection
         }
 
         public DataGridView inspectionGrid { get { return inspectionEntryGridView; } }
-
-        /*
-        public object getRowE
-        {
-            get { return; }
-            set { }
-        }
-        */
-
 
         public object LastRowFeatureOperationNumberFK
         {
@@ -156,6 +166,39 @@ namespace Feature_Inspection
         {
             throw new NotImplementedException();
 
+        }
+
+        public void inspectionHeaderInitiate()
+        {
+            DataGridViewTextBoxColumn BubbleColumn = new DataGridViewTextBoxColumn();
+            {
+                BubbleColumn.HeaderText = "Sketch Bubble";
+                inspectionEntryGridView.Columns.Insert(inspectionEntryGridView.Columns.Count, BubbleColumn);
+            }
+
+            DataGridViewTextBoxColumn FeatureColumn = new DataGridViewTextBoxColumn();
+            {
+                FeatureColumn.HeaderText = "Feature";
+                inspectionEntryGridView.Columns.Insert(inspectionEntryGridView.Columns.Count, FeatureColumn);
+            }
+
+            DataGridViewTextBoxColumn MeasuredColumn = new DataGridViewTextBoxColumn();
+            {
+                MeasuredColumn.HeaderText = "Measured Actual";
+                inspectionEntryGridView.Columns.Insert(inspectionEntryGridView.Columns.Count, MeasuredColumn);
+            }
+
+            DataGridViewTextBoxColumn InspectionColumn = new DataGridViewTextBoxColumn();
+            {
+                InspectionColumn.HeaderText = "Inspection Tool";
+                inspectionEntryGridView.Columns.Insert(inspectionEntryGridView.Columns.Count, InspectionColumn);
+            }
+
+            DataGridViewTextBoxColumn RedoButtonColumn = new DataGridViewTextBoxColumn();
+            {
+                RedoButtonColumn.HeaderText = "Redo Entry";
+                inspectionEntryGridView.Columns.Insert(inspectionEntryGridView.Columns.Count, RedoButtonColumn);
+            }
         }
 
         public void ShowRelatedFeatures(IList<Feature> relatedFeaures)
@@ -316,14 +359,33 @@ namespace Feature_Inspection
 
             else
             {
-                inspectionEntryGridView.Columns.Clear();
                 partNumberLabelInspection.Text = null;
                 jobLabelInspection.Text = null;
                 opLabelInspection.Text = null;
-                MessageBox.Show(opKeyBoxInspection.Text + " is invalid please enter a valid Op Key", "Invalid OpKey");
+                inspectionChart.Visible = false;
+                inspectionFocusCombo.DataSource = null;
+                inspectionFocusCombo.Items.Clear();
                 opKeyBoxInspection.Clear();
                 lotSizeBoxInspection.Clear();
                 opKeyBoxInspection.Focus();
+                partsListBox.DataSource = null;
+                inspectionEntryGridView.DataSource = null;
+                inspectionEntryGridView.Columns.Clear();
+                inspectionHeaderInitiate();
+                inspectionPresenter.DisableSortableColumns();
+                inspectionPageHeader.Text = "INSPECTION PAGE";
+                MessageBox.Show(opKeyBoxInspection.Text + " is invalid please enter a valid Op Key", "Invalid OpKey");
+                try
+                {
+                    for (int i = 0; i < inspectionEntryGridView.RowCount; i++)
+                    {
+                        inspectionEntryGridView.Rows[i].Cells.Clear();
+                    }
+                }
+                catch
+                {
+
+                }
 
                 return false;
             }
@@ -426,14 +488,31 @@ namespace Feature_Inspection
                 catch
                 {
                     inspectionEntryGridView.DataSource = null;
+                    inspectionEntryGridView.Columns.Clear();
                     partsListBox.DataSource = null;
+                    opKeyBoxInspection.Text = null;
                     lotSizeBoxInspection.Text = null;
                     partNumberLabelInspection.Text = null;
                     jobLabelInspection.Text = null;
                     opLabelInspection.Text = null;
-                    inspectionEntryGridView.Columns.Clear();
+                    inspectionChart.Visible = false;
+                    inspectionFocusCombo.DataSource = null;
+                    inspectionFocusCombo.Items.Clear();
+                    inspectionHeaderInitiate();
+                    inspectionPresenter.DisableSortableColumns();
                     inspectionPageHeader.Text = "INSPECTION PAGE";
                     MessageBox.Show("Please enter a valid Op Key", "Invalid OpKey");
+                    try
+                    {
+                        for (int i = 0; i < inspectionEntryGridView.RowCount; i++)
+                        {
+                            inspectionEntryGridView.Rows[i].Cells.Clear();
+                        }
+                    }
+                    catch
+                    {
+
+                    }
                 }
 
                 if (isValidOpKey)
@@ -482,9 +561,34 @@ namespace Feature_Inspection
                             partsListBox.DataSource = null;
                             lotSizeBoxInspection.Text = null;
                             inspectionPageHeader.Text = "INSPECTION PAGE";
-                            inspectionEntryGridView.Columns.Clear();
+                            inspectionChart.Visible = false;
+                            inspectionFocusCombo.DataSource = null;
+                            inspectionFocusCombo.Items.Clear();
+                            inspectionFocusCombo.Text = null;
+                            MessageBox.Show("OpKey exists, enter in how many parts you have");
 
-                            MessageBox.Show("Lead must add features to this Part and Operation number");
+                            //TODO : Figure out how to correctly designate and record whether an inspection lot is ready.
+                            /*
+                            if (featureTable.Columns.Count > 0)
+                            {
+                                MessageBox.Show("OpKey exists, enter in how many parts you have");
+                            }
+                            else
+                            {
+                                MessageBox.Show("Lead must add features to this Part and Operation number");
+                            }
+                            */
+                            try
+                            {
+                                for (int i = 1; i < inspectionEntryGridView.RowCount; i++)
+                                {
+                                    inspectionEntryGridView.Rows[i].Cells.Clear();
+                                }
+                            }
+                            catch
+                            {
+
+                            }
 
                         }
                     }
@@ -493,7 +597,7 @@ namespace Feature_Inspection
                         //Create the inspection in inspection table
                         lotSizeBoxInspection.Clear();
                         model.CreateInspectionInInspectionTable(opkey);
-                        MessageBox.Show("Creating Inspection");
+                        MessageBox.Show("Lead must add features to this Part and Operation number");
 
                         //Run the logic inside the if loop above
                         //Check if there are features related on op and part numn
@@ -728,11 +832,25 @@ namespace Feature_Inspection
 
         private void BindDataCharts()
         {
-            int opKey = Int32.Parse(opKeyBoxInspection.Text);
-            int featureKey = (int)inspectionFocusCombo.SelectedValue;
-            DataTable table = model.GetChartData(opKey, featureKey);
-            inspectionChart.Visible = true;
-            CreateCharts(table);
+            
+            try
+            {
+                int opKey = Int32.Parse(opKeyBoxInspection.Text);
+                int featureKey = (int)inspectionFocusCombo.SelectedValue;
+                DataTable table = model.GetChartData(opKey, featureKey);
+                inspectionChart.Visible = true;
+                CreateCharts(table);
+            }
+            catch
+            {
+
+            }
+
+        }
+
+        private void partBoxFeature_Leave(object sender, EventArgs e)
+        {
+
         }
     }
 }
