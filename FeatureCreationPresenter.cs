@@ -43,6 +43,13 @@ namespace Feature_Inspection
             }
         }
 
+        public void leaveFocus(EventArgs e)
+        {
+            ValidateTextBoxes();
+
+            InitializeFeatureGridView();
+        }
+
         public void cancelChanges_Click()
         {
             var result = AskIfChangesWillBeUndone();
@@ -405,7 +412,8 @@ namespace Feature_Inspection
             {
                 if (e.ColumnIndex == table.Columns[table.ColumnCount - 1].Index)
                 {
-                    table.Rows.Remove(table.Rows[e.RowIndex]);
+                    table.Rows.RemoveAt(e.RowIndex);
+                    table.Refresh();
                 }
             }
         }

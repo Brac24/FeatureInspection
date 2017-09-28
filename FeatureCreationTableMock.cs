@@ -439,7 +439,7 @@ namespace Feature_Inspection
             inspectionChart.ChartAreas[0].BackColor = Color.DimGray;
             inspectionChart.Series[0].Color = Color.MediumSeaGreen;
             inspectionChart.Series[0].BorderWidth = 3;
-            inspectionChart.ChartAreas[0].Area3DStyle.Enable3D = true;
+            inspectionChart.ChartAreas[0].Area3DStyle.Enable3D = false;
             inspectionChart.ChartAreas[0].AxisX.LabelStyle.ForeColor = Color.Gainsboro;
             inspectionChart.ChartAreas[0].AxisY.LabelStyle.ForeColor = Color.Gainsboro;
             inspectionChart.ChartAreas[0].AxisX.LabelStyle.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -688,7 +688,7 @@ namespace Feature_Inspection
             //TODO: Table should be binding everytime the Measured value has been edited
             AdapterUpdateInspection();
             BindDataCharts();
-            inspectionPresenter.lockCellInspection(sender, e);
+            //inspectionPresenter.lockCellInspection(sender, e);
         }
 
         /// <summary>
@@ -850,7 +850,13 @@ namespace Feature_Inspection
 
         private void partBoxFeature_Leave(object sender, EventArgs e)
         {
+            //presenter.leaveFocus(e);
+        }
 
+        private void inspectionEntryGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            //TODO: stuff
+            //inspectionPresenter.lockCellInspection(sender, e);
         }
     }
 }

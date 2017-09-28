@@ -792,6 +792,7 @@
             this.inspectionEntryGridView.TabIndex = 0;
             this.inspectionEntryGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.inspectionEntryGridView_CellEndEdit);
             this.inspectionEntryGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.RedoRowInspection_MouseUp);
+            this.inspectionEntryGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.inspectionEntryGridView_CellValueChanged);
             this.inspectionEntryGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.inspectionEntryGridView_DataBindingComplete);
             this.inspectionEntryGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.inspectionEntryGridView_DataError);
             // 
@@ -1076,7 +1077,7 @@
             this.summaryChart.Name = "summaryChart";
             series1.BorderWidth = 5;
             series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series1.Color = System.Drawing.Color.MediumSeaGreen;
             series1.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             series1.Name = "Dimension Actuals";
@@ -1403,6 +1404,7 @@
             this.opBoxFeature.TabIndex = 1;
             this.opBoxFeature.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.opBoxFeature.KeyDown += new System.Windows.Forms.KeyEventHandler(this.checkEnterKeyPressedFeatures);
+            this.opBoxFeature.Leave += new System.EventHandler(this.partBoxFeature_Leave);
             // 
             // labely
             // 
@@ -1431,6 +1433,7 @@
             this.partBoxFeature.TabIndex = 0;
             this.partBoxFeature.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.partBoxFeature.KeyDown += new System.Windows.Forms.KeyEventHandler(this.checkEnterKeyPressedFeatures);
+            this.partBoxFeature.Leave += new System.EventHandler(this.partBoxFeature_Leave);
             // 
             // partStorageLabel
             // 
