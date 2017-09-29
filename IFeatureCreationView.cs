@@ -10,18 +10,21 @@ namespace Feature_Inspection
 {
     public interface IFeatureCreationView
     {
-
         TextBox PartTextBox { get; }
 
         TextBox OpTextBox { get; }
 
-        string FeaturePageHeader { set; }
+        string FeaturePageHeader { get;  set; }
        
         BindingSource BindingSource { get; set; }
 
         BindingSource SampleBindingSource { get; set; }
 
         int OpKey { get; }
+
+        string OpStorage { get; set; }
+
+        string PartStorage { get; set; }
 
         string OperationNumber { get; }
 

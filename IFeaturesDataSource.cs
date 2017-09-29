@@ -15,7 +15,6 @@ namespace Feature_Inspection
 
         //Will bind data directly to view. No need to go through presenter
         DataTable GetFeaturesOnOpKey(string partnumber, string operationNum);
-
         DataTable AdapterUpdate(DataTable table);
         DataTable GetFeaturesOnPartIndex(int pieceID, int opKey);
         bool PartNumberExists(string partNumber);

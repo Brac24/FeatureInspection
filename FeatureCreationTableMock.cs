@@ -37,6 +37,8 @@ namespace Feature_Inspection
             lotSizeBoxInspection.KeyDown += keyDownOpLot_Textbox;
             partsListBox.Text = null;
 
+
+
             for (int i = 0; i < inspectionEntryGridView.ColumnCount; i++)
             {
                 inspectionEntryGridView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -67,6 +69,19 @@ namespace Feature_Inspection
             set { }
         }
 
+        public string PartStorage
+        {
+            get { return partStorageLabel.Text;  }
+            set { partStorageLabel.Text = value; }
+        }
+
+        public string OpStorage
+        {
+            get { return opStorageLabel.Text; }
+            set { opStorageLabel.Text = value; }
+        }
+
+
         public TextBox OpTextBox
         {
             get { return opBoxFeature; }
@@ -87,12 +102,6 @@ namespace Feature_Inspection
         public string OperationNumber
         {
             get { return opBoxFeature.Text; }
-        }
-
-        public int PartsInspected
-        {
-            get { return Int32.Parse(partsInspectedLabel.Text); }
-            set { partsInspectedLabel.Text = value.ToString(); }
         }
 
         public int OpKey
@@ -121,7 +130,11 @@ namespace Feature_Inspection
             get { return partsListBox.Items.Count; }
         }
 
-        public string FeaturePageHeader { set { featurePageHeader.Text = value; } }
+        public string FeaturePageHeader
+        {
+            get { return featurePageHeader.Text;  }
+            set { featurePageHeader.Text = value; }
+        }
 
         public object LastRowFeaturePartNumberFK
         {
@@ -129,6 +142,8 @@ namespace Feature_Inspection
             set { featureEditGridView.Rows[featureEditGridView.Rows.Count - 1].Cells["Part_Number_FK"].Value = value; }
 
         }
+
+        public DataGridView inspectionGrid { get { return inspectionEntryGridView; } }
 
         public object LastRowFeatureOperationNumberFK
         {
@@ -151,6 +166,39 @@ namespace Feature_Inspection
         {
             throw new NotImplementedException();
 
+        }
+
+        public void inspectionHeaderInitiate()
+        {
+            DataGridViewTextBoxColumn BubbleColumn = new DataGridViewTextBoxColumn();
+            {
+                BubbleColumn.HeaderText = "Sketch Bubble";
+                inspectionEntryGridView.Columns.Insert(inspectionEntryGridView.Columns.Count, BubbleColumn);
+            }
+
+            DataGridViewTextBoxColumn FeatureColumn = new DataGridViewTextBoxColumn();
+            {
+                FeatureColumn.HeaderText = "Feature";
+                inspectionEntryGridView.Columns.Insert(inspectionEntryGridView.Columns.Count, FeatureColumn);
+            }
+
+            DataGridViewTextBoxColumn MeasuredColumn = new DataGridViewTextBoxColumn();
+            {
+                MeasuredColumn.HeaderText = "Measured Actual";
+                inspectionEntryGridView.Columns.Insert(inspectionEntryGridView.Columns.Count, MeasuredColumn);
+            }
+
+            DataGridViewTextBoxColumn InspectionColumn = new DataGridViewTextBoxColumn();
+            {
+                InspectionColumn.HeaderText = "Inspection Tool";
+                inspectionEntryGridView.Columns.Insert(inspectionEntryGridView.Columns.Count, InspectionColumn);
+            }
+
+            DataGridViewTextBoxColumn RedoButtonColumn = new DataGridViewTextBoxColumn();
+            {
+                RedoButtonColumn.HeaderText = "Redo Entry";
+                inspectionEntryGridView.Columns.Insert(inspectionEntryGridView.Columns.Count, RedoButtonColumn);
+            }
         }
 
         public void ShowRelatedFeatures(IList<Feature> relatedFeaures)
@@ -232,14 +280,10 @@ namespace Feature_Inspection
             inspectionEntryGridView.Columns["Inspection_Key_FK"].Visible = false;
             inspectionEntryGridView.Columns["Feature_Key"].Visible = false;
             inspectionEntryGridView.Columns["Position_Key"].Visible = false;
+            inspectionEntryGridView.Columns["Old Value"].Visible = false;
+            inspectionEntryGridView.Columns["Oldest Value"].Visible = false;
 
             inspectionEntryGridView.Columns["Feature"].ReadOnly = true;
-
-            DataGridViewTextBoxColumn BubbleColumn = new DataGridViewTextBoxColumn();
-            {
-                BubbleColumn.HeaderText = "Drawing Bubble";
-                inspectionEntryGridView.Columns.Insert(0, BubbleColumn);
-            }
 
             DataGridViewButtonColumn RedoButtonColumn = new DataGridViewButtonColumn();
             {
@@ -283,32 +327,6 @@ namespace Feature_Inspection
         {
             inspectionChart.DataSource = table;
             inspectionChart.DataBind();
-
-            /*
-            for(int i = 0; i < inspectionFocusCombo.Items.Count; i++)
-            {
-                int j = i * 3;
-                int k = j + 1;
-                int l = k + 1;
-
-                string chartName = "ChartArea" + i;
-                string nominalSeries = "Series" + i;
-                string lowSeries = "Series" + i + "L";
-                string highSeries = "Series" + i + "H";
-
-                inspectionChart.ChartAreas.Add(chartName);
-                //inspectionChart.ChartAreas[i].Visible = false;
-                inspectionChart.Series.Add(nominalSeries);
-                inspectionChart.Series[j].ChartType = SeriesChartType.Line;
-                inspectionChart.Series[j].ChartArea = "ChartArea" + i;
-                inspectionChart.Series.Add(lowSeries);
-                inspectionChart.Series[k].ChartType = SeriesChartType.Line;
-                inspectionChart.Series[k].ChartArea = "ChartArea" + i;
-                inspectionChart.Series.Add(highSeries);
-                inspectionChart.Series[l].ChartType = SeriesChartType.Line;
-                inspectionChart.Series[l].ChartArea = "ChartArea" + i;
-            }
-            */
         }
 
         private void ClearCharts()
@@ -341,14 +359,33 @@ namespace Feature_Inspection
 
             else
             {
-                inspectionEntryGridView.Columns.Clear();
                 partNumberLabelInspection.Text = null;
                 jobLabelInspection.Text = null;
                 opLabelInspection.Text = null;
-                MessageBox.Show(opKeyBoxInspection.Text + " is invalid please enter a valid Op Key", "Invalid OpKey");
+                inspectionChart.Visible = false;
+                inspectionFocusCombo.DataSource = null;
+                inspectionFocusCombo.Items.Clear();
                 opKeyBoxInspection.Clear();
                 lotSizeBoxInspection.Clear();
                 opKeyBoxInspection.Focus();
+                partsListBox.DataSource = null;
+                inspectionEntryGridView.DataSource = null;
+                inspectionEntryGridView.Columns.Clear();
+                inspectionHeaderInitiate();
+                inspectionPresenter.DisableSortableColumns();
+                inspectionPageHeader.Text = "INSPECTION PAGE";
+                MessageBox.Show(opKeyBoxInspection.Text + " is invalid please enter a valid Op Key", "Invalid OpKey");
+                try
+                {
+                    for (int i = 0; i < inspectionEntryGridView.RowCount; i++)
+                    {
+                        inspectionEntryGridView.Rows[i].Cells.Clear();
+                    }
+                }
+                catch
+                {
+
+                }
 
                 return false;
             }
@@ -385,15 +422,29 @@ namespace Feature_Inspection
 
         public void FeatureCreationTableMock_Load(object sender, EventArgs e)
         {
-            //model = new FeatureCreationModelMock();
-            //presenter = new FeatureCreationPresenter(this, model); //Give a reference of the view and model to the presenter class
-            //inspectionPresenter = new InspectionPresenter(this, model);
+            model = new FeatureCreationModelMock();
+            presenter = new FeatureCreationPresenter(this, model); //Give a reference of the view and model to the presenter class
+            inspectionPresenter = new InspectionPresenter(this, model);
 
-            inspectionChart.ChartAreas.Add("Test");
-            inspectionChart.Series.Add("Test");
-            inspectionChart.Series["Test"].ChartType = SeriesChartType.Line;
-            inspectionChart.Series["Test"].XValueMember = "Piece_ID";
-            inspectionChart.Series["Test"].YValueMembers = "Measured_Value";
+            inspectionChart.ChartAreas.Add("InspectionChart");
+            inspectionChart.Series.Add("NominalSeries");
+            inspectionChart.Titles.Add("TEST");
+            inspectionChart.Series["NominalSeries"].XValueMember = "Piece_ID";
+            inspectionChart.Series["NominalSeries"].YValueMembers = "Measured_Value";
+
+            //Chart Styling
+            inspectionChart.Series["NominalSeries"].ChartType = SeriesChartType.Line;
+            inspectionChart.Titles[0].Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            inspectionChart.Titles[0].ForeColor = Color.Gainsboro;
+            inspectionChart.ChartAreas[0].BackColor = Color.DimGray;
+            inspectionChart.Series[0].Color = Color.MediumSeaGreen;
+            inspectionChart.Series[0].BorderWidth = 3;
+            inspectionChart.ChartAreas[0].Area3DStyle.Enable3D = false;
+            inspectionChart.ChartAreas[0].AxisX.LabelStyle.ForeColor = Color.Gainsboro;
+            inspectionChart.ChartAreas[0].AxisY.LabelStyle.ForeColor = Color.Gainsboro;
+            inspectionChart.ChartAreas[0].AxisX.LabelStyle.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            inspectionChart.ChartAreas[0].AxisY.LabelStyle.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+
         }
 
         //HANDLER FOR BOTH TABS
@@ -437,14 +488,31 @@ namespace Feature_Inspection
                 catch
                 {
                     inspectionEntryGridView.DataSource = null;
+                    inspectionEntryGridView.Columns.Clear();
                     partsListBox.DataSource = null;
+                    opKeyBoxInspection.Text = null;
                     lotSizeBoxInspection.Text = null;
                     partNumberLabelInspection.Text = null;
                     jobLabelInspection.Text = null;
                     opLabelInspection.Text = null;
-                    inspectionEntryGridView.Columns.Clear();
+                    inspectionChart.Visible = false;
+                    inspectionFocusCombo.DataSource = null;
+                    inspectionFocusCombo.Items.Clear();
+                    inspectionHeaderInitiate();
+                    inspectionPresenter.DisableSortableColumns();
                     inspectionPageHeader.Text = "INSPECTION PAGE";
                     MessageBox.Show("Please enter a valid Op Key", "Invalid OpKey");
+                    try
+                    {
+                        for (int i = 0; i < inspectionEntryGridView.RowCount; i++)
+                        {
+                            inspectionEntryGridView.Rows[i].Cells.Clear();
+                        }
+                    }
+                    catch
+                    {
+
+                    }
                 }
 
                 if (isValidOpKey)
@@ -458,7 +526,6 @@ namespace Feature_Inspection
 
                         featureList = model.GetFeatureList(opkey);
                         BindComboBox(featureList);
-                        //CreateCharts();
 
                         if (featureTable.Rows.Count > 0)
                         {
@@ -494,9 +561,34 @@ namespace Feature_Inspection
                             partsListBox.DataSource = null;
                             lotSizeBoxInspection.Text = null;
                             inspectionPageHeader.Text = "INSPECTION PAGE";
-                            inspectionEntryGridView.Columns.Clear();
+                            inspectionChart.Visible = false;
+                            inspectionFocusCombo.DataSource = null;
+                            inspectionFocusCombo.Items.Clear();
+                            inspectionFocusCombo.Text = null;
+                            MessageBox.Show("OpKey exists, enter in how many parts you have");
 
-                            MessageBox.Show("Lead must add features to this Part and Operation number");
+                            //TODO : Figure out how to correctly designate and record whether an inspection lot is ready.
+                            /*
+                            if (featureTable.Columns.Count > 0)
+                            {
+                                MessageBox.Show("OpKey exists, enter in how many parts you have");
+                            }
+                            else
+                            {
+                                MessageBox.Show("Lead must add features to this Part and Operation number");
+                            }
+                            */
+                            try
+                            {
+                                for (int i = 1; i < inspectionEntryGridView.RowCount; i++)
+                                {
+                                    inspectionEntryGridView.Rows[i].Cells.Clear();
+                                }
+                            }
+                            catch
+                            {
+
+                            }
 
                         }
                     }
@@ -505,7 +597,7 @@ namespace Feature_Inspection
                         //Create the inspection in inspection table
                         lotSizeBoxInspection.Clear();
                         model.CreateInspectionInInspectionTable(opkey);
-                        MessageBox.Show("Creating Inspection");
+                        MessageBox.Show("Lead must add features to this Part and Operation number");
 
                         //Run the logic inside the if loop above
                         //Check if there are features related on op and part numn
@@ -595,6 +687,8 @@ namespace Feature_Inspection
         {
             //TODO: Table should be binding everytime the Measured value has been edited
             AdapterUpdateInspection();
+            BindDataCharts();
+            //inspectionPresenter.lockCellInspection(sender, e);
         }
 
         /// <summary>
@@ -662,6 +756,16 @@ namespace Feature_Inspection
         }
 
         /// <summary>
+        /// Allows user to redo an inspection entry
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void RedoRowInspection_MouseUp(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            inspectionPresenter.RedoDataGridViewRow(sender, e);
+        }
+
+        /// <summary>
         /// Will simply rebind feature data grid view without updating the database.
         /// To have the old state the user started with
         /// </summary>
@@ -714,11 +818,46 @@ namespace Feature_Inspection
 
         #endregion
 
+        
+
+        private void inspectionFocusCombo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            BindDataCharts();
+        }
+
         private void inspectionEntryGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
-            DataTable table = model.GetChartData();
+            BindDataCharts();
+        }
 
-            CreateCharts(table);
+        private void BindDataCharts()
+        {
+            
+            try
+            {
+                int opKey = Int32.Parse(opKeyBoxInspection.Text);
+                int featureKey = (int)inspectionFocusCombo.SelectedValue;
+                DataTable table = model.GetChartData(opKey, featureKey);
+                inspectionChart.Visible = true;
+                CreateCharts(table);
+            }
+            catch
+            {
+
+            }
+
+        }
+
+        private void partBoxFeature_Leave(object sender, EventArgs e)
+        {
+            //presenter.leaveFocus(e);
+        }
+
+        private void inspectionEntryGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            //TODO: stuff
+            //inspectionPresenter.lockCellInspection(sender, e);
         }
     }
 }
+

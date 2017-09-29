@@ -62,6 +62,19 @@ namespace Feature_Inspection
                 featureTable = UpdateTable(pieceID);
                 view.BindDataGridViewInspection(featureTable);
             }
+
+            for (int i = 0; i < view.inspectionGrid.RowCount; i++)
+            {
+                float test = float.Parse(view.inspectionGrid.Rows[i].Cells[5].Value.ToString());
+                if (test != 0)
+                {
+                    view.inspectionGrid.Rows[i].ReadOnly = true;
+                }
+                else
+                {
+                    view.inspectionGrid.Rows[i].ReadOnly = false;
+                }
+            }
         }
 
         public void GotToNextPart()
@@ -78,5 +91,58 @@ namespace Feature_Inspection
         {
             GotToNextPart();
         }
+
+        public void DisableSortableColumns()
+        {
+            for (int j = 0; j < view.inspectionGrid.ColumnCount; j++)
+            {
+                view.inspectionGrid.Columns[j].SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+        }
+
+        internal void lockCellInspection(object sender, DataGridViewCellEventArgs e)
+        {
+            var table = (DataGridView)sender;
+
+                float test = float.Parse(view.inspectionGrid.Rows[e.RowIndex].Cells[5].Value.ToString());
+                if (test != 0)
+                {
+                    view.inspectionGrid.Rows[e.RowIndex].ReadOnly = true;
+                }
+                else
+                {
+                    view.inspectionGrid.Rows[e.RowIndex].ReadOnly = false;
+                }
+
+            //TODO: Remember to make the table row ReadOnly
+        }
+
+        internal void RedoDataGridViewRow(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            var table = (DataGridView)sender;
+
+            //float measured = (float)view.inspectionGrid.Rows[e.RowIndex].Cells["Measured Actual"].Value;
+            //float old = (float)view.inspectionGrid.Rows[e.RowIndex].Cells["Old Value"].Value;
+            //float oldest = (float)view.inspectionGrid.Rows[e.RowIndex].Cells["Oldest Value"].Value;
+
+            if (e.RowIndex != -1)
+            {
+                if (e.ColumnIndex == table.Columns[table.ColumnCount - 1].Index)
+                {
+                    if (float.Parse(view.inspectionGrid.Rows[e.RowIndex].Cells["Oldest Value"].Value.ToString()) == 0)
+                    {
+                        view.inspectionGrid.Rows[e.RowIndex].Cells["Oldest Value"].Value = view.inspectionGrid.Rows[e.RowIndex].Cells["Old Value"].Value;
+                        view.inspectionGrid.Rows[e.RowIndex].Cells["Old Value"].Value = view.inspectionGrid.Rows[e.RowIndex].Cells["Measured Actual"].Value;
+                        
+                        table.Rows[e.RowIndex].ReadOnly = false;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Maximum allowed of Redo's reached");
+                    }
+                }
+            }
+        }
+
     }
 }

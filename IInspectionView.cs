@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Feature_Inspection
 {
@@ -16,5 +17,8 @@ namespace Feature_Inspection
         int ListBoxCount { get; }
 
         void BindDataGridViewInspection(DataTable featureTable);
+
+        DataGridView inspectionGrid { get; }
+
     }
 }
