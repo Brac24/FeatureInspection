@@ -11,14 +11,14 @@ namespace Feature_Inspection
     interface IInspectionView
     {
         int OpKey { get; }
-        string InspectionHeader { set; }
+        string InspectionHeaderText { set; }
 
         int ListBoxIndex { get; set; }
         int ListBoxCount { get; }
 
         void BindDataGridViewInspection(DataTable featureTable);
 
-        DataGridView inspectionGrid { get; }
+        DataGridView InspectionGrid { get; }
 
     }
 }

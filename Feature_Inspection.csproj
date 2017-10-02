@@ -121,11 +121,11 @@
     <Compile Include="Feature.cs" />
     <Compile Include="FeatureCreationModelMock.cs" />
     <Compile Include="FeatureCreationPresenter.cs" />
-    <Compile Include="FeatureCreationTableMock.cs">
+    <Compile Include="Feature_Inspection.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FeatureCreationTableMock.Designer.cs">
-      <DependentUpon>FeatureCreationTableMock.cs</DependentUpon>
+    <Compile Include="Feature_Inspection.Designer.cs">
+      <DependentUpon>Feature_Inspection.cs</DependentUpon>
     </Compile>
     <Compile Include="IanForm\TABBED_FORM.cs">
       <SubType>Form</SubType>
@@ -167,8 +167,8 @@
     <EmbeddedResource Include="AlternateUI.resx">
       <DependentUpon>AlternateUI.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FeatureCreationTableMock.resx">
-      <DependentUpon>FeatureCreationTableMock.cs</DependentUpon>
+    <EmbeddedResource Include="Feature_Inspection.resx">
+      <DependentUpon>Feature_Inspection.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IanForm\TABBED_FORM.resx">
       <DependentUpon>TABBED_FORM.cs</DependentUpon>

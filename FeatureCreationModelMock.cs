@@ -181,7 +181,7 @@ namespace Feature_Inspection
         public DataTable GetChartData(int opKey, int featureKey)
         {
             DataTable features = new DataTable();
-            string getFeatures = "SELECT Measured_Value, Piece_ID FROM ATI_FeatureInspection.dbo.Position WHERE Inspection_Key_FK = (SELECT Inspection_Key FROM ATI_FeatureInspection.dbo.Inspection WHERE Op_Key = " + opKey + ") AND Feature_Key = "+ featureKey + "; ";
+            string getFeatures = "SELECT Measured_Value, Piece_ID FROM ATI_FeatureInspection.dbo.Position WHERE Inspection_Key_FK = (SELECT Inspection_Key FROM ATI_FeatureInspection.dbo.Inspection WHERE Op_Key = " + opKey + ") AND Feature_Key = " + featureKey + "; ";
 
             using (OdbcConnection connection = new OdbcConnection(connection_string))
             using (OdbcCommand command = connection.CreateCommand())
@@ -236,6 +236,7 @@ namespace Feature_Inspection
 
 
         // INSPECTION MODEL
+        //TODO: Move to new model file.
 
         public DataTable AdapterUpdateInspection(DataTable dt)
         {
@@ -254,7 +255,7 @@ namespace Feature_Inspection
                 dataAdapter.UpdateCommand.Parameters.Add("@Old_Value", OdbcType.Decimal, 3, "Old Value");
                 dataAdapter.UpdateCommand.Parameters.Add("@Oldest_Value", OdbcType.Decimal, 3, "Oldest Value");
                 dataAdapter.UpdateCommand.Parameters.Add("@Position_Key", OdbcType.Int, 3, "Position_Key");
-                
+
                 changedTable = dt.GetChanges();
 
                 int rowsInChangedTable;

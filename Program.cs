@@ -18,7 +18,7 @@ namespace Feature_Inspection
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new AlternateUI());
-            Application.Run(new FeatureCreationTableMock());
+            Application.Run(new Feature_Inspection());
             
           
 

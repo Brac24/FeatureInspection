@@ -1,6 +1,6 @@
 ﻿namespace Feature_Inspection
 {
-    partial class FeatureCreationTableMock : IFeatureCreationView
+    partial class Feature_Inspection : IFeatureCreationView
     {
         /// <summary>
         /// Required designer variable.
@@ -66,7 +66,6 @@
             System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint26 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4295D);
             System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint27 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4295D);
             System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FeatureCreationTableMock));
             this.featureEditGridView = new System.Windows.Forms.DataGridView();
             this.Feature = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Bubble = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -276,41 +275,49 @@
             // 
             this.Feature.HeaderText = "Feature Type (Optional)";
             this.Feature.Name = "Feature";
+            this.Feature.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // Bubble
             // 
             this.Bubble.HeaderText = "Sketch Bubble (Optional)";
             this.Bubble.Name = "Bubble";
+            this.Bubble.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // Nominal
             // 
             this.Nominal.HeaderText = "Nominal";
             this.Nominal.Name = "Nominal";
+            this.Nominal.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // Plus
             // 
             this.Plus.HeaderText = "+";
             this.Plus.Name = "Plus";
+            this.Plus.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // Minus
             // 
             this.Minus.HeaderText = "-";
             this.Minus.Name = "Minus";
+            this.Minus.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // Sample
             // 
             this.Sample.HeaderText = "Sample";
             this.Sample.Name = "Sample";
+            this.Sample.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // Tool
             // 
             this.Tool.HeaderText = "Tool";
             this.Tool.Name = "Tool";
+            this.Tool.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // Delete
             // 
             this.Delete.HeaderText = "Delete Feature";
             this.Delete.Name = "Delete";
+            this.Delete.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // addFeatureButton
             // 
@@ -495,6 +502,7 @@
             this.opKeyBoxInspection.Size = new System.Drawing.Size(143, 26);
             this.opKeyBoxInspection.TabIndex = 0;
             this.opKeyBoxInspection.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.opKeyBoxInspection.KeyDown += new System.Windows.Forms.KeyEventHandler(this.keyDownOpLot_Textbox);
             // 
             // label1
             // 
@@ -622,6 +630,7 @@
             this.lotSizeBoxInspection.Size = new System.Drawing.Size(143, 26);
             this.lotSizeBoxInspection.TabIndex = 1;
             this.lotSizeBoxInspection.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.lotSizeBoxInspection.KeyDown += new System.Windows.Forms.KeyEventHandler(this.keyDownOpLot_Textbox);
             // 
             // label22
             // 
@@ -800,26 +809,31 @@
             // 
             this.dataGridViewTextBoxColumn1.HeaderText = "Sketch Bubble";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // dataGridViewTextBoxColumn2
             // 
             this.dataGridViewTextBoxColumn2.HeaderText = "Feature";
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // dataGridViewTextBoxColumn3
             // 
             this.dataGridViewTextBoxColumn3.HeaderText = "Measured Actual";
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // dataGridViewTextBoxColumn4
             // 
             this.dataGridViewTextBoxColumn4.HeaderText = "Inspection Tool";
             this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // dataGridViewTextBoxColumn5
             // 
             this.dataGridViewTextBoxColumn5.HeaderText = "Redo Entry";
             this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // tableLayoutPanel10
             // 
@@ -1592,7 +1606,7 @@
             this.textBox2.Size = new System.Drawing.Size(172, 26);
             this.textBox2.TabIndex = 0;
             // 
-            // FeatureCreationTableMock
+            // Feature_Inspection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -1601,11 +1615,11 @@
             this.ClientSize = new System.Drawing.Size(1165, 720);
             this.Controls.Add(this.mainTabControl);
             this.ForeColor = System.Drawing.Color.Gainsboro;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(1165, 720);
-            this.Name = "FeatureCreationTableMock";
+            this.Name = "Feature_Inspection";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FeatureCreationTableMock";
+            this.Text = "Feature Inspection";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FeatureCreationTableMock_Load);
             ((System.ComponentModel.ISupportInitialize)(this.featureEditGridView)).EndInit();
             this.mainTabControl.ResumeLayout(false);
@@ -1751,6 +1765,12 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.DataVisualization.Charting.Chart inspectionChart;
+        private System.Windows.Forms.Label jobBossLabel;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel21;
+        private System.Windows.Forms.Button nextPartButton;
+        private System.Windows.Forms.Label partStorageLabel;
+        private System.Windows.Forms.Label opStorageLabel;
         private System.Windows.Forms.DataGridViewTextBoxColumn Feature;
         private System.Windows.Forms.DataGridViewTextBoxColumn Bubble;
         private System.Windows.Forms.DataGridViewTextBoxColumn Nominal;
@@ -1759,16 +1779,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Sample;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tool;
         private System.Windows.Forms.DataGridViewTextBoxColumn Delete;
-        private System.Windows.Forms.Label jobBossLabel;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel21;
-        private System.Windows.Forms.Button nextPartButton;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-        private System.Windows.Forms.Label partStorageLabel;
-        private System.Windows.Forms.Label opStorageLabel;
     }
 }

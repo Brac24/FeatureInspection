@@ -13,7 +13,7 @@ namespace Feature_Inspection
     {
         private IFeatureCreationView view;
         private IFeaturesDataSource model;
-        
+
 
         public FeatureCreationPresenter(IFeatureCreationView view, IFeaturesDataSource model)
         {
@@ -26,15 +26,17 @@ namespace Feature_Inspection
         private void Initialize()
         {
 
-
         }
 
-
+        /// <summary>
+        /// This event handler, when Enter or Tab are pressed, will call to a validation method and a page view update.
+        /// </summary>
+        /// <param name="e"></param>
         public void checkEnterKeyPressed(KeyEventArgs e)
         {
-            
+
             SuppressKeyIfWhiteSpaceChar(e);
-                       
+
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
             {
                 ValidateTextBoxes();
@@ -43,6 +45,10 @@ namespace Feature_Inspection
             }
         }
 
+        /// <summary>
+        /// This event handler is currently unused.
+        /// </summary>
+        /// <param name="e"></param>
         public void leaveFocus(EventArgs e)
         {
             ValidateTextBoxes();
@@ -50,6 +56,58 @@ namespace Feature_Inspection
             InitializeFeatureGridView();
         }
 
+        /// <summary>
+        /// This event handler supresses any white space characters being entered.
+        /// </summary>
+        /// <param name="e"></param>
+        public void SuppressKeyIfWhiteSpaceChar(KeyEventArgs e)
+        {
+            char currentKey = (char)e.KeyCode;
+            bool nonNumber = char.IsWhiteSpace(currentKey); //Deals with all white space characters which inlcude tab, return, etc.
+
+            if (nonNumber)
+                e.SuppressKeyPress = true;
+        }
+
+        /// <summary>
+        /// This event handler will delete a row on the sending grid view.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void DeleteDataGridViewRow(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            var table = (DataGridView)sender;
+
+            if (e.RowIndex != -1)
+            {
+                if (e.ColumnIndex == table.Columns[table.ColumnCount - 1].Index)
+                {
+                    table.Rows.RemoveAt(e.RowIndex);
+                    table.Refresh();
+                }
+            }
+        }
+
+        internal void SetSampleIDAndFeatureTypeHiddenColumns(DataGridViewCellEventArgs e)
+        {
+            if (view.FeatureGridView.Columns["Sample"] != null || view.FeatureGridView.Columns["FeatureTypeColumn"] != null)
+            {
+
+                if (view.FeatureGridView.Columns["Sample"].Index == e.ColumnIndex)
+                {
+                    view.FeatureGridView.Rows[e.RowIndex].Cells["SampleID"].Value = view.FeatureGridView.Rows[e.RowIndex].Cells["Sample"].Value;
+                }
+                else if (view.FeatureGridView.Columns["FeatureTypeColumn"].Index == e.ColumnIndex)
+                {
+                    view.FeatureGridView.Rows[e.RowIndex].Cells["FeatureType"].Value = view.FeatureGridView.Rows[e.RowIndex].Cells["FeatureTypeColumn"].Value;
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// This method calls the "AskIfChangesWillBeUndone()" and if user clicks "Yes", the gridview will revert back to its original state.
+        /// </summary>
         public void cancelChanges_Click()
         {
             var result = AskIfChangesWillBeUndone();
@@ -61,6 +119,9 @@ namespace Feature_Inspection
             }
         }
 
+        /// <summary>
+        /// This method calls the "AskIfChangesWillBeSaved()" and if user clicks "Yes", the gridview will save changes to DB.
+        /// </summary>
         public void saveButton_Click()
         {
             var result = AskIfChangesWillBeSaved();
@@ -77,11 +138,9 @@ namespace Feature_Inspection
             }
         }
 
-        internal void dataGridView1_CellEndEdit(DataGridViewCellEventArgs e)
-        {
-            SetSampleIDAndFeatureTypeHiddenColumns(e);
-        }
-
+        /// <summary>
+        /// This method checks to see if the feature grid has any rows. If it does, then it calls the AddFeatureRow(Datatable data).
+        /// </summary>
         public void addFeature_Click()
         {
             if (view.BindingSource == null)
@@ -108,7 +167,7 @@ namespace Feature_Inspection
 
         private void AdapterUpdate()
         {
-           
+
             try
             {
                 //Must call EndEdit Method before trying to update database
@@ -127,6 +186,10 @@ namespace Feature_Inspection
             }
         }
 
+        /// <summary>
+        ///  This method creates a Yes/No messagebox that asks the user if they are sure they want to save changes to feature page.
+        /// </summary>
+        /// <returns></returns>
         private string AskIfChangesWillBeSaved()
         {
             const string message0 = "Are you sure you want to save all changes made to this set of features? " +
@@ -137,7 +200,10 @@ namespace Feature_Inspection
             return result.ToString();
         }
 
-
+        /// <summary>
+        /// This method creates a Yes/No messagebox that asks the user if they are sure they want to undo changes to feature page.
+        /// </summary>
+        /// <returns></returns>
         private string AskIfChangesWillBeUndone()
         {
             const string message = "Are you sure you want to cancel all changes made to this set of features? " +
@@ -145,17 +211,6 @@ namespace Feature_Inspection
             const string caption = "Cancel Changes";
             var result = view.CreateYesNoMessage(message, caption);
             return result.ToString();
-        }
-
-        
-
-        public void SuppressKeyIfWhiteSpaceChar(KeyEventArgs e)
-        {
-            char currentKey = (char)e.KeyCode;
-            bool nonNumber = char.IsWhiteSpace(currentKey); //Deals with all white space characters which inlcude tab, return, etc.
-
-            if (nonNumber)
-                e.SuppressKeyPress = true;
         }
 
         internal void ValidateTextBoxes()
@@ -195,11 +250,11 @@ namespace Feature_Inspection
             if (view.FeatureCount > 0)
             {
 
-                view.FeaturePageHeader = "PART " + view.LastRowFeaturePartNumberFK + " OP " + view.LastRowFeatureOperationNumberFK + " FEATURES";
+                view.FeaturePageHeaderText = "PART " + view.LastRowFeaturePartNumberFK + " OP " + view.LastRowFeatureOperationNumberFK + " FEATURES";
             }
             else
             {
-                view.FeaturePageHeader = "FEATURES PAGE";
+                view.FeaturePageHeaderText = "FEATURES PAGE";
             }
         }
 
@@ -372,12 +427,12 @@ namespace Feature_Inspection
             else if (model.PartNumberExists(partNumber)) //Check if part number entered exists
             {
                 view.OpTextBox.Select();//opBoxFeature.Focus();
-                
+
             }
             else
             {
 
-                view.FeaturePageHeader = "FEATURES PAGE";
+                view.FeaturePageHeaderText = "FEATURES PAGE";
                 view.PartTextBox.Clear();
                 view.OpTextBox.Clear();
                 view.FeatureGridView.DataSource = null;
@@ -404,20 +459,6 @@ namespace Feature_Inspection
             }
         }
 
-        public void DeleteDataGridViewRow(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            var table = (DataGridView)sender;
-
-            if (e.RowIndex != -1)
-            {
-                if (e.ColumnIndex == table.Columns[table.ColumnCount - 1].Index)
-                {
-                    table.Rows.RemoveAt(e.RowIndex);
-                    table.Refresh();
-                }
-            }
-        }
-
         public void AddFeatureRow(DataTable data)
         {
 
@@ -437,25 +478,6 @@ namespace Feature_Inspection
 
         }
 
-
-
-        private void SetSampleIDAndFeatureTypeHiddenColumns(DataGridViewCellEventArgs e)
-        {
-            if (view.FeatureGridView.Columns["Sample"] != null || view.FeatureGridView.Columns["FeatureTypeColumn"] != null)
-            {
-
-                if (view.FeatureGridView.Columns["Sample"].Index == e.ColumnIndex)
-                {
-                    view.FeatureGridView.Rows[e.RowIndex].Cells["SampleID"].Value = view.FeatureGridView.Rows[e.RowIndex].Cells["Sample"].Value;
-                }
-                else if (view.FeatureGridView.Columns["FeatureTypeColumn"].Index == e.ColumnIndex)
-                {
-                    view.FeatureGridView.Rows[e.RowIndex].Cells["FeatureType"].Value = view.FeatureGridView.Rows[e.RowIndex].Cells["FeatureTypeColumn"].Value;
-                }
-
-            }
-        }
-
         private DataTable AddTableRow(DataTable t)
         {
             if (view.FeatureDataSource == null)
@@ -467,7 +489,6 @@ namespace Feature_Inspection
 
             return t;
         }
-
 
         public bool ViewExists()
         {

@@ -14,8 +14,8 @@ namespace Feature_Inspection
 
         TextBox OpTextBox { get; }
 
-        string FeaturePageHeader { get;  set; }
-       
+        string FeaturePageHeaderText { get; set; }
+
         BindingSource BindingSource { get; set; }
 
         BindingSource SampleBindingSource { get; set; }
@@ -29,7 +29,6 @@ namespace Feature_Inspection
         string OperationNumber { get; }
 
         string PartNumber { get; }
-
 
         int FeatureCount { get; }
 
@@ -50,7 +49,7 @@ namespace Feature_Inspection
 
         #endregion
 
-        
-        
+
+
     }
 }
