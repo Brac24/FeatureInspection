@@ -12,7 +12,8 @@ namespace Feature_Inspection
 {
     public class FeatureCreationModelMock : IFeaturesDataSource
     {
-        private readonly string connection_string = "DSN=unipointDB;UID=jbread;PWD=Cloudy2Day";
+       // private readonly string connection_string = "DSN=unipointDB;UID=jbread;PWD=Cloudy2Day";
+        private readonly string connection_string = "DSN=ATI-SQL";
 
         public FeatureCreationModelMock()
         {
@@ -102,6 +103,33 @@ namespace Feature_Inspection
 
         }
 
+        public bool PartNumberExistsInOperationTable(string partNumber)
+        {
+            string query = "SELECT Part_Number FROM ATI_FeatureInspection.dbo.Operation " +
+                           "WHERE Part_Number = '" + partNumber + "' GROUP BY Part_Number";
+
+            bool partExists = false;
+
+            using (OdbcConnection connection = new OdbcConnection(connection_string))
+            {
+                connection.Open();
+
+                OdbcCommand command = new OdbcCommand(query, connection);
+
+                OdbcDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    //Means part number exists
+                    partExists = true;
+                }
+
+
+            }
+
+            return partExists;
+        }
+
         public bool PartNumberExists(string partNumber)
         {
             string query = "SELECT Part_Number FROM PRODUCTION.dbo.Job " +
@@ -136,6 +164,31 @@ namespace Feature_Inspection
             string query = "SELECT Operation_Service, Part_Number FROM PRODUCTION.dbo.Job_Operation " +
                            "INNER JOIN PRODUCTION.dbo.Job ON Job_Operation.Job = Job.Job " +
                            "WHERE Operation_Service = '" + op + "' AND Part_Number = '" + partNumber + "' GROUP BY Operation_Service, Part_Number";
+
+            using (OdbcConnection connection = new OdbcConnection(connection_string))
+            {
+                connection.Open();
+
+                OdbcCommand command = new OdbcCommand(query, connection);
+
+                OdbcDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    opExists = true;
+                }
+            }
+
+            return opExists;
+        }
+
+        public bool OpAndPartNumberExistInOperationTable(string viewOperationNumber, string viewPartNumber)
+        {
+
+            bool opExists = false;
+
+            string query = "SELECT Operation_Number, Part_Number FROM ATI_FeatureInspection.dbo.Operation " +
+                           "WHERE Operation_Number = '" + viewOperationNumber + "' AND Part_Number = '" + viewPartNumber + "' GROUP BY Operation_Number, Part_Number";
 
             using (OdbcConnection connection = new OdbcConnection(connection_string))
             {
@@ -501,5 +554,7 @@ namespace Feature_Inspection
                 command.ExecuteNonQuery();
             }
         }
+
+       
     }
 }

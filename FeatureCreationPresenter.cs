@@ -369,6 +369,10 @@ namespace Feature_Inspection
             {
                 MessageBox.Show("Please Enter a Part Number");
             }
+            else if (model.PartNumberExistsInOperationTable(partNumber))
+            {
+                view.OpTextBox.Select();
+            }
             else if (model.PartNumberExists(partNumber)) //Check if part number entered exists
             {
                 view.OpTextBox.Select();//opBoxFeature.Focus();
@@ -392,7 +396,12 @@ namespace Feature_Inspection
             {
                 MessageBox.Show("Please Enter an Operation Number");
             }
-            else if (model.OpExists(view.OperationNumber, view.PartNumber))
+            else if (model.OpAndPartNumberExistInOperationTable(view.OperationNumber, view.PartNumber))
+            {
+                MessageBox.Show("This is valid Part and Operation Number in Operation Table");
+                view.FeatureGridView.Focus();
+            }
+            else if (model.OpExists(view.OperationNumber, view.PartNumber)) //This will check JobBoss Tables for the op key
             {
                 MessageBox.Show("This is a valid Part and Operation Number");
                 view.FeatureGridView.Focus();

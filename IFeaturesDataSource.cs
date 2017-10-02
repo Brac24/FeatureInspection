@@ -20,5 +20,7 @@ namespace Feature_Inspection
         bool PartNumberExists(string partNumber);
         bool OpExists(string operationNumber, string partNumber);
         DataTable GetSampleChoices();
+        bool OpAndPartNumberExistInOperationTable(string viewOperationNumber, string viewPartNumber);
+        bool PartNumberExistsInOperationTable(string partNumber);
     }
 }
