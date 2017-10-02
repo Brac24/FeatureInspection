@@ -28,6 +28,9 @@ namespace Feature_Inspection
 
         }
 
+        /*NOTE: Even if these event handlers and methods have summaries, this does not necessarily mean they have been checked for 
+        redundancies or if they should be refactored more. */
+
         /// <summary>
         /// This event handler, when Enter or Tab are pressed, will call to a validation method and a page view update.
         /// </summary>
@@ -88,6 +91,10 @@ namespace Feature_Inspection
             }
         }
 
+        /// <summary>
+        /// This event handler sets the  Sample and Feature type.
+        /// </summary>
+        /// <param name="e"></param>
         internal void SetSampleIDAndFeatureTypeHiddenColumns(DataGridViewCellEventArgs e)
         {
             if (view.FeatureGridView.Columns["Sample"] != null || view.FeatureGridView.Columns["FeatureTypeColumn"] != null)
@@ -151,6 +158,9 @@ namespace Feature_Inspection
             AddFeatureRow((DataTable)(view.BindingSource.DataSource));
         }
 
+        /// <summary>
+        /// This method creates a message box that lets the user know changes have not been save.
+        /// </summary>
         private static void Message_ChangesNotSaved()
         {
             const string message2 = "Any Changes to the table have not been updated to the database";
@@ -158,6 +168,9 @@ namespace Feature_Inspection
             var result2 = MessageBox.Show(message2, caption2);
         }
 
+        /// <summary>
+        /// This method creates a message box that lets the user know changes have beend saved.
+        /// </summary>
         private static void Message_ChangesSaved()
         {
             const string message1 = "All changes made to the table have been updated to the database";
@@ -165,6 +178,9 @@ namespace Feature_Inspection
             var result2 = MessageBox.Show(message1, caption1);
         }
 
+        /// <summary>
+        /// TODO: create an accurate summary description.
+        /// </summary>
         private void AdapterUpdate()
         {
 
@@ -213,6 +229,10 @@ namespace Feature_Inspection
             return result.ToString();
         }
 
+        /// <summary>
+        /// This method sees which textbox is in focus in the feature page, and validates that those values match the DB.
+        /// </summary>
+        //TODO: Always called with "InitializeFeatureGridView()", could they be combined or is there any redundancy?
         internal void ValidateTextBoxes()
         {
             //Pressing enter key on part number text box
@@ -227,6 +247,9 @@ namespace Feature_Inspection
             }
         }
 
+        /// <summary>
+        /// If both textboxes in the feature page have values, this method will try to call other methods to draw the page.
+        /// </summary>
         private void InitializeFeatureGridView()
         {
             //As long as both textboxes are not empty
@@ -234,18 +257,25 @@ namespace Feature_Inspection
             {
                 DataTable featureList = model.GetFeaturesOnOpKey(view.PartNumber, view.OperationNumber);
                 DataBindFeature(featureList);
-                SetFeatureGridViewHeader();
+                SetFeaturePageHeader();
                 StorePartOpNumbers();
             }
         }
 
+        /// <summary>
+        /// This method is used to store what part and op number are being viewd in the grid view, in case either value is deleted
+        /// in the text box.
+        /// </summary>
         private void StorePartOpNumbers()
         {
             view.PartStorage = view.PartNumber;
             view.OpStorage = view.OperationNumber;
         }
 
-        private void SetFeatureGridViewHeader()
+        /// <summary>
+        /// This method sets the feature page header to match whatever part and op is currently being edited.
+        /// </summary>
+        private void SetFeaturePageHeader()
         {
             if (view.FeatureCount > 0)
             {
@@ -258,6 +288,10 @@ namespace Feature_Inspection
             }
         }
 
+        /// <summary>
+        /// TODO: create an accurate summary for this method.
+        /// </summary>
+        /// <param name="featureTable"></param>
         private void DataBindFeature(DataTable featureTable)
         {
             view.FeatureGridView.Columns.Clear();
@@ -273,6 +307,10 @@ namespace Feature_Inspection
             ConfigureFeatureDataGridView(featureTable);
         }
 
+        /// <summary>
+        /// TODO: create an accurate summary for this method.
+        /// </summary>
+        /// <param name="featureTable"></param>
         private void ConfigureFeatureDataGridView(DataTable featureTable)
         {
             int maxRows;
@@ -294,6 +332,10 @@ namespace Feature_Inspection
             DisableSortableColumns();
         }
 
+        /// <summary>
+        /// This method makes all columns in a grid view not sortable.
+        /// </summary>
+        //TODO: exact same logic as in InspectionPresenter. Can we consolidate this?
         public void DisableSortableColumns()
         {
             for (int j = 0; j < view.FeatureGridView.ColumnCount; j++)
@@ -302,6 +344,9 @@ namespace Feature_Inspection
             }
         }
 
+        /// <summary>
+        /// This method is used to create a not DB column, used to delete rows.
+        /// </summary>
         private void SetUpDeleteButtonColumn()
         {
             DataGridViewButtonColumn DeleteButtonColumn = new DataGridViewButtonColumn();
@@ -316,6 +361,9 @@ namespace Feature_Inspection
             }
         }
 
+        /// <summary>
+        /// This method is used to create a ComboBoxColumn for inspection tools.
+        /// </summary>
         private void SetUpToolColumnComboBox()
         {
             DataGridViewComboBoxColumn ToolCategoryColumn = new DataGridViewComboBoxColumn();
@@ -328,74 +376,25 @@ namespace Feature_Inspection
             }
         }
 
-        private static void ToolCategories(DataGridViewComboBoxColumn comboboxColumn)
-        {
-            comboboxColumn.Items.AddRange("0-1 Mic", "Height Stand");
-        }
-
-        private void SampleComboBind()
-        {
-            DataGridViewComboBoxColumn SamplingColumn = CreateSampleColumn();
-
-            view.FeatureGridView.Columns.Insert(view.FeatureGridView.Columns.Count, SamplingColumn);
-
-            view.SampleBindingSource.DataSource = model.GetSampleChoices(); //Set binding source to list of sample choices from database
-
-            //Binding combo box to database table of sample choices
-            SetSampleColumnProperties(SamplingColumn);
-
-            SamplingColumn.DataSource = view.SampleBindingSource; //Set column data source to binding source
-
-            //Initialize combo box value for each row in Sample and FeatureType column
-            InitSampleAndFeatureTypeComboBoxColumnValue();
-        }
-
-        private void InitSampleAndFeatureTypeComboBoxColumnValue()
-        {
-            for (int i = 0; i < view.FeatureCount; i++)
-            {
-                view.FeatureGridView.Rows[i].Cells["Sample"].Value = view.FeatureGridView.Rows[i].Cells["SampleID"].Value;
-                view.FeatureGridView.Rows[i].Cells["FeatureTypeColumn"].Value = view.FeatureGridView.Rows[i].Cells["FeatureType"].Value;
-            }
-        }
-
-        private static void SetSampleColumnProperties(DataGridViewComboBoxColumn SamplingColumn)
-        {
-            SamplingColumn.DisplayMember = "SampleChoice";
-            SamplingColumn.ValueMember = "SampleID";
-
-            SamplingColumn.HeaderText = "Sample";
-            SamplingColumn.Name = "Sample";
-        }
-
+        /// <summary>
+        /// This method creates the sample plan column.
+        /// </summary>
+        /// <returns></returns>
         private static DataGridViewComboBoxColumn CreateSampleColumn()
         {
             DataGridViewComboBoxColumn SamplingColumn = new DataGridViewComboBoxColumn();
             SamplingColumn.FlatStyle = FlatStyle.Flat;
             SamplingColumn.CellTemplate.Style.BackColor = Color.FromArgb(50, 50, 50);
+            SamplingColumn.DisplayMember = "SampleChoice";
+            SamplingColumn.ValueMember = "SampleID";
+            SamplingColumn.HeaderText = "Sample";
+            SamplingColumn.Name = "Sample";
             return SamplingColumn;
         }
 
-        private void HideFeatureColumns()
-        {
-            view.FeatureGridView.Columns["Feature_Key"].Visible = false;
-            view.FeatureGridView.Columns["Part_Number_FK"].Visible = false;
-            view.FeatureGridView.Columns["Operation_Number_FK"].Visible = false;
-            view.FeatureGridView.Columns["Feature_Name"].Visible = false;
-            view.FeatureGridView.Columns["Active"].Visible = false;
-            view.FeatureGridView.Columns["Pieces"].Visible = false;
-            view.FeatureGridView.Columns["FeatureType"].Visible = false;
-            view.FeatureGridView.Columns["Places"].Visible = false;
-            view.FeatureGridView.Columns["SampleID"].Visible = false;
-        }
-
-        private void SetHeaderTexts()
-        {
-            view.FeatureGridView.Columns["Sketch_Bubble"].HeaderText = "Sketch Bubble (Optional)";
-            view.FeatureGridView.Columns["Plus_Tolerance"].HeaderText = "+";
-            view.FeatureGridView.Columns["Minus_Tolerance"].HeaderText = "-";
-        }
-
+        /// <summary>
+        /// This method sets up the feature type column in feature grid.
+        /// </summary>
         private void SetUpFeatureTypeColumnComboBox()
         {
             DataGridViewComboBoxColumn FeatureDropColumn = new DataGridViewComboBoxColumn();
@@ -410,13 +409,82 @@ namespace Feature_Inspection
             }
         }
 
-        //IP>Test code to try combo box workability. Will be replaced with a .DataSource method.
+        /// <summary>
+        /// This is a temporary method used to create some temporary tools for inspection tools.
+        /// </summary>
+        /// <param name="comboboxColumn"></param>
+        private static void ToolCategories(DataGridViewComboBoxColumn comboboxColumn)
+        {
+            comboboxColumn.Items.AddRange("0-1 Mic", "Height Stand");
+        }
+
+        /// <summary>
+        /// This method binds what sample plan is chosen for a feature.
+        /// </summary>
+        private void SampleComboBind()
+        {
+            DataGridViewComboBoxColumn SamplingColumn = CreateSampleColumn();
+
+            view.FeatureGridView.Columns.Insert(view.FeatureGridView.Columns.Count, SamplingColumn);
+
+            view.SampleBindingSource.DataSource = model.GetSampleChoices(); //Set binding source to list of sample choices from database
+
+            SamplingColumn.DataSource = view.SampleBindingSource; //Set column data source to binding source
+
+            //Initialize combo box value for each row in Sample and FeatureType column
+            InitSampleAndFeatureTypeComboBoxColumnValue();
+        }
+
+        /// <summary>
+        /// TODO: create an accurate summary for this method.
+        /// </summary>
+        /// <param name="featureTable"></param>
+        private void InitSampleAndFeatureTypeComboBoxColumnValue()
+        {
+            for (int i = 0; i < view.FeatureCount; i++)
+            {
+                view.FeatureGridView.Rows[i].Cells["Sample"].Value = view.FeatureGridView.Rows[i].Cells["SampleID"].Value;
+                view.FeatureGridView.Rows[i].Cells["FeatureTypeColumn"].Value = view.FeatureGridView.Rows[i].Cells["FeatureType"].Value;
+            }
+        }
+
+        /// <summary>
+        /// This method limits the specific grid columns that are visible to the user.
+        /// </summary>
+        private void HideFeatureColumns()
+        {
+            view.FeatureGridView.Columns["Feature_Key"].Visible = false;
+            view.FeatureGridView.Columns["Part_Number_FK"].Visible = false;
+            view.FeatureGridView.Columns["Operation_Number_FK"].Visible = false;
+            view.FeatureGridView.Columns["Feature_Name"].Visible = false;
+            view.FeatureGridView.Columns["Active"].Visible = false;
+            view.FeatureGridView.Columns["Pieces"].Visible = false;
+            view.FeatureGridView.Columns["FeatureType"].Visible = false;
+            view.FeatureGridView.Columns["Places"].Visible = false;
+            view.FeatureGridView.Columns["SampleID"].Visible = false;
+        }
+
+        /// <summary>
+        /// This method changes the names of a handful of columns in the feature grid.
+        /// </summary>
+        private void SetHeaderTexts()
+        {
+            view.FeatureGridView.Columns["Sketch_Bubble"].HeaderText = "Sketch Bubble (Optional)";
+            view.FeatureGridView.Columns["Plus_Tolerance"].HeaderText = "+";
+            view.FeatureGridView.Columns["Minus_Tolerance"].HeaderText = "-";
+        }
+
+        //Test code to try combo box workability. Will be replaced with a .DataSource method.
         private static void FeatureDropChoices(DataGridViewComboBoxColumn comboboxColumn)
         {
             comboboxColumn.Items.AddRange(" ", "Diameter", "Fillet", "Chamfer", "Angle", "M.O.W.",
                 "Surface Finish", "Linear", "Square", "Depth", "Straightness", "Flatness", "Parallelism", "Perpendicularity", "Circular Runout", "Total Runout", "Position", "Concentricity");
         }
 
+        /// <summary>
+        /// This method validates that the part number exists.
+        /// </summary>
+        /// <param name="partNumber"></param>
         public void CheckPartNumberExists(string partNumber)
         {
 
@@ -441,6 +509,9 @@ namespace Feature_Inspection
             }
         }
 
+        /// <summary>
+        /// This method validates that the op number exists.
+        /// </summary>
         private void CheckOpNumberExists()
         {
             if (view.OperationNumber == "")
@@ -459,6 +530,10 @@ namespace Feature_Inspection
             }
         }
 
+        /// <summary>
+        /// This method adds a row to the feature grid for next feature entry.
+        /// </summary>
+        /// <param name="data"></param>
         public void AddFeatureRow(DataTable data)
         {
 
@@ -467,6 +542,10 @@ namespace Feature_Inspection
             SetPartAndOpNumInTable();
         }
 
+        /// <summary>
+        /// TODO: create an accurate summary for this method.
+        /// </summary>
+        /// <param name="featureTable"></param>
         private void SetPartAndOpNumInTable()
         {
             if (view.FeatureCount > 0)
@@ -478,6 +557,11 @@ namespace Feature_Inspection
 
         }
 
+        /// <summary>
+        /// This method checks that there are rows in the grid view, and adds a row.
+        /// </summary>
+        /// <param name="t"></param>
+        /// <returns></returns>
         private DataTable AddTableRow(DataTable t)
         {
             if (view.FeatureDataSource == null)
@@ -490,6 +574,10 @@ namespace Feature_Inspection
             return t;
         }
 
+        /// <summary>
+        /// This method checks that the view exists.
+        /// </summary>
+        /// <returns></returns>
         public bool ViewExists()
         {
             if (view == null)
