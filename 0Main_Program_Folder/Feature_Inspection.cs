@@ -62,6 +62,8 @@ namespace Feature_Inspection
 
         public BindingSource BindingSource { get { return bindingSource; } set { bindingSource = value; } }
 
+        public BindingSource InspectionBindingSource { get { return bindingSourceInspection; } set { bindingSourceInspection = value; } }
+
         //redudant? couldn't we use ^^ "BindingSource" for anyplace we are calling "SampleBindingSource"
         public BindingSource SampleBindingSource { get { return sampleBindingSource; } set { sampleBindingSource = value; } }
 
@@ -99,43 +101,6 @@ namespace Feature_Inspection
         #region Inspection Tab Methods
         // INSPECTION TAB METHODS
 
-        //TODO: Not a lot going on in this method but it could still probably be slimmed down.
-        public void BindDataGridViewInspection(DataTable featuresTable)
-        {
-            InspectionGrid.Columns.Clear();
-            InspectionGrid.DataSource = null;
-            bindingSourceInspection.DataSource = featuresTable;
-            InspectionGrid.DataSource = bindingSourceInspection;
-
-            InspectionGrid.Columns["Inspection_Key_FK"].Visible = false;
-            InspectionGrid.Columns["Feature_Key"].Visible = false;
-            InspectionGrid.Columns["Position_Key"].Visible = false;
-            InspectionGrid.Columns["Old Value"].Visible = false;
-            InspectionGrid.Columns["Oldest Value"].Visible = false;
-
-            InspectionGrid.Columns["Feature"].ReadOnly = true;
-            InspectionGrid.Columns["Sketch Bubble"].ReadOnly = true;
-
-            DataGridViewButtonColumn RedoButtonColumn = new DataGridViewButtonColumn();
-            {
-                RedoButtonColumn.FlatStyle = FlatStyle.Popup;
-                RedoButtonColumn.CellTemplate.Style.BackColor = Color.DarkRed;
-                RedoButtonColumn.CellTemplate.Style.SelectionBackColor = Color.DarkRed;
-                RedoButtonColumn.HeaderText = "Redo Entry";
-                RedoButtonColumn.Text = "Redo";
-                InspectionGrid.Columns.Insert(InspectionGrid.Columns.Count, RedoButtonColumn);
-                RedoButtonColumn.UseColumnTextForButtonValue = true;
-            }
-
-            if (InspectionGrid.RowCount != 0)
-            {
-                InspectionGrid.Rows[0].Cells["Measured Actual"].Selected = true;
-            }
-
-            inspectionPresenter.DisableSortableColumns();
-
-        }
-
         /*TODO: Currently this contains logic that is strongly linked to "numOnly_KeyDown", "suppressZeroFirstChar", and 
         "checkEnterKeyPressedInspection", refactoring should be taking all of these methods and events into consideration as there is 
         definitely still some redundant/ovderiding logic among them.*/
@@ -162,19 +127,6 @@ namespace Feature_Inspection
 
                 return false;
             }
-        }
-
-        /// <summary>
-        /// This method reduces "graphics popping" by creating inspection headers on the inspectionEntryGridView 
-        /// before any opkey has been entered.
-        /// </summary>
-        public void inspectionHeaderCreation()
-        {
-            inspectionPresenter.createGridHeaders("Sketch Bubble", InspectionGrid);
-            inspectionPresenter.createGridHeaders("Feature", InspectionGrid);
-            inspectionPresenter.createGridHeaders("Measured Actual", InspectionGrid);
-            inspectionPresenter.createGridHeaders("Inspection Tool", InspectionGrid);
-            inspectionPresenter.createGridHeaders("Redo Entry", InspectionGrid);
         }
 
         /// <summary>
@@ -253,7 +205,7 @@ namespace Feature_Inspection
             partsListBox.DataSource = null;
             inspectionEntryGridView.DataSource = null;
             inspectionEntryGridView.Columns.Clear();
-            inspectionHeaderCreation();
+            inspectionPresenter.inspectionHeaderCreation();
             inspectionPresenter.DisableSortableColumns();
             inspectionPageHeader.Text = "INSPECTION PAGE";
         }
@@ -262,21 +214,6 @@ namespace Feature_Inspection
 
         #region Feature Tab Methods
         // FEATURE TAB METHODS
-
-        /// <summary>
-        /// This method is a framework for initializing a message box with a yes/no button response.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="caption"></param>
-        /// <returns></returns>
-        public string CreateYesNoMessage(string message, string caption)
-        {
-            DialogResult result = MessageBox.Show(message, caption,
-                                 MessageBoxButtons.YesNo,
-                                 MessageBoxIcon.Question);
-
-            return result.ToString();
-        }
 
         //TODO: Is there a plan for this method?
         public void ShowJobInformation(Job job)

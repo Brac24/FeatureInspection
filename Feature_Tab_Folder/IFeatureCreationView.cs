@@ -45,8 +45,6 @@ namespace Feature_Inspection
 
         void ShowJobInformation(Job job);
 
-        string CreateYesNoMessage(string message, string caption);
-
         #endregion
 
 

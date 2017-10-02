@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Drawing;
 
 namespace Feature_Inspection
 {
@@ -24,6 +25,81 @@ namespace Feature_Inspection
         private void Initialize()
         {
 
+        }
+
+        public void BindDataGridViewInspection(DataTable featuresTable)
+        {
+            view.InspectionGrid.Columns.Clear();
+
+            view.InspectionGrid.DataSource = null;
+
+            view.InspectionBindingSource = new BindingSource();
+
+            view.InspectionBindingSource.DataSource = featuresTable;
+
+            view.InspectionGrid.DataSource = view.InspectionBindingSource;
+
+            HideInspectionColumns();
+
+            SetInspectionReadOnlyColumns();
+
+            SetupRedoButtonColumn();
+
+            Inspection_SetSelectedCell();
+
+            DisableSortableColumns();
+
+        }
+
+        private void Inspection_SetSelectedCell()
+        {
+            if (view.InspectionGrid.RowCount != 0)
+            {
+                view.InspectionGrid.Rows[0].Cells["Measured Actual"].Selected = true;
+            }
+
+        }
+
+        private void SetInspectionReadOnlyColumns()
+        {
+            view.InspectionGrid.Columns["Feature"].ReadOnly = true;
+            view.InspectionGrid.Columns["Sketch Bubble"].ReadOnly = true;
+        }
+
+        private void HideInspectionColumns()
+        {
+            view.InspectionGrid.Columns["Inspection_Key_FK"].Visible = false;
+            view.InspectionGrid.Columns["Feature_Key"].Visible = false;
+            view.InspectionGrid.Columns["Position_Key"].Visible = false;
+            view.InspectionGrid.Columns["Old Value"].Visible = false;
+            view.InspectionGrid.Columns["Oldest Value"].Visible = false;
+        }
+
+        private void SetupRedoButtonColumn()
+        {
+            DataGridViewButtonColumn RedoButtonColumn = new DataGridViewButtonColumn();
+            {
+                RedoButtonColumn.FlatStyle = FlatStyle.Popup;
+                RedoButtonColumn.CellTemplate.Style.BackColor = Color.DarkRed;
+                RedoButtonColumn.CellTemplate.Style.SelectionBackColor = Color.DarkRed;
+                RedoButtonColumn.HeaderText = "Redo Entry";
+                RedoButtonColumn.Text = "Redo";
+                view.InspectionGrid.Columns.Insert(view.InspectionGrid.Columns.Count, RedoButtonColumn);
+                RedoButtonColumn.UseColumnTextForButtonValue = true;
+            }
+        }
+
+        /// <summary>
+        /// This method reduces "graphics popping" by creating inspection headers on the inspectionEntryGridView 
+        /// before any opkey has been entered.
+        /// </summary>
+        public void inspectionHeaderCreation()
+        {
+            createGridHeaders("Sketch Bubble", view.InspectionGrid);
+            createGridHeaders("Feature", view.InspectionGrid);
+            createGridHeaders("Measured Actual", view.InspectionGrid);
+            createGridHeaders("Inspection Tool", view.InspectionGrid);
+            createGridHeaders("Redo Entry", view.InspectionGrid);
         }
 
         /// <summary>
@@ -70,7 +146,7 @@ namespace Feature_Inspection
                 view.InspectionHeaderText = listBox.Text;
                 int pieceID = listBox.SelectedIndex + 1; //Due to 0 indexing
                 featureTable = UpdateTable(pieceID);
-                view.BindDataGridViewInspection(featureTable);
+                BindDataGridViewInspection(featureTable);
             }
 
             ifInspectionCellEqualsZero_NoLock();

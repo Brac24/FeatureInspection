@@ -212,7 +212,7 @@ namespace Feature_Inspection
                             "All changes will save to the database.";
             const string caption0 = "Save Changes";
 
-            var result = view.CreateYesNoMessage(message0, caption0);
+            var result = CreateYesNoMessage(message0, caption0);
             return result.ToString();
         }
 
@@ -225,7 +225,22 @@ namespace Feature_Inspection
             const string message = "Are you sure you want to cancel all changes made to this set of features? " +
                             "Any changes to this table will be reverted.";
             const string caption = "Cancel Changes";
-            var result = view.CreateYesNoMessage(message, caption);
+            var result = CreateYesNoMessage(message, caption);
+            return result.ToString();
+        }
+
+        /// <summary>
+        /// This method is a framework for initializing a message box with a yes/no button response.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="caption"></param>
+        /// <returns></returns>
+        public string CreateYesNoMessage(string message, string caption)
+        {
+            DialogResult result = MessageBox.Show(message, caption,
+                                 MessageBoxButtons.YesNo,
+                                 MessageBoxIcon.Question);
+
             return result.ToString();
         }
 

@@ -16,7 +16,9 @@ namespace Feature_Inspection
         int ListBoxIndex { get; set; }
         int ListBoxCount { get; }
 
-        void BindDataGridViewInspection(DataTable featureTable);
+        //void BindDataGridViewInspection(DataTable featureTable);
+
+        BindingSource InspectionBindingSource { get; set; }
 
         DataGridView InspectionGrid { get; }
 
