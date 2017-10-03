@@ -12,7 +12,7 @@ namespace Feature_Inspection
     {
         TextBox PartTextBox { get; }
 
-        TextBox OpTextBox { get; }
+        TextBox FeatureOpTextBox { get; }
 
         string FeaturePageHeaderText { get; set; }
 

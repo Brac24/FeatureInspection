@@ -27,6 +27,50 @@ namespace Feature_Inspection
 
         }
 
+        /*TODO: Currently this contains logic that is strongly linked to "numOnly_KeyDown", "suppressZeroFirstChar", and 
+        "checkEnterKeyPressedInspection", refactoring should be taking all of these methods and events into consideration as there is 
+        definitely still some redundant/ovderiding logic among them.*/
+        public bool SetOpKeyInfoInspection()
+        {
+            DataTable info = new DataTable();
+            info = model.GetInfoFromOpKeyEntry(view.OpKey);
+
+            if (info.Rows.Count > 0)
+            {
+                view.PartNumberLabel.Text = info.Rows[0]["Part_Number"].ToString();
+                view.JobLabel.Text = info.Rows[0]["Job_Number"].ToString();
+                view.OperationLabel.Text = info.Rows[0]["Operation_Number"].ToString();
+                view.LotsizeTextBox.Focus();
+
+                return true;
+            }
+
+            else
+            {
+                fullInspectionPageClear();
+                MessageBox.Show(view.OpKeyTextBox.Text + " is invalid please enter a valid Op Key", "Invalid OpKey");
+                view.OpKeyTextBox.Clear();
+
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// This method makes all columns in a grid view not sortable.
+        /// </summary>
+        //TODO: exact same logic as in FeatureCreationPresenter. Can we consolidate this?
+        public void DisableSortableColumns()
+        {
+            for (int j = 0; j < view.InspectionGrid.ColumnCount; j++)
+            {
+                view.InspectionGrid.Columns[j].SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+        }
+
+        /// <summary>
+        /// TODO: create an accurate summary for this method.
+        /// </summary>
+        /// <param name="featuresTable"></param>
         public void BindDataGridViewInspection(DataTable featuresTable)
         {
             view.InspectionGrid.Columns.Clear();
@@ -51,6 +95,10 @@ namespace Feature_Inspection
 
         }
 
+        /// <summary>
+        /// This method checks if the object InspectionGrid has any rows. If TRUE, then the first row of the "Measured Actual" column
+        /// is set to selected.
+        /// </summary>
         private void Inspection_SetSelectedCell()
         {
             if (view.InspectionGrid.RowCount != 0)
@@ -60,12 +108,18 @@ namespace Feature_Inspection
 
         }
 
+        /// <summary>
+        /// This method sets two columns in the InspectionGrid to read only.
+        /// </summary>
         private void SetInspectionReadOnlyColumns()
         {
             view.InspectionGrid.Columns["Feature"].ReadOnly = true;
             view.InspectionGrid.Columns["Sketch Bubble"].ReadOnly = true;
         }
 
+        /// <summary>
+        /// This method hides a few columns in the InspectionGrid
+        /// </summary>
         private void HideInspectionColumns()
         {
             view.InspectionGrid.Columns["Inspection_Key_FK"].Visible = false;
@@ -75,6 +129,9 @@ namespace Feature_Inspection
             view.InspectionGrid.Columns["Oldest Value"].Visible = false;
         }
 
+        /// <summary>
+        /// This method sets up the Redo button column in the inspection entry grid.
+        /// </summary>
         private void SetupRedoButtonColumn()
         {
             DataGridViewButtonColumn RedoButtonColumn = new DataGridViewButtonColumn();
@@ -185,18 +242,6 @@ namespace Feature_Inspection
         }
 
         /// <summary>
-        /// This method makes all columns in a grid view not sortable.
-        /// </summary>
-        //TODO: exact same logic as in FeatureCreationPresenter. Can we consolidate this?
-        public void DisableSortableColumns()
-        {
-            for (int j = 0; j < view.InspectionGrid.ColumnCount; j++)
-            {
-                view.InspectionGrid.Columns[j].SortMode = DataGridViewColumnSortMode.NotSortable;
-            }
-        }
-
-        /// <summary>
         /// This event handler transfers values in a the inspection grid view to an "older" position to keep track of redos.
         /// </summary>
         /// <param name="sender"></param>
@@ -262,6 +307,83 @@ namespace Feature_Inspection
             chart.ChartAreas[0].AxisY.LabelStyle.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         }
 
+        /// <summary>
+        /// This method clears some of the information being displayed on the inspection page.
+        /// Best called on new inspections.
+        /// </summary>
+        public void smallInspectionPageClear()
+        {
+            view.InspectionChart.Visible = false;
+            view.ChartFocusComboBox.DataSource = null;
+            view.ChartFocusComboBox.Items.Clear();
+            view.ChartFocusComboBox.Text = null;
+            view.LotsizeTextBox.Clear();
+            view.OpKeyTextBox.Focus();
+            view.PartsListBox.DataSource = null;
+            view.InspectionGrid.DataSource = null;
+            view.InspectionGrid.Columns.Clear();
+            inspectionHeaderCreation();
+            DisableSortableColumns();
+            view.InspectionPageHeader.Text = "INSPECTION PAGE";
+        }
 
+        /// <summary>
+        /// This method calls the "smallInspectionPageClear()" and then clears some additional info on the inspection page.
+        /// Best called on false opkeys.
+        /// </summary>
+        public void fullInspectionPageClear()
+        {
+            view.PartNumberLabel.Text = null;
+            view.JobLabel.Text = null;
+            view.OperationLabel.Text = null;
+            smallInspectionPageClear();
+        }
+
+        /// <summary>
+        /// This method binds the opkey and feature to the graph area and makes them visible.
+        /// </summary>
+        public void BindFocusCharts()
+        {
+            try
+            {
+                DataTable table = model.GetChartData(view.OpKey, (int)view.ChartFocusComboBox.SelectedValue);
+                view.InspectionChart.Visible = true;
+                view.InspectionChart.DataSource = table;
+                view.InspectionChart.DataBind();
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// This method binds nominal feature values to the graph focus combo box.
+        /// </summary>
+        /// <param name="featuresTable"></param>
+        public void BindFocusComboBox(DataTable featuresTable)
+        {
+            view.ChartFocusComboBox.DisplayMember = "Nominal";
+            view.ChartFocusComboBox.ValueMember = "Feature_Key";
+            view.ChartFocusComboBox.DataSource = featuresTable;
+        }
+
+        /// <summary>
+        /// This method binds the entered part count into the "inspected parts" list box.
+        /// </summary>
+        /// <param name="partsTable"></param>
+        public void BindPartListBox(DataTable partsTable)
+        {
+            view.ListBoxBindingSource.DataSource = partsTable;
+            view.PartsListBox.DataSource = view.ListBoxBindingSource;
+            view.PartsListBox.DisplayMember = "PartList";
+        }
+
+        /// <summary>
+        /// *TODO: Fill out this summary with an accurate description.
+        /// </summary>
+        public void AdapterUpdateInspection()
+        {
+            //Call EndEdit method before updating database
+            view.InspectionBindingSource.EndEdit();
+            model.AdapterUpdateInspection((DataTable)view.InspectionBindingSource.DataSource);
+        }
     }
 }

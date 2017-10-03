@@ -256,7 +256,7 @@ namespace Feature_Inspection
                 CheckPartNumberExists(view.PartNumber);
             }
             //Pressing enter on op number text box
-            else if (view.OpTextBox.ContainsFocus)
+            else if (view.FeatureOpTextBox.ContainsFocus)
             {
                 CheckOpNumberExists();
             }
@@ -509,7 +509,7 @@ namespace Feature_Inspection
             }
             else if (model.PartNumberExists(partNumber)) //Check if part number entered exists
             {
-                view.OpTextBox.Select();//opBoxFeature.Focus();
+                view.FeatureOpTextBox.Select();//opBoxFeature.Focus();
 
             }
             else
@@ -517,7 +517,7 @@ namespace Feature_Inspection
 
                 view.FeaturePageHeaderText = "FEATURES PAGE";
                 view.PartTextBox.Clear();
-                view.OpTextBox.Clear();
+                view.FeatureOpTextBox.Clear();
                 view.FeatureGridView.DataSource = null;
                 MessageBox.Show("Part Number does not exist");
 
@@ -541,7 +541,7 @@ namespace Feature_Inspection
             else
             {
                 MessageBox.Show("Op Number does not exist for this Part Number");
-                view.OpTextBox.Clear();
+                view.FeatureOpTextBox.Clear();
             }
         }
 

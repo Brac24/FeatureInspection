@@ -40,7 +40,38 @@ namespace Feature_Inspection
 
         public TextBox PartTextBox { get { return partBoxFeature; } set { } }
 
-        public TextBox OpTextBox { get { return opBoxFeature; } }
+        public TextBox FeatureOpTextBox { get { return opBoxFeature; } }
+
+        public DataGridView FeatureGridView { get { return featureEditGridView; } }
+
+        public DataGridView InspectionGrid { get { return inspectionEntryGridView; } }
+
+        public BindingSource BindingSource { get { return bindingSource; } set { bindingSource = value; } }
+
+        public BindingSource InspectionBindingSource { get { return bindingSourceInspection; } set { bindingSourceInspection = value; } }
+
+        //redudant? couldn't we use ^^ "BindingSource" for anyplace we are calling "SampleBindingSource"
+        public BindingSource SampleBindingSource { get { return sampleBindingSource; } set { sampleBindingSource = value; } }
+
+        public BindingSource ListBoxBindingSource { get { return bindingSourceListBox; } set { bindingSourceListBox = value; } }
+
+        public Chart InspectionChart { get { return inspectionChart; } set { inspectionChart = value; } }
+
+        public ComboBox ChartFocusComboBox { get { return inspectionFocusCombo; } set { inspectionFocusCombo = value; } }
+
+        public TextBox LotsizeTextBox { get { return lotSizeBoxInspection; } set { lotSizeBoxInspection = value; } }
+
+        public TextBox OpKeyTextBox { get { return opKeyBoxInspection; } set { opKeyBoxInspection = value; } }
+
+        public ListBox PartsListBox { get { return partsListBox; } set { partsListBox = value; } }
+
+        public Label InspectionPageHeader { get { return inspectionPageHeader; } set { inspectionPageHeader = value; } }
+
+        public Label PartNumberLabel { get { return partNumberLabelInspection; } set { partNumberLabelInspection = value; } }
+
+        public Label JobLabel { get { return jobLabelInspection; } set { jobLabelInspection = value; } }
+
+        public Label OperationLabel { get { return opLabelInspection; } set { opLabelInspection = value; } }
 
         public string PartStorage { get { return partStorageLabel.Text; } set { partStorageLabel.Text = value; } }
 
@@ -55,17 +86,6 @@ namespace Feature_Inspection
         public string JobNumber { get { return jobLabelInspection.Text; } set { jobLabelInspection.Text = value; } }
 
         public string FeaturePageHeaderText { get { return featurePageHeader.Text; } set { featurePageHeader.Text = value; } }
-
-        public DataGridView FeatureGridView { get { return featureEditGridView; } }
-
-        public DataGridView InspectionGrid { get { return inspectionEntryGridView; } }
-
-        public BindingSource BindingSource { get { return bindingSource; } set { bindingSource = value; } }
-
-        public BindingSource InspectionBindingSource { get { return bindingSourceInspection; } set { bindingSourceInspection = value; } }
-
-        //redudant? couldn't we use ^^ "BindingSource" for anyplace we are calling "SampleBindingSource"
-        public BindingSource SampleBindingSource { get { return sampleBindingSource; } set { sampleBindingSource = value; } }
 
         public int OpKey { get { return Int32.Parse(opKeyBoxInspection.Text); } }
 
@@ -95,120 +115,9 @@ namespace Feature_Inspection
         /************************/
         /******* Methods ********/
         /************************/
-        /*Most methods have been given summary blocks, that does not mean that they have been boiled down yet. 
-         Summaries were added for clarity, and to possibly assist in refactoring.*/
 
         #region Inspection Tab Methods
         // INSPECTION TAB METHODS
-
-        /*TODO: Currently this contains logic that is strongly linked to "numOnly_KeyDown", "suppressZeroFirstChar", and 
-        "checkEnterKeyPressedInspection", refactoring should be taking all of these methods and events into consideration as there is 
-        definitely still some redundant/ovderiding logic among them.*/
-        private bool SetOpKeyInfoInspection()
-        {
-            DataTable info = new DataTable();
-            info = model.GetInfoFromOpKeyEntry(OpKey);
-
-            if (info.Rows.Count > 0)
-            {
-                partNumberLabelInspection.Text = info.Rows[0]["Part_Number"].ToString();
-                jobLabelInspection.Text = info.Rows[0]["Job_Number"].ToString();
-                opLabelInspection.Text = info.Rows[0]["Operation_Number"].ToString();
-                lotSizeBoxInspection.Focus();
-
-                return true;
-            }
-
-            else
-            {
-                fullInspectionPageClear();
-                MessageBox.Show(opKeyBoxInspection.Text + " is invalid please enter a valid Op Key", "Invalid OpKey");
-                opKeyBoxInspection.Clear();
-
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// This method binds the entered part count into the "inspected parts" list box.
-        /// </summary>
-        /// <param name="partsTable"></param>
-        private void BindPartListBox(DataTable partsTable)
-        {
-            bindingSourceListBox.DataSource = partsTable;
-            partsListBox.DataSource = bindingSourceListBox;
-            partsListBox.DisplayMember = "PartList";
-        }
-
-        /// <summary>
-        /// This method binds nominal feature values to the graph focus combo box.
-        /// </summary>
-        /// <param name="featuresTable"></param>
-        private void BindFocusComboBox(DataTable featuresTable)
-        {
-            inspectionFocusCombo.DisplayMember = "Nominal";
-            inspectionFocusCombo.ValueMember = "Feature_Key";
-            inspectionFocusCombo.DataSource = featuresTable;
-        }
-
-        /// <summary>
-        /// This method binds the opkey and feature to the graph area and makes them visible.
-        /// </summary>
-        private void BindFocusCharts()
-        {
-            try
-            {
-                int opKey = Int32.Parse(opKeyBoxInspection.Text);
-                int featureKey = (int)inspectionFocusCombo.SelectedValue;
-                DataTable table = model.GetChartData(opKey, featureKey);
-                inspectionChart.Visible = true;
-                inspectionChart.DataSource = table;
-                inspectionChart.DataBind();
-            }
-            catch { }
-        }
-
-        /// <summary>
-        /// *TODO: Fill out this summary with an accurate description.
-        /// </summary>
-        private void AdapterUpdateInspection()
-        {
-            //Call EndEdit method before updating database
-            bindingSourceInspection.EndEdit();
-            model.AdapterUpdateInspection((DataTable)bindingSourceInspection.DataSource);
-        }
-
-        /// <summary>
-        /// This method calls the "smallInspectionPageClear()" and then clears some additional info on the inspection page.
-        /// Best called on false opkeys.
-        /// </summary>
-        public void fullInspectionPageClear()
-        {
-            partNumberLabelInspection.Text = null;
-            jobLabelInspection.Text = null;
-            opLabelInspection.Text = null;
-            smallInspectionPageClear();
-        }
-
-        /// <summary>
-        /// This method clears some of the information being displayed on the inspection page.
-        /// Best called on new inspections.
-        /// </summary>
-        public void smallInspectionPageClear()
-        {
-            inspectionChart.Visible = false;
-            inspectionFocusCombo.DataSource = null;
-            inspectionFocusCombo.Items.Clear();
-            inspectionFocusCombo.Text = null;
-            lotSizeBoxInspection.Clear();
-            opKeyBoxInspection.Focus();
-            partsListBox.DataSource = null;
-            inspectionEntryGridView.DataSource = null;
-            inspectionEntryGridView.Columns.Clear();
-            inspectionPresenter.inspectionHeaderCreation();
-            inspectionPresenter.DisableSortableColumns();
-            inspectionPageHeader.Text = "INSPECTION PAGE";
-        }
 
         #endregion
 
@@ -299,7 +208,7 @@ namespace Feature_Inspection
                 DataTable featureList = null;
 
                 partList = model.GetPartsList(OpKey);
-                isValidOpKey = SetOpKeyInfoInspection();
+                isValidOpKey = inspectionPresenter.SetOpKeyInfoInspection();
 
                 if (isValidOpKey)
                 {
@@ -311,7 +220,7 @@ namespace Feature_Inspection
                         featureTable = model.GetFeaturesOnOpKey(OpKey);
 
                         featureList = model.GetFeatureList(OpKey);
-                        BindFocusComboBox(featureList);
+                        inspectionPresenter.BindFocusComboBox(featureList);
 
                         if (featureTable.Rows.Count > 0)
                         {
@@ -319,7 +228,7 @@ namespace Feature_Inspection
                             if (partList.Rows.Count > 0)
                             {
                                 //Get the parts if there are
-                                BindPartListBox(partList);
+                                inspectionPresenter.BindPartListBox(partList);
                                 lotSizeBoxInspection.Text = model.GetLotSize(OpKey);
                                 lotSizeBoxInspection.ReadOnly = true;
                             }
@@ -336,14 +245,14 @@ namespace Feature_Inspection
                                 partList = model.GetPartsList(OpKey);
 
                                 //Bind the part list box BindListBox(partList);
-                                BindPartListBox(partList);
+                                inspectionPresenter.BindPartListBox(partList);
 
                             }
                         }
                         else
                         {
                             //Message user to add features to this part num op num
-                            smallInspectionPageClear();
+                            inspectionPresenter.smallInspectionPageClear();
                             MessageBox.Show("OpKey exists, enter in how many parts you have");
 
                         }
@@ -366,7 +275,7 @@ namespace Feature_Inspection
                             if (partList.Rows.Count > 0)
                             {
                                 //Get the parts if there are
-                                BindPartListBox(partList);
+                                inspectionPresenter.BindPartListBox(partList);
                                 lotSizeBoxInspection.Text = model.GetLotSize(OpKey);
                                 lotSizeBoxInspection.ReadOnly = true;
                             }
@@ -383,7 +292,7 @@ namespace Feature_Inspection
                                 partList = model.GetPartsList(OpKey);
 
                                 //Bind the part list box BindListBox(partList);
-                                BindPartListBox(partList);
+                                inspectionPresenter.BindPartListBox(partList);
                             }
                         }
                         else
@@ -521,8 +430,8 @@ namespace Feature_Inspection
         private void inspectionEntryGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             //TODO: Table should be binding everytime the Measured value has been edited
-            AdapterUpdateInspection();
-            BindFocusCharts();
+            inspectionPresenter.AdapterUpdateInspection();
+            inspectionPresenter.BindFocusCharts();
             //inspectionPresenter.lockCellInspection(sender, e);
         }
 
@@ -543,7 +452,7 @@ namespace Feature_Inspection
         /// <param name="e"></param>
         private void inspectionFocusCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            BindFocusCharts();
+            inspectionPresenter.BindFocusCharts();
         }
 
         /// <summary>
@@ -553,7 +462,7 @@ namespace Feature_Inspection
         /// <param name="e"></param>
         private void inspectionEntryGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
-            BindFocusCharts();
+            inspectionPresenter.BindFocusCharts();
         }
 
         #endregion
