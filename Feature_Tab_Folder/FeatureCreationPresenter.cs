@@ -253,7 +253,7 @@ namespace Feature_Inspection
             //Pressing enter key on part number text box
             if (view.PartTextBox.ContainsFocus)//partBoxFeature.ContainsFocus
             {
-                CheckPartNumberExists(view.PartNumber);
+                CheckPartNumberExists(view.PartTextBox.Text);
             }
             //Pressing enter on op number text box
             else if (view.FeatureOpTextBox.ContainsFocus)
@@ -268,9 +268,9 @@ namespace Feature_Inspection
         private void InitializeFeatureGridView()
         {
             //As long as both textboxes are not empty
-            if (view.PartNumber != "" && view.OperationNumber != "")
+            if (view.PartTextBox.Text != "" && view.FeatureOpTextBox.Text != "")
             {
-                DataTable featureList = model.GetFeaturesOnOpKey(view.PartNumber, view.OperationNumber);
+                DataTable featureList = model.GetFeaturesOnOpKey(view.PartTextBox.Text, view.FeatureOpTextBox.Text);
                 DataBindFeature(featureList);
                 SetFeaturePageHeader();
                 StorePartOpNumbers();
@@ -283,7 +283,7 @@ namespace Feature_Inspection
         /// </summary>
         private void StorePartOpNumbers()
         {
-            view.PartStorage = view.PartNumber;
+            view.PartStorage = view.PartTextBox.Text;
             view.OpStorage = view.OperationNumber;
         }
 
