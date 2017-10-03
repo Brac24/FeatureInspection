@@ -271,10 +271,17 @@ namespace Feature_Inspection
             //As long as both textboxes are not empty
             if (view.PartTextBox.Text != "" && view.FeatureOpTextBox.Text != "")
             {
+<<<<<<< HEAD
                 DataTable featureTable = model.GetFeaturesOnOpKey(view.PartNumber, view.OperationNumber);
                 DataBindFeaturesToFeatureDataGridView(featureTable);
                 SetFeatureDataGridViewHeader();
                 StorePartOpNumbers();  //TODO: What is this Ian?
+=======
+                DataTable featureList = model.GetFeaturesOnOpKey(view.PartTextBox.Text, view.FeatureOpTextBox.Text);
+                DataBindFeature(featureList);
+                SetFeaturePageHeader();
+                StorePartOpNumbers();
+>>>>>>> 1b6a35a44b788d90c0b1dd5f27193aecec6d44a1
             }
         }
 

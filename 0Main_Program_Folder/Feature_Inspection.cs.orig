@@ -119,6 +119,7 @@ namespace Feature_Inspection
         #region Inspection Tab Methods
         // INSPECTION TAB METHODS
 
+<<<<<<< HEAD
         /*TODO: Currently this contains logic that is strongly linked to "numOnly_KeyDown", "suppressZeroFirstChar", and 
         "checkEnterKeyPressedInspection", refactoring should be taking all of these methods and events into consideration as there is 
         definitely still some redundant/ovderiding logic among them.*/
@@ -235,11 +236,14 @@ namespace Feature_Inspection
             inspectionPageHeader.Text = "INSPECTION PAGE";
         }
 
+=======
+>>>>>>> 1b6a35a44b788d90c0b1dd5f27193aecec6d44a1
         #endregion
 
         #region Feature Tab Methods
         // FEATURE TAB METHODS
 
+      
 
         #endregion
 

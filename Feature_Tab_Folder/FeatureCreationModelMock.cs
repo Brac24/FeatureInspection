@@ -337,7 +337,7 @@ namespace Feature_Inspection
             return t;
         }
 
-        internal string GetLotSize(int opkey)
+        public string GetLotSize(int opkey)
         {
             int lotSize = 0;
             string query = "SELECT Lot_Size FROM ATI_FeatureInspection.dbo.Inspection WHERE Op_Key = " + opkey + ";";
