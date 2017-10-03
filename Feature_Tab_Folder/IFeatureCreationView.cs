@@ -39,15 +39,6 @@ namespace Feature_Inspection
         object FeatureDataSource { get; set; }
         DataGridView FeatureGridView { get; }
 
-        #region Show Methods
-
-        void ShowRelatedFeatures(IList<Feature> relatedFeaures);
-
-        void ShowJobInformation(Job job);
-
-        #endregion
-
-
 
     }
 }

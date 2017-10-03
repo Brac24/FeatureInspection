@@ -42,7 +42,7 @@ namespace Feature_Inspection
 
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
             {
-                ValidateTextBoxes();
+                ValidateFeatureTabTextBoxes();
 
                 InitializeFeatureGridView();
             }
@@ -54,7 +54,7 @@ namespace Feature_Inspection
         /// <param name="e"></param>
         public void leaveFocus(EventArgs e)
         {
-            ValidateTextBoxes();
+            ValidateFeatureTabTextBoxes();
 
             InitializeFeatureGridView();
         }
@@ -97,7 +97,7 @@ namespace Feature_Inspection
         /// <param name="e"></param>
         internal void SetSampleIDAndFeatureTypeHiddenColumns(DataGridViewCellEventArgs e)
         {
-            if (view.FeatureGridView.Columns["Sample"] != null || view.FeatureGridView.Columns["FeatureTypeColumn"] != null)
+            if (view.FeatureGridView.Columns["Sample"] != null && view.FeatureGridView.Columns["FeatureTypeColumn"] != null)
             {
 
                 if (view.FeatureGridView.Columns["Sample"].Index == e.ColumnIndex)
@@ -122,7 +122,7 @@ namespace Feature_Inspection
             if (result == "Yes")
             {
                 DataTable partList = model.GetFeaturesOnOpKey(view.PartStorage, view.OpStorage);
-                DataBindFeature(partList);
+                DataBindFeaturesToFeatureDataGridView(partList);
             }
         }
 
@@ -137,6 +137,7 @@ namespace Feature_Inspection
             {
                 //Save Changes made in gridview back to the database
                 AdapterUpdate();
+                InitializeFeatureGridView();
             }
 
             else if (result == "No")
@@ -248,7 +249,7 @@ namespace Feature_Inspection
         /// This method sees which textbox is in focus in the feature page, and validates that those values match the DB.
         /// </summary>
         //TODO: Always called with "InitializeFeatureGridView()", could they be combined or is there any redundancy?
-        internal void ValidateTextBoxes()
+        internal void ValidateFeatureTabTextBoxes()
         {
             //Pressing enter key on part number text box
             if (view.PartTextBox.ContainsFocus)//partBoxFeature.ContainsFocus
@@ -270,10 +271,10 @@ namespace Feature_Inspection
             //As long as both textboxes are not empty
             if (view.PartNumber != "" && view.OperationNumber != "")
             {
-                DataTable featureList = model.GetFeaturesOnOpKey(view.PartNumber, view.OperationNumber);
-                DataBindFeature(featureList);
-                SetFeaturePageHeader();
-                StorePartOpNumbers();
+                DataTable featureTable = model.GetFeaturesOnOpKey(view.PartNumber, view.OperationNumber);
+                DataBindFeaturesToFeatureDataGridView(featureTable);
+                SetFeatureDataGridViewHeader();
+                StorePartOpNumbers();  //TODO: What is this Ian?
             }
         }
 
@@ -290,7 +291,7 @@ namespace Feature_Inspection
         /// <summary>
         /// This method sets the feature page header to match whatever part and op is currently being edited.
         /// </summary>
-        private void SetFeaturePageHeader()
+        private void SetFeatureDataGridViewHeader()
         {
             if (view.FeatureCount > 0)
             {
@@ -307,8 +308,10 @@ namespace Feature_Inspection
         /// TODO: create an accurate summary for this method.
         /// </summary>
         /// <param name="featureTable"></param>
-        private void DataBindFeature(DataTable featureTable)
+        private void DataBindFeaturesToFeatureDataGridView(DataTable featureTable)
         {
+            
+
             view.FeatureGridView.Columns.Clear();
 
             view.BindingSource = new BindingSource();
@@ -328,13 +331,10 @@ namespace Feature_Inspection
         /// <param name="featureTable"></param>
         private void ConfigureFeatureDataGridView(DataTable featureTable)
         {
-            int maxRows;
 
             HideFeatureColumns();
 
             SetHeaderTexts();
-
-            maxRows = featureTable.Rows.Count;
 
             SetUpFeatureTypeColumnComboBox();
 

@@ -164,6 +164,13 @@ namespace Feature_Inspection
                 inspectionChart.Visible = true;
                 inspectionChart.DataSource = table;
                 inspectionChart.DataBind();
+
+                //TODO: Find a way to set these properties below based on a feature that an operator would like to view in the chart
+                
+                //inspectionChart.ChartAreas[0].AxisY.Maximum = 1.2;  //This should be a little above max tolerance
+                //inspectionChart.ChartAreas[0].AxisY.Minimum = 1;    //A little below minimum tolerance
+                //inspectionChart.ChartAreas[0].AxisY.Interval = .02; //interval scale should be based on --> To Be Determined
+
             }
             catch { }
         }
@@ -215,17 +222,7 @@ namespace Feature_Inspection
         #region Feature Tab Methods
         // FEATURE TAB METHODS
 
-        //TODO: Is there a plan for this method?
-        public void ShowJobInformation(Job job)
-        {
-            throw new NotImplementedException();
-        }
-
-        //TODO: Is there a plan for this method?
-        public void ShowRelatedFeatures(IList<Feature> relatedFeaures)
-        {
-            throw new NotImplementedException();
-        }
+      
 
         #endregion
 
@@ -568,7 +565,7 @@ namespace Feature_Inspection
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void checkEnterKeyPressedFeatures(object sender, KeyEventArgs e)
+        private void checkEnterKeyPressedFeatures_KeyDown(object sender, KeyEventArgs e)
         {
             presenter.checkEnterKeyPressed(e);
         }
