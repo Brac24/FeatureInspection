@@ -291,10 +291,22 @@ namespace Feature_Inspection
         {
             chart.ChartAreas.Add("InspectionChart");
             chart.Series.Add("NominalSeries");
+            chart.Series.Add("UpperToleranceSeries");
+            chart.Series.Add("LowerToleranceSeries");
             chart.Titles.Add("TEST");
+            
             chart.Series["NominalSeries"].XValueMember = "Piece_ID";
             chart.Series["NominalSeries"].YValueMembers = "Measured_Value";
             chart.Series["NominalSeries"].ChartType = SeriesChartType.Line;
+
+            chart.Series["UpperToleranceSeries"].XValueMember = "Piece_ID";
+            chart.Series["UpperToleranceSeries"].YValueMembers = "Upper_Tolerance";
+            chart.Series["UpperToleranceSeries"].ChartType = SeriesChartType.Line;
+
+            chart.Series["LowerToleranceSeries"].XValueMember = "Piece_ID";
+            chart.Series["LowerToleranceSeries"].YValueMembers = "Lower_Tolerance";
+            chart.Series["LowerToleranceSeries"].ChartType = SeriesChartType.Line;
+
             chart.Titles[0].Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             chart.Titles[0].ForeColor = System.Drawing.Color.Gainsboro;
             chart.ChartAreas[0].BackColor = System.Drawing.Color.DimGray;
@@ -306,6 +318,8 @@ namespace Feature_Inspection
             chart.ChartAreas[0].AxisX.LabelStyle.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             chart.ChartAreas[0].AxisY.LabelStyle.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 
+            chart.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
+            chart.ChartAreas[0].CursorY.IsUserSelectionEnabled = true;
         }
 
         /// <summary>
@@ -351,6 +365,10 @@ namespace Feature_Inspection
                 view.InspectionChart.Visible = true;
                 view.InspectionChart.DataSource = table;
                 view.InspectionChart.DataBind();
+
+                //view.InspectionChart.ChartAreas[0].AxisY.Maximum = 1.111;  //This should be a little above max tolerance
+                //view.InspectionChart.ChartAreas[0].AxisY.Minimum = 1.0889;    //A little below minimum tolerance
+                //view.InspectionChart.ChartAreas[0].AxisY.Interval = .001; //interval scale should be based on --> To Be Determined
             }
             catch { }
         }
@@ -364,6 +382,8 @@ namespace Feature_Inspection
             view.ChartFocusComboBox.DisplayMember = "Nominal";
             view.ChartFocusComboBox.ValueMember = "Feature_Key";
             view.ChartFocusComboBox.DataSource = featuresTable;
+
+            
         }
 
         /// <summary>
@@ -421,7 +441,7 @@ namespace Feature_Inspection
 
                         if (featureTable.Rows.Count > 0)
                         {
-                            //Check if there are parts in position
+                            //Check if there are parts in position table
                             if (partList.Rows.Count > 0)
                             {
                                 //Get the parts if there are

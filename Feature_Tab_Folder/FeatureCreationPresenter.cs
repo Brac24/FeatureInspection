@@ -35,16 +35,22 @@ namespace Feature_Inspection
         /// This event handler, when Enter or Tab are pressed, will call to a validation method and a page view update.
         /// </summary>
         /// <param name="e"></param>
-        public void checkEnterKeyPressed(KeyEventArgs e)
+        public bool OnEnterKeyInitializeDataGridView(object sender, KeyEventArgs e)
         {
 
             SuppressKeyIfWhiteSpaceChar(e);
 
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
             {
-                ValidateFeatureTabTextBoxes();
+                ValidateFeatureTabTextBoxes(sender);
 
                 InitializeFeatureGridView();
+
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -54,7 +60,7 @@ namespace Feature_Inspection
         /// <param name="e"></param>
         public void leaveFocus(EventArgs e)
         {
-            ValidateFeatureTabTextBoxes();
+            //ValidateFeatureTabTextBoxes();
 
             InitializeFeatureGridView();
         }
@@ -249,15 +255,15 @@ namespace Feature_Inspection
         /// This method sees which textbox is in focus in the feature page, and validates that those values match the DB.
         /// </summary>
         //TODO: Always called with "InitializeFeatureGridView()", could they be combined or is there any redundancy?
-        internal void ValidateFeatureTabTextBoxes()
+        internal void ValidateFeatureTabTextBoxes(object sender)
         {
             //Pressing enter key on part number text box
-            if (view.PartTextBox.ContainsFocus)//partBoxFeature.ContainsFocus
+            if (sender == view.PartTextBox)//partBoxFeature.ContainsFocus
             {
                 CheckPartNumberExists(view.PartTextBox.Text);
             }
             //Pressing enter on op number text box
-            else if (view.FeatureOpTextBox.ContainsFocus)
+            else if (sender == view.FeatureOpTextBox)
             {
                 CheckOpNumberExists();
             }

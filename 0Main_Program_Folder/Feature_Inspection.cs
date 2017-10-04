@@ -269,6 +269,7 @@ namespace Feature_Inspection
             inspectionPresenter = new InspectionPresenter(this, model);
 
             inspectionPresenter.createGraphArea(inspectionChart);
+            
         }
 
         #endregion
@@ -452,6 +453,7 @@ namespace Feature_Inspection
         /// <param name="e"></param>
         private void inspectionEntryGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
+            inspectionPresenter.AdapterUpdateInspection();
             inspectionPresenter.BindFocusCharts();
         }
 
@@ -469,7 +471,7 @@ namespace Feature_Inspection
         /// <param name="e"></param>
         private void checkEnterKeyPressedFeatures_KeyDown(object sender, KeyEventArgs e)
         {
-            presenter.checkEnterKeyPressed(e);
+            presenter.OnEnterKeyInitializeDataGridView(sender, e);
         }
 
         /// <summary>

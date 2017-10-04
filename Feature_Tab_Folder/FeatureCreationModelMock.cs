@@ -181,7 +181,7 @@ namespace Feature_Inspection
         public DataTable GetChartData(int opKey, int featureKey)
         {
             DataTable features = new DataTable();
-            string getFeatures = "SELECT Measured_Value, Piece_ID FROM ATI_FeatureInspection.dbo.Position WHERE Inspection_Key_FK = (SELECT Inspection_Key FROM ATI_FeatureInspection.dbo.Inspection WHERE Op_Key = " + opKey + ") AND Feature_Key = " + featureKey + "; ";
+            string getFeatures = "SELECT Measured_Value, Piece_ID, Features.Upper_Tolerance, Features.Lower_Tolerance FROM ATI_FeatureInspection.dbo.Position LEFT JOIN ATI_FeatureInspection.dbo.Features ON Features.Feature_Key = Position.Feature_Key WHERE Inspection_Key_FK = (SELECT Inspection_Key FROM ATI_FeatureInspection.dbo.Inspection WHERE Op_Key = " + opKey + ") AND Position.Feature_Key = " + featureKey + "; ";
 
             using (OdbcConnection connection = new OdbcConnection(connection_string))
             using (OdbcCommand command = connection.CreateCommand())
@@ -455,14 +455,14 @@ namespace Feature_Inspection
 
         public void InsertPartsToPositionTable(int opkey, int lotSize)
         {
-            string insert = "DECLARE @Count INT, @RowFeature INT,  @MaxParts INT, @TotalFeatures INT " +
+            string insert = "DECLARE @Count INT, @RowFeature INT,  @MaxParts INT, @TotalFeauresFeatureTable INT " +
             "DECLARE @InspectionKey INT, @FeatureKey INT" +
             " SET @InspectionKey = (SELECT Inspection_Key FROM ATI_FeatureInspection.dbo.Inspection WHERE Op_Key = " + opkey + "); " +
-            " SET @TotalFeatures = (SELECT COUNT(Feature_Key) FROM ATI_FeatureInspection.dbo.Features WHERE Part_Number_FK = (SELECT Part_Number FROM ATI_FeatureInspection.dbo.Operation WHERE Op_Key = " + opkey + ") AND Operation_Number_FK = (SELECT Operation_Number FROM ATI_FeatureInspection.dbo.Operation WHERE Op_Key = " + opkey + ")); " +
+            " SET @TotalFeauresFeatureTable = (SELECT COUNT(Feature_Key) FROM ATI_FeatureInspection.dbo.Features WHERE Part_Number_FK = (SELECT Part_Number FROM ATI_FeatureInspection.dbo.Operation WHERE Op_Key = " + opkey + ") AND Operation_Number_FK = (SELECT Operation_Number FROM ATI_FeatureInspection.dbo.Operation WHERE Op_Key = " + opkey + ")); " +
             " SET @Count = 0; " +
             " SET @RowFeature = 0 " +
             " SET @MaxParts = " + lotSize +
-            " WHILE(@RowFeature < @TotalFeatures) " +
+            " WHILE(@RowFeature < @TotalFeauresFeatureTable) " +
             " BEGIN " +
             " SET @RowFeature = @RowFeature + 1 " +
             " SET @FeatureKey = (SELECT Feature_Key FROM (SELECT ROW_NUMBER() OVER(ORDER BY Feature_Key ASC) AS RowNumber, Feature_Key  FROM ATI_FeatureInspection.dbo.Features WHERE Part_Number_FK = (SELECT Part_Number FROM ATI_FeatureInspection.dbo.Operation WHERE Op_Key = " + opkey + ") AND Operation_Number_FK = (SELECT Operation_Number FROM ATI_FeatureInspection.dbo.Operation WHERE Op_Key = " + opkey + ") ) AS foo " +
