@@ -453,11 +453,7 @@ namespace Feature_Inspection
             }
         }
 
-        public void NewFeaturesForPartNumberOpNumber()
-        {
-            
-        }
-
+      
         public void InsertPartsToPositionTable(int opkey, int lotSize)
         {
             string insert = "DECLARE @Count INT, @RowFeature INT,  @MaxParts INT, @TotalNewFeatures INT " +
