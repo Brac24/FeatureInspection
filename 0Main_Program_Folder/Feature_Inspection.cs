@@ -121,7 +121,7 @@ namespace Feature_Inspection
 
         /*TODO: Currently this contains logic that is strongly linked to "numOnly_KeyDown", "suppressZeroFirstChar", and 
         "checkEnterKeyPressedInspection", refactoring should be taking all of these methods and events into consideration as there is 
-        definitely still some redundant/ovderiding logic among them.*/
+        definitely still some redundant/ovderiding logic among them.
         private bool SetOpKeyInfoInspection()
         {
             DataTable info = new DataTable();
@@ -235,6 +235,7 @@ namespace Feature_Inspection
             inspectionPageHeader.Text = "INSPECTION PAGE";
         }
 
+       */
         #endregion
 
         #region Feature Tab Methods
