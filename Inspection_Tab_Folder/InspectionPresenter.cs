@@ -447,7 +447,7 @@ namespace Feature_Inspection
                             {
                                 view.LotsizeTextBox.Text = model.GetLotSize(view.OpKey);
                                 view.LotsizeTextBox.ReadOnly = true;
-                                model.InsertPartsToPositionTable(view.OpKey, Int32.Parse(view.LotsizeTextBox.Text));
+                                model.InsertPartsToPositionTable(view.OpKey, Int32.Parse(view.LotsizeTextBox.Text)); // Add any new features that were added by lead
 
                                 //Get the parts if there are
                                 BindPartListBox(partList);
