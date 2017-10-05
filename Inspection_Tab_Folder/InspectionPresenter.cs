@@ -27,34 +27,6 @@ namespace Feature_Inspection
 
         }
 
-        /*TODO: Currently this contains logic that is strongly linked to "numOnly_KeyDown", "suppressZeroFirstChar", and 
-        "checkEnterKeyPressedInspection", refactoring should be taking all of these methods and events into consideration as there is 
-        definitely still some redundant/ovderiding logic among them.*/
-        public bool SetOpKeyInfoInspection()
-        {
-            DataTable info = new DataTable();
-            info = model.GetInfoFromOpKeyEntry(view.OpKey);
-
-            if (info.Rows.Count > 0)
-            {
-                view.PartNumberLabel.Text = info.Rows[0]["Part_Number"].ToString();
-                view.JobLabel.Text = info.Rows[0]["Job_Number"].ToString();
-                view.OperationLabel.Text = info.Rows[0]["Operation_Number"].ToString();
-                view.LotsizeTextBox.Focus();
-
-                return true;
-            }
-
-            else
-            {
-                fullInspectionPageClear();
-                MessageBox.Show(view.OpKeyTextBox.Text + " is invalid please enter a valid Op Key", "Invalid OpKey");
-                view.OpKeyTextBox.Clear();
-
-                return false;
-            }
-        }
-
         /// <summary>
         /// This method makes all columns in a grid view not sortable.
         /// </summary>
@@ -157,24 +129,6 @@ namespace Feature_Inspection
             createGridHeaders("Measured Actual", view.InspectionGrid);
             createGridHeaders("Inspection Tool", view.InspectionGrid);
             createGridHeaders("Redo Entry", view.InspectionGrid);
-        }
-
-        /// <summary>
-        /// This event handler supresses pressinng '0' when there are no characters in the sending textbox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void suppressZeroFirstChar(object sender, KeyEventArgs e)
-        {
-            var textbox = (TextBox)sender;
-            int lotChars = textbox.Text.Length;
-            if (lotChars == 0)
-            {
-                if (e.KeyCode == Keys.D0 || e.KeyCode == Keys.NumPad0)
-                {
-                    e.SuppressKeyPress = true;
-                }
-            }
         }
 
         /// <summary>
@@ -293,7 +247,7 @@ namespace Feature_Inspection
             chart.Series.Add("NominalSeries");
             chart.Series.Add("UpperToleranceSeries");
             chart.Series.Add("LowerToleranceSeries");
-            chart.Titles.Add("TEST");
+            chart.Titles.Add("Title");
             
             chart.Series["NominalSeries"].XValueMember = "Piece_ID";
             chart.Series["NominalSeries"].YValueMembers = "Measured_Value";
@@ -311,15 +265,45 @@ namespace Feature_Inspection
             chart.Titles[0].ForeColor = System.Drawing.Color.Gainsboro;
             chart.ChartAreas[0].BackColor = System.Drawing.Color.DimGray;
             chart.Series[0].Color = System.Drawing.Color.MediumSeaGreen;
+            chart.Series[1].Color = System.Drawing.Color.DarkRed;
+            chart.Series[2].Color = System.Drawing.Color.DarkRed;
             chart.Series[0].BorderWidth = 3;
-            chart.ChartAreas[0].Area3DStyle.Enable3D = false;
+            chart.Series[1].BorderWidth = 3;
+            chart.Series[2].BorderWidth = 3;
+            //chart.ChartAreas[0].Area3DStyle.Enable3D = true;
             chart.ChartAreas[0].AxisX.LabelStyle.ForeColor = System.Drawing.Color.Gainsboro;
             chart.ChartAreas[0].AxisY.LabelStyle.ForeColor = System.Drawing.Color.Gainsboro;
             chart.ChartAreas[0].AxisX.LabelStyle.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             chart.ChartAreas[0].AxisY.LabelStyle.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chart.Series[0].MarkerStyle = MarkerStyle.Square;
+            chart.Series[0].MarkerSize = 9;
 
             chart.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
             chart.ChartAreas[0].CursorY.IsUserSelectionEnabled = true;
+        }
+
+        /// <summary>
+        /// This method binds the opkey and feature to the graph area and makes them visible.
+        /// </summary>
+        public void BindFocusCharts()
+        {
+            try
+            {
+                DataTable table = model.GetChartData(view.OpKey, (int)view.ChartFocusComboBox.SelectedValue);
+                view.InspectionChart.Visible = true;
+                view.InspectionChart.DataSource = table;
+                view.InspectionChart.DataBind();
+
+                double max = view.InspectionChart.Series["UpperToleranceSeries"].Points[0].YValues[0];
+                double min = view.InspectionChart.Series["LowerToleranceSeries"].Points[0].YValues[0];
+                string title = view.InspectionChart.Series["NominalSeries"].Points[0].YValues[0].ToString();
+
+                view.InspectionChart.Titles[0].Text = title;
+                view.InspectionChart.ChartAreas[0].AxisY.Maximum = max + .0003;  //This should be a little above max tolerance
+                view.InspectionChart.ChartAreas[0].AxisY.Minimum = min - .0003;    //A little below minimum tolerance
+                //view.InspectionChart.ChartAreas[0].AxisY.Interval = .001; //interval scale should be based on --> To Be Determined
+            }
+            catch { }
         }
 
         /// <summary>
@@ -355,25 +339,6 @@ namespace Feature_Inspection
         }
 
         /// <summary>
-        /// This method binds the opkey and feature to the graph area and makes them visible.
-        /// </summary>
-        public void BindFocusCharts()
-        {
-            try
-            {
-                DataTable table = model.GetChartData(view.OpKey, (int)view.ChartFocusComboBox.SelectedValue);
-                view.InspectionChart.Visible = true;
-                view.InspectionChart.DataSource = table;
-                view.InspectionChart.DataBind();
-
-                //view.InspectionChart.ChartAreas[0].AxisY.Maximum = 1.111;  //This should be a little above max tolerance
-                //view.InspectionChart.ChartAreas[0].AxisY.Minimum = 1.0889;    //A little below minimum tolerance
-                //view.InspectionChart.ChartAreas[0].AxisY.Interval = .001; //interval scale should be based on --> To Be Determined
-            }
-            catch { }
-        }
-
-        /// <summary>
         /// This method binds nominal feature values to the graph focus combo box.
         /// </summary>
         /// <param name="featuresTable"></param>
@@ -405,6 +370,24 @@ namespace Feature_Inspection
             //Call EndEdit method before updating database
             view.InspectionBindingSource.EndEdit();
             model.AdapterUpdateInspection((DataTable)view.InspectionBindingSource.DataSource);
+        }
+
+        /// <summary>
+        /// This event handler supresses pressinng '0' when there are no characters in the sending textbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void suppressZeroFirstChar(object sender, KeyEventArgs e)
+        {
+            var textbox = (TextBox)sender;
+            int lotChars = textbox.Text.Length;
+            if (lotChars == 0)
+            {
+                if (e.KeyCode == Keys.D0 || e.KeyCode == Keys.NumPad0)
+                {
+                    e.SuppressKeyPress = true;
+                }
+            }
         }
 
         /*TODO: This is without at doubt our most bloated handler. I am not even sure how to start trimming the fat off it.
@@ -529,5 +512,34 @@ namespace Feature_Inspection
 
             }
         }
+
+        /*TODO: Currently this contains logic that is strongly linked to "numOnly_KeyDown", "suppressZeroFirstChar", and 
+        "checkEnterKeyPressedInspection", refactoring should be taking all of these methods and events into consideration as there is 
+        definitely still some redundant/ovderiding logic among them.*/
+        public bool SetOpKeyInfoInspection()
+        {
+            DataTable info = new DataTable();
+            info = model.GetInfoFromOpKeyEntry(view.OpKey);
+
+            if (info.Rows.Count > 0)
+            {
+                view.PartNumberLabel.Text = info.Rows[0]["Part_Number"].ToString();
+                view.JobLabel.Text = info.Rows[0]["Job_Number"].ToString();
+                view.OperationLabel.Text = info.Rows[0]["Operation_Number"].ToString();
+                view.LotsizeTextBox.Focus();
+
+                return true;
+            }
+
+            else
+            {
+                fullInspectionPageClear();
+                MessageBox.Show(view.OpKeyTextBox.Text + " is invalid please enter a valid Op Key", "Invalid OpKey");
+                view.OpKeyTextBox.Clear();
+
+                return false;
+            }
+        }
+
     }
 }
