@@ -43,5 +43,9 @@ namespace Feature_Inspection
 
         Label OperationLabel { get; set; }
 
+        Label ChartLabel1 { get; set; }
+
+        Label ChartLabel2 { get; set; }
+
     }
 }

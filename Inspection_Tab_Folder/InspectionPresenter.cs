@@ -291,12 +291,13 @@ namespace Feature_Inspection
 
                 double max = view.InspectionChart.Series["UpperToleranceSeries"].Points[0].YValues[0];
                 double min = view.InspectionChart.Series["LowerToleranceSeries"].Points[0].YValues[0];
+                double tol = (max - min) / 4;
                 string title = view.InspectionChart.Series["NominalSeries"].Points[0].YValues[0].ToString();
 
                 view.InspectionChart.Titles[0].Text = title;
-                view.InspectionChart.ChartAreas[0].AxisY.Maximum = max + .0003;  //This should be a little above max tolerance
-                view.InspectionChart.ChartAreas[0].AxisY.Minimum = min - .0003;    //A little below minimum tolerance
-                //view.InspectionChart.ChartAreas[0].AxisY.Interval = .001; //interval scale should be based on --> To Be Determined
+                view.InspectionChart.ChartAreas[0].AxisY.Maximum = max + tol;
+                view.InspectionChart.ChartAreas[0].AxisY.Minimum = min - tol;
+                view.InspectionChart.ChartAreas[0].AxisY.Interval = tol;
             }
             catch { }
         }
@@ -534,6 +535,18 @@ namespace Feature_Inspection
             else
             {
                 return false;
+            }
+        }
+
+        public void ShowChartDetails(MouseEventArgs e)
+        {
+
+            HitTestResult result = view.InspectionChart.HitTest(e.X, e.Y);
+
+            if (result.PointIndex > -1 && result.ChartArea != null)
+            {
+                view.ChartLabel1.Text = "Measured Dimension: " + result.Series.Points[result.PointIndex].YValues[0].ToString();
+                view.ChartLabel2.Text = "Part Inspected: " + result.Series.Points[result.PointIndex].XValue.ToString();
             }
         }
 

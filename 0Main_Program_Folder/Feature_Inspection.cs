@@ -70,6 +70,10 @@ namespace Feature_Inspection
 
         public Label JobLabel { get { return jobLabelInspection; } set { jobLabelInspection = value; } }
 
+        public Label ChartLabel1 { get { return partNumberLabel; } set { partNumberLabel = value; } }
+
+        public Label ChartLabel2 { get { return measuredLabel; } set { measuredLabel = value; } }
+
         public Label OperationLabel { get { return opLabelInspection; } set { opLabelInspection = value; } }
 
         public string PartStorage { get { return partStorageLabel.Text; } set { partStorageLabel.Text = value; } }
@@ -235,6 +239,11 @@ namespace Feature_Inspection
         private void inspectionEntryGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             inspectionPresenter.AdapterUpdateInspection();
+        }
+
+        private void inspectionChart_MouseMove(object sender, MouseEventArgs e)
+        {
+            inspectionPresenter.ShowChartDetails(e);
         }
 
         #endregion
