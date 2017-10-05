@@ -441,13 +441,17 @@ namespace Feature_Inspection
 
                         if (featureTable.Rows.Count > 0)
                         {
+                            
                             //Check if there are parts in position table
                             if (partList.Rows.Count > 0)
                             {
-                                //Get the parts if there are
-                                BindPartListBox(partList);
                                 view.LotsizeTextBox.Text = model.GetLotSize(view.OpKey);
                                 view.LotsizeTextBox.ReadOnly = true;
+                                model.InsertPartsToPositionTable(view.OpKey, Int32.Parse(view.LotsizeTextBox.Text));
+
+                                //Get the parts if there are
+                                BindPartListBox(partList);
+                                
                             }
                             else if (view.LotsizeTextBox.Text != "")
                             {
