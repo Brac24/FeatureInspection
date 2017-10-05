@@ -50,7 +50,6 @@ namespace Feature_Inspection
 
         public BindingSource InspectionBindingSource { get { return bindingSourceInspection; } set { bindingSourceInspection = value; } }
 
-        //redudant? couldn't we use ^^ "BindingSource" for anyplace we are calling "SampleBindingSource"
         public BindingSource SampleBindingSource { get { return sampleBindingSource; } set { sampleBindingSource = value; } }
 
         public BindingSource ListBoxBindingSource { get { return bindingSourceListBox; } set { bindingSourceListBox = value; } }
@@ -155,8 +154,14 @@ namespace Feature_Inspection
         of redos without ever changing the measured value.*/
         private void inspectionEntryGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            //TODO: stuff
-            //inspectionPresenter.lockCellInspection(sender, e);
+            try
+            {
+                inspectionPresenter.ifInspectionCellEqualsZero_NoLock();
+            }
+            catch
+            {
+
+            }
         }
 
         /// <summary>
@@ -200,7 +205,6 @@ namespace Feature_Inspection
         {
             //TODO: Table should be binding everytime the Measured value has been edited
             inspectionPresenter.AdapterUpdateInspection();
-            //inspectionPresenter.lockCellInspection(sender, e);
         }
 
         /// <summary>

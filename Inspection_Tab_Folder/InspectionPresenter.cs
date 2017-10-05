@@ -158,28 +158,27 @@ namespace Feature_Inspection
                 int pieceID = listBox.SelectedIndex + 1; //Due to 0 indexing
                 featureTable = UpdateTable(pieceID);
                 BindDataGridViewInspection(featureTable);
+                ifInspectionCellEqualsZero_NoLock();
             }
-
-            ifInspectionCellEqualsZero_NoLock();
         }
 
         /// <summary>
         /// This method checks to each row in the inspection grid to see if they equal 0 or not. If a value != 0, then the row locks.
         /// </summary>
-        private void ifInspectionCellEqualsZero_NoLock()
+        public void ifInspectionCellEqualsZero_NoLock()
         {
-            for (int i = 0; i < view.InspectionGrid.RowCount; i++)
-            {
-                float test = float.Parse(view.InspectionGrid.Rows[i].Cells[5].Value.ToString());
-                if (test != 0)
+                for (int i = 0; i < view.InspectionGrid.RowCount; i++)
                 {
-                    view.InspectionGrid.Rows[i].ReadOnly = true;
+                    float test = float.Parse(view.InspectionGrid.Rows[i].Cells[5].Value.ToString());
+                    if (test != 0)
+                    {
+                        view.InspectionGrid.Rows[i].ReadOnly = true;
+                    }
+                    else
+                    {
+                        view.InspectionGrid.Rows[i].ReadOnly = false;
+                    }
                 }
-                else
-                {
-                    view.InspectionGrid.Rows[i].ReadOnly = false;
-                }
-            }
         }
 
         /// <summary>
@@ -477,15 +476,16 @@ namespace Feature_Inspection
                         //Check if there are parts in position table
                         if (featureTable.Rows.Count > 0 && partList.Rows.Count > 0)
                         {
-                                view.LotsizeTextBox.Text = model.GetLotSize(view.OpKey);
-                                view.LotsizeTextBox.ReadOnly = true;
-                                model.InsertPartsToPositionTable(view.OpKey, Int32.Parse(view.LotsizeTextBox.Text)); // Add any new features that were added by lead
+                            view.LotsizeTextBox.Text = model.GetLotSize(view.OpKey);
+                            view.LotsizeTextBox.ReadOnly = true;
+                            model.InsertPartsToPositionTable(view.OpKey, Int32.Parse(view.LotsizeTextBox.Text)); // Add any new features that were added by lead
 
-                                //Get the parts if there are
-                                BindPartListBox(partList);
-                                int pieceID = view.PartsListBox.SelectedIndex + 1; //Due to 0 indexing
-                                featureTable = UpdateTable(pieceID);
-                                BindDataGridViewInspection(featureTable);
+                            //Get the parts if there are
+                            BindPartListBox(partList);
+                            int pieceID = view.PartsListBox.SelectedIndex + 1; //Due to 0 indexing
+                            featureTable = UpdateTable(pieceID);
+                            BindDataGridViewInspection(featureTable);
+                            ifInspectionCellEqualsZero_NoLock();
                         }
                         else
                         {
