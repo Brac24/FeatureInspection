@@ -434,7 +434,10 @@ namespace Feature_Inspection
 
                                 //Get the parts if there are
                                 BindPartListBox(partList);
-                                
+                                int pieceID = view.PartsListBox.SelectedIndex + 1; //Due to 0 indexing
+                                featureTable = UpdateTable(pieceID);
+                                BindDataGridViewInspection(featureTable);
+
                             }
                             else if (view.LotsizeTextBox.Text != "")
                             {
