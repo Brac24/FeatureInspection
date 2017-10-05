@@ -292,7 +292,7 @@ namespace Feature_Inspection
                 double max = view.InspectionChart.Series["UpperToleranceSeries"].Points[0].YValues[0];
                 double min = view.InspectionChart.Series["LowerToleranceSeries"].Points[0].YValues[0];
                 double tol = (max - min) / 4;
-                string title = view.InspectionChart.Series["NominalSeries"].Points[0].YValues[0].ToString();
+                string title = view.ChartFocusComboBox.Text;
 
                 view.InspectionChart.Titles[0].Text = title;
                 view.InspectionChart.ChartAreas[0].AxisY.Maximum = max + tol;
