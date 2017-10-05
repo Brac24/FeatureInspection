@@ -28,44 +28,44 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4307D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint2 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4306D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint3 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4301D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint4 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4301D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint5 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4305D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint6 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.43D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint7 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4296D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint8 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4301D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint9 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4299D);
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint10 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4305D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint11 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4305D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint12 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4305D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint13 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4305D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint14 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4305D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint15 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4305D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint16 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4305D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint17 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4305D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint18 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4305D);
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint19 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4295D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint20 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4295D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint21 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4295D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint22 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4295D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint23 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4295D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint24 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4295D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint25 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4295D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint26 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4295D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint27 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4295D);
-            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint55 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4307D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint56 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4306D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint57 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4301D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint58 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4301D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint59 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4305D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint60 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.43D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint61 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4296D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint62 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4301D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint63 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4299D);
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint64 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4305D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint65 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4305D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint66 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4305D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint67 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4305D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint68 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4305D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint69 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4305D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint70 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4305D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint71 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4305D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint72 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4305D);
+            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint73 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4295D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint74 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4295D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint75 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4295D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint76 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4295D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint77 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4295D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint78 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4295D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint79 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4295D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint80 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4295D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint81 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0.4295D);
+            System.Windows.Forms.DataVisualization.Charting.Title title3 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.featureEditGridView = new System.Windows.Forms.DataGridView();
             this.Feature = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Bubble = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -114,7 +114,10 @@
             this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
             this.inspectionChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tableLayoutPanel21 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel22 = new System.Windows.Forms.TableLayoutPanel();
             this.nextPartButton = new System.Windows.Forms.Button();
+            this.measuredLabel = new System.Windows.Forms.Label();
+            this.partNumberLabel = new System.Windows.Forms.Label();
             this.Report_Page = new System.Windows.Forms.TabPage();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
@@ -179,6 +182,7 @@
             this.tableLayoutPanel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.inspectionChart)).BeginInit();
             this.tableLayoutPanel21.SuspendLayout();
+            this.tableLayoutPanel22.SuspendLayout();
             this.Report_Page.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
             this.splitContainer4.Panel1.SuspendLayout();
@@ -221,14 +225,14 @@
             this.featureEditGridView.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.featureEditGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.featureEditGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.SeaGreen;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.featureEditGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle13.ForeColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.Color.SeaGreen;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.featureEditGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
             this.featureEditGridView.ColumnHeadersHeight = 64;
             this.featureEditGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.featureEditGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -240,14 +244,14 @@
             this.Sample,
             this.Tool,
             this.Delete});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.SeaGreen;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.featureEditGridView.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.Color.SeaGreen;
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.featureEditGridView.DefaultCellStyle = dataGridViewCellStyle14;
             this.featureEditGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.featureEditGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.featureEditGridView.EnableHeadersVisualStyles = false;
@@ -255,14 +259,14 @@
             this.featureEditGridView.Margin = new System.Windows.Forms.Padding(0);
             this.featureEditGridView.MultiSelect = false;
             this.featureEditGridView.Name = "featureEditGridView";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.SeaGreen;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.featureEditGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle15.ForeColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.Color.SeaGreen;
+            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.featureEditGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle15;
             this.featureEditGridView.RowHeadersVisible = false;
             this.featureEditGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.featureEditGridView.Size = new System.Drawing.Size(822, 423);
@@ -502,7 +506,7 @@
             this.opKeyBoxInspection.Size = new System.Drawing.Size(143, 26);
             this.opKeyBoxInspection.TabIndex = 0;
             this.opKeyBoxInspection.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.opKeyBoxInspection.KeyDown += new System.Windows.Forms.KeyEventHandler(this.keyDownOpLot_Textbox);
+            this.opKeyBoxInspection.KeyDown += new System.Windows.Forms.KeyEventHandler(this.numOnly_KeyDown);
             // 
             // label1
             // 
@@ -630,7 +634,7 @@
             this.lotSizeBoxInspection.Size = new System.Drawing.Size(143, 26);
             this.lotSizeBoxInspection.TabIndex = 1;
             this.lotSizeBoxInspection.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.lotSizeBoxInspection.KeyDown += new System.Windows.Forms.KeyEventHandler(this.keyDownOpLot_Textbox);
+            this.lotSizeBoxInspection.KeyDown += new System.Windows.Forms.KeyEventHandler(this.numOnly_KeyDown);
             // 
             // label22
             // 
@@ -764,12 +768,12 @@
             this.inspectionEntryGridView.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.inspectionEntryGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.inspectionEntryGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.MediumSeaGreen;
-            this.inspectionEntryGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle16.ForeColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.Color.MediumSeaGreen;
+            this.inspectionEntryGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
             this.inspectionEntryGridView.ColumnHeadersHeight = 64;
             this.inspectionEntryGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.inspectionEntryGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -778,14 +782,14 @@
             this.dataGridViewTextBoxColumn3,
             this.dataGridViewTextBoxColumn4,
             this.dataGridViewTextBoxColumn5});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.MediumSeaGreen;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.inspectionEntryGridView.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle17.ForeColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.Color.MediumSeaGreen;
+            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.inspectionEntryGridView.DefaultCellStyle = dataGridViewCellStyle17;
             this.inspectionEntryGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.inspectionEntryGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.inspectionEntryGridView.EnableHeadersVisualStyles = false;
@@ -793,8 +797,8 @@
             this.inspectionEntryGridView.Margin = new System.Windows.Forms.Padding(0);
             this.inspectionEntryGridView.MultiSelect = false;
             this.inspectionEntryGridView.Name = "inspectionEntryGridView";
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.inspectionEntryGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle18.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.inspectionEntryGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle18;
             this.inspectionEntryGridView.RowHeadersVisible = false;
             this.inspectionEntryGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.inspectionEntryGridView.Size = new System.Drawing.Size(822, 337);
@@ -864,12 +868,13 @@
             this.inspectionChart.TabIndex = 19;
             this.inspectionChart.TabStop = false;
             this.inspectionChart.Visible = false;
+            this.inspectionChart.MouseMove += new System.Windows.Forms.MouseEventHandler(this.inspectionChart_MouseMove);
             // 
             // tableLayoutPanel21
             // 
             this.tableLayoutPanel21.ColumnCount = 1;
             this.tableLayoutPanel21.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel21.Controls.Add(this.nextPartButton, 0, 0);
+            this.tableLayoutPanel21.Controls.Add(this.tableLayoutPanel22, 0, 0);
             this.tableLayoutPanel21.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel21.Location = new System.Drawing.Point(431, 0);
             this.tableLayoutPanel21.Margin = new System.Windows.Forms.Padding(0);
@@ -879,6 +884,25 @@
             this.tableLayoutPanel21.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel21.Size = new System.Drawing.Size(431, 225);
             this.tableLayoutPanel21.TabIndex = 20;
+            // 
+            // tableLayoutPanel22
+            // 
+            this.tableLayoutPanel22.ColumnCount = 2;
+            this.tableLayoutPanel22.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel22.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel22.Controls.Add(this.nextPartButton, 1, 2);
+            this.tableLayoutPanel22.Controls.Add(this.measuredLabel, 0, 0);
+            this.tableLayoutPanel22.Controls.Add(this.partNumberLabel, 0, 1);
+            this.tableLayoutPanel22.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel22.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel22.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel22.Name = "tableLayoutPanel22";
+            this.tableLayoutPanel22.RowCount = 3;
+            this.tableLayoutPanel22.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel22.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel22.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 128F));
+            this.tableLayoutPanel22.Size = new System.Drawing.Size(411, 205);
+            this.tableLayoutPanel22.TabIndex = 0;
             // 
             // nextPartButton
             // 
@@ -891,10 +915,29 @@
             this.nextPartButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
             this.nextPartButton.Name = "nextPartButton";
             this.nextPartButton.Size = new System.Drawing.Size(195, 35);
-            this.nextPartButton.TabIndex = 4;
+            this.nextPartButton.TabIndex = 5;
             this.nextPartButton.Text = "NEXT PART";
             this.nextPartButton.UseVisualStyleBackColor = false;
-            this.nextPartButton.Click += new System.EventHandler(this.nextPartButton_Click);
+            // 
+            // measuredLabel
+            // 
+            this.measuredLabel.AutoSize = true;
+            this.measuredLabel.Location = new System.Drawing.Point(3, 0);
+            this.measuredLabel.Name = "measuredLabel";
+            this.measuredLabel.Size = new System.Drawing.Size(45, 19);
+            this.measuredLabel.TabIndex = 6;
+            this.measuredLabel.Text = "Here";
+            this.measuredLabel.Visible = false;
+            // 
+            // partNumberLabel
+            // 
+            this.partNumberLabel.AutoSize = true;
+            this.partNumberLabel.Location = new System.Drawing.Point(3, 38);
+            this.partNumberLabel.Name = "partNumberLabel";
+            this.partNumberLabel.Size = new System.Drawing.Size(45, 19);
+            this.partNumberLabel.TabIndex = 7;
+            this.partNumberLabel.Text = "Here";
+            this.partNumberLabel.Visible = false;
             // 
             // Report_Page
             // 
@@ -1065,87 +1108,87 @@
             // summaryChart
             // 
             this.summaryChart.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            chartArea1.AxisX.IsLabelAutoFit = false;
-            chartArea1.AxisX.LabelStyle.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea1.AxisX.LabelStyle.ForeColor = System.Drawing.Color.Gainsboro;
-            chartArea1.AxisX.TitleFont = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea1.AxisX.TitleForeColor = System.Drawing.Color.Gainsboro;
-            chartArea1.AxisY.Interval = 0.0001D;
-            chartArea1.AxisY.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
-            chartArea1.AxisY.IsLabelAutoFit = false;
-            chartArea1.AxisY.IsStartedFromZero = false;
-            chartArea1.AxisY.LabelStyle.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea1.AxisY.LabelStyle.ForeColor = System.Drawing.Color.Gainsboro;
-            chartArea1.AxisY.Maximum = 0.431D;
-            chartArea1.AxisY.Minimum = 0.429D;
-            chartArea1.AxisY.ScaleView.SizeType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
-            chartArea1.AxisY.TitleFont = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea1.AxisY.TitleForeColor = System.Drawing.Color.Gainsboro;
-            chartArea1.AxisY2.ScaleView.Size = 0.4D;
-            chartArea1.BackColor = System.Drawing.Color.Gray;
-            chartArea1.Name = "ChartArea1";
-            this.summaryChart.ChartAreas.Add(chartArea1);
+            chartArea3.AxisX.IsLabelAutoFit = false;
+            chartArea3.AxisX.LabelStyle.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chartArea3.AxisX.LabelStyle.ForeColor = System.Drawing.Color.Gainsboro;
+            chartArea3.AxisX.TitleFont = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chartArea3.AxisX.TitleForeColor = System.Drawing.Color.Gainsboro;
+            chartArea3.AxisY.Interval = 0.0001D;
+            chartArea3.AxisY.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
+            chartArea3.AxisY.IsLabelAutoFit = false;
+            chartArea3.AxisY.IsStartedFromZero = false;
+            chartArea3.AxisY.LabelStyle.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chartArea3.AxisY.LabelStyle.ForeColor = System.Drawing.Color.Gainsboro;
+            chartArea3.AxisY.Maximum = 0.431D;
+            chartArea3.AxisY.Minimum = 0.429D;
+            chartArea3.AxisY.ScaleView.SizeType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
+            chartArea3.AxisY.TitleFont = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chartArea3.AxisY.TitleForeColor = System.Drawing.Color.Gainsboro;
+            chartArea3.AxisY2.ScaleView.Size = 0.4D;
+            chartArea3.BackColor = System.Drawing.Color.Gray;
+            chartArea3.Name = "ChartArea1";
+            this.summaryChart.ChartAreas.Add(chartArea3);
             this.summaryChart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.summaryChart.Location = new System.Drawing.Point(20, 0);
             this.summaryChart.Margin = new System.Windows.Forms.Padding(0);
             this.summaryChart.Name = "summaryChart";
-            series1.BorderWidth = 5;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Color = System.Drawing.Color.MediumSeaGreen;
-            series1.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            series1.Name = "Dimension Actuals";
-            series1.Points.Add(dataPoint1);
-            series1.Points.Add(dataPoint2);
-            series1.Points.Add(dataPoint3);
-            series1.Points.Add(dataPoint4);
-            series1.Points.Add(dataPoint5);
-            series1.Points.Add(dataPoint6);
-            series1.Points.Add(dataPoint7);
-            series1.Points.Add(dataPoint8);
-            series1.Points.Add(dataPoint9);
-            series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Single;
-            series2.BorderColor = System.Drawing.Color.Red;
-            series2.BorderWidth = 3;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
-            series2.Color = System.Drawing.Color.DarkRed;
-            series2.IsVisibleInLegend = false;
-            series2.Name = "Series2";
-            series2.Points.Add(dataPoint10);
-            series2.Points.Add(dataPoint11);
-            series2.Points.Add(dataPoint12);
-            series2.Points.Add(dataPoint13);
-            series2.Points.Add(dataPoint14);
-            series2.Points.Add(dataPoint15);
-            series2.Points.Add(dataPoint16);
-            series2.Points.Add(dataPoint17);
-            series2.Points.Add(dataPoint18);
-            series3.BorderWidth = 3;
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series3.Color = System.Drawing.Color.DarkRed;
-            series3.Name = "Dimension Limits";
-            series3.Points.Add(dataPoint19);
-            series3.Points.Add(dataPoint20);
-            series3.Points.Add(dataPoint21);
-            series3.Points.Add(dataPoint22);
-            series3.Points.Add(dataPoint23);
-            series3.Points.Add(dataPoint24);
-            series3.Points.Add(dataPoint25);
-            series3.Points.Add(dataPoint26);
-            series3.Points.Add(dataPoint27);
-            this.summaryChart.Series.Add(series1);
-            this.summaryChart.Series.Add(series2);
-            this.summaryChart.Series.Add(series3);
+            series7.BorderWidth = 5;
+            series7.ChartArea = "ChartArea1";
+            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series7.Color = System.Drawing.Color.MediumSeaGreen;
+            series7.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            series7.Name = "Dimension Actuals";
+            series7.Points.Add(dataPoint55);
+            series7.Points.Add(dataPoint56);
+            series7.Points.Add(dataPoint57);
+            series7.Points.Add(dataPoint58);
+            series7.Points.Add(dataPoint59);
+            series7.Points.Add(dataPoint60);
+            series7.Points.Add(dataPoint61);
+            series7.Points.Add(dataPoint62);
+            series7.Points.Add(dataPoint63);
+            series7.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Single;
+            series8.BorderColor = System.Drawing.Color.Red;
+            series8.BorderWidth = 3;
+            series8.ChartArea = "ChartArea1";
+            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
+            series8.Color = System.Drawing.Color.DarkRed;
+            series8.IsVisibleInLegend = false;
+            series8.Name = "Series2";
+            series8.Points.Add(dataPoint64);
+            series8.Points.Add(dataPoint65);
+            series8.Points.Add(dataPoint66);
+            series8.Points.Add(dataPoint67);
+            series8.Points.Add(dataPoint68);
+            series8.Points.Add(dataPoint69);
+            series8.Points.Add(dataPoint70);
+            series8.Points.Add(dataPoint71);
+            series8.Points.Add(dataPoint72);
+            series9.BorderWidth = 3;
+            series9.ChartArea = "ChartArea1";
+            series9.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series9.Color = System.Drawing.Color.DarkRed;
+            series9.Name = "Dimension Limits";
+            series9.Points.Add(dataPoint73);
+            series9.Points.Add(dataPoint74);
+            series9.Points.Add(dataPoint75);
+            series9.Points.Add(dataPoint76);
+            series9.Points.Add(dataPoint77);
+            series9.Points.Add(dataPoint78);
+            series9.Points.Add(dataPoint79);
+            series9.Points.Add(dataPoint80);
+            series9.Points.Add(dataPoint81);
+            this.summaryChart.Series.Add(series7);
+            this.summaryChart.Series.Add(series8);
+            this.summaryChart.Series.Add(series9);
             this.summaryChart.Size = new System.Drawing.Size(822, 443);
             this.summaryChart.TabIndex = 15;
             this.summaryChart.Text = "chart1";
-            title1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            title1.ForeColor = System.Drawing.Color.Gainsboro;
-            title1.Name = "Title1";
-            title1.Text = "FEATURE XXX ± XXX HISTORY";
-            this.summaryChart.Titles.Add(title1);
+            title3.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            title3.ForeColor = System.Drawing.Color.Gainsboro;
+            title3.Name = "Title1";
+            title3.Text = "FEATURE XXX ± XXX HISTORY";
+            this.summaryChart.Titles.Add(title3);
             // 
             // panel5
             // 
@@ -1648,6 +1691,8 @@
             this.tableLayoutPanel10.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.inspectionChart)).EndInit();
             this.tableLayoutPanel21.ResumeLayout(false);
+            this.tableLayoutPanel22.ResumeLayout(false);
+            this.tableLayoutPanel22.PerformLayout();
             this.Report_Page.ResumeLayout(false);
             this.splitContainer4.Panel1.ResumeLayout(false);
             this.splitContainer4.Panel2.ResumeLayout(false);
@@ -1768,7 +1813,6 @@
         private System.Windows.Forms.Label jobBossLabel;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel21;
-        private System.Windows.Forms.Button nextPartButton;
         private System.Windows.Forms.Label partStorageLabel;
         private System.Windows.Forms.Label opStorageLabel;
         private System.Windows.Forms.DataGridViewTextBoxColumn Feature;
@@ -1784,5 +1828,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel22;
+        private System.Windows.Forms.Button nextPartButton;
+        private System.Windows.Forms.Label measuredLabel;
+        private System.Windows.Forms.Label partNumberLabel;
     }
 }

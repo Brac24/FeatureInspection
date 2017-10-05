@@ -159,28 +159,27 @@ namespace Feature_Inspection
                 int pieceID = listBox.SelectedIndex + 1; //Due to 0 indexing
                 featureTable = UpdateTable(pieceID);
                 BindDataGridViewInspection(featureTable);
+                ifInspectionCellEqualsZero_NoLock();
             }
-
-            ifInspectionCellEqualsZero_NoLock();
         }
 
         /// <summary>
         /// This method checks to each row in the inspection grid to see if they equal 0 or not. If a value != 0, then the row locks.
         /// </summary>
-        private void ifInspectionCellEqualsZero_NoLock()
+        public void ifInspectionCellEqualsZero_NoLock()
         {
-            for (int i = 0; i < view.InspectionGrid.RowCount; i++)
-            {
-                float test = float.Parse(view.InspectionGrid.Rows[i].Cells[5].Value.ToString());
-                if (test != 0)
+                for (int i = 0; i < view.InspectionGrid.RowCount; i++)
                 {
-                    view.InspectionGrid.Rows[i].ReadOnly = true;
+                    float test = float.Parse(view.InspectionGrid.Rows[i].Cells[5].Value.ToString());
+                    if (test != 0)
+                    {
+                        view.InspectionGrid.Rows[i].ReadOnly = true;
+                    }
+                    else
+                    {
+                        view.InspectionGrid.Rows[i].ReadOnly = false;
+                    }
                 }
-                else
-                {
-                    view.InspectionGrid.Rows[i].ReadOnly = false;
-                }
-            }
         }
 
         /// <summary>
@@ -271,16 +270,12 @@ namespace Feature_Inspection
             chart.Series[0].BorderWidth = 3;
             chart.Series[1].BorderWidth = 3;
             chart.Series[2].BorderWidth = 3;
-            //chart.ChartAreas[0].Area3DStyle.Enable3D = true;
             chart.ChartAreas[0].AxisX.LabelStyle.ForeColor = System.Drawing.Color.Gainsboro;
             chart.ChartAreas[0].AxisY.LabelStyle.ForeColor = System.Drawing.Color.Gainsboro;
             chart.ChartAreas[0].AxisX.LabelStyle.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             chart.ChartAreas[0].AxisY.LabelStyle.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             chart.Series[0].MarkerStyle = MarkerStyle.Square;
             chart.Series[0].MarkerSize = 9;
-
-            chart.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
-            chart.ChartAreas[0].CursorY.IsUserSelectionEnabled = true;
         }
 
         /// <summary>
@@ -297,12 +292,13 @@ namespace Feature_Inspection
 
                 double max = view.InspectionChart.Series["UpperToleranceSeries"].Points[0].YValues[0];
                 double min = view.InspectionChart.Series["LowerToleranceSeries"].Points[0].YValues[0];
+                double tol = (max - min) / 4;
                 string title = view.InspectionChart.Series["NominalSeries"].Points[0].YValues[0].ToString();
 
                 view.InspectionChart.Titles[0].Text = title;
-                view.InspectionChart.ChartAreas[0].AxisY.Maximum = max + .0003;  //This should be a little above max tolerance
-                view.InspectionChart.ChartAreas[0].AxisY.Minimum = min - .0003;    //A little below minimum tolerance
-                //view.InspectionChart.ChartAreas[0].AxisY.Interval = .001; //interval scale should be based on --> To Be Determined
+                view.InspectionChart.ChartAreas[0].AxisY.Maximum = max + tol;
+                view.InspectionChart.ChartAreas[0].AxisY.Minimum = min - tol;
+                view.InspectionChart.ChartAreas[0].AxisY.Interval = tol;
             }
             catch { }
         }
@@ -371,17 +367,50 @@ namespace Feature_Inspection
             //Call EndEdit method before updating database
             view.InspectionBindingSource.EndEdit();
             model.AdapterUpdateInspection((DataTable)view.InspectionBindingSource.DataSource);
+            BindFocusCharts();
         }
 
         /// <summary>
-        /// This event handler supresses pressinng '0' when there are no characters in the sending textbox.
+        /// This method handles filtering non number characters out of the opKeyTextBox and lotSizeTextBox
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void suppressZeroFirstChar(object sender, KeyEventArgs e)
+        public void filterTextBox(object sender, KeyEventArgs e)
         {
             var textbox = (TextBox)sender;
             int lotChars = textbox.Text.Length;
+            //Block non-number characters
+            char currentKey = (char)e.KeyCode;
+            bool modifier = e.Control || e.Alt || e.Shift;
+            bool nonNumber = char.IsLetter(currentKey) ||
+                             char.IsSymbol(currentKey) ||
+                             char.IsWhiteSpace(currentKey) ||
+                             char.IsPunctuation(currentKey) ||
+                             char.IsSeparator(currentKey) ||
+                             char.IsUpper(currentKey);
+
+            //Allow navigation keyboard arrows
+            switch (e.KeyCode)
+            {
+                case Keys.Up:
+                case Keys.Down:
+                case Keys.Left:
+                case Keys.Right:
+                case Keys.Delete:
+                    e.SuppressKeyPress = false;
+                    return;
+                default:
+                    break;
+            }
+
+            if (modifier || nonNumber || e.KeyCode == Keys.OemPeriod || e.KeyCode == Keys.OemMinus || e.KeyCode == Keys.Oemcomma)
+                e.SuppressKeyPress = true;
+
+            if (e.KeyCode >= (Keys)96 && e.KeyCode <= (Keys)105)
+            {
+                e.SuppressKeyPress = false;
+            }
+
             if (lotChars == 0)
             {
                 if (e.KeyCode == Keys.D0 || e.KeyCode == Keys.NumPad0)
@@ -389,11 +418,34 @@ namespace Feature_Inspection
                     e.SuppressKeyPress = true;
                 }
             }
+
+            //Handle pasted Text
+            if (e.Control && e.KeyCode == Keys.V)
+            {
+                //Preview paste data (removing non-number characters)
+                string pasteText = Clipboard.GetText();
+                string strippedText = "";
+                for (int i = 0; i < pasteText.Length; i++)
+                {
+                    if (char.IsDigit(pasteText[i]))
+                        strippedText += pasteText[i].ToString();
+                }
+
+                if (strippedText != pasteText)
+                {
+                    //There were non-numbers in the pasted text
+                    e.SuppressKeyPress = true;
+                }
+                else
+                    e.SuppressKeyPress = false;
+            }
         }
 
-        /*TODO: This is without at doubt our most bloated handler. I am not even sure how to start trimming the fat off it.
-        It is also one of the offenders of redundant and overriding logic along with "SetOpKeyInfoInspection", "numOnly_KeyDown", 
-        "suppressZeroFirstChar" and "filterTextBox".*/
+        /// <summary>
+        /// This method checks to see if the opkey is valid and if it has an inspection table ready for it, and tells the user
+        /// whether or not the opkey is valid.
+        /// </summary>
+        /// <param name="e"></param>
         public void checkEnter_ValidateOpKey(KeyEventArgs e)
         {
 
@@ -423,46 +475,25 @@ namespace Feature_Inspection
                         featureList = model.GetFeatureList(view.OpKey);
                         BindFocusComboBox(featureList);
 
-                        if (featureTable.Rows.Count > 0)
+                        //Check if there are parts in position table
+                        if (featureTable.Rows.Count > 0 && partList.Rows.Count > 0)
                         {
-                            
-                            //Check if there are parts in position table
-                            if (partList.Rows.Count > 0)
-                            {
-                                view.LotsizeTextBox.Text = model.GetLotSize(view.OpKey);
-                                view.LotsizeTextBox.ReadOnly = true;
-                                model.InsertPartsToPositionTable(view.OpKey, Int32.Parse(view.LotsizeTextBox.Text)); // Add any new features that were added by lead
+                            view.LotsizeTextBox.Text = model.GetLotSize(view.OpKey);
+                            view.LotsizeTextBox.ReadOnly = true;
+                            model.InsertPartsToPositionTable(view.OpKey, Int32.Parse(view.LotsizeTextBox.Text)); // Add any new features that were added by lead
 
-                                //Get the parts if there are
-                                BindPartListBox(partList);
-                                int pieceID = view.PartsListBox.SelectedIndex + 1; //Due to 0 indexing
-                                featureTable = UpdateTable(pieceID);
-                                BindDataGridViewInspection(featureTable);
-
-                            }
-                            else if (view.LotsizeTextBox.Text != "")
-                            {
-                                //TODO: Need to get lot size inserted/updated to Inspection table
-
-                                // Insert Lot Size to Inspection Table
-                                model.InsertLotSizeToInspectionTable(Int32.Parse(view.LotsizeTextBox.Text), view.OpKey);
-                                //Create the parts in the positions table
-                                model.InsertPartsToPositionTable(view.OpKey, Int32.Parse(view.LotsizeTextBox.Text));
-
-                                //Get part list DataTable partList = model.GetPartsList(opkey);
-                                partList = model.GetPartsList(view.OpKey);
-
-                                //Bind the part list box BindListBox(partList);
-                                BindPartListBox(partList);
-
-                            }
+                            //Get the parts if there are
+                            BindPartListBox(partList);
+                            int pieceID = view.PartsListBox.SelectedIndex + 1; //Due to 0 indexing
+                            featureTable = UpdateTable(pieceID);
+                            BindDataGridViewInspection(featureTable);
+                            ifInspectionCellEqualsZero_NoLock();
                         }
                         else
                         {
                             //Message user to add features to this part num op num
                             smallInspectionPageClear();
                             MessageBox.Show("OpKey exists, enter in how many parts you have");
-
                         }
                     }
                     else
@@ -471,59 +502,22 @@ namespace Feature_Inspection
                         view.LotsizeTextBox.Clear();
                         model.CreateInspectionInInspectionTable(view.OpKey);
                         MessageBox.Show("Lead must add features to this Part and Operation number");
-
-                        //Run the logic inside the if loop above
-                        //Check if there are features related on op and part numn
-                        featureTable = model.GetFeaturesOnOpKey(view.OpKey);
-
-
-                        if (featureTable.Rows.Count > 0)
-                        {
-                            //Check if there are parts in position
-                            if (partList.Rows.Count > 0)
-                            {
-                                //Get the parts if there are
-                                BindPartListBox(partList);
-                                view.LotsizeTextBox.Text = model.GetLotSize(view.OpKey);
-                                view.LotsizeTextBox.ReadOnly = true;
-                            }
-                            else if (view.LotsizeTextBox.Text != "")
-                            {
-                                //TODO: Need to get lot size inserted/updated to Inspection table
-
-                                // Insert Lot Size to Inspection Table
-                                model.InsertLotSizeToInspectionTable(Int32.Parse(view.LotsizeTextBox.Text), view.OpKey);
-                                //Create the parts in the positions table
-                                model.InsertPartsToPositionTable(view.OpKey, Int32.Parse(view.LotsizeTextBox.Text));
-
-                                //Get part list DataTable partList = model.GetPartsList(opkey);
-                                partList = model.GetPartsList(view.OpKey);
-
-                                //Bind the part list box BindListBox(partList);
-                                BindPartListBox(partList);
-                            }
-                        }
-                        else
-                        {
-                            //Message user to add features to this part num op num
-                            MessageBox.Show("Lead must add features to this Part and Operation number");
-
-                        }
                     }
-
                 }
                 else
                 {
-                    //Not valid opkey
-
+                    fullInspectionPageClear();
+                    MessageBox.Show(view.OpKeyTextBox.Text + " is invalid please enter a valid Op Key", "Invalid OpKey");
+                    view.OpKeyTextBox.Clear();
                 }
-
             }
         }
 
-        /*TODO: Currently this contains logic that is strongly linked to "numOnly_KeyDown", "suppressZeroFirstChar", and 
-        "checkEnterKeyPressedInspection", refactoring should be taking all of these methods and events into consideration as there is 
-        definitely still some redundant/ovderiding logic among them.*/
+        /// <summary>
+        /// This method checks to see if the value in the opKeyTextBox exists in the DB, if it does, it populates the inspection page
+        /// with the part number, job number, and operation number of that opkey.
+        /// </summary>
+        /// <returns></returns>
         public bool SetOpKeyInfoInspection()
         {
             DataTable info = new DataTable();
@@ -541,11 +535,19 @@ namespace Feature_Inspection
 
             else
             {
-                fullInspectionPageClear();
-                MessageBox.Show(view.OpKeyTextBox.Text + " is invalid please enter a valid Op Key", "Invalid OpKey");
-                view.OpKeyTextBox.Clear();
-
                 return false;
+            }
+        }
+
+        public void ShowChartDetails(MouseEventArgs e)
+        {
+
+            HitTestResult result = view.InspectionChart.HitTest(e.X, e.Y);
+
+            if (result.PointIndex > -1 && result.ChartArea != null)
+            {
+                view.ChartLabel1.Text = "Measured Dimension: " + result.Series.Points[result.PointIndex].YValues[0].ToString();
+                view.ChartLabel2.Text = "Part Inspected: " + result.Series.Points[result.PointIndex].XValue.ToString();
             }
         }
 
