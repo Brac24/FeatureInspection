@@ -440,9 +440,11 @@ namespace Feature_Inspection
             }
         }
 
-        /*TODO: This is without at doubt our most bloated handler. I am not even sure how to start trimming the fat off it.
-        It is also one of the offenders of redundant and overriding logic along with "SetOpKeyInfoInspection", "numOnly_KeyDown", 
-        "suppressZeroFirstChar" and "filterTextBox".*/
+        /// <summary>
+        /// This method checks to see if the opkey is valid and if it has an inspection table ready for it, and tells the user
+        /// whether or not the opkey is valid.
+        /// </summary>
+        /// <param name="e"></param>
         public void checkEnter_ValidateOpKey(KeyEventArgs e)
         {
 
@@ -472,12 +474,9 @@ namespace Feature_Inspection
                         featureList = model.GetFeatureList(view.OpKey);
                         BindFocusComboBox(featureList);
 
-                        if (featureTable.Rows.Count > 0)
+                        //Check if there are parts in position table
+                        if (featureTable.Rows.Count > 0 && partList.Rows.Count > 0)
                         {
-                            
-                            //Check if there are parts in position table
-                            if (partList.Rows.Count > 0)
-                            {
                                 view.LotsizeTextBox.Text = model.GetLotSize(view.OpKey);
                                 view.LotsizeTextBox.ReadOnly = true;
                                 model.InsertPartsToPositionTable(view.OpKey, Int32.Parse(view.LotsizeTextBox.Text)); // Add any new features that were added by lead
@@ -487,24 +486,6 @@ namespace Feature_Inspection
                                 int pieceID = view.PartsListBox.SelectedIndex + 1; //Due to 0 indexing
                                 featureTable = UpdateTable(pieceID);
                                 BindDataGridViewInspection(featureTable);
-
-                            }
-                            else if (view.LotsizeTextBox.Text != "")
-                            {
-                                //TODO: Need to get lot size inserted/updated to Inspection table
-
-                                // Insert Lot Size to Inspection Table
-                                model.InsertLotSizeToInspectionTable(Int32.Parse(view.LotsizeTextBox.Text), view.OpKey);
-                                //Create the parts in the positions table
-                                model.InsertPartsToPositionTable(view.OpKey, Int32.Parse(view.LotsizeTextBox.Text));
-
-                                //Get part list DataTable partList = model.GetPartsList(opkey);
-                                partList = model.GetPartsList(view.OpKey);
-
-                                //Bind the part list box BindListBox(partList);
-                                BindPartListBox(partList);
-
-                            }
                         }
                         else
                         {
@@ -519,50 +500,14 @@ namespace Feature_Inspection
                         view.LotsizeTextBox.Clear();
                         model.CreateInspectionInInspectionTable(view.OpKey);
                         MessageBox.Show("Lead must add features to this Part and Operation number");
-
-                        //Run the logic inside the if loop above
-                        //Check if there are features related on op and part numn
-                        featureTable = model.GetFeaturesOnOpKey(view.OpKey);
-
-
-                        if (featureTable.Rows.Count > 0)
-                        {
-                            //Check if there are parts in position
-                            if (partList.Rows.Count > 0)
-                            {
-                                //Get the parts if there are
-                                BindPartListBox(partList);
-                                view.LotsizeTextBox.Text = model.GetLotSize(view.OpKey);
-                                view.LotsizeTextBox.ReadOnly = true;
-                            }
-                            else if (view.LotsizeTextBox.Text != "")
-                            {
-                                //TODO: Need to get lot size inserted/updated to Inspection table
-
-                                // Insert Lot Size to Inspection Table
-                                model.InsertLotSizeToInspectionTable(Int32.Parse(view.LotsizeTextBox.Text), view.OpKey);
-                                //Create the parts in the positions table
-                                model.InsertPartsToPositionTable(view.OpKey, Int32.Parse(view.LotsizeTextBox.Text));
-
-                                //Get part list DataTable partList = model.GetPartsList(opkey);
-                                partList = model.GetPartsList(view.OpKey);
-
-                                //Bind the part list box BindListBox(partList);
-                                BindPartListBox(partList);
-                            }
-                        }
-
                     }
-
                 }
                 else
                 {
                     fullInspectionPageClear();
                     MessageBox.Show(view.OpKeyTextBox.Text + " is invalid please enter a valid Op Key", "Invalid OpKey");
                     view.OpKeyTextBox.Clear();
-
                 }
-
             }
         }
 
