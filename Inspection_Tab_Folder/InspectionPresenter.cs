@@ -270,16 +270,12 @@ namespace Feature_Inspection
             chart.Series[0].BorderWidth = 3;
             chart.Series[1].BorderWidth = 3;
             chart.Series[2].BorderWidth = 3;
-            //chart.ChartAreas[0].Area3DStyle.Enable3D = true;
             chart.ChartAreas[0].AxisX.LabelStyle.ForeColor = System.Drawing.Color.Gainsboro;
             chart.ChartAreas[0].AxisY.LabelStyle.ForeColor = System.Drawing.Color.Gainsboro;
             chart.ChartAreas[0].AxisX.LabelStyle.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             chart.ChartAreas[0].AxisY.LabelStyle.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             chart.Series[0].MarkerStyle = MarkerStyle.Square;
             chart.Series[0].MarkerSize = 9;
-
-            chart.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
-            chart.ChartAreas[0].CursorY.IsUserSelectionEnabled = true;
         }
 
         /// <summary>
@@ -370,23 +366,77 @@ namespace Feature_Inspection
             //Call EndEdit method before updating database
             view.InspectionBindingSource.EndEdit();
             model.AdapterUpdateInspection((DataTable)view.InspectionBindingSource.DataSource);
+            BindFocusCharts();
         }
 
         /// <summary>
-        /// This event handler supresses pressinng '0' when there are no characters in the sending textbox.
+        /// This method handles filtering non number characters out of the opKeyTextBox and lotSizeTextBox
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void suppressZeroFirstChar(object sender, KeyEventArgs e)
+        public void filterTextBox(object sender, KeyEventArgs e)
         {
             var textbox = (TextBox)sender;
             int lotChars = textbox.Text.Length;
+            //Block non-number characters
+            char currentKey = (char)e.KeyCode;
+            bool modifier = e.Control || e.Alt || e.Shift;
+            bool nonNumber = char.IsLetter(currentKey) ||
+                             char.IsSymbol(currentKey) ||
+                             char.IsWhiteSpace(currentKey) ||
+                             char.IsPunctuation(currentKey) ||
+                             char.IsSeparator(currentKey) ||
+                             char.IsUpper(currentKey);
+
+            //Allow navigation keyboard arrows
+            switch (e.KeyCode)
+            {
+                case Keys.Up:
+                case Keys.Down:
+                case Keys.Left:
+                case Keys.Right:
+                case Keys.Delete:
+                    e.SuppressKeyPress = false;
+                    return;
+                default:
+                    break;
+            }
+
+            if (modifier || nonNumber || e.KeyCode == Keys.OemPeriod || e.KeyCode == Keys.OemMinus || e.KeyCode == Keys.Oemcomma)
+                e.SuppressKeyPress = true;
+
+            if (e.KeyCode >= (Keys)96 && e.KeyCode <= (Keys)105)
+            {
+                e.SuppressKeyPress = false;
+            }
+
             if (lotChars == 0)
             {
                 if (e.KeyCode == Keys.D0 || e.KeyCode == Keys.NumPad0)
                 {
                     e.SuppressKeyPress = true;
                 }
+            }
+
+            //Handle pasted Text
+            if (e.Control && e.KeyCode == Keys.V)
+            {
+                //Preview paste data (removing non-number characters)
+                string pasteText = Clipboard.GetText();
+                string strippedText = "";
+                for (int i = 0; i < pasteText.Length; i++)
+                {
+                    if (char.IsDigit(pasteText[i]))
+                        strippedText += pasteText[i].ToString();
+                }
+
+                if (strippedText != pasteText)
+                {
+                    //There were non-numbers in the pasted text
+                    e.SuppressKeyPress = true;
+                }
+                else
+                    e.SuppressKeyPress = false;
             }
         }
 
@@ -461,7 +511,6 @@ namespace Feature_Inspection
                             //Message user to add features to this part num op num
                             smallInspectionPageClear();
                             MessageBox.Show("OpKey exists, enter in how many parts you have");
-
                         }
                     }
                     else
@@ -502,27 +551,26 @@ namespace Feature_Inspection
                                 BindPartListBox(partList);
                             }
                         }
-                        else
-                        {
-                            //Message user to add features to this part num op num
-                            MessageBox.Show("Lead must add features to this Part and Operation number");
 
-                        }
                     }
 
                 }
                 else
                 {
-                    //Not valid opkey
+                    fullInspectionPageClear();
+                    MessageBox.Show(view.OpKeyTextBox.Text + " is invalid please enter a valid Op Key", "Invalid OpKey");
+                    view.OpKeyTextBox.Clear();
 
                 }
 
             }
         }
 
-        /*TODO: Currently this contains logic that is strongly linked to "numOnly_KeyDown", "suppressZeroFirstChar", and 
-        "checkEnterKeyPressedInspection", refactoring should be taking all of these methods and events into consideration as there is 
-        definitely still some redundant/ovderiding logic among them.*/
+        /// <summary>
+        /// This method checks to see if the value in the opKeyTextBox exists in the DB, if it does, it populates the inspection page
+        /// with the part number, job number, and operation number of that opkey.
+        /// </summary>
+        /// <returns></returns>
         public bool SetOpKeyInfoInspection()
         {
             DataTable info = new DataTable();
@@ -540,10 +588,6 @@ namespace Feature_Inspection
 
             else
             {
-                fullInspectionPageClear();
-                MessageBox.Show(view.OpKeyTextBox.Text + " is invalid please enter a valid Op Key", "Invalid OpKey");
-                view.OpKeyTextBox.Clear();
-
                 return false;
             }
         }

@@ -19,7 +19,7 @@ namespace Feature_Inspection
         private InspectionPresenter inspectionPresenter;
 
         BindingSource bindingSource;
-        BindingSource bindingSourceInspection = new BindingSource(); //Look at all references of "bindingSourceInspection" It looks a little unnecessary.
+        BindingSource bindingSourceInspection = new BindingSource();
         BindingSource bindingSourceListBox = new BindingSource();
         BindingSource bindingSourceFocusCombo = new BindingSource();
         BindingSource sampleBindingSource = new BindingSource();
@@ -112,30 +112,12 @@ namespace Feature_Inspection
         #endregion
 
 
-        /************************/
-        /******* Methods ********/
-        /************************/
-
-        #region Inspection Tab Methods
-        // INSPECTION TAB METHODS
-        
-
-        #endregion
-
-        #region Feature Tab Methods
-        // FEATURE TAB METHODS
-
-
-        #endregion
-
 
         /************************/
         /***  Event Handlers ****/
         /************************/
         /*All Handlers with <summary> blocks have been refactored or have been deemed simple enough.
-        Handlers that have TODOs on them are either non-functioning or are bloated and contain too much logic.
-        
-        I think that plenty of our handlers can also use clearer names, even though they have summaries.*/
+        Handlers that have TODOs on them are either non-functioning or are bloated and contain too much logic.*/
 
 
         #region Form Handlers
@@ -159,99 +141,9 @@ namespace Feature_Inspection
 
         #endregion
 
-        #region Multiple Tab Handlers
-
-        //HANDLER FOR BOTH TABS
-
-        /*TODO: Figure out if this can be handled with "filterTextBox" or "suppressZeroFirstChar" or "checkEnterKeyPressedInspection"
-        in a better way*/
-        private void numOnly_KeyDown(object sender, KeyEventArgs e)
-        {
-            filterTextBox(sender, e);
-
-            if (sender == opKeyBoxInspection)
-            {
-                checkEnterKeyPressedInspection(sender, e);
-            }
-        }
-
-        #endregion
-
         #region Inspection Handlers
 
-        //INSPECTION ENTRY TAB HANDLERS
-
-        /*TODO: This is without at doubt our most bloated handler. I am not even sure how to start trimming the fat off it.
-         It is also one of the offenders of redundant and overriding logic along with "SetOpKeyInfoInspection", "numOnly_KeyDown", 
-         "suppressZeroFirstChar" and "filterTextBox".*/
-        private void checkEnterKeyPressedInspection(object sender, KeyEventArgs e)
-        {
-            inspectionPresenter.checkEnter_ValidateOpKey(e);
-        }
-
-        /*TODO: one of our larger handlers that should be slimmed down. It is also one of the offenders of redundant and
-         overriding logic along with "SetOpKeyInfoInspection", "numOnly_KeyDown", "suppressZeroFirstChar" and "checkEnterKeyPressedInspection"
-         a specific example is that this event handler makes "suppressZeroFirstChar" only half functional.*/
-        private void filterTextBox(object sender, KeyEventArgs e)
-        {
-
-            int opChars = opKeyBoxInspection.Text.Length;
-            int lotChars = lotSizeBoxInspection.Text.Length;
-
-            //Block non-number characters
-            char currentKey = (char)e.KeyCode;
-            bool modifier = e.Control || e.Alt || e.Shift;
-            bool nonNumber = char.IsLetter(currentKey) ||
-                             char.IsSymbol(currentKey) ||
-                             char.IsWhiteSpace(currentKey) ||
-                             char.IsPunctuation(currentKey) ||
-                             char.IsSeparator(currentKey) ||
-                             char.IsUpper(currentKey);
-
-            //Allow navigation keyboard arrows
-            switch (e.KeyCode)
-            {
-                case Keys.Up:
-                case Keys.Down:
-                case Keys.Left:
-                case Keys.Right:
-                case Keys.PageUp:
-                case Keys.PageDown:
-                case Keys.Delete:
-                    e.SuppressKeyPress = false;
-                    return;
-                default:
-                    break;
-            }
-
-            if (modifier || nonNumber || e.KeyCode == Keys.OemPeriod || e.KeyCode == Keys.OemMinus || e.KeyCode == Keys.Oemcomma)
-                e.SuppressKeyPress = true;
-            if (e.KeyCode >= (Keys)96 && e.KeyCode <= (Keys)105)
-            {
-                e.SuppressKeyPress = false;
-            }
-
-            //Handle pasted Text
-            if (e.Control && e.KeyCode == Keys.V)
-            {
-                //Preview paste data (removing non-number characters)
-                string pasteText = Clipboard.GetText();
-                string strippedText = "";
-                for (int i = 0; i < pasteText.Length; i++)
-                {
-                    if (char.IsDigit(pasteText[i]))
-                        strippedText += pasteText[i].ToString();
-                }
-
-                if (strippedText != pasteText)
-                {
-                    //There were non-numbers in the pasted text
-                    e.SuppressKeyPress = true;
-                }
-                else
-                    e.SuppressKeyPress = false;
-            }
-        }
+        //INSPECTION ENTRY TAB HANDLERS    
 
         //TODO: Tried to make it so when you click out of OpKeyTextBox inspectionEntryGridView would update
         private void partBoxFeature_Leave(object sender, EventArgs e)
@@ -268,14 +160,15 @@ namespace Feature_Inspection
         }
 
         /// <summary>
-        /// This event handler stops Inspection page textboxes from accepting 0's as their first character.
+        /// This event handler triggers when a key is pressed down while the focus is on either textbox in the inspection page.
+        /// This event calls methods that filter accepted characters and validates values entered.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void keyDownOpLot_Textbox(object sender, KeyEventArgs e)
+        private void numOnly_KeyDown(object sender, KeyEventArgs e)
         {
-            inspectionPresenter.suppressZeroFirstChar(sender, e);
-            numOnly_KeyDown(sender, e);
+            inspectionPresenter.filterTextBox(sender, e);
+            inspectionPresenter.checkEnter_ValidateOpKey(e);
         }
 
         /// <summary>
@@ -307,7 +200,6 @@ namespace Feature_Inspection
         {
             //TODO: Table should be binding everytime the Measured value has been edited
             inspectionPresenter.AdapterUpdateInspection();
-            inspectionPresenter.BindFocusCharts();
             //inspectionPresenter.lockCellInspection(sender, e);
         }
 
@@ -339,7 +231,6 @@ namespace Feature_Inspection
         private void inspectionEntryGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             inspectionPresenter.AdapterUpdateInspection();
-            inspectionPresenter.BindFocusCharts();
         }
 
         #endregion
