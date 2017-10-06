@@ -503,7 +503,8 @@ namespace Feature_Inspection
             //Create the inspection in inspection table
             view.LotsizeTextBox.Clear();
             model.CreateInspectionInInspectionTable(view.OpKey);
-            MessageBox.Show("Creating Inspection");
+            smallInspectionPageClear();
+            //MessageBox.Show("Creating Inspection");            
         }
 
         private void BeginInpsectionDataGridViewInitialization(DataTable partList)
@@ -519,6 +520,11 @@ namespace Feature_Inspection
             if (featureTable.Rows.Count > 0)
             {
                 InitializeInspectionGridViewWithCorrespondingParts(partList);
+                view.InspectionHeaderText = view.PartsListBox.Text;
+                int pieceID = view.PartsListBox.SelectedIndex + 1; //Due to 0 indexing
+                featureTable = UpdateTable(pieceID);
+                BindDataGridViewInspection(featureTable);
+                ifInspectionCellEqualsZero_NoLock();
             }
             else
             {
