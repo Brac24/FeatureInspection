@@ -291,7 +291,7 @@ namespace Feature_Inspection
         /// <param name="e"></param>
         private void DeleteRowFeature_MouseUp(object sender, DataGridViewCellMouseEventArgs e)
         {
-            presenter.DeleteDataGridViewRow(sender, e);
+            presenter.DeleteDataGridViewRowOnRowDeleteButtonWasClicked(sender, e);
         }
 
         /// <summary>

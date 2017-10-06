@@ -35,14 +35,14 @@ namespace Feature_Inspection
         /// This event handler, when Enter or Tab are pressed, will call to a validation method and a page view update.
         /// </summary>
         /// <param name="e"></param>
-        public bool OnEnterKeyInitializeDataGridView(object sender, KeyEventArgs e)
+        public bool OnEnterKeyInitializeDataGridView(object textbox, KeyEventArgs e)
         {
 
             SuppressKeyIfWhiteSpaceChar(e);
 
-            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
+            if (e.KeyCode.Equals(Keys.Enter) || e.KeyCode.Equals(Keys.Tab))
             {
-                ValidateFeatureTabTextBoxes(sender);
+                ValidatePartAndOpNumberExistWhenEntered(textbox);
 
                 InitializeFeatureGridView();
 
@@ -69,11 +69,11 @@ namespace Feature_Inspection
         /// This event handler supresses any white space characters being entered.
         /// </summary>
         /// <param name="e"></param>
-        public void SuppressKeyIfWhiteSpaceChar(KeyEventArgs e)
+        private void SuppressKeyIfWhiteSpaceChar(KeyEventArgs e)
         {
             char currentKey = (char)e.KeyCode;
             bool nonNumber = char.IsWhiteSpace(currentKey); //Deals with all white space characters which inlcude tab, return, etc.
-
+            
             if (nonNumber)
                 e.SuppressKeyPress = true;
         }
@@ -83,16 +83,16 @@ namespace Feature_Inspection
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void DeleteDataGridViewRow(object sender, DataGridViewCellMouseEventArgs e)
+        public void DeleteDataGridViewRowOnRowDeleteButtonWasClicked(object sender, DataGridViewCellMouseEventArgs e)
         {
-            var table = (DataGridView)sender;
+            var featureDataGridView = (DataGridView)sender;
 
             if (e.RowIndex != -1)
             {
-                if (e.ColumnIndex == table.Columns[table.ColumnCount - 1].Index)
+                if (e.ColumnIndex == featureDataGridView.Columns[featureDataGridView.ColumnCount - 1].Index)
                 {
-                    table.Rows.RemoveAt(e.RowIndex);
-                    table.Refresh();
+                    featureDataGridView.Rows.RemoveAt(e.RowIndex);
+                    featureDataGridView.Refresh();
                 }
             }
         }
@@ -102,20 +102,37 @@ namespace Feature_Inspection
         /// </summary>
         /// <param name="e"></param>
         internal void SetSampleIDAndFeatureTypeHiddenColumns(DataGridViewCellEventArgs e)
-        {
+        {  
+
             if (view.FeatureGridView.Columns["Sample"] != null && view.FeatureGridView.Columns["FeatureTypeColumn"] != null)
             {
-
-                if (view.FeatureGridView.Columns["Sample"].Index == e.ColumnIndex)
-                {
-                    view.FeatureGridView.Rows[e.RowIndex].Cells["SampleID"].Value = view.FeatureGridView.Rows[e.RowIndex].Cells["Sample"].Value;
-                }
-                else if (view.FeatureGridView.Columns["FeatureTypeColumn"].Index == e.ColumnIndex)
-                {
-                    view.FeatureGridView.Rows[e.RowIndex].Cells["FeatureType"].Value = view.FeatureGridView.Rows[e.RowIndex].Cells["FeatureTypeColumn"].Value;
-                }
-
+                ChooseColumnToSet(e);
             }
+        }
+
+        private void ChooseColumnToSet(DataGridViewCellEventArgs e)
+        {
+            var sampleChosen = view.FeatureGridView.Columns["Sample"].Index.Equals(e.ColumnIndex);
+            var featureTypeChosen = view.FeatureGridView.Columns["FeatureTypeColumn"].Index.Equals(e.ColumnIndex);
+
+            if (sampleChosen)
+            {
+                SetSampleIDColumn(e.RowIndex);
+            }
+            else if (featureTypeChosen)
+            {
+                SetFeatureTypeColumn(e.RowIndex);
+            }
+        }
+
+        private void SetFeatureTypeColumn(int rowIndex)
+        {
+            view.FeatureGridView.Rows[rowIndex].Cells["FeatureType"].Value = view.FeatureGridView.Rows[rowIndex].Cells["FeatureTypeColumn"].Value;
+        }
+
+        private void SetSampleIDColumn(int rowIndex)
+        {
+            view.FeatureGridView.Rows[rowIndex].Cells["SampleID"].Value = view.FeatureGridView.Rows[rowIndex].Cells["Sample"].Value;
         }
 
         /// <summary>
@@ -255,15 +272,15 @@ namespace Feature_Inspection
         /// This method sees which textbox is in focus in the feature page, and validates that those values match the DB.
         /// </summary>
         //TODO: Always called with "InitializeFeatureGridView()", could they be combined or is there any redundancy?
-        internal void ValidateFeatureTabTextBoxes(object sender)
+        internal void ValidatePartAndOpNumberExistWhenEntered(object sender)
         {
             //Pressing enter key on part number text box
-            if (sender == view.PartTextBox)//partBoxFeature.ContainsFocus
+            if (sender.Equals(view.PartTextBox))//partBoxFeature.ContainsFocus
             {
                 CheckPartNumberExists(view.PartTextBox.Text);
             }
             //Pressing enter on op number text box
-            else if (sender == view.FeatureOpTextBox)
+            else if (sender.Equals(view.FeatureOpTextBox))
             {
                 CheckOpNumberExists();
             }
@@ -338,9 +355,9 @@ namespace Feature_Inspection
         private void ConfigureFeatureDataGridView(DataTable featureTable)
         {
 
-            HideFeatureColumns();
+            HideUnecessaryFeatureDataGridViewColumns();
 
-            SetHeaderTexts();
+            SetFeatureDataGridViewColumnHeaderTexts();
 
             SetUpFeatureTypeColumnComboBox();
 
@@ -472,7 +489,7 @@ namespace Feature_Inspection
         /// <summary>
         /// This method limits the specific grid columns that are visible to the user.
         /// </summary>
-        private void HideFeatureColumns()
+        private void HideUnecessaryFeatureDataGridViewColumns()
         {
             view.FeatureGridView.Columns["Feature_Key"].Visible = false;
             view.FeatureGridView.Columns["Part_Number_FK"].Visible = false;
@@ -483,12 +500,14 @@ namespace Feature_Inspection
             view.FeatureGridView.Columns["FeatureType"].Visible = false;
             view.FeatureGridView.Columns["Places"].Visible = false;
             view.FeatureGridView.Columns["SampleID"].Visible = false;
+            view.FeatureGridView.Columns["Upper_Tolerance"].Visible = false;
+            view.FeatureGridView.Columns["Lower_Tolerance"].Visible = false;
         }
 
         /// <summary>
         /// This method changes the names of a handful of columns in the feature grid.
         /// </summary>
-        private void SetHeaderTexts()
+        private void SetFeatureDataGridViewColumnHeaderTexts()
         {
             view.FeatureGridView.Columns["Sketch_Bubble"].HeaderText = "Sketch Bubble (Optional)";
             view.FeatureGridView.Columns["Plus_Tolerance"].HeaderText = "+";

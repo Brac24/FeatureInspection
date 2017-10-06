@@ -99,6 +99,7 @@ namespace Feature_Inspection
             view.InspectionGrid.Columns["Position_Key"].Visible = false;
             view.InspectionGrid.Columns["Old Value"].Visible = false;
             view.InspectionGrid.Columns["Oldest Value"].Visible = false;
+            ;
         }
 
         /// <summary>
