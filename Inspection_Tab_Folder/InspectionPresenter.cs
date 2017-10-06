@@ -49,9 +49,7 @@ namespace Feature_Inspection
 
             view.InspectionGrid.DataSource = null;
 
-            view.InspectionBindingSource = new BindingSource();
-
-            view.InspectionBindingSource.DataSource = featuresTable;
+            view.InspectionBindingSource = new BindingSource() { DataSource = featuresTable };
 
             view.InspectionGrid.DataSource = view.InspectionBindingSource;
 
@@ -446,8 +444,8 @@ namespace Feature_Inspection
         /// </summary>
         /// <param name="e"></param>
         public void checkEnter_ValidateOpKey(KeyEventArgs e)
-        {
 
+        {
             //Will work on an enter or tab key press
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
             {
@@ -458,7 +456,6 @@ namespace Feature_Inspection
                 DataTable partList = null;
                 String text = view.OpKeyTextBox.Text;
                 DataTable featureList = null;
-
                 partList = model.GetPartsList(view.OpKey);
                 isValidOpKey = SetOpKeyInfoInspection();
 
@@ -470,24 +467,37 @@ namespace Feature_Inspection
                     {
                         //Check if there are features related on op and part numn
                         featureTable = model.GetFeaturesOnOpKey(view.OpKey);
-
                         featureList = model.GetFeatureList(view.OpKey);
                         BindFocusComboBox(featureList);
 
-                        //Check if there are parts in position table
-                        if (featureTable.Rows.Count > 0 && partList.Rows.Count > 0)
+                        if (featureTable.Rows.Count > 0)
                         {
-                            view.LotsizeTextBox.Text = model.GetLotSize(view.OpKey);
-                            view.LotsizeTextBox.ReadOnly = true;
-                            model.InsertPartsToPositionTable(view.OpKey, Int32.Parse(view.LotsizeTextBox.Text)); // Add any new features that were added by lead
+                            //Check if there are parts in position table
+                            if (partList.Rows.Count > 0)
+                            {
+                                //Get the parts if there are
+                                BindPartListBox(partList);
+                                view.LotsizeTextBox.Text = model.GetLotSize(view.OpKey);
+                                view.LotsizeTextBox.ReadOnly = true;
+                            }
 
-                            //Get the parts if there are
-                            BindPartListBox(partList);
-                            int pieceID = view.PartsListBox.SelectedIndex + 1; //Due to 0 indexing
-                            featureTable = UpdateTable(pieceID);
-                            BindDataGridViewInspection(featureTable);
-                            ifInspectionCellEqualsZero_NoLock();
+                            else if (view.LotsizeTextBox.Text != "")
+                            {
+                                //TODO: Need to get lot size inserted/updated to Inspection table
+                                // Insert Lot Size to Inspection Table
+                                model.InsertLotSizeToInspectionTable(Int32.Parse(view.LotsizeTextBox.Text), view.OpKey);
+
+                                //Create the parts in the positions table
+                                model.InsertPartsToPositionTable(view.OpKey, Int32.Parse(view.LotsizeTextBox.Text));
+                        
+                                //Get part list DataTable partList = model.GetPartsList(opkey);
+                                partList = model.GetPartsList(view.OpKey);
+
+                                //Bind the part list box BindListBox(partList);
+                                BindPartListBox(partList);
+                            }
                         }
+
                         else
                         {
                             //Message user to add features to this part num op num
@@ -495,19 +505,58 @@ namespace Feature_Inspection
                             MessageBox.Show("OpKey exists, enter in how many parts you have");
                         }
                     }
+
                     else
                     {
-                        //Create the inspection in inspection table
+                       //Create the inspection in inspection table
                         view.LotsizeTextBox.Clear();
                         model.CreateInspectionInInspectionTable(view.OpKey);
                         MessageBox.Show("Lead must add features to this Part and Operation number");
+
+                        //Run the logic inside the if loop above
+                        //Check if there are features related on op and part numn
+                        featureTable = model.GetFeaturesOnOpKey(view.OpKey);
+
+                        if (featureTable.Rows.Count > 0)
+                        {
+                            //Check if there are parts in position
+                            if (partList.Rows.Count > 0)
+                            {
+                                //Get the parts if there are
+                                BindPartListBox(partList);
+                                view.LotsizeTextBox.Text = model.GetLotSize(view.OpKey);
+                                view.LotsizeTextBox.ReadOnly = true;
+                            }
+
+                            else if (view.LotsizeTextBox.Text != "")
+                            {
+                                //TODO: Need to get lot size inserted/updated to Inspection table
+                                // Insert Lot Size to Inspection Table
+                                model.InsertLotSizeToInspectionTable(Int32.Parse(view.LotsizeTextBox.Text), view.OpKey);
+
+                                //Create the parts in the positions table
+                                model.InsertPartsToPositionTable(view.OpKey, Int32.Parse(view.LotsizeTextBox.Text));
+
+                                //Get part list DataTable partList = model.GetPartsList(opkey);
+                                partList = model.GetPartsList(view.OpKey);
+
+                                //Bind the part list box BindListBox(partList);
+                                BindPartListBox(partList);
+                            }
+                        }
+
+                        else
+                        {
+
+                            //Message user to add features to this part num op num
+                            MessageBox.Show("Lead must add features to this Part and Operation number");
+                        }
                     }
                 }
+
                 else
                 {
-                    fullInspectionPageClear();
-                    MessageBox.Show(view.OpKeyTextBox.Text + " is invalid please enter a valid Op Key", "Invalid OpKey");
-                    view.OpKeyTextBox.Clear();
+                    //Not valid opkey
                 }
             }
         }
