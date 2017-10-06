@@ -102,20 +102,37 @@ namespace Feature_Inspection
         /// </summary>
         /// <param name="e"></param>
         internal void SetSampleIDAndFeatureTypeHiddenColumns(DataGridViewCellEventArgs e)
-        {
+        {  
+
             if (view.FeatureGridView.Columns["Sample"] != null && view.FeatureGridView.Columns["FeatureTypeColumn"] != null)
             {
-
-                if (view.FeatureGridView.Columns["Sample"].Index == e.ColumnIndex)
-                {
-                    view.FeatureGridView.Rows[e.RowIndex].Cells["SampleID"].Value = view.FeatureGridView.Rows[e.RowIndex].Cells["Sample"].Value;
-                }
-                else if (view.FeatureGridView.Columns["FeatureTypeColumn"].Index == e.ColumnIndex)
-                {
-                    view.FeatureGridView.Rows[e.RowIndex].Cells["FeatureType"].Value = view.FeatureGridView.Rows[e.RowIndex].Cells["FeatureTypeColumn"].Value;
-                }
-
+                ChooseColumnToSet(e);
             }
+        }
+
+        private void ChooseColumnToSet(DataGridViewCellEventArgs e)
+        {
+            var sampleChosen = view.FeatureGridView.Columns["Sample"].Index.Equals(e.ColumnIndex);
+            var featureTypeChosen = view.FeatureGridView.Columns["FeatureTypeColumn"].Index.Equals(e.ColumnIndex);
+
+            if (sampleChosen)
+            {
+                SetSampleIDColumn(e.RowIndex);
+            }
+            else if (featureTypeChosen)
+            {
+                SetFeatureTypeColumn(e.RowIndex);
+            }
+        }
+
+        private void SetFeatureTypeColumn(int rowIndex)
+        {
+            view.FeatureGridView.Rows[rowIndex].Cells["FeatureType"].Value = view.FeatureGridView.Rows[rowIndex].Cells["FeatureTypeColumn"].Value;
+        }
+
+        private void SetSampleIDColumn(int rowIndex)
+        {
+            view.FeatureGridView.Rows[rowIndex].Cells["SampleID"].Value = view.FeatureGridView.Rows[rowIndex].Cells["Sample"].Value;
         }
 
         /// <summary>
