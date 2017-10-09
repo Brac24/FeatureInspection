@@ -26,9 +26,9 @@ namespace Feature_Inspection
 
         string PartStorage { get; set; }
 
-        string OperationNumber { get; }
+        string OperationNumber { get; set; }
 
-        string PartNumber { get; }
+        string PartNumber { get; set; }
 
         int FeatureCount { get; }
 

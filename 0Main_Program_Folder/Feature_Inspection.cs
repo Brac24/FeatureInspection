@@ -84,7 +84,7 @@ namespace Feature_Inspection
 
         public string InspectionHeaderText { set { inspectionPageHeader.Text = value.ToString(); } }
 
-        public string OperationNumber { get { return opBoxFeature.Text; } }
+        public string OperationNumber { get { return opBoxFeature.Text; } set { opBoxFeature.Text = value; } }
 
         public string JobNumber { get { return jobLabelInspection.Text; } set { jobLabelInspection.Text = value; } }
 
