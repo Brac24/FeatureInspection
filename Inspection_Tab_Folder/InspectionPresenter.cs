@@ -333,7 +333,7 @@ namespace Feature_Inspection
                 HideInspectionColumns();
                 SetupRedoButtonColumn();
                 DisableSortableColumns();
-                MessageBox.Show("Please enter your part count.");
+                MessageBox.Show("Features have been added to this operation. Please enter your part count.");
                 view.InspectionGrid.Columns.Remove("Redo_Column");
             }
 

@@ -566,24 +566,25 @@ namespace Feature_Inspection
             {
 
                 view.FeaturePageHeaderText = "FEATURES PAGE";
-                MessageBox.Show("Please Enter an Operation Number");
                 view.FeatureOpTextBox.Clear();
                 DataTable featureTable = model.GetFeaturesOnOpKey(view.PartNumber, view.OperationNumber);
                 DataBindFeaturesToFeatureDataGridView(featureTable);
+                MessageBox.Show("Please Enter an Operation Number");
             }
             else if (model.OpExists(view.OperationNumber, view.PartNumber))
             {
-                MessageBox.Show("This is a valid Part and Operation Number");
                 view.FeatureGridView.Focus();
                 view.FeaturePageHeaderText = "PART " + view.PartNumber + " OP " + view.OperationNumber + " FEATURES";
+                MessageBox.Show("This is a valid Part and Operation Number");
             }
             else
             {
-                MessageBox.Show("Op Number does not exist for this Part Number");
+               
                 view.FeaturePageHeaderText = "FEATURES PAGE";
                 DataTable featureTable = model.GetFeaturesOnOpKey(view.PartNumber, view.OperationNumber);
                 DataBindFeaturesToFeatureDataGridView(featureTable);
                 view.FeatureOpTextBox.Clear();
+                MessageBox.Show("Op Number does not exist for this Part Number");
             }
         }
 
