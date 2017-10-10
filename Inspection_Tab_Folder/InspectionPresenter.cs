@@ -45,6 +45,7 @@ namespace Feature_Inspection
         /// <param name="featuresTable"></param>
         public void BindDataGridViewInspection(DataTable featuresTable)
         {
+            bool caught = false;
             view.InspectionGrid.Columns.Clear();
 
             view.InspectionGrid.DataSource = null;
@@ -53,9 +54,17 @@ namespace Feature_Inspection
 
             view.InspectionGrid.DataSource = view.InspectionBindingSource;
 
-            HideInspectionColumns();
+            try
+            {
+                HideInspectionColumns();
 
-            SetInspectionReadOnlyColumns();
+                SetInspectionReadOnlyColumns();
+            }
+
+            catch
+            {
+                caught = true;
+            }
 
             SetupRedoButtonColumn();
 
@@ -112,6 +121,7 @@ namespace Feature_Inspection
                 RedoButtonColumn.CellTemplate.Style.SelectionBackColor = Color.DarkRed;
                 RedoButtonColumn.HeaderText = "Redo Entry";
                 RedoButtonColumn.Text = "Redo";
+                RedoButtonColumn.Name = "Redo_Column";
                 view.InspectionGrid.Columns.Insert(view.InspectionGrid.Columns.Count, RedoButtonColumn);
                 RedoButtonColumn.UseColumnTextForButtonValue = true;
             }
@@ -281,10 +291,12 @@ namespace Feature_Inspection
         /// </summary>
         public void BindFocusCharts()
         {
+            bool caught = false;
+            DataTable table;
+
             try
             {
-                DataTable table = model.GetChartData(view.OpKey, (int)view.ChartFocusComboBox.SelectedValue);
-                view.InspectionChart.Visible = true;
+                table = model.GetChartData(view.OpKey, (int)view.ChartFocusComboBox.SelectedValue);
                 view.InspectionChart.DataSource = table;
                 view.InspectionChart.DataBind();
 
@@ -298,7 +310,33 @@ namespace Feature_Inspection
                 view.InspectionChart.ChartAreas[0].AxisY.Minimum = min - tol;
                 view.InspectionChart.ChartAreas[0].AxisY.Interval = tol;
             }
-            catch { }
+            catch
+            {
+                caught = true;
+                view.InspectionChart.Visible = false;
+            }
+
+            if (!caught)
+            {
+                view.InspectionChart.Visible = true;
+            }
+        }
+
+        public void noInspectionStartClear()
+        {
+            if (view.InspectionChart.Visible == false)
+            {
+                view.ChartFocusComboBox.DataSource = null;
+                view.InspectionHeaderText = "INSPECTION PAGE";
+                view.PartsListBox.DataSource = null;
+                view.LotsizeTextBox.Clear();
+                HideInspectionColumns();
+                SetupRedoButtonColumn();
+                DisableSortableColumns();
+                MessageBox.Show("Please enter your part count.");
+                view.InspectionGrid.Columns.Remove("Redo_Column");
+            }
+
         }
 
         /// <summary>
@@ -366,6 +404,7 @@ namespace Feature_Inspection
             view.InspectionBindingSource.EndEdit();
             model.AdapterUpdateInspection((DataTable)view.InspectionBindingSource.DataSource);
             BindFocusCharts();
+            noInspectionStartClear();
         }
 
         /// <summary>
@@ -547,7 +586,6 @@ namespace Feature_Inspection
             else if (view.LotsizeTextBox.Text != "")
             {
                 SetUpDataAndListBox();
-
             }
         }
 
