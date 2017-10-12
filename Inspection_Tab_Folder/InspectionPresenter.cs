@@ -314,6 +314,12 @@ namespace Feature_Inspection
                 view.InspectionChart.ChartAreas[0].AxisY.Minimum = min - tol;
                 view.InspectionChart.ChartAreas[0].AxisY.Interval = tol;
                 ChartDataWarning();
+                TrimChartPartCount();
+                for (int i = 0; i < view.InspectionChart.Series[0].Points.Count; i++)
+                {
+                    DataPoint d = view.InspectionChart.Series[0].Points[i];
+                    d.Label = view.InspectionChart.Series[0].Points[i].YValues[0].ToString();
+                }
             }
             catch
             {
@@ -334,7 +340,8 @@ namespace Feature_Inspection
 
             for (int i = 0; i < view.InspectionChart.Series[0].Points.Count; i++)
             {
-                if (view.InspectionChart.Series[0].Points[i].YValues[0] > (max * .9))
+
+                if (view.InspectionChart.Series[0].Points[i].YValues[0] > (max * .95))
                 {
                     view.InspectionChart.Series[0].Points[i].Color = Color.Orange;
                     //MessageBox.Show("Last Part Inspected was near your upper limit. Consider offsetting or other actions to get closer to nominal.");
@@ -342,11 +349,11 @@ namespace Feature_Inspection
 
                 if (view.InspectionChart.Series[0].Points[i].YValues[0] >= (max))
                 {
-                    view.InspectionChart.Series[0].Points[i].Color = Color.DarkRed;
+                    view.InspectionChart.Series[0].Points[i].Color = Color.Red;
                     //MessageBox.Show("Last Part Inspected outside your upper limit. Take action so next part is within tolerance.");
                 }
 
-                if (view.InspectionChart.Series[0].Points[i].YValues[0] < (min * 1.1))
+                if (view.InspectionChart.Series[0].Points[i].YValues[0] < (min * 1.05))
                 {
                     view.InspectionChart.Series[0].Points[i].Color = Color.Orange;
                     //MessageBox.Show("Last Part Inspected was near your lower limit. Consider offsetting or other actions to get closer to nominal.");
@@ -354,7 +361,7 @@ namespace Feature_Inspection
 
                 if (view.InspectionChart.Series[0].Points[i].YValues[0] <= (min))
                 {
-                    view.InspectionChart.Series[0].Points[i].Color = Color.DarkRed;
+                    view.InspectionChart.Series[0].Points[i].Color = Color.Red;
                     //MessageBox.Show("Last Part Inspected outside your lower limit. Take action so next part is within tolerance.");
                 }
                 if (view.InspectionChart.Series[0].Points[i].YValues[0] == 0)
@@ -362,6 +369,26 @@ namespace Feature_Inspection
                     view.InspectionChart.Series[0].Points[i].IsEmpty = true;
                 }
 
+            }
+        }
+
+        public void TrimChartPartCount()
+        {
+
+            for (int i = 0; i > view.InspectionChart.Series[0].Points.Count - 1; i++)
+            {
+                if (view.InspectionChart.Series[0].Points[i].IsEmpty == false)
+                {
+                    try
+                    {
+                        view.InspectionChart.ChartAreas[0].AxisX.Maximum = i + 1;
+                        view.InspectionChart.ChartAreas[0].AxisX.Minimum = i - 20;
+                    }
+                    catch
+                    {
+
+                    }
+                }
             }
         }
 

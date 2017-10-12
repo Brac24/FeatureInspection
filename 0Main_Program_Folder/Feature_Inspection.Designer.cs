@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -160,6 +161,7 @@
             this.cancelButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.textBox2 = new System.Windows.Forms.TextBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.featureEditGridView)).BeginInit();
             this.mainTabControl.SuspendLayout();
             this.Inspection_Page.SuspendLayout();
@@ -1650,6 +1652,10 @@
             this.textBox2.Size = new System.Drawing.Size(172, 26);
             this.textBox2.TabIndex = 0;
             // 
+            // toolTip1
+            // 
+            this.toolTip1.Popup += new System.Windows.Forms.PopupEventHandler(this.toolTip1_Popup);
+            // 
             // Feature_Inspection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1833,5 +1839,6 @@
         private System.Windows.Forms.Button nextPartButton;
         private System.Windows.Forms.Label measuredLabel;
         private System.Windows.Forms.Label partNumberLabel;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
