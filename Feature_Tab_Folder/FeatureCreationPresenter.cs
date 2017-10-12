@@ -564,7 +564,6 @@ namespace Feature_Inspection
         {
             if (view.OperationNumber == "")
             {
-
                 view.FeaturePageHeaderText = "FEATURES PAGE";
                 view.FeatureOpTextBox.Clear();
                 DataTable featureTable = model.GetFeaturesOnOpKey(view.PartNumber, view.OperationNumber);
@@ -579,7 +578,6 @@ namespace Feature_Inspection
             }
             else
             {
-               
                 view.FeaturePageHeaderText = "FEATURES PAGE";
                 DataTable featureTable = model.GetFeaturesOnOpKey(view.PartNumber, view.OperationNumber);
                 DataBindFeaturesToFeatureDataGridView(featureTable);

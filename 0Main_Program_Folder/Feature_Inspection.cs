@@ -189,6 +189,7 @@ namespace Feature_Inspection
         private void nextPartButton_Click(object sender, EventArgs e)
         {
             inspectionPresenter.GotToNextPart();
+
         }
 
         /// <summary>

@@ -200,6 +200,10 @@ namespace Feature_Inspection
             {
                 view.ListBoxIndex = (view.ListBoxIndex + 1 < view.ListBoxCount) ?
                 view.ListBoxIndex += 1 : view.ListBoxIndex = 0;
+                DataTable featureList = model.GetFeatureList(view.OpKey);
+                BindFocusComboBox(featureList);
+                string title = view.ChartFocusComboBox.Text;
+                view.InspectionChart.Titles[0].Text = title;
             }
         }
 
@@ -309,6 +313,7 @@ namespace Feature_Inspection
                 view.InspectionChart.ChartAreas[0].AxisY.Maximum = max + tol;
                 view.InspectionChart.ChartAreas[0].AxisY.Minimum = min - tol;
                 view.InspectionChart.ChartAreas[0].AxisY.Interval = tol;
+                ChartDataWarning();
             }
             catch
             {
@@ -322,11 +327,49 @@ namespace Feature_Inspection
             }
         }
 
+        public void ChartDataWarning()
+        {
+            double max = view.InspectionChart.Series["UpperToleranceSeries"].Points[0].YValues[0];
+            double min = view.InspectionChart.Series["LowerToleranceSeries"].Points[0].YValues[0];
+
+            for (int i = 0; i < view.InspectionChart.Series[0].Points.Count; i++)
+            {
+                if (view.InspectionChart.Series[0].Points[i].YValues[0] > (max * .9))
+                {
+                    view.InspectionChart.Series[0].Points[i].Color = Color.Orange;
+                    //MessageBox.Show("Last Part Inspected was near your upper limit. Consider offsetting or other actions to get closer to nominal.");
+                }
+
+                if (view.InspectionChart.Series[0].Points[i].YValues[0] >= (max))
+                {
+                    view.InspectionChart.Series[0].Points[i].Color = Color.DarkRed;
+                    //MessageBox.Show("Last Part Inspected outside your upper limit. Take action so next part is within tolerance.");
+                }
+
+                if (view.InspectionChart.Series[0].Points[i].YValues[0] < (min * 1.1))
+                {
+                    view.InspectionChart.Series[0].Points[i].Color = Color.Orange;
+                    //MessageBox.Show("Last Part Inspected was near your lower limit. Consider offsetting or other actions to get closer to nominal.");
+                }
+
+                if (view.InspectionChart.Series[0].Points[i].YValues[0] <= (min))
+                {
+                    view.InspectionChart.Series[0].Points[i].Color = Color.DarkRed;
+                    //MessageBox.Show("Last Part Inspected outside your lower limit. Take action so next part is within tolerance.");
+                }
+                if (view.InspectionChart.Series[0].Points[i].YValues[0] == 0)
+                {
+                    view.InspectionChart.Series[0].Points[i].IsEmpty = true;
+                }
+
+            }
+        }
+
         public void noInspectionStartClear()
         {
             if (view.InspectionChart.Visible == false)
             {
-                view.ChartFocusComboBox.DataSource = null;
+                //view.ChartFocusComboBox.DataSource = null;
                 view.InspectionHeaderText = "INSPECTION PAGE";
                 view.PartsListBox.DataSource = null;
                 view.LotsizeTextBox.Clear();
