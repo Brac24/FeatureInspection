@@ -203,7 +203,7 @@ namespace Feature_Inspection
                 DataTable featureList = model.GetFeatureList(view.OpKey);
                 BindFocusComboBox(featureList);
                 string title = view.ChartFocusComboBox.Text;
-                view.InspectionChart.Titles[0].Text = title;
+                BindFocusCharts();
             }
         }
 
@@ -302,21 +302,6 @@ namespace Feature_Inspection
             {
                 table = model.GetChartData(view.OpKey, (int)view.ChartFocusComboBox.SelectedValue);
                 view.InspectionChart.DataSource = table;
-                view.InspectionChart.DataBind();
-
-                double max = view.InspectionChart.Series["UpperToleranceSeries"].Points[0].YValues[0];
-                double min = view.InspectionChart.Series["LowerToleranceSeries"].Points[0].YValues[0];
-                double nom = view.InspectionChart.Series["NominalSeries"].Points[0].YValues[0];
-                double tol = (max - min) / 4;
-                string title ="Nominal: " + nom.ToString() + "   +" + (max-nom).ToString() + "   -" + (nom-min).ToString();
-
-                view.InspectionChart.Titles[0].Text = title;
-                view.InspectionChart.Titles[0].BackColor = Color.FromArgb(15, 15, 15);
-                view.InspectionChart.ChartAreas[0].AxisY.Maximum = max + tol;
-                view.InspectionChart.ChartAreas[0].AxisY.Minimum = min - tol;
-                view.InspectionChart.ChartAreas[0].AxisY.Interval = tol;
-                ChartDataWarning();
-                TrimChartPartCount();
             }
             catch
             {
@@ -326,11 +311,49 @@ namespace Feature_Inspection
 
             if (!caught)
             {
-                view.InspectionChart.Visible = true;
+                view.InspectionChart.Visible = true; 
+                view.InspectionChart.DataBind();
+
+                double max = view.InspectionChart.Series["UpperToleranceSeries"].Points[0].YValues[0];
+                double min = view.InspectionChart.Series["LowerToleranceSeries"].Points[0].YValues[0];
+                double nom = view.InspectionChart.Series["NominalSeries"].Points[0].YValues[0];
+                double tol = (max - min) / 4;
+                string title = "NOMINAL: " + nom.ToString() + "   HIGH: " + (max).ToString() + "   LOW: " + (min).ToString();
+
+                view.InspectionChart.Titles[0].Text = title;
+                view.InspectionChart.Titles[0].BackColor = Color.FromArgb(15, 15, 15);
+                view.InspectionChart.ChartAreas[0].AxisY.Maximum = max + tol;
+                view.InspectionChart.ChartAreas[0].AxisY.Minimum = min - tol;
+                view.InspectionChart.ChartAreas[0].AxisY.Interval = tol;
+                ChartDataLabeling();
+                TrimChartPartCount();
+                //ChartDataWarning();
             }
         }
 
         public void ChartDataWarning()
+        {
+            int j = 0;
+            for (int i = 0; i < view.InspectionChart.Series[0].Points.Count; i++)
+            {
+                if (view.InspectionChart.Series[0].Points[i].IsEmpty == false)
+                {
+                    j++;
+                }
+            }
+
+            if (view.InspectionChart.Series[0].Points[j - 1].Color.Name == "Orange")
+            {
+                MessageBox.Show("Warning");
+            }
+
+            if (view.InspectionChart.Series[0].Points[j - 1].Color.Name == "Red")
+            {
+                MessageBox.Show("You Done Goofed, Kid!");
+            }
+        }
+
+        public void ChartDataLabeling()
         {
             double max = view.InspectionChart.Series["UpperToleranceSeries"].Points[0].YValues[0];
             double min = view.InspectionChart.Series["LowerToleranceSeries"].Points[0].YValues[0];
@@ -338,67 +361,41 @@ namespace Feature_Inspection
             for (int i = 0; i < view.InspectionChart.Series[0].Points.Count; i++)
             {
 
-                if (view.InspectionChart.Series[0].Points[i].YValues[0] > (max * .95))
+                if (view.InspectionChart.Series[0].Points[i].YValues[0] > (max * .95) || view.InspectionChart.Series[0].Points[i].YValues[0] < (min * 1.05))
                 {
                     view.InspectionChart.Series[0].Points[i].Color = Color.Orange;
                     DataPoint d = view.InspectionChart.Series[0].Points[i];
                     d.Label = view.InspectionChart.Series[0].Points[i].YValues[0].ToString();
                     d.LabelBackColor = Color.Gainsboro;
-                    //MessageBox.Show("Last Part Inspected was near your upper limit. Consider offsetting or other actions to get closer to nominal.");
                 }
 
-                if (view.InspectionChart.Series[0].Points[i].YValues[0] >= (max))
+                if (view.InspectionChart.Series[0].Points[i].YValues[0] > (max) || view.InspectionChart.Series[0].Points[i].YValues[0] < (min))
                 {
                     view.InspectionChart.Series[0].Points[i].Color = Color.Red;
                     DataPoint d = view.InspectionChart.Series[0].Points[i];
                     d.Label = view.InspectionChart.Series[0].Points[i].YValues[0].ToString();
-                    d.LabelBackColor = Color.Gainsboro;
-                    d.LabelForeColor = Color.DarkRed;
-                    //MessageBox.Show("Last Part Inspected outside your upper limit. Take action so next part is within tolerance.");
+                    d.LabelBackColor = Color.Black;
+                    d.LabelForeColor = Color.Red;
                 }
 
-                if (view.InspectionChart.Series[0].Points[i].YValues[0] < (min * 1.05))
-                {
-                    view.InspectionChart.Series[0].Points[i].Color = Color.Orange;
-                    DataPoint d = view.InspectionChart.Series[0].Points[i];
-                    d.Label = view.InspectionChart.Series[0].Points[i].YValues[0].ToString();
-                    d.LabelBackColor = Color.Gainsboro;
-                    //MessageBox.Show("Last Part Inspected was near your lower limit. Consider offsetting or other actions to get closer to nominal.");
-                }
-
-                if (view.InspectionChart.Series[0].Points[i].YValues[0] <= (min))
-                {
-                    view.InspectionChart.Series[0].Points[i].Color = Color.Red;
-                    DataPoint d = view.InspectionChart.Series[0].Points[i];
-                    d.Label = view.InspectionChart.Series[0].Points[i].YValues[0].ToString();
-                    d.LabelBackColor = Color.Gainsboro;
-                    d.LabelForeColor = Color.DarkRed;
-                    //MessageBox.Show("Last Part Inspected outside your lower limit. Take action so next part is within tolerance.");
-                }
                 if (view.InspectionChart.Series[0].Points[i].YValues[0] == 0)
                 {
                     view.InspectionChart.Series[0].Points[i].IsEmpty = true;
                 }
-
             }
         }
+
+
 
         public void TrimChartPartCount()
         {
 
-            for (int i = 0; i > view.InspectionChart.Series[0].Points.Count - 1; i++)
+            for (int i = 0; i < view.InspectionChart.Series[0].Points.Count - 1; i++)
             {
                 if (view.InspectionChart.Series[0].Points[i].IsEmpty == false)
                 {
-                    try
-                    {
-                        view.InspectionChart.ChartAreas[0].AxisX.Maximum = i + 1;
-                        view.InspectionChart.ChartAreas[0].AxisX.Minimum = i - 20;
-                    }
-                    catch
-                    {
-
-                    }
+                    //view.InspectionChart.ChartAreas[0].AxisX.Maximum = i + 1;
+                    //view.InspectionChart.ChartAreas[0].AxisX.Minimum = i - 20;
                 }
             }
         }
