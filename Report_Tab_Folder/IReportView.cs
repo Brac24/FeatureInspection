@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Feature_Inspection.Report_Tab_Folder
+namespace Feature_Inspection
 {
-    class IReportView
+    interface IReportView
     {
+
     }
 }
