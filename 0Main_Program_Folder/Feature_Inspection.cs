@@ -64,6 +64,8 @@ namespace Feature_Inspection
 
         public ComboBox ReportTypeComboBox { get { return reportTypeDropdown; } set { reportTypeDropdown = value; } }
 
+        public ComboBox ReportFocusComboBox { get { return reportFocusComboBox; } set { reportFocusComboBox = value; } }
+
         public TextBox LotsizeTextBox { get { return lotSizeBoxInspection; } set { lotSizeBoxInspection = value; } }
 
         public TextBox OpKeyTextBox { get { return opKeyBoxInspection; } set { opKeyBoxInspection = value; } }
@@ -71,6 +73,8 @@ namespace Feature_Inspection
         public ListBox PartsListBox { get { return partsListBox; } set { partsListBox = value; } }
 
         public Label InspectionPageHeader { get { return inspectionPageHeader; } set { inspectionPageHeader = value; } }
+
+        public Label ReportPageHeader { get { return reportPageHeader; } set { reportPageHeader = value; } }
 
         public Label PartNumberLabel { get { return partNumberLabelInspection; } set { partNumberLabelInspection = value; } }
 
@@ -154,6 +158,7 @@ namespace Feature_Inspection
             reportPresenter = new ReportPresenter(this, model);
 
             inspectionPresenter.createGraphArea(inspectionChart);
+            reportPresenter.createGraphArea(ReportChart);
             
         }
 
@@ -386,11 +391,34 @@ namespace Feature_Inspection
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void reportNumOnly_KeyDown(object sender, KeyEventArgs e)
+        private void reportTextBox_Check_Filter(object sender, KeyEventArgs e)
         {
-            reportPresenter.filterTextBox(sender, e);
-            reportPresenter.checkEnter_ValidateOpKey(e);
+            reportPresenter.check_ReportScope(sender, e);
         }
+
+        /// <summary>
+        /// This event handler is fired on part and operation number text boxes and checks 
+        /// the enter key was pressed in each of these
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void checkEnterKeyPressedReport_KeyDown(object sender, KeyEventArgs e)
+        {
+            //Same method that is called in second case of "check_ReportScope"
+            reportPresenter.OnEnterKeyInitializeDataGridView(sender, e);
+        }
+
+        /// <summary>
+        /// Handles when the value selected in the inspection focus combo box changes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ReportFocusCombo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            reportPresenter.DataBindReportFocus();
+        }
+
+
 
         #endregion
 

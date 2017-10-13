@@ -325,7 +325,7 @@ namespace Feature_Inspection
                 view.InspectionChart.ChartAreas[0].AxisY.Minimum = min - tol;
                 view.InspectionChart.ChartAreas[0].AxisY.Interval = tol;
                 ChartDataLabeling();
-                TrimChartPartCount();
+                //TrimChartPartCount();
                 //ChartDataWarning();
             }
         }
@@ -393,8 +393,8 @@ namespace Feature_Inspection
             {
                 if (view.InspectionChart.Series[0].Points[i].IsEmpty == false)
                 {
-                    //view.InspectionChart.ChartAreas[0].AxisX.Maximum = i + 1;
-                    //view.InspectionChart.ChartAreas[0].AxisX.Minimum = i - 20;
+                    view.InspectionChart.ChartAreas[0].AxisX.Maximum = i + 1;
+                    view.InspectionChart.ChartAreas[0].AxisX.Minimum = i - 20;
                 }
             }
         }
