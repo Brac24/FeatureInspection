@@ -176,18 +176,18 @@ namespace Feature_Inspection
         /// </summary>
         public void ifInspectionCellEqualsZero_NoLock()
         {
-                for (int i = 0; i < view.InspectionGrid.RowCount; i++)
+            for (int i = 0; i < view.InspectionGrid.RowCount; i++)
+            {
+                float test = float.Parse(view.InspectionGrid.Rows[i].Cells[5].Value.ToString());
+                if (test != 0)
                 {
-                    float test = float.Parse(view.InspectionGrid.Rows[i].Cells[5].Value.ToString());
-                    if (test != 0)
-                    {
-                        view.InspectionGrid.Rows[i].ReadOnly = true;
-                    }
-                    else
-                    {
-                        view.InspectionGrid.Rows[i].ReadOnly = false;
-                    }
+                    view.InspectionGrid.Rows[i].ReadOnly = true;
                 }
+                else
+                {
+                    view.InspectionGrid.Rows[i].ReadOnly = false;
+                }
+            }
         }
 
         /// <summary>
@@ -224,7 +224,6 @@ namespace Feature_Inspection
                     {
                         view.InspectionGrid.Rows[e.RowIndex].Cells["Oldest Value"].Value = view.InspectionGrid.Rows[e.RowIndex].Cells["Old Value"].Value;
                         view.InspectionGrid.Rows[e.RowIndex].Cells["Old Value"].Value = view.InspectionGrid.Rows[e.RowIndex].Cells["Measured Actual"].Value;
-
                         table.Rows[e.RowIndex].ReadOnly = false;
                     }
                     else
