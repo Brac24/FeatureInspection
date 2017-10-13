@@ -132,7 +132,14 @@ namespace Feature_Inspection
 
         private void SetSampleIDColumn(int rowIndex)
         {
-            view.FeatureGridView.Rows[rowIndex].Cells["SampleID"].Value = view.FeatureGridView.Rows[rowIndex].Cells["Sample"].Value;
+            if(view.FeatureGridView.Rows[rowIndex].Cells["Sample"].Value != null)
+            {
+                view.FeatureGridView.Rows[rowIndex].Cells["SampleID"].Value = view.FeatureGridView.Rows[rowIndex].Cells["Sample"].Value;
+            }
+            else
+            {
+                MessageBox.Show("Please Choose a sample");
+            }
         }
 
         /// <summary>

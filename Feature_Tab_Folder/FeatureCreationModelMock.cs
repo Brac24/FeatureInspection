@@ -453,29 +453,31 @@ namespace Feature_Inspection
             }
         }
 
-      
+
         public void InsertPartsToPositionTable(int opkey, int lotSize)
         {
-            string insert = "DECLARE @Count INT, @RowFeature INT,  @MaxParts INT, @TotalNewFeatures INT " +
-            "DECLARE @InspectionKey INT, @FeatureKey INT" +
-            " SET @InspectionKey = (SELECT Inspection_Key FROM ATI_FeatureInspection.dbo.Inspection WHERE Op_Key = " + opkey + "); " +
-            " SET @TotalNewFeatures = (SELECT COUNT(DISTINCT Features.Feature_Key) FROM ATI_FeatureInspection.dbo.Features LEFT JOIN ATI_FeatureInspection.dbo.Position ON Features.Feature_Key = Position.Feature_Key WHERE Part_Number_FK = (SELECT Part_Number FROM ATI_FeatureInspection.dbo.Operation WHERE Op_Key = " + opkey + ") AND Operation_Number_FK = (SELECT Operation_Number FROM ATI_FeatureInspection.dbo.Operation WHERE Op_Key = " + opkey + ") AND Position.Feature_Key IS NULL);" +
-            " SET @Count = 0; " +
-            " SET @RowFeature = 0 " +
-            " SET @MaxParts = " + lotSize +
-            " WHILE(@RowFeature < @TotalNewFeatures) " +
-            " BEGIN " +
-            " SET @RowFeature = @RowFeature + 1 " +
-            " SET @FeatureKey = (SELECT Feature_Key FROM (SELECT ROW_NUMBER() OVER(ORDER BY Features.Feature_Key ASC) AS RowNumber, Features.Feature_Key  FROM ATI_FeatureInspection.dbo.Features LEFT JOIN ATI_FeatureInspection.dbo.Position ON Features.Feature_Key = Position.Feature_Key WHERE Part_Number_FK = (SELECT Part_Number FROM ATI_FeatureInspection.dbo.Operation WHERE Op_Key = " + opkey + ") AND Operation_Number_FK = (SELECT Operation_Number FROM ATI_FeatureInspection.dbo.Operation WHERE Op_Key = " + opkey + ") AND Position.Feature_Key IS NULL ) AS foo  " +
-            " WHERE RowNumber = @RowFeature) " +
-            " WHILE(@Count < @MaxParts) " +
-            " BEGIN " +
-            " INSERT INTO ATI_FeatureInspection.dbo.Position(Inspection_Key_FK, Piece_ID, Feature_Key) " +
-            " VALUES(@InspectionKey, @Count + 1, @FeatureKey) " +
-            " SET @Count = @Count + 1 " +
-            " END " +
-            " SET @Count = 0 " +
-            " END";
+            string insert = "DECLARE @i INT, @iRwCount INT, @featureKey INT, @MaxParts INT, @Count INT, @InspectionKey INT " +
+                            "SET @i = 1 \n" +
+                            "CREATE TABLE #tableFeatures(ID INT identity(1,1), FeatureKey INT)\n " +
+                            "CREATE CLUSTERED INDEX idx_tmp on #tableFeatures(ID) WITH FILLFACTOR = 100\n " +
+                            "INSERT INTO #tableFeatures(FeatureKey)\n " +
+                            "SELECT Features.Feature_Key FROM ATI_FeatureInspection.dbo.Features WHERE NOT EXISTS(SELECT * FROM ATI_FeatureInspection.dbo.Position WHERE Features.Feature_Key = Position.Feature_Key AND Inspection_Key_FK = (SELECT Inspection.Inspection_Key FROM ATI_FeatureInspection.dbo.Inspection WHERE Op_Key = " + opkey + "))  AND Part_Number_FK = (SELECT Part_Number FROM ATI_FeatureInspection.dbo.Operation WHERE Op_Key = " + opkey + ") AND Operation_Number_FK = (SELECT Operation_Number FROM ATI_FeatureInspection.dbo.Operation WHERE Op_Key = " + opkey + ");\n " +
+                                        "SET @iRwCount = @@ROWCOUNT\n " +
+                                        "SET @MaxParts = " + lotSize + "\n " +
+                            "SET @Count = 0\n " +
+                            "SET @InspectionKey = (SELECT Inspection_Key FROM ATI_FeatureInspection.dbo.Inspection WHERE Op_Key = " + opkey + ");\n " +
+                                        "WHILE(@i <= @iRwCount)\n " +
+                            "BEGIN\n " +
+                            "SELECT @featureKey = FeatureKey FROM #tableFeatures WHERE ID = @i\n " +
+                            "WHILE(@Count < @MaxParts)\n " +
+                            "BEGIN\n " +
+                            "SET @Count = @Count + 1\n " +
+                            "INSERT INTO ATI_FeatureInspection.dbo.Position(Inspection_Key_FK, Piece_ID, Feature_Key)  VALUES(@InspectionKey, @Count, @FeatureKey)\n " +
+                            "END\n " +
+                            "SET @Count = 0\n " +
+                            "SET @i = @i + 1\n " +
+                            "END\n " +
+                            "DROP TABLE #tableFeatures";
 
 
 
