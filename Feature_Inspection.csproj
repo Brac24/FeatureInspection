@@ -157,6 +157,9 @@
     <Compile Include="Old_Forms_Folder\UserInputForm.Designer.cs">
       <DependentUpon>UserInputForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Report_Tab_Folder\IReportDataSource.cs" />
+    <Compile Include="Report_Tab_Folder\ReportPresenter.cs" />
+    <Compile Include="Report_Tab_Folder\IReportView.cs" />
     <EmbeddedResource Include="Old_Forms_Folder\AlternateUI.resx">
       <DependentUpon>AlternateUI.cs</DependentUpon>
     </EmbeddedResource>

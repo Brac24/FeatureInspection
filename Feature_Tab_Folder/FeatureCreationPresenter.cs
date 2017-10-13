@@ -303,8 +303,8 @@ namespace Feature_Inspection
             {
                 DataTable featureTable = model.GetFeaturesOnOpKey(view.PartNumber, view.OperationNumber);
                 DataBindFeaturesToFeatureDataGridView(featureTable);
-                SetFeatureDataGridViewHeader();
-                StorePartOpNumbers();  //TODO: What is this Ian?
+                //SetFeatureDataGridViewHeader();
+                StorePartOpNumbers();
             }
         }
 
@@ -318,6 +318,7 @@ namespace Feature_Inspection
             view.OpStorage = view.OperationNumber;
         }
 
+        /*
         /// <summary>
         /// This method sets the feature page header to match whatever part and op is currently being edited.
         /// </summary>
@@ -332,7 +333,7 @@ namespace Feature_Inspection
             {
                 view.FeaturePageHeaderText = "FEATURES PAGE";
             }
-        }
+        }*/
 
         /// <summary>
         /// TODO: create an accurate summary for this method.
@@ -537,7 +538,12 @@ namespace Feature_Inspection
 
             if (partNumber == "")
             {
+                DataTable featureTable = model.GetFeaturesOnOpKey(view.PartNumber, view.OperationNumber);
+                DataBindFeaturesToFeatureDataGridView(featureTable);
                 MessageBox.Show("Please Enter a Part Number");
+                view.PartNumber = null;
+                view.OperationNumber = null;
+                view.FeaturePageHeaderText = "FEATURES PAGE";
             }
             else if (model.PartNumberExists(partNumber)) //Check if part number entered exists
             {
@@ -548,10 +554,12 @@ namespace Feature_Inspection
             {
 
                 view.FeaturePageHeaderText = "FEATURES PAGE";
-                view.PartTextBox.Clear();
-                view.FeatureOpTextBox.Clear();
-                view.FeatureGridView.DataSource = null;
                 MessageBox.Show("Part Number does not exist");
+                view.PartNumber = null; ;
+                view.OperationNumber = null;
+                DataTable featureTable = model.GetFeaturesOnOpKey(view.PartNumber, view.OperationNumber);
+                DataBindFeaturesToFeatureDataGridView(featureTable);
+
 
             }
         }
@@ -563,17 +571,25 @@ namespace Feature_Inspection
         {
             if (view.OperationNumber == "")
             {
+                view.FeaturePageHeaderText = "FEATURES PAGE";
+                view.FeatureOpTextBox.Clear();
+                DataTable featureTable = model.GetFeaturesOnOpKey(view.PartNumber, view.OperationNumber);
+                DataBindFeaturesToFeatureDataGridView(featureTable);
                 MessageBox.Show("Please Enter an Operation Number");
             }
             else if (model.OpExists(view.OperationNumber, view.PartNumber))
             {
-                MessageBox.Show("This is a valid Part and Operation Number");
                 view.FeatureGridView.Focus();
+                view.FeaturePageHeaderText = "PART " + view.PartNumber + " OP " + view.OperationNumber + " FEATURES";
+                MessageBox.Show("This is a valid Part and Operation Number");
             }
             else
             {
-                MessageBox.Show("Op Number does not exist for this Part Number");
+                view.FeaturePageHeaderText = "FEATURES PAGE";
+                DataTable featureTable = model.GetFeaturesOnOpKey(view.PartNumber, view.OperationNumber);
+                DataBindFeaturesToFeatureDataGridView(featureTable);
                 view.FeatureOpTextBox.Clear();
+                MessageBox.Show("Op Number does not exist for this Part Number");
             }
         }
 

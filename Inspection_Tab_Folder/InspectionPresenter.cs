@@ -45,6 +45,7 @@ namespace Feature_Inspection
         /// <param name="featuresTable"></param>
         public void BindDataGridViewInspection(DataTable featuresTable)
         {
+            bool caught = false;
             view.InspectionGrid.Columns.Clear();
 
             view.InspectionGrid.DataSource = null;
@@ -53,9 +54,17 @@ namespace Feature_Inspection
 
             view.InspectionGrid.DataSource = view.InspectionBindingSource;
 
-            HideInspectionColumns();
+            try
+            {
+                HideInspectionColumns();
 
-            SetInspectionReadOnlyColumns();
+                SetInspectionReadOnlyColumns();
+            }
+
+            catch
+            {
+                caught = true;
+            }
 
             SetupRedoButtonColumn();
 
@@ -112,6 +121,7 @@ namespace Feature_Inspection
                 RedoButtonColumn.CellTemplate.Style.SelectionBackColor = Color.DarkRed;
                 RedoButtonColumn.HeaderText = "Redo Entry";
                 RedoButtonColumn.Text = "Redo";
+                RedoButtonColumn.Name = "Redo_Column";
                 view.InspectionGrid.Columns.Insert(view.InspectionGrid.Columns.Count, RedoButtonColumn);
                 RedoButtonColumn.UseColumnTextForButtonValue = true;
             }
@@ -166,18 +176,18 @@ namespace Feature_Inspection
         /// </summary>
         public void ifInspectionCellEqualsZero_NoLock()
         {
-                for (int i = 0; i < view.InspectionGrid.RowCount; i++)
+            for (int i = 0; i < view.InspectionGrid.RowCount; i++)
+            {
+                float test = float.Parse(view.InspectionGrid.Rows[i].Cells[5].Value.ToString());
+                if (test != 0)
                 {
-                    float test = float.Parse(view.InspectionGrid.Rows[i].Cells[5].Value.ToString());
-                    if (test != 0)
-                    {
-                        view.InspectionGrid.Rows[i].ReadOnly = true;
-                    }
-                    else
-                    {
-                        view.InspectionGrid.Rows[i].ReadOnly = false;
-                    }
+                    view.InspectionGrid.Rows[i].ReadOnly = true;
                 }
+                else
+                {
+                    view.InspectionGrid.Rows[i].ReadOnly = false;
+                }
+            }
         }
 
         /// <summary>
@@ -190,6 +200,10 @@ namespace Feature_Inspection
             {
                 view.ListBoxIndex = (view.ListBoxIndex + 1 < view.ListBoxCount) ?
                 view.ListBoxIndex += 1 : view.ListBoxIndex = 0;
+                DataTable featureList = model.GetFeatureList(view.OpKey);
+                BindFocusComboBox(featureList);
+                string title = view.ChartFocusComboBox.Text;
+                BindFocusCharts();
             }
         }
 
@@ -210,7 +224,6 @@ namespace Feature_Inspection
                     {
                         view.InspectionGrid.Rows[e.RowIndex].Cells["Oldest Value"].Value = view.InspectionGrid.Rows[e.RowIndex].Cells["Old Value"].Value;
                         view.InspectionGrid.Rows[e.RowIndex].Cells["Old Value"].Value = view.InspectionGrid.Rows[e.RowIndex].Cells["Measured Actual"].Value;
-
                         table.Rows[e.RowIndex].ReadOnly = false;
                     }
                     else
@@ -281,24 +294,126 @@ namespace Feature_Inspection
         /// </summary>
         public void BindFocusCharts()
         {
+            bool caught = false;
+            DataTable table;
+
             try
             {
-                DataTable table = model.GetChartData(view.OpKey, (int)view.ChartFocusComboBox.SelectedValue);
-                view.InspectionChart.Visible = true;
+                table = model.GetChartData(view.OpKey, (int)view.ChartFocusComboBox.SelectedValue);
                 view.InspectionChart.DataSource = table;
+            }
+            catch
+            {
+                caught = true;
+                view.InspectionChart.Visible = false;
+            }
+
+            if (!caught)
+            {
+                view.InspectionChart.Visible = true; 
                 view.InspectionChart.DataBind();
 
                 double max = view.InspectionChart.Series["UpperToleranceSeries"].Points[0].YValues[0];
                 double min = view.InspectionChart.Series["LowerToleranceSeries"].Points[0].YValues[0];
+                double nom = view.InspectionChart.Series["NominalSeries"].Points[0].YValues[0];
                 double tol = (max - min) / 4;
-                string title = view.ChartFocusComboBox.Text;
+                string title = "NOMINAL: " + nom.ToString() + "   HIGH: " + (max).ToString() + "   LOW: " + (min).ToString();
 
                 view.InspectionChart.Titles[0].Text = title;
+                view.InspectionChart.Titles[0].BackColor = Color.FromArgb(15, 15, 15);
                 view.InspectionChart.ChartAreas[0].AxisY.Maximum = max + tol;
                 view.InspectionChart.ChartAreas[0].AxisY.Minimum = min - tol;
                 view.InspectionChart.ChartAreas[0].AxisY.Interval = tol;
+                ChartDataLabeling();
+                TrimChartPartCount();
+                //ChartDataWarning();
             }
-            catch { }
+        }
+
+        public void ChartDataWarning()
+        {
+            int j = 0;
+            for (int i = 0; i < view.InspectionChart.Series[0].Points.Count; i++)
+            {
+                if (view.InspectionChart.Series[0].Points[i].IsEmpty == false)
+                {
+                    j++;
+                }
+            }
+
+            if (view.InspectionChart.Series[0].Points[j - 1].Color.Name == "Orange")
+            {
+                MessageBox.Show("Warning");
+            }
+
+            if (view.InspectionChart.Series[0].Points[j - 1].Color.Name == "Red")
+            {
+                MessageBox.Show("You Done Goofed, Kid!");
+            }
+        }
+
+        public void ChartDataLabeling()
+        {
+            double max = view.InspectionChart.Series["UpperToleranceSeries"].Points[0].YValues[0];
+            double min = view.InspectionChart.Series["LowerToleranceSeries"].Points[0].YValues[0];
+
+            for (int i = 0; i < view.InspectionChart.Series[0].Points.Count; i++)
+            {
+
+                if (view.InspectionChart.Series[0].Points[i].YValues[0] > (max * .95) || view.InspectionChart.Series[0].Points[i].YValues[0] < (min * 1.05))
+                {
+                    view.InspectionChart.Series[0].Points[i].Color = Color.Orange;
+                    DataPoint d = view.InspectionChart.Series[0].Points[i];
+                    d.Label = view.InspectionChart.Series[0].Points[i].YValues[0].ToString();
+                    d.LabelBackColor = Color.Gainsboro;
+                }
+
+                if (view.InspectionChart.Series[0].Points[i].YValues[0] > (max) || view.InspectionChart.Series[0].Points[i].YValues[0] < (min))
+                {
+                    view.InspectionChart.Series[0].Points[i].Color = Color.Red;
+                    DataPoint d = view.InspectionChart.Series[0].Points[i];
+                    d.Label = view.InspectionChart.Series[0].Points[i].YValues[0].ToString();
+                    d.LabelBackColor = Color.Black;
+                    d.LabelForeColor = Color.Red;
+                }
+
+                if (view.InspectionChart.Series[0].Points[i].YValues[0] == 0)
+                {
+                    view.InspectionChart.Series[0].Points[i].IsEmpty = true;
+                }
+            }
+        }
+
+
+
+        public void TrimChartPartCount()
+        {
+
+            for (int i = 0; i < view.InspectionChart.Series[0].Points.Count - 1; i++)
+            {
+                if (view.InspectionChart.Series[0].Points[i].IsEmpty == false)
+                {
+                    //view.InspectionChart.ChartAreas[0].AxisX.Maximum = i + 1;
+                    //view.InspectionChart.ChartAreas[0].AxisX.Minimum = i - 20;
+                }
+            }
+        }
+
+        public void noInspectionStartClear()
+        {
+            if (view.InspectionChart.Visible == false)
+            {
+                //view.ChartFocusComboBox.DataSource = null;
+                view.InspectionHeaderText = "INSPECTION PAGE";
+                view.PartsListBox.DataSource = null;
+                view.LotsizeTextBox.Clear();
+                HideInspectionColumns();
+                SetupRedoButtonColumn();
+                DisableSortableColumns();
+                MessageBox.Show("Features have been added to this operation. Please enter your part count.");
+                view.InspectionGrid.Columns.Remove("Redo_Column");
+            }
+
         }
 
         /// <summary>
@@ -366,6 +481,7 @@ namespace Feature_Inspection
             view.InspectionBindingSource.EndEdit();
             model.AdapterUpdateInspection((DataTable)view.InspectionBindingSource.DataSource);
             BindFocusCharts();
+            noInspectionStartClear();
         }
 
         /// <summary>
@@ -547,7 +663,6 @@ namespace Feature_Inspection
             else if (view.LotsizeTextBox.Text != "")
             {
                 SetUpDataAndListBox();
-
             }
         }
 

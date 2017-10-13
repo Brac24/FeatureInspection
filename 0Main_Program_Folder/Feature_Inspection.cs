@@ -12,11 +12,12 @@ using System.Windows.Forms;
 
 namespace Feature_Inspection
 {
-    public partial class Feature_Inspection : Form, IFeatureCreationView, IInspectionView
+    public partial class Feature_Inspection : Form, IFeatureCreationView, IInspectionView, IReportView
     {
         public FeatureCreationPresenter presenter;
         private FeatureCreationModelMock model;
         private InspectionPresenter inspectionPresenter;
+        private ReportPresenter reportPresenter;
 
         BindingSource bindingSource;
         BindingSource bindingSourceInspection = new BindingSource();
@@ -28,6 +29,7 @@ namespace Feature_Inspection
         public Feature_Inspection()
         {
             InitializeComponent();
+            //this.mainTabControl.TabPages.Remove(this.mainTabControl.TabPages["Report_Page"]);
         }
 
 
@@ -56,7 +58,11 @@ namespace Feature_Inspection
 
         public Chart InspectionChart { get { return inspectionChart; } set { inspectionChart = value; } }
 
+        public Chart ReportChart { get { return report_Chart; } set { report_Chart = value; } }
+
         public ComboBox ChartFocusComboBox { get { return inspectionFocusCombo; } set { inspectionFocusCombo = value; } }
+
+        public ComboBox ReportTypeComboBox { get { return reportTypeDropdown; } set { reportTypeDropdown = value; } }
 
         public TextBox LotsizeTextBox { get { return lotSizeBoxInspection; } set { lotSizeBoxInspection = value; } }
 
@@ -76,6 +82,14 @@ namespace Feature_Inspection
 
         public Label OperationLabel { get { return opLabelInspection; } set { opLabelInspection = value; } }
 
+        public TextBox ReportTB1 { get { return reportTB1; } set { reportTB1 = value; } }
+
+        public TextBox ReportTB2 { get { return reportTB2; } set { reportTB2 = value; } }
+
+        public Label ReportLB1 { get { return reportLB1; } set { reportLB1 = value; } }
+
+        public Label ReportLB2 { get { return reportLB2; } set { reportLB2 = value; } }
+
         public string PartStorage { get { return partStorageLabel.Text; } set { partStorageLabel.Text = value; } }
 
         public string OpStorage { get { return opStorageLabel.Text; } set { opStorageLabel.Text = value; } }
@@ -84,7 +98,7 @@ namespace Feature_Inspection
 
         public string InspectionHeaderText { set { inspectionPageHeader.Text = value.ToString(); } }
 
-        public string OperationNumber { get { return opBoxFeature.Text; } }
+        public string OperationNumber { get { return opBoxFeature.Text; } set { opBoxFeature.Text = value; } }
 
         public string JobNumber { get { return jobLabelInspection.Text; } set { jobLabelInspection.Text = value; } }
 
@@ -137,6 +151,7 @@ namespace Feature_Inspection
             model = new FeatureCreationModelMock();
             presenter = new FeatureCreationPresenter(this, model);
             inspectionPresenter = new InspectionPresenter(this, model);
+            reportPresenter = new ReportPresenter(this, model);
 
             inspectionPresenter.createGraphArea(inspectionChart);
             
@@ -188,6 +203,7 @@ namespace Feature_Inspection
         private void nextPartButton_Click(object sender, EventArgs e)
         {
             inspectionPresenter.GotToNextPart();
+
         }
 
         /// <summary>
@@ -349,18 +365,34 @@ namespace Feature_Inspection
         /// <param name="e"></param>
         private void ReportSwitch(object sender, EventArgs e)
         {
-            if (summaryChart.Visible == true)
+            if (report_Chart.Visible == true)
             {
-                summaryChart.Visible = false;
-                SummaryList.Visible = true;
+                report_Chart.Visible = false;
             }
             else
             {
-                summaryChart.Visible = true;
-                SummaryList.Visible = false;
+                report_Chart.Visible = true;
             }
         }
 
+        private void reportTypeDropdown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            reportPresenter.ReportScope_TextBoxVisibility();
+        }
+
+        /// <summary>
+        /// This event handler triggers when a key is pressed down while the focus is on either textbox in the inspection page.
+        /// This event calls methods that filter accepted characters and validates values entered.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void reportNumOnly_KeyDown(object sender, KeyEventArgs e)
+        {
+            reportPresenter.filterTextBox(sender, e);
+            reportPresenter.checkEnter_ValidateOpKey(e);
+        }
+
         #endregion
+
     }
 }
