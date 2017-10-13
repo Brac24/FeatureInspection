@@ -25,5 +25,9 @@ namespace Feature_Inspection
         Label ReportLB1 { get; set; }
 
         Label ReportLB2 { get; set; }
+
+        Label ReportPageHeader { get; set; }
+
+        ComboBox ReportFocusComboBox { get; set; }
     }
 }

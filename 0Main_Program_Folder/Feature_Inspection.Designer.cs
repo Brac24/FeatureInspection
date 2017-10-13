@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
             this.featureEditGridView = new System.Windows.Forms.DataGridView();
             this.Feature = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Bubble = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -97,11 +97,20 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.reportTypeDropdown = new System.Windows.Forms.ComboBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.reportFocusComboBox = new System.Windows.Forms.ComboBox();
             this.reportTB1 = new System.Windows.Forms.TextBox();
             this.reportTB2 = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel18 = new System.Windows.Forms.TableLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel25 = new System.Windows.Forms.TableLayoutPanel();
+            this.button6 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
+            this.button9 = new System.Windows.Forms.Button();
+            this.button10 = new System.Windows.Forms.Button();
+            this.button11 = new System.Windows.Forms.Button();
+            this.button12 = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel23 = new System.Windows.Forms.TableLayoutPanel();
@@ -116,7 +125,7 @@
             this.reportSwitchButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel15 = new System.Windows.Forms.TableLayoutPanel();
-            this.label2 = new System.Windows.Forms.Label();
+            this.reportPageHeader = new System.Windows.Forms.Label();
             this.Feature_Page = new System.Windows.Forms.TabPage();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
@@ -140,15 +149,6 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel25 = new System.Windows.Forms.TableLayoutPanel();
-            this.button12 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
-            this.button9 = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.featureEditGridView)).BeginInit();
             this.mainTabControl.SuspendLayout();
             this.Inspection_Page.SuspendLayout();
@@ -184,6 +184,8 @@
             this.panel3.SuspendLayout();
             this.tableLayoutPanel19.SuspendLayout();
             this.tableLayoutPanel18.SuspendLayout();
+            this.panel6.SuspendLayout();
+            this.tableLayoutPanel25.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel5.SuspendLayout();
             this.tableLayoutPanel23.SuspendLayout();
@@ -205,8 +207,6 @@
             this.tableLayoutPanel5.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
-            this.panel6.SuspendLayout();
-            this.tableLayoutPanel25.SuspendLayout();
             this.SuspendLayout();
             // 
             // featureEditGridView
@@ -219,14 +219,14 @@
             this.featureEditGridView.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.featureEditGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.featureEditGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            dataGridViewCellStyle25.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle25.ForeColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle25.SelectionBackColor = System.Drawing.Color.SeaGreen;
-            dataGridViewCellStyle25.SelectionForeColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle25.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.featureEditGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle25;
+            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            dataGridViewCellStyle19.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle19.ForeColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.Color.SeaGreen;
+            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.featureEditGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle19;
             this.featureEditGridView.ColumnHeadersHeight = 64;
             this.featureEditGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.featureEditGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -238,14 +238,14 @@
             this.Sample,
             this.Tool,
             this.Delete});
-            dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle26.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            dataGridViewCellStyle26.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle26.ForeColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle26.SelectionBackColor = System.Drawing.Color.SeaGreen;
-            dataGridViewCellStyle26.SelectionForeColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle26.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.featureEditGridView.DefaultCellStyle = dataGridViewCellStyle26;
+            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle20.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            dataGridViewCellStyle20.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle20.ForeColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle20.SelectionBackColor = System.Drawing.Color.SeaGreen;
+            dataGridViewCellStyle20.SelectionForeColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.featureEditGridView.DefaultCellStyle = dataGridViewCellStyle20;
             this.featureEditGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.featureEditGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.featureEditGridView.EnableHeadersVisualStyles = false;
@@ -253,14 +253,14 @@
             this.featureEditGridView.Margin = new System.Windows.Forms.Padding(0);
             this.featureEditGridView.MultiSelect = false;
             this.featureEditGridView.Name = "featureEditGridView";
-            dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle27.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            dataGridViewCellStyle27.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle27.ForeColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle27.SelectionBackColor = System.Drawing.Color.SeaGreen;
-            dataGridViewCellStyle27.SelectionForeColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle27.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.featureEditGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle27;
+            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            dataGridViewCellStyle21.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle21.ForeColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle21.SelectionBackColor = System.Drawing.Color.SeaGreen;
+            dataGridViewCellStyle21.SelectionForeColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle21.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.featureEditGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle21;
             this.featureEditGridView.RowHeadersVisible = false;
             this.featureEditGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.featureEditGridView.Size = new System.Drawing.Size(822, 423);
@@ -762,12 +762,12 @@
             this.inspectionEntryGridView.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.inspectionEntryGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.inspectionEntryGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle28.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle28.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            dataGridViewCellStyle28.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle28.ForeColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle28.SelectionBackColor = System.Drawing.Color.MediumSeaGreen;
-            this.inspectionEntryGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle28;
+            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            dataGridViewCellStyle22.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle22.ForeColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle22.SelectionBackColor = System.Drawing.Color.MediumSeaGreen;
+            this.inspectionEntryGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle22;
             this.inspectionEntryGridView.ColumnHeadersHeight = 64;
             this.inspectionEntryGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.inspectionEntryGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -776,14 +776,14 @@
             this.dataGridViewTextBoxColumn3,
             this.dataGridViewTextBoxColumn4,
             this.dataGridViewTextBoxColumn5});
-            dataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle29.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            dataGridViewCellStyle29.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle29.ForeColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle29.SelectionBackColor = System.Drawing.Color.MediumSeaGreen;
-            dataGridViewCellStyle29.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle29.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.inspectionEntryGridView.DefaultCellStyle = dataGridViewCellStyle29;
+            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle23.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            dataGridViewCellStyle23.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle23.ForeColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle23.SelectionBackColor = System.Drawing.Color.MediumSeaGreen;
+            dataGridViewCellStyle23.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle23.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.inspectionEntryGridView.DefaultCellStyle = dataGridViewCellStyle23;
             this.inspectionEntryGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.inspectionEntryGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.inspectionEntryGridView.EnableHeadersVisualStyles = false;
@@ -791,8 +791,8 @@
             this.inspectionEntryGridView.Margin = new System.Windows.Forms.Padding(0);
             this.inspectionEntryGridView.MultiSelect = false;
             this.inspectionEntryGridView.Name = "inspectionEntryGridView";
-            dataGridViewCellStyle30.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.inspectionEntryGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle30;
+            dataGridViewCellStyle24.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.inspectionEntryGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle24;
             this.inspectionEntryGridView.RowHeadersVisible = false;
             this.inspectionEntryGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.inspectionEntryGridView.Size = new System.Drawing.Size(822, 337);
@@ -1009,7 +1009,7 @@
             this.tableLayoutPanel19.Controls.Add(this.label8, 0, 6);
             this.tableLayoutPanel19.Controls.Add(this.label4, 0, 0);
             this.tableLayoutPanel19.Controls.Add(this.reportTypeDropdown, 1, 0);
-            this.tableLayoutPanel19.Controls.Add(this.comboBox1, 1, 6);
+            this.tableLayoutPanel19.Controls.Add(this.reportFocusComboBox, 1, 6);
             this.tableLayoutPanel19.Controls.Add(this.reportTB1, 1, 1);
             this.tableLayoutPanel19.Controls.Add(this.reportTB2, 1, 2);
             this.tableLayoutPanel19.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -1094,16 +1094,18 @@
             this.reportTypeDropdown.TabIndex = 44;
             this.reportTypeDropdown.SelectedIndexChanged += new System.EventHandler(this.reportTypeDropdown_SelectedIndexChanged);
             // 
-            // comboBox1
+            // reportFocusComboBox
             // 
-            this.comboBox1.BackColor = System.Drawing.Color.DimGray;
-            this.comboBox1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(122, 189);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(3, 3, 20, 3);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(143, 27);
-            this.comboBox1.TabIndex = 45;
+            this.reportFocusComboBox.BackColor = System.Drawing.Color.DimGray;
+            this.reportFocusComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.reportFocusComboBox.ForeColor = System.Drawing.Color.Gainsboro;
+            this.reportFocusComboBox.FormattingEnabled = true;
+            this.reportFocusComboBox.Location = new System.Drawing.Point(122, 189);
+            this.reportFocusComboBox.Margin = new System.Windows.Forms.Padding(3, 3, 20, 3);
+            this.reportFocusComboBox.Name = "reportFocusComboBox";
+            this.reportFocusComboBox.Size = new System.Drawing.Size(143, 27);
+            this.reportFocusComboBox.TabIndex = 45;
+            this.reportFocusComboBox.SelectedIndexChanged += new System.EventHandler(this.ReportFocusCombo_SelectedIndexChanged);
             // 
             // reportTB1
             // 
@@ -1118,7 +1120,7 @@
             this.reportTB1.TabIndex = 46;
             this.reportTB1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.reportTB1.Visible = false;
-            this.reportTB1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.reportNumOnly_KeyDown);
+            this.reportTB1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.reportTextBox_Check_Filter);
             // 
             // reportTB2
             // 
@@ -1133,7 +1135,7 @@
             this.reportTB2.TabIndex = 47;
             this.reportTB2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.reportTB2.Visible = false;
-            this.reportTB2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.reportNumOnly_KeyDown);
+            this.reportTB2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.checkEnterKeyPressedReport_KeyDown);
             // 
             // tableLayoutPanel18
             // 
@@ -1160,6 +1162,149 @@
             this.label3.Size = new System.Drawing.Size(157, 19);
             this.label3.TabIndex = 22;
             this.label3.Text = "JOB INFORMATION";
+            // 
+            // panel6
+            // 
+            this.panel6.Controls.Add(this.tableLayoutPanel25);
+            this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel6.Location = new System.Drawing.Point(0, 0);
+            this.panel6.Margin = new System.Windows.Forms.Padding(0);
+            this.panel6.Name = "panel6";
+            this.panel6.Padding = new System.Windows.Forms.Padding(20, 0, 20, 15);
+            this.panel6.Size = new System.Drawing.Size(285, 393);
+            this.panel6.TabIndex = 0;
+            // 
+            // tableLayoutPanel25
+            // 
+            this.tableLayoutPanel25.ColumnCount = 1;
+            this.tableLayoutPanel25.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel25.Controls.Add(this.button6, 0, 0);
+            this.tableLayoutPanel25.Controls.Add(this.button7, 0, 1);
+            this.tableLayoutPanel25.Controls.Add(this.button8, 0, 2);
+            this.tableLayoutPanel25.Controls.Add(this.button9, 0, 3);
+            this.tableLayoutPanel25.Controls.Add(this.button10, 0, 4);
+            this.tableLayoutPanel25.Controls.Add(this.button11, 0, 5);
+            this.tableLayoutPanel25.Controls.Add(this.button12, 0, 6);
+            this.tableLayoutPanel25.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel25.Location = new System.Drawing.Point(20, 0);
+            this.tableLayoutPanel25.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel25.Name = "tableLayoutPanel25";
+            this.tableLayoutPanel25.RowCount = 7;
+            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel25.Size = new System.Drawing.Size(245, 378);
+            this.tableLayoutPanel25.TabIndex = 1;
+            // 
+            // button6
+            // 
+            this.button6.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.button6.BackColor = System.Drawing.Color.DarkRed;
+            this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button6.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button6.ForeColor = System.Drawing.Color.Gainsboro;
+            this.button6.Location = new System.Drawing.Point(0, 14);
+            this.button6.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(245, 35);
+            this.button6.TabIndex = 4;
+            this.button6.Text = "RUN CHART";
+            this.button6.UseVisualStyleBackColor = false;
+            // 
+            // button7
+            // 
+            this.button7.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.button7.BackColor = System.Drawing.Color.DarkRed;
+            this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button7.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button7.ForeColor = System.Drawing.Color.Gainsboro;
+            this.button7.Location = new System.Drawing.Point(0, 67);
+            this.button7.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(245, 35);
+            this.button7.TabIndex = 5;
+            this.button7.Text = "PFMEA";
+            this.button7.UseVisualStyleBackColor = false;
+            // 
+            // button8
+            // 
+            this.button8.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.button8.BackColor = System.Drawing.Color.DarkRed;
+            this.button8.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button8.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button8.ForeColor = System.Drawing.Color.Gainsboro;
+            this.button8.Location = new System.Drawing.Point(0, 120);
+            this.button8.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(245, 35);
+            this.button8.TabIndex = 6;
+            this.button8.Text = "NC\'S";
+            this.button8.UseVisualStyleBackColor = false;
+            // 
+            // button9
+            // 
+            this.button9.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.button9.BackColor = System.Drawing.Color.DarkRed;
+            this.button9.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button9.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button9.ForeColor = System.Drawing.Color.Gainsboro;
+            this.button9.Location = new System.Drawing.Point(0, 173);
+            this.button9.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(245, 35);
+            this.button9.TabIndex = 7;
+            this.button9.Text = "DPPM";
+            this.button9.UseVisualStyleBackColor = false;
+            // 
+            // button10
+            // 
+            this.button10.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.button10.BackColor = System.Drawing.Color.DarkRed;
+            this.button10.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button10.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button10.ForeColor = System.Drawing.Color.Gainsboro;
+            this.button10.Location = new System.Drawing.Point(0, 226);
+            this.button10.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(245, 35);
+            this.button10.TabIndex = 8;
+            this.button10.Text = "PRODUTION REVISIONS";
+            this.button10.UseVisualStyleBackColor = false;
+            // 
+            // button11
+            // 
+            this.button11.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.button11.BackColor = System.Drawing.Color.DarkRed;
+            this.button11.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button11.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button11.ForeColor = System.Drawing.Color.Gainsboro;
+            this.button11.Location = new System.Drawing.Point(0, 279);
+            this.button11.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(245, 35);
+            this.button11.TabIndex = 9;
+            this.button11.Text = "REPORT TYPE";
+            this.button11.UseVisualStyleBackColor = false;
+            // 
+            // button12
+            // 
+            this.button12.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.button12.BackColor = System.Drawing.Color.DarkRed;
+            this.button12.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button12.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button12.ForeColor = System.Drawing.Color.Gainsboro;
+            this.button12.Location = new System.Drawing.Point(0, 335);
+            this.button12.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(245, 35);
+            this.button12.TabIndex = 10;
+            this.button12.Text = "REPORT TYPE";
+            this.button12.UseVisualStyleBackColor = false;
             // 
             // panel4
             // 
@@ -1358,7 +1503,7 @@
             this.tableLayoutPanel15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(75)))), ((int)(((byte)(75)))));
             this.tableLayoutPanel15.ColumnCount = 1;
             this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel15.Controls.Add(this.label2, 0, 0);
+            this.tableLayoutPanel15.Controls.Add(this.reportPageHeader, 0, 0);
             this.tableLayoutPanel15.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel15.Location = new System.Drawing.Point(20, 20);
             this.tableLayoutPanel15.Margin = new System.Windows.Forms.Padding(0);
@@ -1368,17 +1513,17 @@
             this.tableLayoutPanel15.Size = new System.Drawing.Size(822, 60);
             this.tableLayoutPanel15.TabIndex = 1;
             // 
-            // label2
+            // reportPageHeader
             // 
-            this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Arial Black", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label2.Location = new System.Drawing.Point(295, 11);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(231, 38);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "REPORT PAGE";
+            this.reportPageHeader.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.reportPageHeader.AutoSize = true;
+            this.reportPageHeader.Font = new System.Drawing.Font("Arial Black", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.reportPageHeader.ForeColor = System.Drawing.Color.Gainsboro;
+            this.reportPageHeader.Location = new System.Drawing.Point(295, 11);
+            this.reportPageHeader.Name = "reportPageHeader";
+            this.reportPageHeader.Size = new System.Drawing.Size(231, 38);
+            this.reportPageHeader.TabIndex = 3;
+            this.reportPageHeader.Text = "REPORT PAGE";
             // 
             // Feature_Page
             // 
@@ -1712,149 +1857,6 @@
             this.textBox2.Size = new System.Drawing.Size(172, 26);
             this.textBox2.TabIndex = 0;
             // 
-            // panel6
-            // 
-            this.panel6.Controls.Add(this.tableLayoutPanel25);
-            this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel6.Location = new System.Drawing.Point(0, 0);
-            this.panel6.Margin = new System.Windows.Forms.Padding(0);
-            this.panel6.Name = "panel6";
-            this.panel6.Padding = new System.Windows.Forms.Padding(20, 0, 20, 20);
-            this.panel6.Size = new System.Drawing.Size(285, 393);
-            this.panel6.TabIndex = 0;
-            // 
-            // tableLayoutPanel25
-            // 
-            this.tableLayoutPanel25.ColumnCount = 1;
-            this.tableLayoutPanel25.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel25.Controls.Add(this.button6, 0, 0);
-            this.tableLayoutPanel25.Controls.Add(this.button7, 0, 1);
-            this.tableLayoutPanel25.Controls.Add(this.button8, 0, 2);
-            this.tableLayoutPanel25.Controls.Add(this.button9, 0, 3);
-            this.tableLayoutPanel25.Controls.Add(this.button10, 0, 4);
-            this.tableLayoutPanel25.Controls.Add(this.button11, 0, 5);
-            this.tableLayoutPanel25.Controls.Add(this.button12, 0, 6);
-            this.tableLayoutPanel25.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel25.Location = new System.Drawing.Point(20, 0);
-            this.tableLayoutPanel25.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel25.Name = "tableLayoutPanel25";
-            this.tableLayoutPanel25.RowCount = 7;
-            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel25.Size = new System.Drawing.Size(245, 373);
-            this.tableLayoutPanel25.TabIndex = 1;
-            // 
-            // button12
-            // 
-            this.button12.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button12.BackColor = System.Drawing.Color.DarkRed;
-            this.button12.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button12.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button12.ForeColor = System.Drawing.Color.Gainsboro;
-            this.button12.Location = new System.Drawing.Point(0, 333);
-            this.button12.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(245, 35);
-            this.button12.TabIndex = 10;
-            this.button12.Text = "REPORT TYPE";
-            this.button12.UseVisualStyleBackColor = false;
-            // 
-            // button6
-            // 
-            this.button6.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button6.BackColor = System.Drawing.Color.DarkRed;
-            this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button6.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button6.ForeColor = System.Drawing.Color.Gainsboro;
-            this.button6.Location = new System.Drawing.Point(0, 14);
-            this.button6.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(245, 35);
-            this.button6.TabIndex = 4;
-            this.button6.Text = "RUN CHART";
-            this.button6.UseVisualStyleBackColor = false;
-            // 
-            // button7
-            // 
-            this.button7.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button7.BackColor = System.Drawing.Color.DarkRed;
-            this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button7.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button7.ForeColor = System.Drawing.Color.Gainsboro;
-            this.button7.Location = new System.Drawing.Point(0, 67);
-            this.button7.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(245, 35);
-            this.button7.TabIndex = 5;
-            this.button7.Text = "PFMEA";
-            this.button7.UseVisualStyleBackColor = false;
-            // 
-            // button8
-            // 
-            this.button8.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button8.BackColor = System.Drawing.Color.DarkRed;
-            this.button8.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button8.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button8.ForeColor = System.Drawing.Color.Gainsboro;
-            this.button8.Location = new System.Drawing.Point(0, 120);
-            this.button8.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(245, 35);
-            this.button8.TabIndex = 6;
-            this.button8.Text = "NC\'S";
-            this.button8.UseVisualStyleBackColor = false;
-            // 
-            // button9
-            // 
-            this.button9.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button9.BackColor = System.Drawing.Color.DarkRed;
-            this.button9.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button9.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button9.ForeColor = System.Drawing.Color.Gainsboro;
-            this.button9.Location = new System.Drawing.Point(0, 173);
-            this.button9.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(245, 35);
-            this.button9.TabIndex = 7;
-            this.button9.Text = "REPORT TYPE";
-            this.button9.UseVisualStyleBackColor = false;
-            // 
-            // button10
-            // 
-            this.button10.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button10.BackColor = System.Drawing.Color.DarkRed;
-            this.button10.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button10.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button10.ForeColor = System.Drawing.Color.Gainsboro;
-            this.button10.Location = new System.Drawing.Point(0, 226);
-            this.button10.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(245, 35);
-            this.button10.TabIndex = 8;
-            this.button10.Text = "REPORT TYPE";
-            this.button10.UseVisualStyleBackColor = false;
-            // 
-            // button11
-            // 
-            this.button11.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button11.BackColor = System.Drawing.Color.DarkRed;
-            this.button11.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button11.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button11.ForeColor = System.Drawing.Color.Gainsboro;
-            this.button11.Location = new System.Drawing.Point(0, 279);
-            this.button11.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(245, 35);
-            this.button11.TabIndex = 9;
-            this.button11.Text = "REPORT TYPE";
-            this.button11.UseVisualStyleBackColor = false;
-            // 
             // Feature_Inspection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1913,6 +1915,8 @@
             this.tableLayoutPanel19.PerformLayout();
             this.tableLayoutPanel18.ResumeLayout(false);
             this.tableLayoutPanel18.PerformLayout();
+            this.panel6.ResumeLayout(false);
+            this.tableLayoutPanel25.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.tableLayoutPanel23.ResumeLayout(false);
@@ -1941,8 +1945,6 @@
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
-            this.panel6.ResumeLayout(false);
-            this.tableLayoutPanel25.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -2003,7 +2005,7 @@
         private System.Windows.Forms.SplitContainer splitContainer5;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel15;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label reportPageHeader;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel19;
         private System.Windows.Forms.Label label4;
@@ -2043,7 +2045,7 @@
         private System.Windows.Forms.Label reportLB2;
         private System.Windows.Forms.Label reportLB1;
         private System.Windows.Forms.ComboBox reportTypeDropdown;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox reportFocusComboBox;
         private System.Windows.Forms.TextBox reportTB1;
         private System.Windows.Forms.TextBox reportTB2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel23;
