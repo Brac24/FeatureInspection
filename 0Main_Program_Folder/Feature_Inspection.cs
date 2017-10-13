@@ -377,7 +377,19 @@ namespace Feature_Inspection
 
         private void reportTypeDropdown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            reportPresenter.ReportType_TextBoxVisibility();
+            reportPresenter.ReportScope_TextBoxVisibility();
+        }
+
+        /// <summary>
+        /// This event handler triggers when a key is pressed down while the focus is on either textbox in the inspection page.
+        /// This event calls methods that filter accepted characters and validates values entered.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void reportNumOnly_KeyDown(object sender, KeyEventArgs e)
+        {
+            reportPresenter.filterTextBox(sender, e);
+            reportPresenter.checkEnter_ValidateOpKey(e);
         }
 
         #endregion
