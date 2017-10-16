@@ -202,7 +202,7 @@ namespace Feature_Inspection
                 view.ListBoxIndex += 1 : view.ListBoxIndex = 0;
                 DataTable featureList = model.GetFeatureList(view.OpKey);
                 BindFocusComboBox(featureList);
-                string title = view.ChartFocusComboBox.Text;
+                //string title = view.ChartFocusComboBox.Text;
                 BindFocusCharts();
             }
         }
@@ -301,6 +301,18 @@ namespace Feature_Inspection
             {
                 table = model.GetChartData(view.OpKey, (int)view.ChartFocusComboBox.SelectedValue);
                 view.InspectionChart.DataSource = table;
+                view.InspectionChart.DataBind();
+                var max = view.InspectionChart.Series["UpperToleranceSeries"].Points[0].YValues[0];
+                var min = view.InspectionChart.Series["LowerToleranceSeries"].Points[0].YValues[0];
+                var nom = (min + max) / 2;
+                var tol = (max - min) / 4;
+                string title = "NOMINAL: " + nom.ToString() + "   HIGH: " + (max).ToString() + "   LOW: " + (min).ToString();
+
+                view.InspectionChart.Titles[0].Text = title;
+                view.InspectionChart.Titles[0].BackColor = Color.FromArgb(15, 15, 15);
+                view.InspectionChart.ChartAreas[0].AxisY.Maximum = max + tol;
+                view.InspectionChart.ChartAreas[0].AxisY.Minimum = min - tol;
+                view.InspectionChart.ChartAreas[0].AxisY.Interval = tol;
             }
             catch
             {
@@ -311,19 +323,6 @@ namespace Feature_Inspection
             if (!caught)
             {
                 view.InspectionChart.Visible = true; 
-                view.InspectionChart.DataBind();
-
-                double max = view.InspectionChart.Series["UpperToleranceSeries"].Points[0].YValues[0];
-                double min = view.InspectionChart.Series["LowerToleranceSeries"].Points[0].YValues[0];
-                double nom = view.InspectionChart.Series["NominalSeries"].Points[0].YValues[0];
-                double tol = (max - min) / 4;
-                string title = "NOMINAL: " + nom.ToString() + "   HIGH: " + (max).ToString() + "   LOW: " + (min).ToString();
-
-                view.InspectionChart.Titles[0].Text = title;
-                view.InspectionChart.Titles[0].BackColor = Color.FromArgb(15, 15, 15);
-                view.InspectionChart.ChartAreas[0].AxisY.Maximum = max + tol;
-                view.InspectionChart.ChartAreas[0].AxisY.Minimum = min - tol;
-                view.InspectionChart.ChartAreas[0].AxisY.Interval = tol;
                 ChartDataLabeling();
                 //TrimChartPartCount();
                 //ChartDataWarning();
@@ -380,6 +379,9 @@ namespace Feature_Inspection
                 if (view.InspectionChart.Series[0].Points[i].YValues[0] == 0)
                 {
                     view.InspectionChart.Series[0].Points[i].IsEmpty = true;
+                    DataPoint d = view.InspectionChart.Series[0].Points[i];
+                    d.LabelBackColor = Color.Transparent;
+                    d.LabelForeColor = Color.Transparent;
                 }
             }
         }
@@ -401,9 +403,9 @@ namespace Feature_Inspection
 
         public void noInspectionStartClear()
         {
-            if (view.InspectionChart.Visible == false)
+            if (view.PartsListBox.Items.Count == 0)
             {
-                //view.ChartFocusComboBox.DataSource = null;
+                view.ChartFocusComboBox.DataSource = null;
                 view.InspectionHeaderText = "INSPECTION PAGE";
                 view.PartsListBox.DataSource = null;
                 view.LotsizeTextBox.Clear();
