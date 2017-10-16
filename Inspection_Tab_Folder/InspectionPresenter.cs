@@ -164,6 +164,8 @@ namespace Feature_Inspection
             if (listBox.Text.Contains("Part"))
             {
                 view.InspectionHeaderText = listBox.Text;
+
+                //TODO: Refactor these 4 lines. Extract in to function. Same code appears in BeginInspetionDataGridView
                 int pieceID = listBox.SelectedIndex + 1; //Due to 0 indexing
                 featureTable = UpdateTable(pieceID);
                 BindDataGridViewInspection(featureTable);
@@ -639,7 +641,7 @@ namespace Feature_Inspection
             {
                 InitializeInspectionGridViewWithCorrespondingParts(partList);
                 view.InspectionHeaderText = view.PartsListBox.Text;
-                int pieceID = view.PartsListBox.SelectedIndex + 1; //Due to 0 indexing
+                int pieceID = view.PartsListBox.SelectedIndex + 1; //Due to 0 indexing. Used for naming parts in ListBox i.e. Part 1(1 is piece ID)
                 featureTable = UpdateTable(pieceID);
                 BindDataGridViewInspection(featureTable);
                 ifInspectionCellEqualsZero_NoLock();
@@ -709,7 +711,16 @@ namespace Feature_Inspection
         public bool SetOpKeyInfoInspection()
         {
             DataTable info = new DataTable();
-            info = model.GetInfoFromOpKeyEntry(view.OpKey);
+
+            try
+            {
+                info = model.GetInfoFromOpKeyEntry(view.OpKey);
+            }
+            catch
+            {
+                //If OpKey is null
+                return false;
+            }
 
             if (info.Rows.Count > 0)
             {
