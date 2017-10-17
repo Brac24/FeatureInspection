@@ -159,17 +159,14 @@ namespace Feature_Inspection
         {
             //Use (listbox)sender.SelectedIndex
             var listBox = (ListBox)sender;
-            DataTable featureTable;
+            
 
             if (listBox.Text.Contains("Part"))
             {
                 view.InspectionHeaderText = listBox.Text;
 
                 //TODO: Refactor these 4 lines. Extract in to function. Same code appears in BeginInspetionDataGridView
-                int pieceID = listBox.SelectedIndex + 1; //Due to 0 indexing
-                featureTable = UpdateTable(pieceID);
-                BindDataGridViewInspection(featureTable);
-                IfInspectionCellEqualsZero_NoLock();
+                BindAndConfigureDataGridView();
             }
         }
 
@@ -304,10 +301,12 @@ namespace Feature_Inspection
                 table = model.GetChartData(view.OpKey, (int)view.ChartFocusComboBox.SelectedValue);
                 view.InspectionChart.DataSource = table;
                 view.InspectionChart.DataBind();
-                double max = view.InspectionChart.Series["UpperToleranceSeries"].Points[0].YValues[0];
-                double min = view.InspectionChart.Series["LowerToleranceSeries"].Points[0].YValues[0];
-                double nom = Double.Parse(view.ChartFocusComboBox.Text.ToString());
-                double tol = (max - min) / 4;
+
+                var max = view.InspectionChart.Series["UpperToleranceSeries"].Points[0].YValues[0];
+                var min = view.InspectionChart.Series["LowerToleranceSeries"].Points[0].YValues[0];
+                var nom = Double.Parse(view.ChartFocusComboBox.Text);
+                var tol = (max - min) / 4;
+
                 string title = "NOMINAL: " + nom.ToString() + "   HIGH: " + (max).ToString() + "   LOW: " + (min).ToString();
 
                 view.InspectionChart.Titles[0].Text = title;
@@ -561,12 +560,20 @@ namespace Feature_Inspection
             }
         }
 
-        public void checkFilterOrEnter(object sender, KeyEventArgs e)
+        /// <summary>
+        /// This method checks to see if the opkey is valid and if it has an inspection table ready for it, and tells the user
+        /// whether or not the opkey is valid. This method is also executed when pressing enter on the LotSizeTextBox
+        /// </summary>
+        /// <param name="e"></param>
+        public void checkEnter_ValidateOpKeyAndLotSize(object sender, KeyEventArgs e)
+
         {
             //Will work on an enter or tab key press
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
             {
                 view.LotsizeTextBox.ReadOnly = false;
+
+                ClearLotSizeIfValidatingOpKey();
 
                 ValidateValidOpKey();
             }
@@ -576,7 +583,13 @@ namespace Feature_Inspection
             }
         }
 
-
+        private void ClearLotSizeIfValidatingOpKey()
+        {
+            if (view.OpKeyTextBox.Focused)
+            {
+                view.LotsizeTextBox.Clear();
+            }
+        }
 
         private void ValidateValidOpKey()
         {
@@ -606,10 +619,12 @@ namespace Feature_Inspection
             
             if (inspectionExists)
             {
+                
                 BeginInspectionDataGridViewInitialization();
             }
             else
             {
+               // view.LotsizeTextBox.Clear();
                 CreateInspectionForOpKey();
 
                 BeginInspectionDataGridViewInitialization();

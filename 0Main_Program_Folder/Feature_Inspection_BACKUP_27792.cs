@@ -197,7 +197,12 @@ namespace Feature_Inspection
         /// <param name="e"></param>
         private void numOnly_KeyDown(object sender, KeyEventArgs e)
         {
-            inspectionPresenter.checkEnter_ValidateOpKeyAndLotSize(sender, e);
+<<<<<<< HEAD
+            inspectionPresenter.checkFilterOrEnter(sender, e);
+=======
+            inspectionPresenter.filterTextBox(sender, e);
+            inspectionPresenter.checkEnter_ValidateOpKeyAndLotSize(e);
+>>>>>>> 163236a7f4ebe9afebd8332085a7e583259724d3
         }
 
         /// <summary>

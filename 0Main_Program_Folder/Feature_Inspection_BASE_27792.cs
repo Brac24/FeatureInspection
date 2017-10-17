@@ -155,7 +155,6 @@ namespace Feature_Inspection
             model = new FeatureCreationModelMock();
             presenter = new FeatureCreationPresenter(this, model);
             inspectionPresenter = new InspectionPresenter(this, model);
-            inspectionPresenter.BindFocusCharts();
             reportPresenter = new ReportPresenter(this, model);
 
             inspectionPresenter.createGraphArea(inspectionChart);
@@ -197,7 +196,8 @@ namespace Feature_Inspection
         /// <param name="e"></param>
         private void numOnly_KeyDown(object sender, KeyEventArgs e)
         {
-            inspectionPresenter.checkEnter_ValidateOpKeyAndLotSize(sender, e);
+            inspectionPresenter.filterTextBox(sender, e);
+            inspectionPresenter.checkEnter_ValidateOpKey(e);
         }
 
         /// <summary>
@@ -208,6 +208,7 @@ namespace Feature_Inspection
         private void nextPartButton_Click(object sender, EventArgs e)
         {
             inspectionPresenter.GotToNextPart();
+
         }
 
         /// <summary>
@@ -420,6 +421,5 @@ namespace Feature_Inspection
 
         #endregion
 
-        
     }
 }
