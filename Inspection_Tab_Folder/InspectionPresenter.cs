@@ -304,10 +304,10 @@ namespace Feature_Inspection
                 table = model.GetChartData(view.OpKey, (int)view.ChartFocusComboBox.SelectedValue);
                 view.InspectionChart.DataSource = table;
                 view.InspectionChart.DataBind();
-                var max = view.InspectionChart.Series["UpperToleranceSeries"].Points[0].YValues[0];
-                var min = view.InspectionChart.Series["LowerToleranceSeries"].Points[0].YValues[0];
-                var nom = (min + max) / 2;
-                var tol = (max - min) / 4;
+                double max = view.InspectionChart.Series["UpperToleranceSeries"].Points[0].YValues[0];
+                double min = view.InspectionChart.Series["LowerToleranceSeries"].Points[0].YValues[0];
+                double nom = (min + max) / 2;
+                double tol = (max - min) / 4;
                 string title = "NOMINAL: " + nom.ToString() + "   HIGH: " + (max).ToString() + "   LOW: " + (min).ToString();
 
                 view.InspectionChart.Titles[0].Text = title;
@@ -357,16 +357,17 @@ namespace Feature_Inspection
         {
             double max = view.InspectionChart.Series["UpperToleranceSeries"].Points[0].YValues[0];
             double min = view.InspectionChart.Series["LowerToleranceSeries"].Points[0].YValues[0];
+            double nom = (min + max) / 2;
 
             for (int i = 0; i < view.InspectionChart.Series[0].Points.Count; i++)
             {
 
-                if (view.InspectionChart.Series[0].Points[i].YValues[0] > (max * .95) || view.InspectionChart.Series[0].Points[i].YValues[0] < (min * 1.05))
+                if (view.InspectionChart.Series[0].Points[i].YValues[0] > (((max - nom) * .89) + nom) || view.InspectionChart.Series[0].Points[i].YValues[0] < (nom - ((nom - min) * .89)))
                 {
                     view.InspectionChart.Series[0].Points[i].Color = Color.Orange;
-                    DataPoint d = view.InspectionChart.Series[0].Points[i];
-                    d.Label = view.InspectionChart.Series[0].Points[i].YValues[0].ToString();
-                    d.LabelBackColor = Color.Gainsboro;
+                    //DataPoint d = view.InspectionChart.Series[0].Points[i];
+                    //d.Label = view.InspectionChart.Series[0].Points[i].YValues[0].ToString();
+                    //d.LabelBackColor = Color.Gainsboro;
                 }
 
                 if (view.InspectionChart.Series[0].Points[i].YValues[0] > (max) || view.InspectionChart.Series[0].Points[i].YValues[0] < (min))
