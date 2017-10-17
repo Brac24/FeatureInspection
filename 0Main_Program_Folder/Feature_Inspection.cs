@@ -180,7 +180,7 @@ namespace Feature_Inspection
         {
             try
             {
-                inspectionPresenter.ifInspectionCellEqualsZero_NoLock();
+                inspectionPresenter.IfInspectionCellEqualsZero_NoLock();
             }
             catch
             {
@@ -228,7 +228,6 @@ namespace Feature_Inspection
         /// <param name="e"></param>
         private void inspectionEntryGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            //TODO: Table should be binding everytime the Measured value has been edited
             inspectionPresenter.AdapterUpdateInspection();
         }
 

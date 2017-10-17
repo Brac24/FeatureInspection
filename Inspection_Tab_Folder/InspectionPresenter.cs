@@ -169,14 +169,14 @@ namespace Feature_Inspection
                 int pieceID = listBox.SelectedIndex + 1; //Due to 0 indexing
                 featureTable = UpdateTable(pieceID);
                 BindDataGridViewInspection(featureTable);
-                ifInspectionCellEqualsZero_NoLock();
+                IfInspectionCellEqualsZero_NoLock();
             }
         }
 
         /// <summary>
         /// This method checks to each row in the inspection grid to see if they equal 0 or not. If a value != 0, then the row locks.
         /// </summary>
-        public void ifInspectionCellEqualsZero_NoLock()
+        public void IfInspectionCellEqualsZero_NoLock()
         {
             for (int i = 0; i < view.InspectionGrid.RowCount; i++)
             {
@@ -601,19 +601,17 @@ namespace Feature_Inspection
 
         private bool ValidateInspectionExistForOpKey()
         {
-            DataTable partList = null;
             bool inspectionExists = model.GetInspectionExistsOnOpKey(view.OpKey);
-            partList = model.GetPartsList(view.OpKey);
-
+            
             if (inspectionExists)
             {
-                BeginInpsectionDataGridViewInitialization(partList);
+                BeginInspectionDataGridViewInitialization();
             }
             else
             {
                 CreateInspectionForOpKey();
 
-                BeginInpsectionDataGridViewInitialization(partList);
+                BeginInspectionDataGridViewInitialization();
             }
 
             return inspectionExists;
@@ -628,7 +626,7 @@ namespace Feature_Inspection
             //MessageBox.Show("Creating Inspection");            
         }
 
-        private void BeginInpsectionDataGridViewInitialization(DataTable partList)
+        private void BeginInspectionDataGridViewInitialization()
         {
             DataTable featureTable;
             DataTable featureList;
@@ -640,12 +638,9 @@ namespace Feature_Inspection
 
             if (featureTable.Rows.Count > 0)
             {
-                InitializeInspectionGridViewWithCorrespondingParts(partList);
+                InitializeInspectionGridViewWithCorrespondingParts();
                 view.InspectionHeaderText = view.PartsListBox.Text;
-                int pieceID = view.PartsListBox.SelectedIndex + 1; //Due to 0 indexing. Used for naming parts in ListBox i.e. Part 1(1 is piece ID)
-                featureTable = UpdateTable(pieceID);
-                BindDataGridViewInspection(featureTable);
-                ifInspectionCellEqualsZero_NoLock();
+                BindAndConfigureDataGridView();
             }
             else
             {
@@ -657,13 +652,25 @@ namespace Feature_Inspection
             }
         }
 
-        private void InitializeInspectionGridViewWithCorrespondingParts(DataTable partList)
+        private void BindAndConfigureDataGridView()
         {
+            DataTable featureTable;
+            int pieceID = view.PartsListBox.SelectedIndex + 1; //Due to 0 indexing. Used for naming parts in ListBox i.e. Part 1(1 is piece ID)
+            featureTable = UpdateTable(pieceID);
+            BindDataGridViewInspection(featureTable);
+            IfInspectionCellEqualsZero_NoLock();
+        }
+
+        private void InitializeInspectionGridViewWithCorrespondingParts()
+        {
+            DataTable partList = model.GetPartsList(view.OpKey);
+
             //Check if there are parts in position table
             if (partList.Rows.Count > 0)
             {               
-                DetermineIfNewFeaturesHaveBeenAddedToOpKey(partList);
-                BindPartListBox(partList);
+                DetermineIfNewFeaturesHaveBeenAddedToOpKey();
+                BindNewlyCreatedPartListToListBox();
+                
             }
             else if (view.LotsizeTextBox.Text != "")
             {
@@ -671,7 +678,7 @@ namespace Feature_Inspection
             }
         }
 
-        private void DetermineIfNewFeaturesHaveBeenAddedToOpKey(DataTable partList)
+        private void DetermineIfNewFeaturesHaveBeenAddedToOpKey()
         {
             //Search for new parts       
             view.LotsizeTextBox.Text = model.GetLotSize(view.OpKey);

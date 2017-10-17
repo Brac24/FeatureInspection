@@ -176,8 +176,6 @@ namespace Feature_Inspection
 
         }
 
-        //TODO: Put opkey and feature key paramters inputs for this method
-        //Feature key is located in the inspectionEntryGridView it is one of the hidden columns
         public DataTable GetChartData(int opKey, int featureKey)
         {
             DataTable features = new DataTable();

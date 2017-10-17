@@ -342,7 +342,6 @@ namespace Feature_Inspection
         private void DataBindFeaturesToFeatureDataGridView(DataTable featureTable)
         {
             
-
             view.FeatureGridView.Columns.Clear();
 
             view.BindingSource = new BindingSource();
@@ -384,6 +383,7 @@ namespace Feature_Inspection
         //TODO: exact same logic as in InspectionPresenter. Can we consolidate this?
         public void DisableSortableColumns()
         {
+            
             for (int j = 0; j < view.FeatureGridView.ColumnCount; j++)
             {
                 view.FeatureGridView.Columns[j].SortMode = DataGridViewColumnSortMode.NotSortable;
