@@ -303,7 +303,7 @@ namespace Feature_Inspection
                 view.InspectionChart.DataBind();
                 var max = view.InspectionChart.Series["UpperToleranceSeries"].Points[0].YValues[0];
                 var min = view.InspectionChart.Series["LowerToleranceSeries"].Points[0].YValues[0];
-                var nom = Double.Parse(view.ChartFocusComboBox.SelectedText);
+                var nom = Double.Parse(view.ChartFocusComboBox.Text);
                 var tol = (max - min) / 4;
                 string title = "NOMINAL: " + nom.ToString() + "   HIGH: " + (max).ToString() + "   LOW: " + (min).ToString();
 
