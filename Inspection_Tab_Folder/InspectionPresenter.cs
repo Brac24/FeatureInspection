@@ -159,17 +159,14 @@ namespace Feature_Inspection
         {
             //Use (listbox)sender.SelectedIndex
             var listBox = (ListBox)sender;
-            DataTable featureTable;
+            
 
             if (listBox.Text.Contains("Part"))
             {
                 view.InspectionHeaderText = listBox.Text;
 
                 //TODO: Refactor these 4 lines. Extract in to function. Same code appears in BeginInspetionDataGridView
-                int pieceID = listBox.SelectedIndex + 1; //Due to 0 indexing
-                featureTable = UpdateTable(pieceID);
-                BindDataGridViewInspection(featureTable);
-                IfInspectionCellEqualsZero_NoLock();
+                BindAndConfigureDataGridView();
             }
         }
 
@@ -306,7 +303,7 @@ namespace Feature_Inspection
                 view.InspectionChart.DataBind();
                 var max = view.InspectionChart.Series["UpperToleranceSeries"].Points[0].YValues[0];
                 var min = view.InspectionChart.Series["LowerToleranceSeries"].Points[0].YValues[0];
-                var nom = (min + max) / 2;
+                var nom = Double.Parse(view.ChartFocusComboBox.SelectedText);
                 var tol = (max - min) / 4;
                 string title = "NOMINAL: " + nom.ToString() + "   HIGH: " + (max).ToString() + "   LOW: " + (min).ToString();
 
@@ -561,10 +558,10 @@ namespace Feature_Inspection
 
         /// <summary>
         /// This method checks to see if the opkey is valid and if it has an inspection table ready for it, and tells the user
-        /// whether or not the opkey is valid.
+        /// whether or not the opkey is valid. This method is also executed when pressing enter on the LotSizeTextBox
         /// </summary>
         /// <param name="e"></param>
-        public void checkEnter_ValidateOpKey(KeyEventArgs e)
+        public void checkEnter_ValidateOpKeyAndLotSize(KeyEventArgs e)
 
         {
             //Will work on an enter or tab key press
@@ -572,7 +569,17 @@ namespace Feature_Inspection
             {
                 view.LotsizeTextBox.ReadOnly = false;
 
+                ClearLotSizeIfValidatingOpKey();
+
                 ValidateValidOpKey();
+            }
+        }
+
+        private void ClearLotSizeIfValidatingOpKey()
+        {
+            if (view.OpKeyTextBox.Focused)
+            {
+                view.LotsizeTextBox.Clear();
             }
         }
 
@@ -604,10 +611,12 @@ namespace Feature_Inspection
             
             if (inspectionExists)
             {
+                
                 BeginInspectionDataGridViewInitialization();
             }
             else
             {
+               // view.LotsizeTextBox.Clear();
                 CreateInspectionForOpKey();
 
                 BeginInspectionDataGridViewInitialization();
