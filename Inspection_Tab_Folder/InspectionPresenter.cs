@@ -298,7 +298,7 @@ namespace Feature_Inspection
         {
             bool caught = false;
             DataTable table;
-
+            
             try
             {
                 table = model.GetChartData(view.OpKey, (int)view.ChartFocusComboBox.SelectedValue);
@@ -306,7 +306,7 @@ namespace Feature_Inspection
                 view.InspectionChart.DataBind();
                 double max = view.InspectionChart.Series["UpperToleranceSeries"].Points[0].YValues[0];
                 double min = view.InspectionChart.Series["LowerToleranceSeries"].Points[0].YValues[0];
-                double nom = (min + max) / 2;
+                double nom = Double.Parse(view.ChartFocusComboBox.Text.ToString());
                 double tol = (max - min) / 4;
                 string title = "NOMINAL: " + nom.ToString() + "   HIGH: " + (max).ToString() + "   LOW: " + (min).ToString();
 
@@ -357,12 +357,12 @@ namespace Feature_Inspection
         {
             double max = view.InspectionChart.Series["UpperToleranceSeries"].Points[0].YValues[0];
             double min = view.InspectionChart.Series["LowerToleranceSeries"].Points[0].YValues[0];
-            double nom = (min + max) / 2;
+            double nom = Double.Parse(view.ChartFocusComboBox.Text.ToString());
 
             for (int i = 0; i < view.InspectionChart.Series[0].Points.Count; i++)
             {
 
-                if (view.InspectionChart.Series[0].Points[i].YValues[0] > (((max - nom) * .89) + nom) || view.InspectionChart.Series[0].Points[i].YValues[0] < (nom - ((nom - min) * .89)))
+                if (view.InspectionChart.Series[0].Points[i].YValues[0] > (((max - nom) * .85) + nom) || view.InspectionChart.Series[0].Points[i].YValues[0] < (nom - ((nom - min) * .85)))
                 {
                     view.InspectionChart.Series[0].Points[i].Color = Color.Orange;
                     //DataPoint d = view.InspectionChart.Series[0].Points[i];
@@ -462,6 +462,7 @@ namespace Feature_Inspection
             view.ChartFocusComboBox.DisplayMember = "Nominal";
             view.ChartFocusComboBox.ValueMember = "Feature_Key";
             view.ChartFocusComboBox.DataSource = featuresTable;
+            
 
             
         }
@@ -560,13 +561,7 @@ namespace Feature_Inspection
             }
         }
 
-        /// <summary>
-        /// This method checks to see if the opkey is valid and if it has an inspection table ready for it, and tells the user
-        /// whether or not the opkey is valid.
-        /// </summary>
-        /// <param name="e"></param>
-        public void checkEnter_ValidateOpKey(KeyEventArgs e)
-
+        public void checkFilterOrEnter(object sender, KeyEventArgs e)
         {
             //Will work on an enter or tab key press
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
@@ -575,7 +570,13 @@ namespace Feature_Inspection
 
                 ValidateValidOpKey();
             }
+            else
+            {
+                filterTextBox(sender, e);
+            }
         }
+
+
 
         private void ValidateValidOpKey()
         {
@@ -641,6 +642,7 @@ namespace Feature_Inspection
                 InitializeInspectionGridViewWithCorrespondingParts();
                 view.InspectionHeaderText = view.PartsListBox.Text;
                 BindAndConfigureDataGridView();
+                BindFocusCharts();
             }
             else
             {

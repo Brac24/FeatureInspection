@@ -196,8 +196,7 @@ namespace Feature_Inspection
         /// <param name="e"></param>
         private void numOnly_KeyDown(object sender, KeyEventArgs e)
         {
-            inspectionPresenter.filterTextBox(sender, e);
-            inspectionPresenter.checkEnter_ValidateOpKey(e);
+            inspectionPresenter.checkFilterOrEnter(sender, e);
         }
 
         /// <summary>
@@ -208,7 +207,6 @@ namespace Feature_Inspection
         private void nextPartButton_Click(object sender, EventArgs e)
         {
             inspectionPresenter.GotToNextPart();
-
         }
 
         /// <summary>
