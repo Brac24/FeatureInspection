@@ -200,8 +200,6 @@ namespace Feature_Inspection
                 view.ListBoxIndex = (view.ListBoxIndex + 1 < view.ListBoxCount) ?
                 view.ListBoxIndex += 1 : view.ListBoxIndex = 0;
                 DataTable featureList = model.GetFeatureList(view.OpKey);
-                BindFocusComboBox(featureList);
-                //string title = view.ChartFocusComboBox.Text;
                 BindFocusCharts();
             }
         }

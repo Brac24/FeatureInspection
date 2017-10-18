@@ -69,7 +69,7 @@ namespace Feature_Inspection
         /// This event handler supresses any white space characters being entered.
         /// </summary>
         /// <param name="e"></param>
-        private void SuppressKeyIfWhiteSpaceChar(KeyEventArgs e)
+        public void SuppressKeyIfWhiteSpaceChar(KeyEventArgs e)
         {
             char currentKey = (char)e.KeyCode;
             bool nonNumber = char.IsWhiteSpace(currentKey); //Deals with all white space characters which inlcude tab, return, etc.
