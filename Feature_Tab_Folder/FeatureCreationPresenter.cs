@@ -20,7 +20,6 @@ namespace Feature_Inspection
             this.view = view;
             this.model = model;
             Initialize();
-
         }
 
         private void Initialize()
@@ -210,7 +209,7 @@ namespace Feature_Inspection
         }
 
         /// <summary>
-        /// TODO: create an accurate summary description.
+        /// This method handles certain actions needed to update data uploaded into the database.
         /// </summary>
         private void AdapterUpdate()
         {
@@ -278,7 +277,6 @@ namespace Feature_Inspection
         /// <summary>
         /// This method sees which textbox is in focus in the feature page, and validates that those values match the DB.
         /// </summary>
-        //TODO: Always called with "InitializeFeatureGridView()", could they be combined or is there any redundancy?
         internal void ValidatePartAndOpNumberExistWhenEntered(object sender)
         {
             //Pressing enter key on part number text box
@@ -336,7 +334,7 @@ namespace Feature_Inspection
         }*/
 
         /// <summary>
-        /// TODO: create an accurate summary for this method.
+        /// This method handles data binding of the grid view in the feature creation page.
         /// </summary>
         /// <param name="featureTable"></param>
         private void DataBindFeaturesToFeatureDataGridView(DataTable featureTable)
@@ -356,7 +354,7 @@ namespace Feature_Inspection
         }
 
         /// <summary>
-        /// TODO: create an accurate summary for this method.
+        /// This method sets up various controls and indications on the feature creation page.
         /// </summary>
         /// <param name="featureTable"></param>
         private void ConfigureFeatureDataGridView(DataTable featureTable)
@@ -368,7 +366,7 @@ namespace Feature_Inspection
 
             SetUpFeatureTypeColumnComboBox();
 
-            SampleComboBind(); //Adds and binds the sample combo box column
+            SampleComboBind();
 
             SetUpToolColumnComboBox();
 
@@ -380,7 +378,6 @@ namespace Feature_Inspection
         /// <summary>
         /// This method makes all columns in a grid view not sortable.
         /// </summary>
-        //TODO: exact same logic as in InspectionPresenter. Can we consolidate this?
         public void DisableSortableColumns()
         {
             
@@ -482,7 +479,7 @@ namespace Feature_Inspection
         }
 
         /// <summary>
-        /// TODO: create an accurate summary for this method.
+        /// This method sets up the sample and feature type columns.
         /// </summary>
         /// <param name="featureTable"></param>
         private void InitSampleAndFeatureTypeComboBoxColumnValue()

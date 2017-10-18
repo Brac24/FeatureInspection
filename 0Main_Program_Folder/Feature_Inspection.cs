@@ -168,14 +168,11 @@ namespace Feature_Inspection
 
         //INSPECTION ENTRY TAB HANDLERS    
 
-        //TODO: Tried to make it so when you click out of OpKeyTextBox inspectionEntryGridView would update
-        private void PartBoxFeature_Leave(object sender, EventArgs e)
-        {
-            //presenter.leaveFocus(e);
-        }
-
-        /*TODO: Tried to lock the cells upon value changing instead of hitting enter. Otherwise its possible to lock yourself out
-        of redos without ever changing the measured value.*/
+        /// <summary>
+        /// This method calls a locking method when a cell value is changed in the inspection grid view.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void InspectionEntryGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             try
