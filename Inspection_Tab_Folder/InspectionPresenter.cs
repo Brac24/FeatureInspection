@@ -53,6 +53,12 @@ namespace Feature_Inspection
 
             view.InspectionGrid.DataSource = view.InspectionBindingSource;
 
+            InspectionDataGridColumnSetup();
+
+        }
+
+        private void InspectionDataGridColumnSetup()
+        {
             try
             {
                 HideInspectionColumns();
@@ -69,7 +75,6 @@ namespace Feature_Inspection
             Inspection_SetSelectedCell();
 
             DisableSortableColumns();
-
         }
 
         /// <summary>
