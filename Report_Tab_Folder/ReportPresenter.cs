@@ -53,12 +53,12 @@ namespace Feature_Inspection
             }
         }
 
-        public void check_ReportScope(object sender, KeyEventArgs e)
+        public void Check_ReportScope(object sender, KeyEventArgs e)
         {
             DataTable featureList;
             if (view.ReportTypeComboBox.SelectedIndex == 0)
             {
-                filterTextBox(sender, e);
+                FilterTextBox(sender, e);
                 if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
                 {
                     ValidateValidOpKey();
@@ -139,7 +139,7 @@ namespace Feature_Inspection
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void filterTextBox(object sender, KeyEventArgs e)
+        public void FilterTextBox(object sender, KeyEventArgs e)
         {
             var textbox = (TextBox)sender;
             int lotChars = textbox.Text.Length;
@@ -361,7 +361,7 @@ namespace Feature_Inspection
 
                 double max = view.ReportChart.Series["UpperToleranceSeries"].Points[0].YValues[0];
                 double min = view.ReportChart.Series["LowerToleranceSeries"].Points[0].YValues[0];
-                double nom = view.ReportChart.Series["NominalSeries"].Points[0].YValues[0];
+                var nom = Double.Parse(view.ReportFocusComboBox.Text);
                 double tol = (max - min) / 4;
                 string title = "NOMINAL: " + nom.ToString() + "   HIGH: " + (max).ToString() + "   LOW: " + (min).ToString();
 
@@ -380,7 +380,7 @@ namespace Feature_Inspection
         /// This method creates the chart area that will display all run charts of recorded data.
         /// </summary>
         /// <param name="chart"></param>
-        public void createGraphArea(Chart chart)
+        public void CreateGraphArea(Chart chart)
         {
             chart.ChartAreas.Add("InspectionChart");
             chart.Series.Add("NominalSeries");
@@ -432,16 +432,17 @@ namespace Feature_Inspection
         {
             double max = view.ReportChart.Series["UpperToleranceSeries"].Points[0].YValues[0];
             double min = view.ReportChart.Series["LowerToleranceSeries"].Points[0].YValues[0];
+            var nom = Double.Parse(view.ReportFocusComboBox.Text);
 
             for (int i = 0; i < view.ReportChart.Series[0].Points.Count; i++)
             {
 
-                if (view.ReportChart.Series[0].Points[i].YValues[0] > (max * .95) || view.ReportChart.Series[0].Points[i].YValues[0] < (min * 1.05))
+                if (view.ReportChart.Series[0].Points[i].YValues[0] > (((max - nom) * .85) + nom) || view.ReportChart.Series[0].Points[i].YValues[0] < (nom - ((nom - min) * .85)))
                 {
                     view.ReportChart.Series[0].Points[i].Color = Color.Orange;
-                    DataPoint d = view.ReportChart.Series[0].Points[i];
-                    d.Label = view.ReportChart.Series[0].Points[i].YValues[0].ToString();
-                    d.LabelBackColor = Color.Gainsboro;
+                    //DataPoint d = view.ReportChart.Series[0].Points[i];
+                    //d.Label = view.ReportChart.Series[0].Points[i].YValues[0].ToString();
+                    //d.LabelBackColor = Color.Gainsboro;
                 }
 
                 if (view.ReportChart.Series[0].Points[i].YValues[0] > (max) || view.ReportChart.Series[0].Points[i].YValues[0] < (min))
@@ -456,6 +457,9 @@ namespace Feature_Inspection
                 if (view.ReportChart.Series[0].Points[i].YValues[0] == 0)
                 {
                     view.ReportChart.Series[0].Points[i].IsEmpty = true;
+                    DataPoint d = view.ReportChart.Series[0].Points[i];
+                    d.LabelBackColor = Color.Transparent;
+                    d.LabelForeColor = Color.Transparent;
                 }
             }
         }
