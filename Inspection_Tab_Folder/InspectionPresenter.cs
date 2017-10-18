@@ -30,7 +30,6 @@ namespace Feature_Inspection
         /// <summary>
         /// This method makes all columns in a grid view not sortable.
         /// </summary>
-        //TODO: exact same logic as in FeatureCreationPresenter. Can we consolidate this?
         public void DisableSortableColumns()
         {
             for (int j = 0; j < view.InspectionGrid.ColumnCount; j++)
@@ -168,7 +167,6 @@ namespace Feature_Inspection
             {
                 view.InspectionHeaderText = listBox.Text;
 
-                //TODO: Refactor these 4 lines. Extract in to function. Same code appears in BeginInspetionDataGridView
                 BindAndConfigureDataGridView();
             }
         }

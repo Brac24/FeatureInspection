@@ -242,7 +242,6 @@ namespace Feature_Inspection
         /// <summary>
         /// This method sees which textbox is in focus in the feature page, and validates that those values match the DB.
         /// </summary>
-        //TODO: Always called with "InitializeFeatureGridView()", could they be combined or is there any redundancy?
         internal void ValidatePartAndOpNumberExistWhenEntered(object sender)
         {
             //Pressing enter key on part number text box
