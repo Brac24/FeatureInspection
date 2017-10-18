@@ -40,7 +40,7 @@ namespace Feature_Inspection
 
         #region Properties
 
-        public TextBox PartTextBox { get { return partBoxFeature; } set { } }
+        public TextBox ChristianIsDumb { get { return partBoxFeature; } set { } }
 
         public TextBox FeatureOpTextBox { get { return opBoxFeature; } }
 
