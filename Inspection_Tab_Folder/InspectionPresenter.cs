@@ -14,7 +14,7 @@ namespace Feature_Inspection
     {
         private IInspectionView view;
         private IFeaturesDataSource model;
-
+        
         public InspectionPresenter(IInspectionView view, IFeaturesDataSource model)
         {
             this.view = view;
@@ -202,8 +202,6 @@ namespace Feature_Inspection
             {
                 view.ListBoxIndex = (view.ListBoxIndex + 1 < view.ListBoxCount) ?
                 view.ListBoxIndex += 1 : view.ListBoxIndex = 0;
-                DataTable featureList = model.GetFeatureList(view.OpKey);
-                BindFocusCharts();
             }
         }
 
