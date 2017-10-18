@@ -265,9 +265,9 @@
             this.featureEditGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.featureEditGridView.Size = new System.Drawing.Size(822, 423);
             this.featureEditGridView.TabIndex = 0;
-            this.featureEditGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
+            this.featureEditGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellEndEdit);
             this.featureEditGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DeleteRowFeature_MouseUp);
-            this.featureEditGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.featureEditGridView_DataError);
+            this.featureEditGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.FeatureEditGridView_DataError);
             // 
             // Feature
             // 
@@ -332,7 +332,7 @@
             this.addFeatureButton.TabIndex = 2;
             this.addFeatureButton.Text = "ADD FEATURE";
             this.addFeatureButton.UseVisualStyleBackColor = false;
-            this.addFeatureButton.Click += new System.EventHandler(this.addFeature_Click);
+            this.addFeatureButton.Click += new System.EventHandler(this.AddFeature_Click);
             // 
             // mainTabControl
             // 
@@ -500,7 +500,7 @@
             this.opKeyBoxInspection.Size = new System.Drawing.Size(143, 26);
             this.opKeyBoxInspection.TabIndex = 0;
             this.opKeyBoxInspection.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.opKeyBoxInspection.KeyDown += new System.Windows.Forms.KeyEventHandler(this.numOnly_KeyDown);
+            this.opKeyBoxInspection.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NumOnly_KeyDown);
             // 
             // label1
             // 
@@ -518,6 +518,7 @@
             // inspectionFocusCombo
             // 
             this.inspectionFocusCombo.BackColor = System.Drawing.Color.DimGray;
+            this.inspectionFocusCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.inspectionFocusCombo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.inspectionFocusCombo.ForeColor = System.Drawing.Color.Gainsboro;
             this.inspectionFocusCombo.FormattingEnabled = true;
@@ -526,8 +527,8 @@
             this.inspectionFocusCombo.Name = "inspectionFocusCombo";
             this.inspectionFocusCombo.Size = new System.Drawing.Size(143, 27);
             this.inspectionFocusCombo.TabIndex = 42;
-            this.inspectionFocusCombo.SelectedIndexChanged += new System.EventHandler(this.inspectionFocusCombo_SelectedIndexChanged);
-            this.inspectionFocusCombo.DisplayMemberChanged += new System.EventHandler(this.inspectionFocusCombo_SelectedIndexChanged);
+            this.inspectionFocusCombo.SelectedIndexChanged += new System.EventHandler(this.InspectionFocusCombo_SelectedIndexChanged);
+            this.inspectionFocusCombo.DisplayMemberChanged += new System.EventHandler(this.InspectionFocusCombo_SelectedIndexChanged);
             // 
             // label7
             // 
@@ -629,7 +630,7 @@
             this.lotSizeBoxInspection.Size = new System.Drawing.Size(143, 26);
             this.lotSizeBoxInspection.TabIndex = 1;
             this.lotSizeBoxInspection.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.lotSizeBoxInspection.KeyDown += new System.Windows.Forms.KeyEventHandler(this.numOnly_KeyDown);
+            this.lotSizeBoxInspection.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NumOnly_KeyDown);
             // 
             // label22
             // 
@@ -695,7 +696,7 @@
             this.partsListBox.Name = "partsListBox";
             this.partsListBox.Size = new System.Drawing.Size(262, 327);
             this.partsListBox.TabIndex = 5;
-            this.partsListBox.SelectedIndexChanged += new System.EventHandler(this.inspectionEntryGridView_ChangeWithPart);
+            this.partsListBox.SelectedIndexChanged += new System.EventHandler(this.InspectionEntryGridView_ChangeWithPart);
             // 
             // tableLayoutPanel12
             // 
@@ -798,11 +799,11 @@
             this.inspectionEntryGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.inspectionEntryGridView.Size = new System.Drawing.Size(822, 337);
             this.inspectionEntryGridView.TabIndex = 0;
-            this.inspectionEntryGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.inspectionEntryGridView_CellEndEdit);
+            this.inspectionEntryGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.InspectionEntryGridView_CellEndEdit);
             this.inspectionEntryGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.RedoRowInspection_MouseUp);
-            this.inspectionEntryGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.inspectionEntryGridView_CellValueChanged);
-            this.inspectionEntryGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.inspectionEntryGridView_DataBindingComplete);
-            this.inspectionEntryGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.inspectionEntryGridView_DataError);
+            this.inspectionEntryGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.InspectionEntryGridView_CellValueChanged);
+            this.inspectionEntryGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.InspectionEntryGridView_DataBindingComplete);
+            this.inspectionEntryGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.InspectionEntryGridView_DataError);
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -863,7 +864,7 @@
             this.inspectionChart.TabIndex = 19;
             this.inspectionChart.TabStop = false;
             this.inspectionChart.Visible = false;
-            this.inspectionChart.MouseMove += new System.Windows.Forms.MouseEventHandler(this.inspectionChart_MouseMove);
+            this.inspectionChart.MouseMove += new System.Windows.Forms.MouseEventHandler(this.InspectionChart_MouseMove);
             // 
             // tableLayoutPanel21
             // 
@@ -913,7 +914,7 @@
             this.nextPartButton.TabIndex = 5;
             this.nextPartButton.Text = "NEXT PART";
             this.nextPartButton.UseVisualStyleBackColor = false;
-            this.nextPartButton.Click += new System.EventHandler(this.nextPartButton_Click);
+            this.nextPartButton.Click += new System.EventHandler(this.NextPartButton_Click);
             // 
             // measuredLabel
             // 
@@ -1093,7 +1094,7 @@
             this.reportTypeDropdown.Name = "reportTypeDropdown";
             this.reportTypeDropdown.Size = new System.Drawing.Size(143, 27);
             this.reportTypeDropdown.TabIndex = 44;
-            this.reportTypeDropdown.SelectedIndexChanged += new System.EventHandler(this.reportTypeDropdown_SelectedIndexChanged);
+            this.reportTypeDropdown.SelectedIndexChanged += new System.EventHandler(this.ReportTypeDropdown_SelectedIndexChanged);
             // 
             // reportFocusComboBox
             // 
@@ -1121,7 +1122,7 @@
             this.reportTB1.TabIndex = 46;
             this.reportTB1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.reportTB1.Visible = false;
-            this.reportTB1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.reportTextBox_Check_Filter);
+            this.reportTB1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ReportTextBox_Check_Filter);
             // 
             // reportTB2
             // 
@@ -1136,7 +1137,7 @@
             this.reportTB2.TabIndex = 47;
             this.reportTB2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.reportTB2.Visible = false;
-            this.reportTB2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.checkEnterKeyPressedReport_KeyDown);
+            this.reportTB2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CheckEnterKeyPressedReport_KeyDown);
             // 
             // tableLayoutPanel18
             // 
@@ -1669,8 +1670,8 @@
             this.opBoxFeature.Size = new System.Drawing.Size(143, 25);
             this.opBoxFeature.TabIndex = 1;
             this.opBoxFeature.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.opBoxFeature.KeyDown += new System.Windows.Forms.KeyEventHandler(this.checkEnterKeyPressedFeatures_KeyDown);
-            this.opBoxFeature.Leave += new System.EventHandler(this.partBoxFeature_Leave);
+            this.opBoxFeature.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CheckEnterKeyPressedFeatures_KeyDown);
+            this.opBoxFeature.Leave += new System.EventHandler(this.PartBoxFeature_Leave);
             // 
             // labely
             // 
@@ -1698,8 +1699,8 @@
             this.partBoxFeature.Size = new System.Drawing.Size(143, 25);
             this.partBoxFeature.TabIndex = 0;
             this.partBoxFeature.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.partBoxFeature.KeyDown += new System.Windows.Forms.KeyEventHandler(this.checkEnterKeyPressedFeatures_KeyDown);
-            this.partBoxFeature.Leave += new System.EventHandler(this.partBoxFeature_Leave);
+            this.partBoxFeature.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CheckEnterKeyPressedFeatures_KeyDown);
+            this.partBoxFeature.Leave += new System.EventHandler(this.PartBoxFeature_Leave);
             // 
             // partStorageLabel
             // 
@@ -1813,7 +1814,7 @@
             this.saveButton.TabIndex = 5;
             this.saveButton.Text = "SAVE CHANGES";
             this.saveButton.UseVisualStyleBackColor = false;
-            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            this.saveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
             // cancelButton
             // 
@@ -1830,7 +1831,7 @@
             this.cancelButton.TabIndex = 6;
             this.cancelButton.Text = "UNDO CHANGES";
             this.cancelButton.UseVisualStyleBackColor = false;
-            this.cancelButton.Click += new System.EventHandler(this.cancelChanges_Click);
+            this.cancelButton.Click += new System.EventHandler(this.CancelChanges_Click);
             // 
             // tableLayoutPanel1
             // 

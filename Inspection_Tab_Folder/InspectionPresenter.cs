@@ -45,7 +45,6 @@ namespace Feature_Inspection
         /// <param name="featuresTable"></param>
         public void BindDataGridViewInspection(DataTable featuresTable)
         {
-            bool caught = false;
             view.InspectionGrid.Columns.Clear();
 
             view.InspectionGrid.DataSource = null;
@@ -63,7 +62,6 @@ namespace Feature_Inspection
 
             catch
             {
-                caught = true;
             }
 
             SetupRedoButtonColumn();
@@ -131,13 +129,13 @@ namespace Feature_Inspection
         /// This method reduces "graphics popping" by creating inspection headers on the inspectionEntryGridView 
         /// before any opkey has been entered.
         /// </summary>
-        public void inspectionHeaderCreation()
+        public void InspectionHeaderCreation()
         {
-            createGridHeaders("Sketch Bubble", view.InspectionGrid);
-            createGridHeaders("Feature", view.InspectionGrid);
-            createGridHeaders("Measured Actual", view.InspectionGrid);
-            createGridHeaders("Inspection Tool", view.InspectionGrid);
-            createGridHeaders("Redo Entry", view.InspectionGrid);
+            CreateGridHeaders("Sketch Bubble", view.InspectionGrid);
+            CreateGridHeaders("Feature", view.InspectionGrid);
+            CreateGridHeaders("Measured Actual", view.InspectionGrid);
+            CreateGridHeaders("Inspection Tool", view.InspectionGrid);
+            CreateGridHeaders("Redo Entry", view.InspectionGrid);
         }
 
         /// <summary>
@@ -155,7 +153,7 @@ namespace Feature_Inspection
         /// This method deals with updating fields on the inspection page when the part number has changed.
         /// </summary>
         /// <param name="sender"></param>
-        public void updateGridViewOnIndexChange(object sender)
+        public void UpdateGridViewOnIndexChange(object sender)
         {
             //Use (listbox)sender.SelectedIndex
             var listBox = (ListBox)sender;
@@ -200,8 +198,6 @@ namespace Feature_Inspection
                 view.ListBoxIndex = (view.ListBoxIndex + 1 < view.ListBoxCount) ?
                 view.ListBoxIndex += 1 : view.ListBoxIndex = 0;
                 DataTable featureList = model.GetFeatureList(view.OpKey);
-                BindFocusComboBox(featureList);
-                //string title = view.ChartFocusComboBox.Text;
                 BindFocusCharts();
             }
         }
@@ -238,7 +234,7 @@ namespace Feature_Inspection
         /// </summary>
         /// <param name="name"></param>
         /// <param name="grid"></param>
-        public void createGridHeaders(string name, DataGridView grid)
+        public void CreateGridHeaders(string name, DataGridView grid)
         {
             DataGridViewTextBoxColumn column = new DataGridViewTextBoxColumn();
             {
@@ -251,7 +247,7 @@ namespace Feature_Inspection
         /// This method creates the chart area that will display all run charts of recorded data.
         /// </summary>
         /// <param name="chart"></param>
-        public void createGraphArea(Chart chart)
+        public void CreateGraphArea(Chart chart)
         {
             chart.ChartAreas.Add("InspectionChart");
             chart.Series.Add("NominalSeries");
@@ -403,7 +399,7 @@ namespace Feature_Inspection
             }
         }
 
-        public void noInspectionStartClear()
+        public void NoInspectionStartClear()
         {
             if (view.PartsListBox.Items.Count == 0)
             {
@@ -424,7 +420,7 @@ namespace Feature_Inspection
         /// This method clears some of the information being displayed on the inspection page.
         /// Best called on new inspections.
         /// </summary>
-        public void smallInspectionPageClear()
+        public void SmallInspectionPageClear()
         {
             view.InspectionChart.Visible = false;
             view.ChartFocusComboBox.DataSource = null;
@@ -435,7 +431,7 @@ namespace Feature_Inspection
             view.PartsListBox.DataSource = null;
             view.InspectionGrid.DataSource = null;
             view.InspectionGrid.Columns.Clear();
-            inspectionHeaderCreation();
+            InspectionHeaderCreation();
             DisableSortableColumns();
             view.InspectionPageHeader.Text = "INSPECTION PAGE";
         }
@@ -444,12 +440,12 @@ namespace Feature_Inspection
         /// This method calls the "smallInspectionPageClear()" and then clears some additional info on the inspection page.
         /// Best called on false opkeys.
         /// </summary>
-        public void fullInspectionPageClear()
+        public void FullInspectionPageClear()
         {
             view.PartNumberLabel.Text = null;
             view.JobLabel.Text = null;
             view.OperationLabel.Text = null;
-            smallInspectionPageClear();
+            SmallInspectionPageClear();
         }
 
         /// <summary>
@@ -486,7 +482,7 @@ namespace Feature_Inspection
             view.InspectionBindingSource.EndEdit();
             model.AdapterUpdateInspection((DataTable)view.InspectionBindingSource.DataSource);
             BindFocusCharts();
-            noInspectionStartClear();
+            NoInspectionStartClear();
         }
 
         /// <summary>
@@ -494,7 +490,7 @@ namespace Feature_Inspection
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void filterTextBox(object sender, KeyEventArgs e)
+        public void FilterTextBox(object sender, KeyEventArgs e)
         {
             var textbox = (TextBox)sender;
             int lotChars = textbox.Text.Length;
@@ -565,7 +561,7 @@ namespace Feature_Inspection
         /// whether or not the opkey is valid. This method is also executed when pressing enter on the LotSizeTextBox
         /// </summary>
         /// <param name="e"></param>
-        public void checkEnter_ValidateOpKeyAndLotSize(object sender, KeyEventArgs e)
+        public void CheckEnter_ValidateOpKeyAndLotSize(object sender, KeyEventArgs e)
 
         {
             //Will work on an enter or tab key press
@@ -579,7 +575,7 @@ namespace Feature_Inspection
             }
             else
             {
-                filterTextBox(sender, e);
+                FilterTextBox(sender, e);
             }
         }
 
@@ -608,7 +604,7 @@ namespace Feature_Inspection
 
         private void InvalidOpKeyProcess()
         {
-            fullInspectionPageClear();
+            FullInspectionPageClear();
             MessageBox.Show(view.OpKeyTextBox.Text + " is invalid please enter a valid Op Key", "Invalid OpKey");
             view.OpKeyTextBox.Clear();
         }
@@ -638,7 +634,7 @@ namespace Feature_Inspection
             //Create the inspection in inspection table
             view.LotsizeTextBox.Clear();
             model.CreateInspectionInInspectionTable(view.OpKey);
-            smallInspectionPageClear();
+            SmallInspectionPageClear();
             //MessageBox.Show("Creating Inspection");            
         }
 
@@ -662,7 +658,7 @@ namespace Feature_Inspection
             else
             {
                 //Message user to add features to this part num op num
-                smallInspectionPageClear();
+                SmallInspectionPageClear();
                 //Message user to add features to this part num op num
                 MessageBox.Show("Lead must add features to this Part and Operation number");
 

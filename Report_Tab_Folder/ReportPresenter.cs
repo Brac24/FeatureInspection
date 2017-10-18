@@ -53,12 +53,12 @@ namespace Feature_Inspection
             }
         }
 
-        public void check_ReportScope(object sender, KeyEventArgs e)
+        public void Check_ReportScope(object sender, KeyEventArgs e)
         {
             DataTable featureList;
             if (view.ReportTypeComboBox.SelectedIndex == 0)
             {
-                filterTextBox(sender, e);
+                FilterTextBox(sender, e);
                 if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
                 {
                     ValidateValidOpKey();
@@ -139,7 +139,7 @@ namespace Feature_Inspection
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void filterTextBox(object sender, KeyEventArgs e)
+        public void FilterTextBox(object sender, KeyEventArgs e)
         {
             var textbox = (TextBox)sender;
             int lotChars = textbox.Text.Length;
@@ -380,7 +380,7 @@ namespace Feature_Inspection
         /// This method creates the chart area that will display all run charts of recorded data.
         /// </summary>
         /// <param name="chart"></param>
-        public void createGraphArea(Chart chart)
+        public void CreateGraphArea(Chart chart)
         {
             chart.ChartAreas.Add("InspectionChart");
             chart.Series.Add("NominalSeries");
