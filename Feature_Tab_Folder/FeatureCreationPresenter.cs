@@ -39,8 +39,6 @@ namespace Feature_Inspection
 
             SuppressKeyIfWhiteSpaceChar(e);
 
-            convertToUppercase();
-
             if (e.KeyCode.Equals(Keys.Enter) || e.KeyCode.Equals(Keys.Tab))
             {
 
@@ -54,11 +52,6 @@ namespace Feature_Inspection
             {
                 return false;
             }
-        }
-
-        public void convertToUppercase()
-        {
-            view.PartNumber.ToUpper();
         }
 
         /// <summary>
