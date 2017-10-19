@@ -1658,7 +1658,6 @@
             // 
             this.opBoxFeature.AcceptsTab = true;
             this.opBoxFeature.BackColor = System.Drawing.Color.DimGray;
-            this.opBoxFeature.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.opBoxFeature.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.opBoxFeature.Location = new System.Drawing.Point(122, 34);
             this.opBoxFeature.Margin = new System.Windows.Forms.Padding(3, 3, 20, 3);
@@ -1669,7 +1668,12 @@
             this.opBoxFeature.Size = new System.Drawing.Size(143, 25);
             this.opBoxFeature.TabIndex = 1;
             this.opBoxFeature.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+<<<<<<< HEAD
+            this.opBoxFeature.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CheckEnterKeyPressedFeatures_KeyDown);
+=======
             this.opBoxFeature.KeyDown += new System.Windows.Forms.KeyEventHandler(this.checkEnterKeyPressedFeatures_KeyDown);
+            this.opBoxFeature.Leave += new System.EventHandler(this.partBoxFeature_Leave);
+>>>>>>> 6b7534d72a8350a98cd420504bcb340fa654a0b4
             // 
             // labely
             // 
@@ -1689,7 +1693,6 @@
             this.partBoxFeature.AcceptsTab = true;
             this.partBoxFeature.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.partBoxFeature.BackColor = System.Drawing.Color.DimGray;
-            this.partBoxFeature.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.partBoxFeature.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.partBoxFeature.Location = new System.Drawing.Point(122, 3);
             this.partBoxFeature.Margin = new System.Windows.Forms.Padding(3, 3, 20, 3);
@@ -1698,7 +1701,12 @@
             this.partBoxFeature.Size = new System.Drawing.Size(143, 25);
             this.partBoxFeature.TabIndex = 0;
             this.partBoxFeature.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+<<<<<<< HEAD
+            this.partBoxFeature.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CheckEnterKeyPressedFeatures_KeyDown);
+=======
             this.partBoxFeature.KeyDown += new System.Windows.Forms.KeyEventHandler(this.checkEnterKeyPressedFeatures_KeyDown);
+            this.partBoxFeature.Leave += new System.EventHandler(this.partBoxFeature_Leave);
+>>>>>>> 6b7534d72a8350a98cd420504bcb340fa654a0b4
             // 
             // partStorageLabel
             // 

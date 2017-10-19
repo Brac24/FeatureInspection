@@ -40,11 +40,7 @@ namespace Feature_Inspection
 
         #region Properties
 
-<<<<<<< HEAD
-        public TextBox ChristianIsDumb { get { return partBoxFeature; } set { } }
-=======
-        public TextBox PartTextBox2 { get { return partBoxFeature; } set { } }
->>>>>>> 6b7534d72a8350a98cd420504bcb340fa654a0b4
+        public TextBox PartTextBox { get { return partBoxFeature; } set { } }
 
         public TextBox FeatureOpTextBox { get { return opBoxFeature; } }
 
@@ -159,7 +155,6 @@ namespace Feature_Inspection
             model = new FeatureCreationModelMock();
             presenter = new FeatureCreationPresenter(this, model);
             inspectionPresenter = new InspectionPresenter(this, model);
-            inspectionPresenter.BindFocusCharts();
             reportPresenter = new ReportPresenter(this, model);
 
             inspectionPresenter.CreateGraphArea(inspectionChart);
@@ -178,7 +173,7 @@ namespace Feature_Inspection
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void inspectionEntryGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        private void InspectionEntryGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             try
             {
@@ -196,7 +191,7 @@ namespace Feature_Inspection
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void numOnly_KeyDown(object sender, KeyEventArgs e)
+        private void NumOnly_KeyDown(object sender, KeyEventArgs e)
         {
             inspectionPresenter.CheckEnter_ValidateOpKeyAndLotSize(sender, e);
         }
@@ -206,10 +201,9 @@ namespace Feature_Inspection
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void nextPartButton_Click(object sender, EventArgs e)
+        private void NextPartButton_Click(object sender, EventArgs e)
         {
             inspectionPresenter.GotToNextPart();
-
         }
 
         /// <summary>
@@ -217,7 +211,7 @@ namespace Feature_Inspection
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void inspectionEntryGridView_ChangeWithPart(object sender, EventArgs e)
+        private void InspectionEntryGridView_ChangeWithPart(object sender, EventArgs e)
         {
             inspectionPresenter.UpdateGridViewOnIndexChange(sender);
         }
@@ -227,7 +221,7 @@ namespace Feature_Inspection
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void inspectionEntryGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        private void InspectionEntryGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             inspectionPresenter.AdapterUpdateInspection();
         }
@@ -237,7 +231,7 @@ namespace Feature_Inspection
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void inspectionEntryGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        private void InspectionEntryGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             MessageBox.Show(e.Exception.Message);
         }
@@ -247,7 +241,7 @@ namespace Feature_Inspection
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void inspectionFocusCombo_SelectedIndexChanged(object sender, EventArgs e)
+        private void InspectionFocusCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
             inspectionPresenter.BindFocusCharts();
         }
@@ -257,12 +251,12 @@ namespace Feature_Inspection
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void inspectionEntryGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        private void InspectionEntryGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             inspectionPresenter.AdapterUpdateInspection();
         }
 
-        private void inspectionChart_MouseMove(object sender, MouseEventArgs e)
+        private void InspectionChart_MouseMove(object sender, MouseEventArgs e)
         {
             inspectionPresenter.ShowChartDetails(e);
         }
@@ -279,7 +273,7 @@ namespace Feature_Inspection
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void checkEnterKeyPressedFeatures_KeyDown(object sender, KeyEventArgs e)
+        private void CheckEnterKeyPressedFeatures_KeyDown(object sender, KeyEventArgs e)
         {
             presenter.OnEnterKeyInitializeDataGridView(sender, e);
         }
@@ -289,7 +283,7 @@ namespace Feature_Inspection
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        private void DataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             presenter.SetSampleIDAndFeatureTypeHiddenColumns(e);
         }
@@ -300,7 +294,7 @@ namespace Feature_Inspection
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void addFeature_Click(object sender, EventArgs e)
+        private void AddFeature_Click(object sender, EventArgs e)
         {
             presenter.addFeature_Click();
         }
@@ -331,7 +325,7 @@ namespace Feature_Inspection
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void cancelChanges_Click(object sender, EventArgs e)
+        private void CancelChanges_Click(object sender, EventArgs e)
         {
             presenter.cancelChanges_Click();
         }
@@ -341,7 +335,7 @@ namespace Feature_Inspection
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void saveButton_Click(object sender, EventArgs e)
+        private void SaveButton_Click(object sender, EventArgs e)
         {
             presenter.saveButton_Click();
 
@@ -352,7 +346,7 @@ namespace Feature_Inspection
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void featureEditGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        private void FeatureEditGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             MessageBox.Show(e.Exception.Message);
         }
@@ -380,7 +374,7 @@ namespace Feature_Inspection
             }
         }
 
-        private void reportTypeDropdown_SelectedIndexChanged(object sender, EventArgs e)
+        private void ReportTypeDropdown_SelectedIndexChanged(object sender, EventArgs e)
         {
             reportPresenter.ReportScope_TextBoxVisibility();
         }
@@ -391,7 +385,7 @@ namespace Feature_Inspection
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void reportTextBox_Check_Filter(object sender, KeyEventArgs e)
+        private void ReportTextBox_Check_Filter(object sender, KeyEventArgs e)
         {
             reportPresenter.Check_ReportScope(sender, e);
         }
@@ -402,7 +396,7 @@ namespace Feature_Inspection
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void checkEnterKeyPressedReport_KeyDown(object sender, KeyEventArgs e)
+        private void CheckEnterKeyPressedReport_KeyDown(object sender, KeyEventArgs e)
         {
             //Same method that is called in second case of "check_ReportScope"
             reportPresenter.OnEnterKeyInitializeDataGridView(sender, e);

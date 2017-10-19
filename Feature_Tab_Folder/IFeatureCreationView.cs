@@ -37,6 +37,7 @@ namespace Feature_Inspection
         object LastRowFeatureOperationNumberFK { get; set; }
 
         object FeatureDataSource { get; set; }
+
         DataGridView FeatureGridView { get; }
 
 
