@@ -1669,7 +1669,6 @@
             this.opBoxFeature.TabIndex = 1;
             this.opBoxFeature.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.opBoxFeature.KeyDown += new System.Windows.Forms.KeyEventHandler(this.checkEnterKeyPressedFeatures_KeyDown);
-            this.opBoxFeature.Leave += new System.EventHandler(this.partBoxFeature_Leave);
             // 
             // labely
             // 
@@ -1698,7 +1697,6 @@
             this.partBoxFeature.TabIndex = 0;
             this.partBoxFeature.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.partBoxFeature.KeyDown += new System.Windows.Forms.KeyEventHandler(this.checkEnterKeyPressedFeatures_KeyDown);
-            this.partBoxFeature.Leave += new System.EventHandler(this.partBoxFeature_Leave);
             // 
             // partStorageLabel
             // 

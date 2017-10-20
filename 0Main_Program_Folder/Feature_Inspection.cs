@@ -36,11 +36,11 @@ namespace Feature_Inspection
         /************************/
         /***** Properties *******/
         /************************/
-
+        
 
         #region Properties
 
-        public TextBox PartTextBox2 { get { return partBoxFeature; } set { } }
+        public TextBox PartTextBox { get { return partBoxFeature; } set { } }
 
         public TextBox FeatureOpTextBox { get { return opBoxFeature; } }
 
