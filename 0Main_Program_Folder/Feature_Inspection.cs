@@ -280,6 +280,8 @@ namespace Feature_Inspection
             presenter.OnEnterKeyInitializeDataGridView(sender, e);
         }
 
+
+
         /// <summary>
         /// Used to set the type of sampling and the feature type
         /// </summary>
@@ -416,8 +418,8 @@ namespace Feature_Inspection
 
 
 
+
         #endregion
 
-        
     }
 }

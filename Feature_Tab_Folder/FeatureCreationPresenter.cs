@@ -41,6 +41,7 @@ namespace Feature_Inspection
 
             if (e.KeyCode.Equals(Keys.Enter) || e.KeyCode.Equals(Keys.Tab))
             {
+
                 ValidatePartAndOpNumberExistWhenEntered(textbox);
 
                 InitializeFeatureGridView();
