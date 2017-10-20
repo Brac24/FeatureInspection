@@ -493,6 +493,7 @@
             this.opKeyBoxInspection.AcceptsTab = true;
             this.opKeyBoxInspection.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.opKeyBoxInspection.BackColor = System.Drawing.Color.DimGray;
+            this.opKeyBoxInspection.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.opKeyBoxInspection.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.opKeyBoxInspection.Location = new System.Drawing.Point(122, 3);
             this.opKeyBoxInspection.Margin = new System.Windows.Forms.Padding(3, 3, 20, 3);
@@ -621,6 +622,7 @@
             this.lotSizeBoxInspection.AcceptsTab = true;
             this.lotSizeBoxInspection.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lotSizeBoxInspection.BackColor = System.Drawing.Color.DimGray;
+            this.lotSizeBoxInspection.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.lotSizeBoxInspection.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.lotSizeBoxInspection.Location = new System.Drawing.Point(122, 65);
             this.lotSizeBoxInspection.Margin = new System.Windows.Forms.Padding(3, 3, 20, 3);
@@ -796,7 +798,7 @@
             this.inspectionEntryGridView.RowHeadersVisible = false;
             this.inspectionEntryGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.inspectionEntryGridView.Size = new System.Drawing.Size(822, 337);
-            this.inspectionEntryGridView.TabIndex = 0;
+            this.inspectionEntryGridView.TabIndex = 3;
             this.inspectionEntryGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.inspectionEntryGridView_CellEndEdit);
             this.inspectionEntryGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.RedoRowInspection_MouseUp);
             this.inspectionEntryGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.inspectionEntryGridView_CellValueChanged);
@@ -1112,6 +1114,7 @@
             this.reportTB1.AcceptsTab = true;
             this.reportTB1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.reportTB1.BackColor = System.Drawing.Color.DimGray;
+            this.reportTB1.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.reportTB1.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.reportTB1.Location = new System.Drawing.Point(122, 34);
             this.reportTB1.Margin = new System.Windows.Forms.Padding(3, 3, 20, 3);
@@ -1127,6 +1130,7 @@
             this.reportTB2.AcceptsTab = true;
             this.reportTB2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.reportTB2.BackColor = System.Drawing.Color.DimGray;
+            this.reportTB2.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.reportTB2.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.reportTB2.Location = new System.Drawing.Point(122, 65);
             this.reportTB2.Margin = new System.Windows.Forms.Padding(3, 3, 20, 3);
