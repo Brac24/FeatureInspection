@@ -579,7 +579,9 @@ namespace Feature_Inspection
             {
                 view.FeatureGridView.Focus();
                 view.FeaturePageHeaderText = "PART " + view.PartNumber + " OP " + view.OperationNumber + " FEATURES";
+                view.FeatureOpTextBox.ReadOnly = true;                          //Set to read only to keep system from adding a return or tab character to the textbox
                 MessageBox.Show("This is a valid Part and Operation Number");
+                view.FeatureOpTextBox.ReadOnly = false;                        //Editable again
             }
             else
             {
@@ -587,6 +589,7 @@ namespace Feature_Inspection
                 DataTable featureTable = model.GetFeaturesOnOpKey(view.PartNumber, view.OperationNumber);
                 DataBindFeaturesToFeatureDataGridView(featureTable);
                 view.FeatureOpTextBox.Clear();
+                
                 MessageBox.Show("Op Number does not exist for this Part Number");
             }
         }

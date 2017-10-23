@@ -36,7 +36,7 @@ namespace Feature_Inspection
         /************************/
         /***** Properties *******/
         /************************/
-
+        
 
         #region Properties
 
