@@ -154,7 +154,7 @@ namespace Feature_Inspection
             return opExists;
         }
 
-        public DataTable GetFeaturesOnOpKey(string partNumber, string operationNum)
+        public DataTable GetFeaturesOnPartAndOpNumber(string partNumber, string operationNum)
         {
 
             DataTable t;

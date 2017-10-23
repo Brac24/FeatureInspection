@@ -138,7 +138,11 @@ namespace Feature_Inspection
             }
             else
             {
-                MessageBox.Show("Please Choose a sample");
+                //Default: Choice 1
+                view.FeatureGridView.Rows[rowIndex].Cells["Sample"].Value = 1;
+                view.FeatureGridView.Rows[rowIndex].Cells["SampleID"].Value = view.FeatureGridView.Rows[rowIndex].Cells["Sample"].Value;
+
+                //MessageBox.Show("Please Choose a sample");
             }
         }
 
@@ -151,7 +155,7 @@ namespace Feature_Inspection
 
             if (result == "Yes")
             {
-                DataTable partList = model.GetFeaturesOnOpKey(view.PartStorage, view.OpStorage);
+                DataTable partList = model.GetFeaturesOnPartAndOpNumber(view.PartStorage, view.OpStorage);
                 DataBindFeaturesToFeatureDataGridView(partList);
             }
         }
@@ -300,7 +304,7 @@ namespace Feature_Inspection
             //As long as both textboxes are not empty
             if (view.PartTextBox.Text != "" && view.FeatureOpTextBox.Text != "")
             {
-                DataTable featureTable = model.GetFeaturesOnOpKey(view.PartNumber, view.OperationNumber);
+                DataTable featureTable = model.GetFeaturesOnPartAndOpNumber(view.PartNumber, view.OperationNumber);
                 DataBindFeaturesToFeatureDataGridView(featureTable);
                 //SetFeatureDataGridViewHeader();
                 StorePartOpNumbers();
@@ -536,7 +540,7 @@ namespace Feature_Inspection
 
             if (partNumber == "")
             {
-                DataTable featureTable = model.GetFeaturesOnOpKey(view.PartNumber, view.OperationNumber);
+                DataTable featureTable = model.GetFeaturesOnPartAndOpNumber(view.PartNumber, view.OperationNumber);
                 DataBindFeaturesToFeatureDataGridView(featureTable);
                 MessageBox.Show("Please Enter a Part Number");
                 view.PartNumber = null;
@@ -555,7 +559,7 @@ namespace Feature_Inspection
                 MessageBox.Show("Part Number does not exist");
                 view.PartNumber = null; ;
                 view.OperationNumber = null;
-                DataTable featureTable = model.GetFeaturesOnOpKey(view.PartNumber, view.OperationNumber);
+                DataTable featureTable = model.GetFeaturesOnPartAndOpNumber(view.PartNumber, view.OperationNumber);
                 DataBindFeaturesToFeatureDataGridView(featureTable);
 
 
@@ -571,7 +575,7 @@ namespace Feature_Inspection
             {
                 view.FeaturePageHeaderText = "FEATURES PAGE";
                 view.FeatureOpTextBox.Clear();
-                DataTable featureTable = model.GetFeaturesOnOpKey(view.PartNumber, view.OperationNumber);
+                DataTable featureTable = model.GetFeaturesOnPartAndOpNumber(view.PartNumber, view.OperationNumber);
                 DataBindFeaturesToFeatureDataGridView(featureTable);
                 MessageBox.Show("Please Enter an Operation Number");
             }
@@ -586,7 +590,7 @@ namespace Feature_Inspection
             else
             {
                 view.FeaturePageHeaderText = "FEATURES PAGE";
-                DataTable featureTable = model.GetFeaturesOnOpKey(view.PartNumber, view.OperationNumber);
+                DataTable featureTable = model.GetFeaturesOnPartAndOpNumber(view.PartNumber, view.OperationNumber);
                 DataBindFeaturesToFeatureDataGridView(featureTable);
                 view.FeatureOpTextBox.Clear();
                 

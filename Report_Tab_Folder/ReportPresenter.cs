@@ -265,7 +265,7 @@ namespace Feature_Inspection
 
             if (partNumber == "")
             {
-                DataTable featureTable = model.GetFeaturesOnOpKey(view.ReportTB1.Text, view.ReportTB2.Text);
+                DataTable featureTable = model.GetFeaturesOnPartAndOpNumber(view.ReportTB1.Text, view.ReportTB2.Text);
                 DataBindReportPage(featureTable);
                 MessageBox.Show("Please Enter a Part Number");
                 view.ReportTB1.Text = null;
@@ -284,7 +284,7 @@ namespace Feature_Inspection
                 MessageBox.Show("Part Number does not exist");
                 view.ReportTB1.Text = null; ;
                 view.ReportTB2.Text = null;
-                DataTable featureTable = model.GetFeaturesOnOpKey(view.ReportTB1.Text, view.ReportTB2.Text);
+                DataTable featureTable = model.GetFeaturesOnPartAndOpNumber(view.ReportTB1.Text, view.ReportTB2.Text);
                 DataBindReportPage(featureTable);
 
 
@@ -300,7 +300,7 @@ namespace Feature_Inspection
             {
                 view.ReportPageHeader.Text = "REPORT PAGE";
                 view.ReportTB2.Clear();
-                DataTable featureTable = model.GetFeaturesOnOpKey(view.ReportTB1.Text, view.ReportTB2.Text);
+                DataTable featureTable = model.GetFeaturesOnPartAndOpNumber(view.ReportTB1.Text, view.ReportTB2.Text);
                 DataBindReportPage(featureTable);
                 MessageBox.Show("Please Enter an Operation Number");
             }
@@ -312,7 +312,7 @@ namespace Feature_Inspection
             else
             {
                 view.ReportPageHeader.Text = "REPORT PAGE";
-                DataTable featureTable = model.GetFeaturesOnOpKey(view.ReportTB1.Text, view.ReportTB2.Text);
+                DataTable featureTable = model.GetFeaturesOnPartAndOpNumber(view.ReportTB1.Text, view.ReportTB2.Text);
                 DataBindReportPage(featureTable);
                 view.ReportTB2.Clear();
                 MessageBox.Show("Op Number does not exist for this Part Number");
