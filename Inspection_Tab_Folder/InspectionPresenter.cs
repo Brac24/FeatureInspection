@@ -353,7 +353,7 @@ namespace Feature_Inspection
         {
             double max = view.InspectionChart.Series["UpperToleranceSeries"].Points[0].YValues[0];
             double min = view.InspectionChart.Series["LowerToleranceSeries"].Points[0].YValues[0];
-            double nom = Double.Parse(view.ChartFocusComboBox.Text.ToString());
+            var nom = Double.Parse(view.ChartFocusComboBox.Text.ToString());
 
             for (int i = 0; i < view.InspectionChart.Series[0].Points.Count; i++)
             {
@@ -366,7 +366,7 @@ namespace Feature_Inspection
                     //d.LabelBackColor = Color.Gainsboro;
                 }
 
-                if (view.InspectionChart.Series[0].Points[i].YValues[0] > (max) || view.InspectionChart.Series[0].Points[i].YValues[0] < (min))
+                if (view.InspectionChart.Series[0].Points[i].YValues[0] > (max) || view.InspectionChart.Series[0].Points[i].YValues[0] < (min) && view.InspectionChart.Series[0].Points[i].YValues[0] != 0)
                 {
                     view.InspectionChart.Series[0].Points[i].Color = Color.Red;
                     DataPoint d = view.InspectionChart.Series[0].Points[i];
@@ -378,9 +378,7 @@ namespace Feature_Inspection
                 if (view.InspectionChart.Series[0].Points[i].YValues[0] == 0)
                 {
                     view.InspectionChart.Series[0].Points[i].IsEmpty = true;
-                    DataPoint d = view.InspectionChart.Series[0].Points[i];
-                    d.LabelBackColor = Color.Transparent;
-                    d.LabelForeColor = Color.Transparent;
+                    view.InspectionChart.Series[0].Points[i].Color = Color.Red;
                 }
             }
         }
@@ -413,6 +411,7 @@ namespace Feature_Inspection
                 DisableSortableColumns();
                 MessageBox.Show("Features have been added to this operation. Please enter your part count.");
                 view.InspectionGrid.Columns.Remove("Redo_Column");
+                view.LotsizeTextBox.Focus();
             }
 
         }
@@ -684,11 +683,14 @@ namespace Feature_Inspection
             {               
                 DetermineIfNewFeaturesHaveBeenAddedToOpKey();
                 BindNewlyCreatedPartListToListBox();
+                view.ChartFocusComboBox.Focus();
                 
             }
             else if (view.LotsizeTextBox.Text != "")
             {
                 SetUpDataAndListBox();
+                view.LotsizeTextBox.ReadOnly = true;
+                view.ChartFocusComboBox.Focus();
             }
         }
 

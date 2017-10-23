@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
             this.featureEditGridView = new System.Windows.Forms.DataGridView();
             this.Feature = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Bubble = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -219,14 +219,14 @@
             this.featureEditGridView.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.featureEditGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.featureEditGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.SeaGreen;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.featureEditGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle13.ForeColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.Color.SeaGreen;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.featureEditGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
             this.featureEditGridView.ColumnHeadersHeight = 64;
             this.featureEditGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.featureEditGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -238,14 +238,14 @@
             this.Sample,
             this.Tool,
             this.Delete});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.SeaGreen;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.featureEditGridView.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.Color.SeaGreen;
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.featureEditGridView.DefaultCellStyle = dataGridViewCellStyle14;
             this.featureEditGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.featureEditGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.featureEditGridView.EnableHeadersVisualStyles = false;
@@ -253,14 +253,14 @@
             this.featureEditGridView.Margin = new System.Windows.Forms.Padding(0);
             this.featureEditGridView.MultiSelect = false;
             this.featureEditGridView.Name = "featureEditGridView";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.SeaGreen;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.featureEditGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle15.ForeColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.Color.SeaGreen;
+            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.featureEditGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle15;
             this.featureEditGridView.RowHeadersVisible = false;
             this.featureEditGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.featureEditGridView.Size = new System.Drawing.Size(822, 423);
@@ -519,6 +519,7 @@
             // inspectionFocusCombo
             // 
             this.inspectionFocusCombo.BackColor = System.Drawing.Color.DimGray;
+            this.inspectionFocusCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.inspectionFocusCombo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.inspectionFocusCombo.ForeColor = System.Drawing.Color.Gainsboro;
             this.inspectionFocusCombo.FormattingEnabled = true;
@@ -764,12 +765,12 @@
             this.inspectionEntryGridView.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.inspectionEntryGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.inspectionEntryGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.MediumSeaGreen;
-            this.inspectionEntryGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle16.ForeColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.Color.MediumSeaGreen;
+            this.inspectionEntryGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
             this.inspectionEntryGridView.ColumnHeadersHeight = 64;
             this.inspectionEntryGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.inspectionEntryGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -778,14 +779,14 @@
             this.dataGridViewTextBoxColumn3,
             this.dataGridViewTextBoxColumn4,
             this.dataGridViewTextBoxColumn5});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.MediumSeaGreen;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.inspectionEntryGridView.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle17.ForeColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.Color.MediumSeaGreen;
+            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.inspectionEntryGridView.DefaultCellStyle = dataGridViewCellStyle17;
             this.inspectionEntryGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.inspectionEntryGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.inspectionEntryGridView.EnableHeadersVisualStyles = false;
@@ -793,8 +794,8 @@
             this.inspectionEntryGridView.Margin = new System.Windows.Forms.Padding(0);
             this.inspectionEntryGridView.MultiSelect = false;
             this.inspectionEntryGridView.Name = "inspectionEntryGridView";
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.inspectionEntryGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle18.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.inspectionEntryGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle18;
             this.inspectionEntryGridView.RowHeadersVisible = false;
             this.inspectionEntryGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.inspectionEntryGridView.Size = new System.Drawing.Size(822, 337);
@@ -1083,6 +1084,7 @@
             // reportTypeDropdown
             // 
             this.reportTypeDropdown.BackColor = System.Drawing.Color.DimGray;
+            this.reportTypeDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.reportTypeDropdown.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.reportTypeDropdown.ForeColor = System.Drawing.Color.Gainsboro;
             this.reportTypeDropdown.FormattingEnabled = true;
@@ -1099,6 +1101,7 @@
             // reportFocusComboBox
             // 
             this.reportFocusComboBox.BackColor = System.Drawing.Color.DimGray;
+            this.reportFocusComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.reportFocusComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.reportFocusComboBox.ForeColor = System.Drawing.Color.Gainsboro;
             this.reportFocusComboBox.FormattingEnabled = true;
