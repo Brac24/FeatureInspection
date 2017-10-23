@@ -290,6 +290,14 @@ namespace Feature_Inspection
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             presenter.SetSampleIDAndFeatureTypeHiddenColumns(e);
+
+            //TODO: Clean up code
+            //Bubble number column
+            if(e.ColumnIndex == 2)
+            {
+                //make letters upper case
+                featureEditGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = featureEditGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString().ToUpper();
+            }
         }
 
         /// <summary>
