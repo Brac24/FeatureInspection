@@ -29,7 +29,7 @@ namespace Feature_Inspection
         public Feature_Inspection()
         {
             InitializeComponent();
-            //this.mainTabControl.TabPages.Remove(this.mainTabControl.TabPages["Report_Page"]);
+            this.mainTabControl.TabPages.Remove(this.mainTabControl.TabPages["Report_Page"]);
         }
 
 

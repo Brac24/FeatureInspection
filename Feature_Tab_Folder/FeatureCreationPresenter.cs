@@ -44,11 +44,10 @@ namespace Feature_Inspection
                 if (view.PartTextBox.Focused)
                 {
                     view.FeatureOpTextBox.Clear();
-                    view.FeaturePageHeaderText = "FEATURES PAGE";
+                    view.FeaturePageHeaderText = "PART " + view.PartTextBox.Text;
                     view.FeatureGridView.DataSource = null;
                     DataTable featureTable = model.GetFeaturesOnPartAndOpNumber(view.PartNumber, view.OperationNumber);
                     DataBindFeaturesToFeatureDataGridView(featureTable);
-
                 }
 
                 ValidatePartAndOpNumberExistWhenEntered(textbox);
