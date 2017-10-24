@@ -675,7 +675,9 @@ namespace Feature_Inspection
                 //Message user to add features to this part num op num
                 SmallInspectionPageClear();
                 //Message user to add features to this part num op num
+                view.OpKeyTextBox.ReadOnly = true;
                 MessageBox.Show("Lead must add features to this Part and Operation number");
+                view.OpKeyTextBox.ReadOnly = false;
 
             }
         }
