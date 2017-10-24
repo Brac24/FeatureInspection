@@ -41,6 +41,15 @@ namespace Feature_Inspection
 
             if (e.KeyCode.Equals(Keys.Enter) || e.KeyCode.Equals(Keys.Tab))
             {
+                if (view.PartTextBox.Focused)
+                {
+                    view.FeatureOpTextBox.Clear();
+                    view.FeaturePageHeaderText = "FEATURES PAGE";
+                    view.FeatureGridView.DataSource = null;
+                    DataTable featureTable = model.GetFeaturesOnPartAndOpNumber(view.PartNumber, view.OperationNumber);
+                    DataBindFeaturesToFeatureDataGridView(featureTable);
+
+                }
 
                 ValidatePartAndOpNumberExistWhenEntered(textbox);
 
@@ -306,7 +315,6 @@ namespace Feature_Inspection
             {
                 DataTable featureTable = model.GetFeaturesOnPartAndOpNumber(view.PartNumber, view.OperationNumber);
                 DataBindFeaturesToFeatureDataGridView(featureTable);
-                //SetFeatureDataGridViewHeader();
                 StorePartOpNumbers();
             }
         }
@@ -320,23 +328,6 @@ namespace Feature_Inspection
             view.PartStorage = view.PartTextBox.Text;
             view.OpStorage = view.OperationNumber;
         }
-
-        /*
-        /// <summary>
-        /// This method sets the feature page header to match whatever part and op is currently being edited.
-        /// </summary>
-        private void SetFeatureDataGridViewHeader()
-        {
-            if (view.FeatureCount > 0)
-            {
-
-                view.FeaturePageHeaderText = "PART " + view.LastRowFeaturePartNumberFK + " OP " + view.LastRowFeatureOperationNumberFK + " FEATURES";
-            }
-            else
-            {
-                view.FeaturePageHeaderText = "FEATURES PAGE";
-            }
-        }*/
 
         /// <summary>
         /// This method handles data binding of the grid view in the feature creation page.
