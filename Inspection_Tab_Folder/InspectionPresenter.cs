@@ -409,7 +409,9 @@ namespace Feature_Inspection
                 HideInspectionColumns();
                 SetupRedoButtonColumn();
                 DisableSortableColumns();
+                view.OpKeyTextBox.ReadOnly = true;
                 MessageBox.Show("Features have been added to this operation. Please enter your part count.");
+                view.OpKeyTextBox.ReadOnly = false;
                 view.InspectionGrid.Columns.Remove("Redo_Column");
                 view.LotsizeTextBox.Focus();
             }
@@ -562,8 +564,8 @@ namespace Feature_Inspection
         /// </summary>
         /// <param name="e"></param>
         public void CheckEnter_ValidateOpKeyAndLotSize(object sender, KeyEventArgs e)
-
         {
+            SuppressKeyIfWhiteSpaceChar(e);
             //Will work on an enter or tab key press
             if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
             {
@@ -577,6 +579,19 @@ namespace Feature_Inspection
             {
                 FilterTextBox(sender, e);
             }
+        }
+
+        /// <summary>
+        /// This event handler supresses any white space characters being entered.
+        /// </summary>
+        /// <param name="e"></param>
+        public void SuppressKeyIfWhiteSpaceChar(KeyEventArgs e)
+        {
+            char currentKey = (char)e.KeyCode;
+            bool nonNumber = char.IsWhiteSpace(currentKey); //Deals with all white space characters which inlcude tab, return, etc.
+
+            if (nonNumber)
+                e.SuppressKeyPress = true;
         }
 
         private void ClearLotSizeIfValidatingOpKey()
@@ -660,7 +675,9 @@ namespace Feature_Inspection
                 //Message user to add features to this part num op num
                 SmallInspectionPageClear();
                 //Message user to add features to this part num op num
+                view.OpKeyTextBox.ReadOnly = true;
                 MessageBox.Show("Lead must add features to this Part and Operation number");
+                view.OpKeyTextBox.ReadOnly = false;
 
             }
         }
@@ -691,6 +708,10 @@ namespace Feature_Inspection
                 SetUpDataAndListBox();
                 view.LotsizeTextBox.ReadOnly = true;
                 view.ChartFocusComboBox.Focus();
+            }
+            else
+            {
+                view.PartsListBox.DataSource = null;
             }
         }
 
